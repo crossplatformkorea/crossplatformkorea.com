@@ -101,7 +101,8 @@ function Home() {
                 "button button--outline button--secondary button--lg",
                 styles.takeatour
               )}
-              to={useBaseUrl("/blog/20221114-meetup")}
+              to={'https://www.meetup.com/ko-KR/crossplatformkorea/events/290799845'}
+              // to={useBaseUrl("/blog/20221114-meetup")}
             >
               <Translate
                 id="homepage.apply"
