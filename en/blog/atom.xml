@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://crossplatformkorea.com/en/blog</id>
+    <title>React Native Seoul Blog</title>
+    <updated>2022-11-30T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
+    <subtitle>React Native Seoul Blog</subtitle>
+    <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[November Meetup]]></title>
+        <id>meeptup-20221130</id>
+        <link href="https://crossplatformkorea.com/en/blog/meeptup-20221130"/>
+        <updated>2022-11-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[At this meetup, presentations were made in groups determined at the previous meetup. We would like to thank the presenters again for their hard work.]]></summary>
+        <content type="html"><![CDATA[<p>At this meetup, presentations were made in groups determined at the previous meetup. We would like to thank the presenters again for their hard work.</p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/206641938-2063d972-ac82-48bc-bb20-3ff7961fa231.jpg" width="600" class="img_ev3q"><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/206641942-2fd300ff-4117-4fa8-8688-ab27f6f65dad.jpg" width="600" class="img_ev3q"><p>The first announcement was made by Hyungu Kang, a developer at Sandbird. We learned in detail about FlatList, which is often used in React Native, and how to optimize it. The presentation video is attached at the link below.</p><a href="https://www.youtube.com/watch?v=kcZ4ZXNX-r4&amp;t" target="_blank" rel="noopener noreferrer">Dive into React Native FlatList</a><br><br><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/206641945-b8274d0d-4ff6-46d3-b894-892805c5cbbe.jpg" width="600" class="img_ev3q"><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/206641949-bf490d34-9a49-434f-b633-3b618d0319d4.jpg" width="600" class="img_ev3q"><p>The second presentation was made by Noh Young-ji, who works at Connect Dream. You shared how to automate app builds and deployments with Fastlane. Please check the presentation video at the link below.</p><a href="https://www.youtube.com/watch?v=KnTh4iCEiNo" target="_blank" rel="noopener noreferrer">Automate building and deploying apps with Fastlane</a><br><br><p>Unfortunately, I couldn't share the rest of the presentation because the video was cut off, but I would also like to thank Lee Tae-heon for sharing how to use Naver Map.</p><p>As promised, a prize of 500,000 won will be given to the team that proceeded with the presentation. Prizes will be awarded at the next meetup on January 25th :)</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[November Meetup Notice]]></title>
+        <id>20221114-meetup</id>
+        <link href="https://crossplatformkorea.com/en/blog/20221114-meetup"/>
+        <updated>2022-11-14T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hello 👋]]></summary>
+        <content type="html"><![CDATA[<p>Hello 👋
+<a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">November 30 meetup application</a> is now applicable.</p><p>As announced last time, this meetup will select a topic for each group and make a presentation. The group that provides the most highly rated content will receive a prize worth 500,000 won ($376).</p><p>For the prize money, each leader can claim directly to our <a href="https://opencollective.com/dooboolab-community" target="_blank" rel="noopener noreferrer">community sponsored organization</a>. It is believed that each leader will reasonably spend the prize money with the members, but you can decide freely :)</p><p>For details, please check the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">meetup page</a>.</p><p>Then see you at the meetup 🙇🏻</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="meetup" term="meetup"/>
+        <category label="announcement" term="announcement"/>
+        <category label="october" term="october"/>
+        <category label="dooboolab" term="dooboolab"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[October Meetup]]></title>
+        <id>meeptup-20221026</id>
+        <link href="https://crossplatformkorea.com/en/blog/meeptup-20221026"/>
+        <updated>2022-10-26T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[A meetup event was held on October 26th. We briefly introduced the contents of the current meetup.]]></summary>
+        <content type="html"><![CDATA[<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/198086669-908514bb-3f53-4c30-a8a7-6e7f2315c0fd.jpeg" width="600" class="img_ev3q"><p>A meetup event was held on October 26th. We briefly introduced the contents of the current meetup.</p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/198086670-925d4fa1-6282-44d2-aa38-98f1b40262a3.jpeg" width="600" class="img_ev3q"><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/198086674-44aa40f2-42a0-4318-97bf-321a05ddcf98.jpeg" width="600" class="img_ev3q"><p>Groups were organized and leaders were selected to continue a pleasant discussion. The leader was selected as the person with the highest stat score on <a href="https://dooboo.io" target="_blank" rel="noopener noreferrer">dooboo.io</a>. We are very much looking forward to the next time to see what useful content each group will provide in the future 🙂</p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/198088266-5ee23468-0623-4dcb-9d35-af4565479c43.jpeg" width="600" class="img_ev3q"><p>Also, thank you to Pang for making the participants so much fun 🙏</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Code push experience]]></title>
+        <id>code-push</id>
+        <link href="https://crossplatformkorea.com/en/blog/code-push"/>
+        <updated>2022-10-24T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[JeffGuKang shared talks about updating mobile clients on the fly via CodePush.]]></summary>
+        <content type="html"><![CDATA[<p>JeffGuKang shared talks about updating mobile clients on the fly via CodePush.</p><p><a href="https://youtu.be/78UAlT4z9XE" target="_blank" rel="noopener noreferrer">https://youtu.be/78UAlT4z9XE</a></p>]]></content>
+        <author>
+            <name>JeffGuKang</name>
+            <uri>https://github.com/JeffGuKang</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+        <category label="App Center" term="App Center"/>
+        <category label="CI" term="CI"/>
+        <category label="CD" term="CD"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Easy Build & Test Deployments with App Center]]></title>
+        <id>app-center</id>
+        <link href="https://crossplatformkorea.com/en/blog/app-center"/>
+        <updated>2022-10-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.]]></summary>
+        <content type="html"><![CDATA[<p>JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.</p><p><a href="https://youtu.be/SyN7nYejzSo" target="_blank" rel="noopener noreferrer">https://youtu.be/SyN7nYejzSo</a></p>]]></content>
+        <author>
+            <name>JeffGuKang</name>
+            <uri>https://github.com/JeffGuKang</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+        <category label="App Center" term="App Center"/>
+        <category label="CI" term="CI"/>
+        <category label="CD" term="CD"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[October Meetup Notice]]></title>
+        <id>20221026-meetup</id>
+        <link href="https://crossplatformkorea.com/en/blog/20221026-meetup"/>
+        <updated>2022-10-09T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hello 👋]]></summary>
+        <content type="html"><![CDATA[<p>Hello 👋
+<a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565" target="_blank" rel="noopener noreferrer">October 26 meetup application</a> is now applicable.</p><p>The meeting place for this meetup will be provided by <a href="https://www.monymony.co" target="_blank" rel="noopener noreferrer">Monymony</a>, which is making <a href="http://sumone.co" target="_blank" rel="noopener noreferrer">Sumone</a>, a service chosen by couples with 4 million subscribers and 1 million monthly visitors.</p><p>Please check the <a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565" target="_blank" rel="noopener noreferrer">Meetup page</a> for the detailed location and details.</p><p>Then see you at the meetup 🙇🏻</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="meetup" term="meetup"/>
+        <category label="announcement" term="announcement"/>
+        <category label="october" term="october"/>
+        <category label="monymony" term="monymony"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[New GitHub stats visualization]]></title>
+        <id>dooboo-stats</id>
+        <link href="https://crossplatformkorea.com/en/blog/dooboo-stats"/>
+        <updated>2022-09-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Introducing a new way to present your GitHub stats.]]></summary>
+        <content type="html"><![CDATA[<p>Introducing a new way to present your GitHub stats.
+Show your performance with <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7" target="_blank" rel="noopener noreferrer">GitHub Stats Visualization</a>.</p><p>English: <a href="https://medium.com/dooboolab/a-new-fancy-way-to-visualize-your-github-stats-418b5d59498" target="_blank" rel="noopener noreferrer">Medium</a><br>
+Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7" target="_blank" rel="noopener noreferrer">Medium</a></p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="소식" term="소식"/>
+        <category label="깃허브" term="깃허브"/>
+        <category label="전투력" term="전투력"/>
+        <category label="통계" term="통계"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Kakao Login Module Web Support]]></title>
+        <id>kakao-login-web</id>
+        <link href="https://crossplatformkorea.com/en/blog/kakao-login-web"/>
+        <updated>2022-09-26T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This is the content of the React Native Seoul meetup on August 31st. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the React Native Kakao Login open source, the problems he encountered, and how he solved them.]]></summary>
+        <content type="html"><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">React Native Seoul meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a class="hash-link" href="#related-pr" title="Direct link to heading">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
+        <author>
+            <name>nain93</name>
+            <uri>https://github.com/nain93</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+        <category label="Kakao Login" term="Kakao Login"/>
+        <category label="Web" term="Web"/>
+        <category label="Web Support" term="Web Support"/>
+        <category label="react-native-web" term="react-native-web"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Greetings]]></title>
+        <id>intro</id>
+        <link href="https://crossplatformkorea.com/en/blog/intro"/>
+        <updated>2022-09-24T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hello. This is Hyo, the organizer of React Native Seoul.]]></summary>
+        <content type="html"><![CDATA[<p>Hello. This is Hyo, the organizer of <strong>React Native Seoul</strong>.
+The community operation was not smooth for a long time as the event could not be held in <a href="https://www.coupang.com" target="_blank" rel="noopener noreferrer">Coupang</a> after COVID.
+In order to revitalize the community culture again, a new homepage has been opened.</p><p>Going forward, we will continue to share new news through our website and ensure smooth operation.</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="News" term="News"/>
+        <category label="Resume" term="Resume"/>
+        <category label="Operations" term="Operations"/>
+    </entry>
+</feed>
