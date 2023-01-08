@@ -1,0 +1,105 @@
+---
+id: built-in
+title: Built-in Styling
+sidebar_label: Built-in Styling
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+When developing an application, regardless of mobile or web, how it appears and feels to the user is crucial. This appearance and feel are achieved through "styling." Styles have key attributes such as color, size, and position, determining how various parts (or components) of an app are represented.
+
+Currently, **React Native** is mainly known for mobile app development. Using JavaScript and React, you can create apps for both iOS and Android. However, with tools like **React Native Web**, you can also develop web applications from the same codebase. Thus, essentially, you can write once and deploy across both mobile and web platforms.
+
+## Applying Styles
+
+1. **Importing Necessary Modules**:
+First, fetch `StyleSheet` from React Native. This module is essential for creating organized styles.
+   ```tsx
+   import { StyleSheet } from 'react-native';
+   ```
+
+2. **Defining Styles**:
+Use the `StyleSheet.create` method to define styles. Each style has a name and sets attributes that determine the appearance of the component within.
+   ```tsx
+   const styles = StyleSheet.create({
+     container: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       backgroundColor: '#F5FCFF',
+     },
+     text: {
+       fontSize: 20,
+       textAlign: 'center',
+       margin: 10,
+     }
+   });
+   ```
+
+3. **Applying Styles**:
+   Apply the defined styles to the React Native components.
+   ```tsx
+   import React from 'react';
+   import { View, Text } from 'react-native';
+   
+   export default function App() {
+     return (
+       <View style={styles.container}>
+         <Text style={styles.text}>Hello, React Native!</Text>
+       </View>
+     );
+   }
+   ```
+
+### Understanding Flexbox
+
+React Native adopts the `flexbox` layout system for layouts. Flexbox is a powerful tool that makes designing complex layouts straightforward. The basic concept revolves around controlling the flexibility of containers and items to create layouts that respond to various screen sizes and orientations.
+
+- **flexDirection**: Sets the primary axis. You can set it to `row` or `column`.
+- **justifyContent**: Determines alignment along the primary axis. Examples include `center`, `space-between`, and `flex-start`.
+- **alignItems**: Sets alignment on the cross-axis. Examples are `center`, `flex-start`, and `flex-end`.
+
+Many more attributes are available, but with just these, you can meet most layout requirements.
+
+Flexbox is the most critical concept when dealing with React Native styling. You can find more details about Flexbox [here](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). Additionally, you may find the video we offer below helpful.
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/07ioPW-VKd4?si=-mku-ztYHU2siXJx" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+### Points to Note
+
+- **Camel Case**: React Native uses camelCase for attribute names. For instance, use `backgroundColor` instead of `background-color`.
+
+## Inline Styles
+
+React Native also supports inline styles, besides `StyleSheet`. This method defines style attributes directly within the component. It's useful for quick styling or testing changes, but for larger projects or recurring styles, using `StyleSheet` is recommended.
+
+Example:
+
+```tsx
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>
+        This is an example of inline styling!
+      </Text>
+    </View>
+  );
+}
+```
+
+In the example above, the `style` properties of the `View` and `Text` components directly define style attributes as objects. This direct style definition method is known as inline styling. While this method can be useful for quick styling or experimenting with changes, it's recommended to use `StyleSheet` for larger projects or recurring styles.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

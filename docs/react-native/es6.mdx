@@ -1,0 +1,555 @@
+---
+id: es6
+title: ES6
+sidebar_label: ES6
+sidebar_position: 2
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+In React Native, [TypeScript](https://www.typescriptlang.org) is the default language used. TypeScript is a superset of JavaScript that provides type support and includes useful ES6 syntax. Let's explore some of the basic TypeScript syntax while taking a look at the necessary [ES6 features](https://www.w3schools.com/js/js_es6.asp) for development.
+
+You can try out the following examples on the [TypeScript Playground](https://www.typescriptlang.org/play).
+
+### 1. let and const
+   ```typescript
+   let x = 10;
+   const y = 20;
+   console.log(x, y); // 10, 20
+   ```
+   TypeScript allows you to specify types for variables. `let` is used for mutable variables, while `const` is used for constants that cannot be reassigned.
+
+  `let` and `const` have significant differences compared to the old `var` keyword:
+
+  #### Block Scope
+  - `var` has function scope, meaning it can be accessed from anywhere within a function. In contrast, `let` and `const` have block scope, meaning they can only be accessed within the block where they are declared (e.g., if statement, for loop).
+
+  #### Hoisting
+  - Variables declared with `var` are hoisted to the top of their containing function, but variables declared with `let` and `const` are also hoisted but cannot be accessed before their declaration. Attempting to do so will result in a ReferenceError.
+
+  #### Reassignment
+  - Variables declared with `var` and `let` can be reassigned, but variables declared with `const` cannot be reassigned after their initial assignment.
+
+  #### Redeclaration
+  - `var` allows variables to be redeclared within the same scope, while `let` and `const` do not allow variable redeclaration in the same scope.
+
+  These differences make `let` and `const` safer and promote more predictable code, especially by preventing confusing situations caused by `var` hoisting.
+
+Certainly! Here's an explanation of the `for...of` loop in English, tailored for beginners.
+
+### 2. Arrow Functions
+```typescript
+const add = (a: number, b: number): number => a + b;
+console.log(add(5, 3)); // 8
+```
+Arrow functions allow you to specify types for parameters and return values.
+
+Arrow functions in JavaScript resolve several limitations of functions defined using the `function` keyword. The most significant difference is how the `this` keyword behaves within arrow functions. In traditional functions, `this` is bound based on how the function is called, leading to potential confusion. However, in arrow functions, `this` always refers to the enclosing lexical scope. This ensures that `this` works as expected in callback functions or closures, leading to more concise and clear code.
+
+> "Lexical Scope" refers to how the scope of variables and functions is determined by the structure of the code in the source file. In other words, lexical scope means that the scope of a variable is determined by where it's declared in the source code, not by how or when it's called during execution.
+
+### 3. Classes
+```typescript
+class Person {
+  private name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  public greet(): string {
+    return `Hello, ${this.name}`;
+  }
+}
+
+const person: Person = new Person("Alice");
+console.log(person.greet()); // Hello, Alice
+```
+You can specify types for class properties and methods. Access modifiers like `public` and `private` can also be used.
+
+### 4. Template Literals
+```typescript
+const name: string = "Bob";
+console.log(`Hello, ${name}`); // Hello, Bob
+```
+You can specify types for string variables.
+
+### 5. Destructuring Assignment
+```typescript
+const obj: { a: number; b: number } = { a: 1, b: 2 };
+const { a, b }: { a: number; b: number } = obj;
+console.log(a, b); // 1, 2
+```
+You can specify types when using destructuring assignment with objects.
+
+### 6. Default Parameters
+```typescript
+function greet(name: string = "Guest"): string {
+  return `Hello, ${name}`;
+}
+console.log(greet()); // Hello, Guest
+console.log(greet("John")); // Hello, John
+```
+You can specify types for function parameters and return values.
+
+### 7. Spread Operator and Rest Parameters
+#### Spread Operator
+The spread operator is useful for copying and combining elements in arrays and objects.
+
+<details>
+  <summary>Example of Spread Operator with Objects</summary>
+  ```js
+  const obj = { a: 1, b: 2 };
+  const newObj = { ...obj, c: 3 };
+  console.log(newObj); // { a: 1, b: 2, c: 3 }
+  ```
+  In this example, `...obj` spreads the properties of `obj` into a new object `newObj`. This allows you to add new properties to the object without modifying the original object.
+</details>
+
+<details>
+  <summary>Example of Spread Operator with Arrays</summary>
+  ```js
+  const nums = [1, 2, 3];
+  const moreNums = [...nums, 4, 5];
+  console.log(moreNums); // [1, 2, 3, 4, 5]
+  ```
+  In this example, `...nums` spreads the elements of the `nums` array into a new array `moreNums`.
+</details>
+
+#### Rest Parameters
+```typescript
+function sum(...numbers) {
+  let total = 0;
+  for (let number of numbers) {
+    total += number;
+  }
+  return total;
+}
+
+console.log(sum(1, 2, 3, 4, 5)); // 15
+```
+Rest parameters allow you to accept a variable number of arguments as an array. This enables you to handle a dynamic number of parameters in a function.
+
+### 8. `for...of` Loop
+
+The `for...of` loop is a feature introduced in ES6 (the 6th edition of JavaScript). This syntax allows you to conveniently iterate over iterable objects like arrays and strings. Simply put, `for...of` enables you to take out and use each element within a collection one by one.
+
+```ts
+for (const item of collection) {
+  // Here, 'item' represents the current element of the collection
+  // You write the code you want to execute inside this loop.
+}
+```
+
+- `collection`: The iterable object you want to traverse, such as an array or string.
+- `item`: The current element of the `collection` during each iteration.
+
+#### Examples
+
+1. **Using with Arrays**:
+
+   Let's assume you have an array of numbers. To print each number in order, you can use the `for...of` loop.
+
+   ```javascript
+   const numbers = [1, 2, 3, 4, 5];
+   for (const number of numbers) {
+     console.log(number); // Outputs 1, 2, 3, 4, 5 in order.
+   }
+   ```
+
+2. **Using with Strings**:
+
+   To process each character of a string in order, you can use the `for...of` loop.
+
+   ```javascript
+   const greeting = "Hello";
+   for (const char of greeting) {
+     console.log(char); // Outputs 'H', 'e', 'l', 'l', 'o' in order.
+   }
+   ```
+
+#### Advantages
+
+- **Conciseness**: The `for...of` loop allows you to write clear and concise code when dealing with arrays, strings, etc.
+- **Intuitiveness**: Direct access to each element makes the code easier to understand.
+- **Flexibility**: It can be applied to a variety of collection types (arrays, strings, Maps, Sets, etc.).
+
+This loop is a useful tool in modern JavaScript, enhancing code readability and efficiency in handling collections of data.
+
+### 9. `includes()` Method
+
+The `includes()` method is used in JavaScript to check whether a specific element or substring is present in an array or string. This method returns `true` if the given element or string is found in the target, and `false` if it is not.
+
+#### Using `includes()` with Arrays
+
+```javascript
+const fruits = ["apple", "banana", "mango"];
+const hasMango = fruits.includes("mango"); // true
+const hasCherry = fruits.includes("cherry"); // false
+```
+
+Here, we check if `"mango"` and `"cherry"` are present in the `fruits` array. Since `"mango"` is included in the array, `hasMango` returns `true`, and since `"cherry"` is not in the array, `hasCherry` returns `false`.
+
+#### Using `includes()` with Strings
+
+```javascript
+const sentence = "Hello, world!";
+const hasHello = sentence.includes("Hello"); // true
+const hasGoodbye = sentence.includes("Goodbye"); // false
+```
+
+In this case, we check if the string `sentence` contains `"Hello"` and `"Goodbye"`. Since `"Hello"` is included in the string, `hasHello` returns `true`, and since `"Goodbye"` is not in the string, `hasGoodbye` returns `false`.
+
+### Features and Considerations
+
+- `includes()` is case-sensitive.
+- `includes()` finds exact matches of elements in an array or substrings in a string. It does not support partial matches or pattern matching.
+- `includes()` was introduced in ES6, so it is not supported in older versions of JavaScript. In older browsers, you can use the `indexOf()` method as an alternative.
+
+The `includes()` method is a useful tool for easily checking the existence of specific elements or substrings in arrays or strings.
+
+### 10. `async`/`await`
+
+`async`/`await` is a modern way to write asynchronous code in JavaScript. This approach makes handling asynchronous operations easier and more readable.
+
+#### Example of Using `async`/`await`
+
+```typescript
+// Define fetchData function to return a Promise
+async function fetchData(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Data fetched successfully");
+      // reject("Error fetching data");
+    }, 1000);
+  });
+}
+
+// Using async function
+async function getData() {
+  try {
+    const data = await fetchData(); // Store the result in data when fetchData resolves
+    console.log(data); // Log data on success
+  } catch (error) {
+    console.log(error); // Log error on failure
+  }
+}
+
+getData(); // Call the function
+```
+
+#### Explanation
+
+- **`async` Function**: Declaring a function with the `async` keyword means it always returns a Promise. You can perform asynchronous operations inside the function.
+- **`await` Operator**: The `await` keyword, used only within `async` functions, pauses function execution until the Promise settles. If the Promise resolves successfully, it returns the result; if it fails, it throws an exception.
+- **`try...catch` Block**: The `try...catch` block is used to handle any exceptions that might occur in the `await` expression.
+
+<details>
+  <summary>Past Callback Approach</summary>
+  
+  In the past, JavaScript handled asynchronous operations using callback functions. This approach involves passing a callback function to handle the process after the function completes the asynchronous task.
+
+  ```typescript
+  function getData(callback) {
+    setTimeout(() => {
+      callback('Sample Data');
+    }, 1000);
+  }
+
+  getData((data) => {
+    console.log(data); // Sample Data
+  });
+  ```
+
+  While this callback approach works well for simple use cases, it can lead to decreased code readability and maintainability as asynchronous operations become nested or complex, a problem known as "callback hell." `async`/`await` provides a modern alternative to this, making the code clearer and more structured.
+</details>
+
+This explanation helps understand the use of `async`/`await` and how it differs from the past callback method. `async`/`await` significantly enhances code readability and simplifies complex asynchronous logic.
+
+### 11. Modules
+```typescript
+// math.ts
+export const add = (a: number, b: number): number => a + b;
+
+// main.ts
+import { add } from './math';
+console.log(add(
+
+5, 3)); // 8
+```
+You can use modules in TypeScript and specify types for functions and variables within modules.
+
+<details>
+<summary>Export Default and Named Exports</summary>
+
+```typescript
+// file: myModule.ts
+const myFunction = (): void => {
+  console.log("Hello from myFunction");
+}
+
+export default myFunction;
+```
+
+```typescript
+// file: main.ts
+import myFunction from './myModule';
+
+myFunction(); // Hello from myFunction
+```
+
+```typescript
+// file: myModule.ts
+export const myFunction = (): void => {
+  console.log("Hello from myFunction");
+}
+
+export const anotherFunction = (): void => {
+  console.log("Hello from anotherFunction");
+}
+```
+
+```typescript
+// file: main.ts
+import { myFunction, anotherFunction } from './myModule';
+
+myFunction(); // Hello from myFunction
+anotherFunction(); // Hello from anotherFunction
+```
+
+```typescript
+// file: main.ts
+import * as myModule from './myModule';
+
+myModule.myFunction();
+myModule.anotherFunction();
+```
+</details>
+
+### 12. Map and Set
+```typescript
+let map: Map<string, string> = new Map();
+map.set('key', 'value');
+console.log(map.get('key')); // value
+
+let set: Set<string> = new Set();
+set.add('item1');
+console.log(set.has('item1')); // true
+```
+You can specify types for the values stored in `Map` and `Set`.
+
+<details>
+<summary>Usage of Map</summary>
+
+```js
+// Creating a Map
+let map = new Map();
+
+// Adding key-value pairs
+map.set('key1', 'value1');
+map.set('key2', 'value2');
+
+// Accessing values by key
+console.log(map.get('key1')); // 'value1'
+console.log(map.get('key2')); // 'value2'
+
+// Checking for key existence
+console.log(map.has('key1')); // true
+
+// Getting the size of the map
+console.log(map.size); // 2
+
+// Clearing all key-value pairs
+map.clear();
+
+// Checking the size after clearing
+console.log(map.size); // 0
+```
+`Map` is a collection that stores key-value pairs. Methods like `set`, `get`, `has`, and `clear` allow you to manage data in a `Map`.
+
+</details>
+
+<details>
+<summary>Usage of Set</summary>
+
+```js
+// Creating a Set
+let set = new Set();
+
+// Adding values
+set.add('value1');
+set.add('value2');
+
+// Checking for value existence
+console.log(set.has('value1')); // true
+
+// Getting the size of the set
+console.log(set.size); // 2
+
+// Deleting a value
+set.delete('value1');
+
+// Checking the size after deletion
+console.log(set.size); // 1
+
+// Clearing all values
+set.clear();
+
+// Checking the size after clearing
+console.log(set.size); // 0
+```
+`Set` is a collection that stores unique values. Methods like `add`, `has`, `delete`, and `clear` allow you to manage data in a `Set`.
+
+</details>
+
+Both `Map` and `Set` are introduced in ES6 and provide efficient data management capabilities.
+
+### 13. Symbols
+```typescript
+const sym: symbol = Symbol('description');
+console.log(sym); // Symbol(description)
+```
+Symbols can be used in TypeScript, and you can specify their types.
+
+<details>
+<summary>Usage of Symbols</summary>
+
+```js
+// Creating a symbol
+let mySymbol = Symbol("mySymbolDescription");
+
+// Using a symbol as a property key in an object
+let obj = {
+  [mySymbol]: "value"
+};
+
+// Accessing a property using a symbol key
+console.log(obj[mySymbol]); // "value"
+
+// Accessing the description of a symbol
+console.log(mySymbol.description); // "mySymbolDescription"
+
+// Creating another symbol with the same description - unique
+let anotherSymbol = Symbol("mySymbolDescription");
+console.log(mySymbol === anotherSymbol); // false
+```
+
+`Symbol` is a unique and immutable data type used primarily as property keys in objects. Each `Symbol` is unique, so even if two symbols have the same description, they are distinct.
+
+</details>
+
+Symbols provide a way to create unique values for object properties and can be helpful for scenarios where property names need to be distinct.
+
+### 14. Iterators and Generators
+```typescript
+function* generator(): Generator<number> {
+  yield 1;
+  yield 2;
+}
+
+const gen: Generator<number> = generator();
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+```
+You can specify types for generator functions and iterators.
+
+### 15. Enhanced Object Literals
+```typescript
+const name: string = 'name';
+const obj: { [key: string]: any; method: () => string } = {
+  [name]: 'value',
+  method(): string {
+    return this[name];
+  }
+};
+console.log(obj.method()); // value
+```
+You can specify types for object literals and also define types for dynamic properties and methods.
+
+### 16. Proxy and Reflection
+```typescript
+let target: any = {};
+let proxy: ProxyHandler<any> = new Proxy(target, {
+  get(target: any, prop: string, receiver: any): any {
+    return Reflect.get(target, prop, receiver);
+  }
+});
+proxy.someProp = 'value';
+console.log(proxy.someProp); // value
+```
+You can apply types to `Proxy` and `Reflect`, allowing you to intercept and perform metaprogramming on object operations.
+
+### 17. New Methods in Number, Math, Array, and Object
+```typescript
+console.log(Number.isInteger(42)); // true
+console.log(Math.log10(100)); // 2
+console.log(Array.from('hello')); // ['h', 'e', 'l', 'l', 'o']
+console.log(Object.assign({}, { a: 1 }, { b: 2 })); // { a: 1, b: 2 }
+```
+In TypeScript, you can also use the new methods introduced in JavaScript for Number, Math, Array, and Object. This enhances type safety.
+
+> TypeScript provides static typing to increase code safety and catch many errors early during development. These features help developers write code that is more secure and efficient.
+
+## ES6 Array Methods
+
+ES6 introduced several useful methods for working with arrays, including `map`, `filter`, `reduce`, and more. These methods are commonly used when dealing with data.
+
+### 1. **`map`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const squared: number[] = numbers.map(x => x * x);
+console.log(squared); // [1, 4, 9, 16, 25]
+```
+
+### 2. **`filter`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const even: number[] = numbers.filter(x => x % 2 === 0);
+console.log(even); // [2, 4]
+```
+
+### 3. **`reduce`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const sum: number = numbers.reduce((acc: number, current: number) => acc + current, 0);
+console.log(sum); // 15
+```
+
+### 4. **`forEach`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+numbers.forEach((x: number) => console.log(x));
+```
+
+### 5. **`find`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const firstEven: number | undefined = numbers.find(x => x % 2 === 0);
+console.log(firstEven); // 2
+```
+
+### 6. **`some`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const hasEven: boolean = numbers.some(x => x % 2 === 0);
+console.log(hasEven); // true
+```
+
+### 7. **`every`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const allEven: boolean = numbers.every(x => x % 2 === 0);
+console.log(allEven); // false
+```
+
+With TypeScript, you can explicitly define the element types of arrays, increasing code safety and preventing type-related errors in advance.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

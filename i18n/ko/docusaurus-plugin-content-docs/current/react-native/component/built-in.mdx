@@ -1,0 +1,1201 @@
+---
+id: built-in
+title: 내장 컴포넌트
+sidebar_label: 내장 컴포넌트
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+import ExActivityIndicator from "@site/static/img/components/activity_indicator.png";
+import ExButton from "@site/static/img/components/button.png";
+import ExFlatList from "@site/static/img/components/flat_list.png";
+import ExImage from "@site/static/img/components/image.png";
+import ExScrollView from "@site/static/img/components/scroll_view.png";
+import ExSectionList from "@site/static/img/components/section_list.png";
+import ExTextInput from "@site/static/img/components/text_input.png";
+import ExText from "@site/static/img/components/text.png";
+import ExTouchables from "@site/static/img/components/touchables.png";
+import ExView from "@site/static/img/components/view.png";
+
+<AdFitMobileBanner unit="DAN-YpcHf9p49U5ykXi8" className="adfit-top-mobile" />
+
+리액트(React)에서 컴포넌트는 UI를 구성하는 독립적이고 재사용 가능한 코드 조각을 의미합니다.
+
+## 리엑트 네이티브 컴포넌트
+
+리액트 네이티브(React Native)는 모바일 애플리케이션을 개발하기 위한 프레임워크로, 리액트의 개념을 기반으로 하면서 모바일에 특화된 컴포넌트를 제공합니다. 기본적인 리액트 네이티브 컴포넌트는 아래와 같습니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile1"
+/>
+
+## **1. View**
+
+`View`는 리액트 네이티브(React Native)에서 가장 기본적인 컴포넌트 중 하나로, UI의 빌딩 블록(building block) 역할을 합니다. 웹의 `<div>` 태그나 iOS의 `UIView`, Android의 `ViewGroup`과 유사한 역할을 합니다.
+
+### **주요 특징**
+
+1. **컨테이너**: `View`는 다른 컴포넌트들을 묶어 주는 컨테이너 역할을 할 수 있습니다. 따라서 레이아웃을 구성하는 데 중요한 역할을 합니다.
+
+2. **스타일링**: `View` 컴포넌트는 `style` prop을 통해 스타일링될 수 있습니다. 여기에는 배경색, 패딩, 마진, 테두리 등의 스타일 속성을 적용할 수 있습니다.
+
+3. **터치 이벤트**: `View`는 사용자의 터치 이벤트에 반응할 수 있습니다. 예를 들면, 사용자의 탭(tap)이나 스와이프(swipe) 등의 동작을 감지하고 해당 동작에 응답할 수 있습니다.
+
+4. **접근성**: `View`는 접근성 기능도 지원합니다. 예를 들면, 스크린 리더(screen reader)와 같은 보조 기술에 대한 정보를 제공하는 역할을 합니다.
+
+5. **레이아웃**: 리액트 네이티브는 Flexbox 레이아웃을 사용합니다. `View` 컴포넌트는 이 Flexbox 레이아웃의 모든 속성을 지원하므로, 복잡한 UI 레이아웃을 구성하는 데에도 활용될 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from "react";
+import { View, Text } from "react-native";
+
+const ViewBoxesWithColorAndText = () => {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        height: 100,
+        padding: 20,
+      }}
+    >
+      <View style={{ backgroundColor: "blue", flex: 0.3 }} />
+      <View style={{ backgroundColor: "red", flex: 0.5 }} />
+      <Text>Hello World!</Text>
+    </View>
+  );
+};
+
+export default ViewBoxesWithColorAndText;
+```
+
+위에 주어진 코드의 주요 특징을 설명하면 다음과 같습니다.
+
+1. **Imports**:
+
+   - `React`는 React 라이브러리를 가져오기 위한 것입니다.
+   - `View`와 `Text`는 React Native 라이브러리에서 가져온 UI 구성 요소입니다. `View`는 주로 컨테이너 역할을 하며, `Text`는 텍스트를 표시합니다.
+
+2. **ViewBoxesWithColorAndText 컴포넌트**:
+   - 이 컴포넌트는 3개의 자식 요소를 포함하는 `View`로 구성되어 있습니다.
+3. **외부 View 스타일**:
+
+   - `flexDirection: 'row'`: 자식 요소들이 가로 방향으로 나열됩니다.
+   - `height: 100`: 이 View의 높이는 100 픽셀입니다.
+   - `padding: 20`: 이 View의 모든 방향에 20 픽셀의 패딩이 추가됩니다.
+
+4. **자식 요소들**:
+
+   - 첫 번째 `View`: 파란색 배경색을 가지며, 부모 `View`의 너비의 30%를 차지합니다. (`flex: 0.3`)
+   - 두 번째 `View`: 빨간색 배경색을 가지며, 부모 `View`의 너비의 50%를 차지합니다. (`flex: 0.5`)
+   - `Text`: "Hello World!"라는 텍스트를 표시합니다.
+
+5. **Export**:
+   - `export default ViewBoxesWithColorAndText;`를 통해 다른 파일에서 이 컴포넌트를 가져와 사용할 수 있습니다.
+
+위의 설명을 바탕으로, 이 컴포넌트를 화면에 표시하면, 두 개의 서로 다른 색상의 박스와 "Hello World!"라는 텍스트가 가로 방향으로 나열된 모습을 볼 수 있을 것입니다.
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-view">
+  <img src={ExView} width="100%" alt="view ex" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-view">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+## 2. **Text**
+
+`Text`는 리액트 네이티브(React Native)의 주요 컴포넌트 중 하나로, 스크린에 텍스트를 표시하기 위해 사용됩니다. 웹의 `<span>` 또는 `<p>` 태그와 유사한 역할을 합니다.
+
+### **주요 특징**
+
+1. **텍스트 표시**: `Text` 컴포넌트는 사용자에게 텍스트 정보를 표시하는 데 사용됩니다.
+
+2. **스타일링**: `Text` 컴포넌트 역시 `style` prop을 통해 스타일링될 수 있습니다. 폰트 크기, 폰트 색상, 가중치 (두껍게), 텍스트 정렬 방식 등의 다양한 텍스트 스타일링 속성을 지원합니다.
+
+3. **중첩 가능**: `Text` 컴포넌트는 중첩될 수 있습니다, 즉, 한 `Text` 컴포넌트 내부에 또 다른 `Text` 컴포넌트를 포함할 수 있습니다. 이를 통해 일부 텍스트 세그먼트에 다른 스타일을 적용하는 등의 복잡한 스타일링이 가능합니다.
+
+4. **터치 이벤트**: `Text` 컴포넌트에도 터치 이벤트를 적용할 수 있습니다. 이를 통해 텍스트를 탭했을 때의 동작 등을 정의할 수 있습니다.
+
+5. **텍스트 특화 속성**: 텍스트의 줄 간격(line height), 글자 간격(letter spacing), 텍스트 자르기(ellipsis) 등의 텍스트 특화 속성을 설정할 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React, {useState} from 'react';
+import {Text, StyleSheet} from 'react-native';
+
+const TextInANest = () => {
+  const [titleText, setTitleText] = useState("Bird's Nest");
+  const bodyText = 'This is not really a bird nest.';
+
+  const onPressTitle = () => {
+    setTitleText("Bird's Nest [pressed]");
+  };
+
+  return (
+    <Text style={styles.baseText}>
+      <Text style={styles.titleText} onPress={onPressTitle}>
+        {titleText}
+        {'\n'}
+        {'\n'}
+      </Text>
+      <Text numberOfLines={5}>{bodyText}</Text>
+    </Text>
+  );
+};
+
+const styles = StyleSheet.create({
+  baseText: {
+    fontFamily: 'Cochin',
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
+
+export default TextInANest;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-text">
+  <img src={ExText} width="100%" alt="view text" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-text">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+#### 코드 설명
+1. **Imports**
+   ```tsx
+   import React, {useState} from 'react';
+   import {Text, StyleSheet} from 'react-native';
+   ```
+   - React와 React의 `useState` hook을 가져옵니다.
+   - React Native의 `Text` 컴포넌트와 `StyleSheet` 객체를 가져옵니다.
+
+2. **TextInANest 컴포넌트**
+   이 컴포넌트는 2개의 텍스트 요소를 포함하고 있습니다.
+
+   - `useState`를 사용해 `titleText` 상태 변수와 그 값을 설정하는 `setTitleText` 함수를 초기화합니다. 초기 값은 `"Bird's Nest"`입니다.
+
+   - `bodyText`는 상수 변수로, 값이 `"This is not really a bird nest."`로 설정되어 있습니다.
+
+   - `onPressTitle` 함수는 titleText의 값을 `"Bird's Nest [pressed]"`로 변경합니다. 이 함수는 제목 텍스트를 탭 할 때 호출됩니다.
+
+   - `return` 문에서, 상위 `Text` 컴포넌트 내부에 두 개의 `Text` 컴포넌트를 중첩하여 렌더링합니다. 중첩된 구조를 통해 스타일 및 다른 속성을 상속받을 수 있습니다.
+
+   - 첫 번째 중첩된 `Text` 컴포넌트는 제목을 표시하며, 누르면 `onPressTitle` 함수가 호출됩니다.
+
+   - 두 번째 중첩된 `Text` 컴포넌트는 `bodyText`의 값을 표시합니다. `numberOfLines` 속성을 통해 최대 5줄까지만 표시하도록 설정되어 있습니다.
+
+3. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({
+     baseText: {
+       fontFamily: 'Cochin',
+     },
+     titleText: {
+       fontSize: 20,
+       fontWeight: 'bold',
+     },
+   });
+   ```
+   - `StyleSheet.create` 메소드를 사용하여 스타일을 정의합니다.
+   - `baseText` 스타일은 `Cochin` 글꼴을 사용하여 텍스트를 표시합니다.
+   - `titleText` 스타일은 글꼴 크기를 20으로 설정하고 볼드체로 표시합니다.
+
+4. **Export**
+   ```tsx
+   export default TextInANest;
+   ```
+   - `TextInANest` 컴포넌트를 기본 내보내기로 설정하여 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile2"
+/>
+
+## 3. **Image**
+
+`Image`는 React Native에서 이미지를 표시하기 위한 기본 컴포넌트입니다. 이 컴포넌트를 사용하면 앱 내에 포함된 정적 이미지 뿐만 아니라 외부 URL에서 가져온 이미지도 표시할 수 있습니다.
+
+### **주요 특징**
+
+1. **소스 타입**: `Image` 컴포넌트는 다양한 타입의 이미지 소스를 지원합니다. 이는 `require`를 통해 로컬에서 가져온 이미지 또는 웹 URL을 통해 가져온 이미지일 수 있습니다.
+
+2. **스타일링**: `Image`도 `style` prop을 통해 스타일링될 수 있습니다. 이를 통해 이미지의 크기, 둥근 모서리, 테두리 등의 스타일을 설정할 수 있습니다.
+
+3. **리사이징**: `resizeMode` prop을 사용하여 이미지의 리사이징 방식을 지정할 수 있습니다. 예를 들면, 'cover', 'contain', 'stretch', 'repeat', 'center' 등의 값이 있습니다.
+
+4. **이벤트 처리**: `Image` 컴포넌트는 이미지 로드 완료, 로드 실패와 같은 여러 이벤트에 대한 콜백을 제공합니다.
+
+5. **페이드 인 효과**: `fadeDuration` prop을 통해 이미지가 화면에 표시될 때의 페이드 인 효과의 지속 시간을 설정할 수 있습니다 (Android 전용).
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {View, Image, StyleSheet} from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+});
+
+const DisplayAnImage = () => {
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.tinyLogo}
+        source={require('@expo/snack-static/react-native-logo.png')}
+      />
+      <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: 'https://reactnative.dev/img/tiny_logo.png',
+        }}
+      />
+    </View>
+  );
+};
+
+export default DisplayAnImage;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-image">
+  <img src={ExImage} width="100%" alt="view image" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-image">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+해당 코드는 React Native를 사용하여 이미지를 화면에 표시하는 간단한 컴포넌트를 정의합니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {View, Image, StyleSheet} from 'react-native';
+   ```
+   - React 라이브러리를 가져옵니다.
+   - React Native에서 `View`, `Image`, 그리고 `StyleSheet`를 가져옵니다.
+
+2. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({
+     container: {
+       paddingTop: 50
+     },
+     tinyLogo: {
+       width: 50,
+       height: 50,
+     },
+   });
+   ```
+   - `StyleSheet.create`를 사용하여 스타일을 정의합니다.
+   - `container`는 상단에 50의 패딩을 갖습니다.
+   - `tinyLogo`는 50x50의 크기로 이미지를 표시합니다.
+
+3. **DisplayAnImage 컴포넌트**
+   - `View` 컴포넌트 내부에 두 개의 `Image` 컴포넌트를 포함하고 있습니다.
+   - 첫 번째 `Image` 컴포넌트는 로컬에서 이미지를 가져와 화면에 표시합니다. 여기서는 `@expo/snack-static/react-native-logo.png` 경로의 이미지를 사용합니다.
+   - 두 번째 `Image` 컴포넌트는 웹 URL에서 이미지를 가져와 화면에 표시합니다. 여기서는 `https://reactnative.dev/img/tiny_logo.png` URL의 이미지를 사용합니다.
+
+4. **Export**
+   ```tsx
+   export default DisplayAnImage;
+   ```
+   - `DisplayAnImage` 컴포넌트를 기본 내보내기로 설정하여 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+## 4. **TextInput**
+
+`TextInput`은 React Native에서 사용자의 텍스트 입력을 받아들이기 위한 기본 컴포넌트입니다. 웹의 `<input type="text">` 요소와 유사하게 동작하며, 사용자가 텍스트를 입력하거나 수정할 수 있게 해줍니다.
+
+### **주요 특징**
+
+1. **텍스트 입력**: 사용자가 키보드를 통해 텍스트를 입력할 수 있습니다.
+
+2. **스타일링**: `TextInput`도 `style` prop을 사용하여 스타일링될 수 있습니다. 이를 통해 입력 필드의 크기, 테두리, 폰트 스타일 등을 지정할 수 있습니다.
+
+3. **플레이스홀더**: `placeholder` prop을 통해 사용자에게 입력 예시나 가이드를 제공할 수 있습니다.
+
+4. **값 제어**: `value` prop을 통해 현재의 입력 값에 접근하거나 변경할 수 있습니다. 또한, `onChangeText` prop을 사용하여 텍스트가 변경될 때 콜백 함수를 실행할 수 있습니다.
+
+5. **키보드 타입**: `keyboardType` prop을 사용하여 특정 타입의 키보드 레이아웃을 표시하도록 요청할 수 있습니다 (예: 숫자만 입력하는 경우 'numeric').
+
+6. **다중 행**: `multiline` prop을 통해 여러 줄의 텍스트 입력을 허용할 수 있습니다.
+
+7. **이벤트 처리**: 여러 가지 이벤트에 대한 콜백 함수를 제공합니다. 예를 들어, `onFocus`, `onBlur`, `onSubmitEditing` 등이 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
+
+const TextInputExample = () => {
+  const [text, onChangeText] = React.useState('Useless Text');
+  const [number, onChangeNumber] = React.useState('');
+
+  return (
+    <SafeAreaView>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeText}
+        value={text}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeNumber}
+        value={number}
+        placeholder="useless placeholder"
+        keyboardType="numeric"
+      />
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
+
+export default TextInputExample;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-textinput">
+  <img src={ExTextInput} width="100%" alt="text-input" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-textinput">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 두 개의 텍스트 입력 상자를 화면에 표시하는 컴포넌트를 정의합니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
+   ```
+   - React와 React Native의 `SafeAreaView`, `StyleSheet`, `TextInput` 컴포넌트를 가져옵니다.
+
+2. **TextInputExample 컴포넌트**
+   - `useState`를 사용하여 텍스트 상태 변수 `text`와 숫자 상태 변수 `number`를 초기화합니다. `text`는 초기값으로 'Useless Text'를 가지고 있습니다.
+   - `onChangeText`는 `text` 상태를 업데이트하고, `onChangeNumber`는 `number` 상태를 업데이트합니다.
+   - `SafeAreaView` 내부에 두 개의 `TextInput` 컴포넌트를 반환합니다.
+     - 첫 번째 `TextInput`은 `text` 값을 표시하며, 값이 변경될 때 `onChangeText` 함수를 호출하여 상태를 업데이트합니다.
+     - 두 번째 `TextInput`은 `number` 값을 표시하며, 값이 변경될 때 `onChangeNumber` 함수를 호출하여 상태를 업데이트합니다. 또한 숫자 키보드를 표시하기 위해 `keyboardType` 속성을 "numeric"으로 설정하고, 입력 상자에 아무 값도 없을 때 "useless placeholder"라는 텍스트를 표시하기 위해 `placeholder` 속성을 사용합니다.
+
+3. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({
+     input: {
+       height: 40,
+       margin: 12,
+       borderWidth: 1,
+       padding: 10,
+     },
+   });
+   ```
+   - `StyleSheet.create` 메소드를 사용하여 입력 상자의 스타일을 정의합니다. 입력 상자는 높이 40, 여백 12, 테두리 두께 1, 패딩 10을 가집니다.
+
+4. **Export**
+   ```tsx
+   export default TextInputExample;
+   ```
+   - `TextInputExample` 컴포넌트를 기본 내보내기로 설정하여 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+## 5. **ScrollView**
+
+`ScrollView`는 React Native에서 콘텐츠가 화면 크기를 넘어서면 스크롤하여 보여주기 위한 기본 컴포넌트입니다. 일반적으로 화면의 크기보다 큰 컴포넌트나 리스트를 스크롤하여 볼 수 있게 해줍니다.
+
+### **주요 특징**
+
+1. **스크롤 가능한 컨테이너**: 화면에 표시할 수 있는 범위를 넘는 콘텐츠를 감싸서 사용자가 스크롤하여 전체 내용을 볼 수 있게 합니다.
+
+2. **방향**: 기본적으로 세로로 스크롤됩니다. 하지만 `horizontal` prop을 `true`로 설정하면 가로로 스크롤되게 할 수 있습니다.
+
+3. **통합 스타일링**: `ScrollView`도 `style` prop을 사용하여 스타일링할 수 있습니다.
+
+4. **이벤트 처리**: 여러 스크롤 이벤트에 대한 콜백 함수를 제공합니다. 예를 들면, `onScroll`, `onMomentumScrollStart`, `onMomentumScrollEnd` 등이 있습니다.
+
+5. **리프레시 컨트롤**: `refreshControl` prop을 통해 pull-to-refresh 기능을 구현할 수 있습니다.
+
+6. **퍼포먼스**: 대용량의 리스트나 그리드를 표시할 때는 `ScrollView`보다는 `FlatList`나 `SectionList` 같은 최적화된 컴포넌트를 사용하는 것이 좋습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
+
+const App = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.text}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollView: {
+    backgroundColor: 'pink',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 42,
+  },
+});
+
+export default App;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-scrollview">
+  <img src={ExScrollView} width="100%" alt="scroll-view" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-scrollview">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 스크롤 가능한 텍스트 영역을 표시하는 간단한 애플리케이션을 설명합니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {
+     StyleSheet,
+     Text,
+     SafeAreaView,
+     ScrollView,
+     StatusBar,
+   } from 'react-native';
+   ```
+   - 필요한 모듈과 컴포넌트들, 즉 `React`, `StyleSheet`, `Text`, `SafeAreaView`, `ScrollView`, 그리고 `StatusBar`를 React Native에서 가져옵니다.
+
+2. **App 컴포넌트**
+   - `SafeAreaView`는 애플리케이션의 메인 컨테이너 역할을 합니다. 이 컨테이너는 디바이스의 상태 표시줄 높이만큼 위에 패딩을 가집니다.
+   - `ScrollView`는 스크롤이 가능한 영역을 제공합니다. 이 예제에서는 `ScrollView` 내부에 `Text` 컴포넌트를 넣어 스크롤이 가능한 텍스트 영역을 만듭니다.
+   - `Text` 컴포넌트는 `Lorem ipsum...`과 같은 샘플 텍스트를 표시합니다.
+
+3. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({
+     container: {
+       flex: 1,
+       paddingTop: StatusBar.currentHeight,
+     },
+     scrollView: {
+       backgroundColor: 'pink',
+       marginHorizontal: 20,
+     },
+     text: {
+       fontSize: 42,
+     },
+   });
+   ```
+   - `StyleSheet.create`를 사용해 스타일을 정의합니다.
+   - `container` 스타일은 전체 화면을 차지하게 설정되며(`flex: 1`), 상태 표시줄의 높이만큼 위쪽 패딩이 적용됩니다.
+   - `scrollView` 스타일은 배경색을 'pink'로 설정하고, 양쪽 가로 마진을 20으로 설정합니다.
+   - `text` 스타일은 텍스트의 글꼴 크기를 42로 설정합니다.
+
+4. **Export**
+   ```tsx
+   export default App;
+   ```
+   - `App` 컴포넌트를 기본 내보내기로 설정하여 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile3"
+/>
+
+## 6. **Button**
+
+`Button`은 React Native에서 기본적으로 제공되는 사용자 인터페이스 컴포넌트 중 하나로, 사용자가 터치할 수 있는 버튼 요소를 나타냅니다.
+
+### **주요 특징**
+
+1. **간단한 인터페이스**: `Button`은 간단한 API를 제공하며, 주로 제목과 이벤트 핸들러를 설정하는 데 사용됩니다.
+
+2. **플랫폼에 따른 스타일링**: `Button`은 기본적으로 현재 플랫폼(iOS, Android 등)의 네이티브 스타일링을 따릅니다.
+3. **제한된 커스터마이징**: `Button` 컴포넌트는 커스터마이징 옵션이 제한적입니다. 더 많은 스타일링이나 기능을 원한다면, 다른 컴포넌트나 서드파티 라이브러리를 검토하는 것이 좋습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Text,
+  Alert,
+} from 'react-native';
+
+const Separator = () => <View style={styles.separator} />;
+
+const App = () => (
+  <SafeAreaView style={styles.container}>
+    <View>
+      <Text style={styles.title}>
+        The title and onPress handler are required. It is recommended to set
+        accessibilityLabel to help make your app usable by everyone.
+      </Text>
+      <Button
+        title="Press me"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Text style={styles.title}>
+        Adjust the color in a way that looks standard on each platform. On iOS,
+        the color prop controls the color of the text. On Android, the color
+        adjusts the background color of the button.
+      </Text>
+      <Button
+        title="Press me"
+        color="#f194ff"
+        onPress={() => Alert.alert('Button with adjusted color pressed')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Text style={styles.title}>
+        All interaction for the component are disabled.
+      </Text>
+      <Button
+        title="Press me"
+        disabled
+        onPress={() => Alert.alert('Cannot press this one')}
+      />
+    </View>
+    <Separator />
+    <View>
+      <Text style={styles.title}>
+        This layout strategy lets the title define the width of the button.
+      </Text>
+      <View style={styles.fixToText}>
+        <Button
+          title="Left button"
+          onPress={() => Alert.alert('Left button pressed')}
+        />
+        <Button
+          title="Right button"
+          onPress={() => Alert.alert('Right button pressed')}
+        />
+      </View>
+    </View>
+  </SafeAreaView>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 16,
+  },
+  title: {
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+});
+
+export default App;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-button">
+  <img src={ExButton} width="100%" alt="button" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-button">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 다양한 속성을 갖는 버튼들을 화면에 표시하는 애플리케이션을 설명합니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {
+     StyleSheet,
+     Button,
+     View,
+     SafeAreaView,
+     Text,
+     Alert,
+   } from 'react-native';
+   ```
+   필요한 모듈과 컴포넌트들을 React Native에서 가져옵니다.
+
+2. **Separator 컴포넌트**
+   ```tsx
+   const Separator = () => <View style={styles.separator} />;
+   ```
+   세로 방향의 간격 및 구분선을 만들기 위한 간단한 컴포넌트입니다.
+
+3. **App 컴포넌트**
+   이 컴포넌트는 여러 개의 `View` 컨테이너를 포함하며, 각각의 `View` 안에는 설명용 `Text`와 `Button`이 있습니다. 
+
+   - `첫 번째 버튼`은 기본 설정을 가진 버튼입니다.
+   - `두 번째 버튼`은 `color` 속성을 사용하여 색상을 조절합니다. iOS에서는 텍스트의 색상을 변경하고, Android에서는 버튼의 배경색을 변경합니다.
+   - `세 번째 버튼`은 `disabled` 속성으로 인해 비활성화되어 있습니다. 따라서 클릭해도 어떤 동작도 발생하지 않습니다.
+   - 마지막 `두 버튼`은 같은 행에 나란히 배치됩니다. 이는 `styles.fixToText` 스타일에 의해 `flexDirection: 'row'` 속성으로 설정되었기 때문입니다.
+
+4. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({ ... });
+   ```
+   애플리케이션의 스타일을 정의합니다. 각 스타일은 컴포넌트의 시각적 표현을 제어합니다. 
+   
+   - `container` 스타일은 앱의 주 컨테이너를 중앙에 배치합니다.
+   - `title` 스타일은 각 섹션의 제목 텍스트에 적용됩니다. 
+   - `fixToText`는 두 버튼을 같은 행에 배치하는 데 사용됩니다.
+   - `separator` 스타일은 각 섹션을 구분하는 구분선을 정의합니다.
+
+5. **Export**
+   ```tsx
+   export default App;
+   ```
+   `App` 컴포넌트를 기본 내보내기로 설정하여 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile4"
+/>
+
+## 7. **FlatList**
+
+`FlatList`는 React Native에서 큰 목록 데이터를 효율적으로 표시하기 위한 컴포넌트입니다. 이 컴포넌트는 뷰가 화면에 표시될 때만 렌더링하는 'windowing' 기술을 사용하여 성능을 최적화합니다.
+
+### **주요 특징**
+
+1. **성능 최적화**: 화면에 보이지 않는 항목은 렌더링되지 않아 렌더링 부하를 줄입니다.
+2. **풀링 기술**: 이전에 사용된 항목 뷰는 재사용될 수 있습니다.
+3. **내장된 스크롤**: 자동으로 스크롤 기능이 내장되어 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {
+  SafeAreaView,
+  View,
+  FlatList,
+  StyleSheet,
+  Text,
+  StatusBar,
+} from 'react-native';
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+
+type ItemProps = {title: string};
+
+const Item = ({title}: ItemProps) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
+
+const App = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={DATA}
+        renderItem={({item}) => <Item title={item.title} />}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+});
+
+export default App;
+````
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-flatlist">
+  <img src={ExFlatList} width="100%" alt="flat_list" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-flatlist">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 간단한 리스트 뷰를 만드는 예제입니다. 주요 부분들을 세부적으로 살펴보겠습니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {
+     SafeAreaView,
+     View,
+     FlatList,
+     StyleSheet,
+     Text,
+     StatusBar,
+   } from 'react-native';
+   ```
+   앱을 구성하기 위해 필요한 React Native의 컴포넌트와 모듈들을 가져옵니다.
+
+2. **DATA 상수**
+   ```tsx
+   const DATA = [ ... ];
+   ```
+   리스트 뷰에 표시될 데이터의 배열입니다. 각 아이템은 고유한 `id`와 `title`을 가집니다.
+
+3. **ItemProps 타입**
+   ```typescript
+   type ItemProps = {title: string};
+   ```
+   TypeScript를 사용하여 `Item` 컴포넌트의 `props` 형식을 정의합니다. 여기서는 `title`이라는 문자열 속성만 포함됩니다.
+
+4. **Item 컴포넌트**
+   ```tsx
+   const Item = ({title}: ItemProps) => ( ... );
+   ```
+   개별 리스트 아이템을 표시하는 컴포넌트입니다. 배경색과 패딩, 그리고 텍스트 스타일을 가진 `Text` 컴포넌트를 포함합니다.
+
+5. **App 컴포넌트**
+   ```tsx
+   const App = () => { ... };
+   ```
+   앱의 메인 컴포넌트입니다. `FlatList` 컴포넌트를 사용하여 `DATA` 배열의 아이템들을 표시합니다. 
+   
+   - `data` prop은 표시할 데이터를 지정합니다.
+   - `renderItem` prop은 각 아이템을 어떻게 렌더링할지를 정의합니다.
+   - `keyExtractor` prop은 각 아이템의 고유 키를 추출하는 함수를 지정합니다. 여기서는 아이템의 `id`를 사용합니다.
+
+6. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({ ... });
+   ```
+   애플리케이션의 스타일을 정의하는 부분입니다. 여기서는 컨테이너, 아이템, 제목의 스타일을 정의하고 있습니다.
+
+7. **Export**
+   ```tsx
+   export default App;
+   ```
+   `App` 컴포넌트를 기본 내보내기로 설정하여, 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+## 8. **SectionList**
+
+`SectionList`는 섹션 헤더와 함께 목록 데이터를 표시하는 컴포넌트입니다. `FlatList`와 유사하게 성능 최적화 기능을 제공하지만, 섹션별로 데이터를 구분하여 표시할 수 있습니다.
+
+### **주요 특징**
+
+1. **섹션 표시**: 데이터를 여러 섹션으로 나누어 표시합니다.
+2. **섹션 헤더**: 각 섹션의 시작 부분에 헤더를 제공할 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  SectionList,
+  StatusBar,
+} from 'react-native';
+
+const DATA = [
+  {
+    title: 'Main dishes',
+    data: ['Pizza', 'Burger', 'Risotto'],
+  },
+  {
+    title: 'Sides',
+    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
+  },
+  {
+    title: 'Drinks',
+    data: ['Water', 'Coke', 'Beer'],
+  },
+  {
+    title: 'Desserts',
+    data: ['Cheese Cake', 'Ice Cream'],
+  },
+];
+
+const App = () => (
+  <SafeAreaView style={styles.container}>
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({item}) => (
+        <View style={styles.item}>
+          <Text style={styles.title}>{item}</Text>
+        </View>
+      )}
+      renderSectionHeader={({section: {title}}) => (
+        <Text style={styles.header}>{title}</Text>
+      )}
+    />
+  </SafeAreaView>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    marginHorizontal: 16,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+  },
+});
+
+export default App;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-sectionlist">
+  <img src={ExSectionList} width="100%" alt="sectionlist" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-sectionlist">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 각 섹션별로 그룹화된 아이템들을 보여주는 리스트를 만드는 예제입니다. 주요 구성 요소들은 다음과 같습니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {
+     StyleSheet,
+     Text,
+     View,
+     SafeAreaView,
+     SectionList,
+     StatusBar,
+   } from 'react-native';
+   ```
+   앱을 구성하기 위해 필요한 React Native의 컴포넌트와 모듈들을 가져옵니다.
+
+2. **DATA 상수**
+   ```tsx
+   const DATA = [ ... ];
+   ```
+   각 섹션별로 그룹화된 아이템들의 데이터입니다. 각 섹션은 `title`과 `data`로 구성되며, `data`는 해당 섹션의 아이템들을 배열로 포함합니다.
+
+3. **App 컴포넌트**
+   ```tsx
+   const App = () => { ... };
+   ```
+   앱의 메인 컴포넌트입니다. `SectionList` 컴포넌트를 사용하여 `DATA` 배열의 섹션별 아이템들을 표시합니다.
+   
+   - `sections` prop은 표시할 섹션 데이터를 지정합니다.
+   - `keyExtractor` prop은 각 아이템의 고유 키를 생성하는 함수를 지정합니다. 여기서는 아이템의 값과 인덱스를 합쳐서 키를 생성합니다.
+   - `renderItem` prop은 각 아이템을 어떻게 렌더링할지를 정의합니다.
+   - `renderSectionHeader` prop은 각 섹션의 헤더를 어떻게 렌더링할지를 정의합니다.
+
+4. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({ ... });
+   ```
+   애플리케이션의 스타일을 정의하는 부분입니다. 여기서는 컨테이너, 아이템, 섹션 헤더, 아이템 제목의 스타일을 정의하고 있습니다.
+
+5. **Export**
+   ```tsx
+   export default App;
+   ```
+   `App` 컴포넌트를 기본 내보내기로 설정하여, 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile5"
+/>
+
+## 9. **ActivityIndicator**
+
+`ActivityIndicator`는 React Native에서 제공하는 로딩 인디케이터(또는 스피너) 컴포넌트입니다. 데이터를 가져오는 동안 또는 처리 중일 때 사용자에게 앱이 여전히 작동 중임을 알려주는 데 유용합니다.
+
+### **주요 특징**
+
+1. **플랫폼 특화 스타일**: 기본적으로 `ActivityIndicator`는 현재 플랫폼(iOS 또는 Android)의 네이티브 로딩 인디케이터 스타일을 사용합니다.
+2. **커스터마이징**: 다양한 속성을 사용하여 인디케이터의 크기, 색상 등을 커스터마이즈할 수 있습니다.
+
+### **주요 props**
+
+- **size**: 인디케이터의 크기를 설정합니다. 'small' 또는 'large' 중 하나의 문자열 값을 받거나, 숫자 값을 직접 지정할 수 있습니다.
+- **color**: 인디케이터의 색상을 설정합니다. 이 값은 유효한 색상 문자열이어야 합니다 (예: '#0000ff' 또는 'blue').
+- **animating**: 인디케이터가 회전하는지 여부를 결정합니다. 기본값은 `true`입니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
+
+const App = () => (
+  <View style={[styles.container, styles.horizontal]}>
+    <ActivityIndicator />
+    <ActivityIndicator size="large" />
+    <ActivityIndicator size="small" color="#0000ff" />
+    <ActivityIndicator size="large" color="#00ff00" />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
+});
+
+export default App;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-activity-indicator">
+  <img src={ExActivityIndicator} width="100%" alt="activity-indicator" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-activity-indicator">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 여러 `ActivityIndicator`를 화면에 표시하는 애플리케이션의 예제입니다. `ActivityIndicator`는 앱에서 로딩이나 데이터 처리 중임을 사용자에게 알려주는 회전하는 원형 인디케이터입니다.
+
+각 부분별 설명은 다음과 같습니다.
+
+1. **Imports**
+   ```tsx
+   import React from 'react';
+   import {ActivityIndicator, StyleSheet, View} from 'react-native';
+   ```
+   앱을 구성하기 위해 필요한 React Native의 컴포넌트와 모듈들을 가져옵니다.
+
+2. **App 컴포넌트**
+   ```tsx
+   const App = () => { ... };
+   ```
+   앱의 메인 컴포넌트입니다. 여기서 4개의 `ActivityIndicator`를 표시하고 있습니다.
+   
+   - 첫 번째와 두 번째 `ActivityIndicator`는 크기만 다르게 설정되었습니다. 크기는 기본값과 `large`를 사용할 수 있습니다.
+   - 세 번째와 네 번째 `ActivityIndicator`는 크기와 색상이 각각 설정되어 있습니다.
+
+3. **Styles**
+   ```tsx
+   const styles = StyleSheet.create({ ... });
+   ```
+   애플리케이션의 스타일을 정의하는 부분입니다.
+   
+   - `container`: 컴포넌트를 화면의 중앙에 배치합니다.
+   - `horizontal`: 컴포넌트의 배치 방향을 가로로 설정하고, 컴포넌트 간의 간격을 동일하게 조정합니다. 또한, 패딩을 추가하여 컴포넌트가 화면 가장자리와 너무 가깝지 않게 합니다.
+
+4. **Export**
+   ```tsx
+   export default App;
+   ```
+   `App` 컴포넌트를 기본 내보내기로 설정하여, 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+## 10. **Touchable\*\***
+
+React Native에서는 여러 종류의 "Touchable" 컴포넌트를 제공하여 사용자의 터치 입력을 처리합니다. 이 컴포넌트들은 사용자가 화면의 요소를 탭할 때 반응하도록 만드는 데 사용됩니다. 여기서는 `TouchableHighlight`, `TouchableOpacity` 및 `TouchableWithoutFeedback`에 대해 설명하겠습니다.
+
+### **TouchableHighlight**
+
+- **기능**: 사용자가 터치하면 밝기가 변경되는 효과를 주는 컴포넌트입니다.
+- **주요 특징**: 터치하면 지정된 색상의 뒷 배경이 나타납니다.
+- **주요 props**:
+  - `underlayColor`: 터치하면 나타나는 배경색입니다.
+
+### **TouchableOpacity**
+
+- **기능**: 사용자가 터치하면 투명도가 변경되는 효과를 주는 컴포넌트입니다.
+- **주요 특징**: 터치하면 컴포넌트의 투명도가 줄어듭니다.
+- **주요 props**:
+  - `activeOpacity`: 터치 시 적용되는 투명도의 값입니다. 기본값은 0.2입니다.
+
+### **TouchableWithoutFeedback**
+
+- **기능**: 터치에 대한 어떠한 시각적 효과 없이 터치 이벤트만을 처리하는 컴포넌트입니다.
+- **주요 특징**: 시각적 효과가 없기 때문에 일반적으로 다른 커스텀 효과와 함께 사용됩니다.
+
+각 "Touchable" 컴포넌트는 다양한 상황과 요구 사항에 따라 적절하게 선택되어 사용될 수 있습니다. 예를 들어, 터치 시 빠른 시각적 반응이 필요한 경우 `TouchableOpacity`를, 터치 효과 없이 추가 동작만 필요한 경우 `TouchableWithoutFeedback`을 선택할 수 있습니다.
+
+> 리액트 네이티브는 이 외에도 다양한 내장 컴포넌트와 API를 제공합니다. 또한, 커뮤니티에서 제공하는 수많은 라이브러리를 통해 추가적인 컴포넌트나 기능을 활용할 수 있습니다.
+
+#### **사용 예제**
+
+```jsx
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+
+const TouchablesExample = () => {
+  const [count, setCount] = useState(0);
+  const onPress = () => setCount(count + 1);
+
+  return (
+    <View style={styles.container}>
+      <TouchableHighlight onPress={onPress}>
+        <View style={styles.button}>
+          <Text>Highlight Here</Text>
+        </View>
+      </TouchableHighlight>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <Text>Opacity Here</Text>
+      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={onPress}>
+        <View style={styles.button}>
+          <Text>WithoutFeedback Here</Text>
+        </View>
+      </TouchableWithoutFeedback>
+      <View style={styles.countContainer}>
+        <Text style={styles.countText}>{count || null}</Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    rowGap: 12,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+  },
+  countContainer: {
+    alignItems: 'center',
+    padding: 10,
+  },
+  countText: {
+    color: '#FF00FF',
+  },
+});
+
+export default TouchablesExample;
+```
+
+<a href="https://snack.expo.dev/@dooboolab/cpk-touchable">
+  <img src={ExTouchables} width="100%" alt="touchables" />
+</a>
+
+> <a href="https://snack.expo.dev/@dooboolab/cpk-touchable">사진</a>을 클릭하면 예시
+코드를 실행해볼 수 있습니다.
+
+이 코드는 React Native를 사용하여 화면에 여러 가지 종류의 터치 가능한 버튼을 표시하는 애플리케이션의 예제입니다. 특히, React Native에서 제공하는 `TouchableHighlight`, `TouchableOpacity`, 그리고 `TouchableWithoutFeedback` 세 가지 주요 터치 반응 컴포넌트를 사용하여 작성되었습니다.
+
+코드의 주요 부분을 분석해보겠습니다.
+
+1. **Imports**
+   필요한 React Native의 컴포넌트와 모듈들을 가져옵니다.
+
+2. **State 생성**
+   ```tsx
+   const [count, setCount] = useState(0);
+   ```
+   `count`라는 상태 변수와 그 값을 설정할 수 있는 `setCount` 함수를 생성합니다. 초기값은 0으로 설정됩니다.
+
+3. **onPress 함수**
+   ```tsx
+   const onPress = () => setCount(count + 1);
+   ```
+   버튼을 눌렀을 때 실행될 함수를 정의합니다. 이 함수는 `count` 값을 1씩 증가시킵니다.
+
+4. **Return 부분**
+   각 터치 반응 컴포넌트와 현재 `count` 값을 표시할 부분을 반환합니다. 
+   
+   - `TouchableHighlight`: 눌렀을 때 밝은 하이라이트 효과를 보여줍니다.
+   - `TouchableOpacity`: 눌렀을 때 투명도 효과를 보여줍니다.
+   - `TouchableWithoutFeedback`: 눌렀을 때 아무런 시각적 효과 없이 동작합니다.
+   
+   각 터치 반응 컴포넌트에 `onPress` 함수를 연결하여, 버튼이 눌릴 때마다 카운터가 증가하도록 합니다.
+
+5. **Styles**
+   애플리케이션의 스타일을 정의합니다. 주요 스타일은 다음과 같습니다.
+
+   - `container`: 전체 화면을 채우고, 내부 아이템들을 중앙에 배치합니다.
+   - `button`: 각 터치 반응 컴포넌트에 적용될 스타일입니다. 백그라운드 색상과 패딩이 설정되어 있습니다.
+   - `countContainer`: 카운트 값을 표시하는 부분의 스타일입니다.
+   - `countText`: 카운트 텍스트의 스타일로, 텍스트의 색상을 보라색으로 설정하였습니다.
+
+6. **Export**
+   `TouchablesExample` 컴포넌트를 기본 내보내기로 설정하여, 다른 파일에서 임포트하여 사용할 수 있게 합니다.
+
+React Native의 주요 컴포넌트에 대해 살펴보았으니, 이제 다양하고 반응형 모바일 애플리케이션을 구축하기 위한 준비가 더 잘 되었습니다. React Native의 힘은 그것을 지원하는 풍부한 생태계와 커뮤니티에 있습니다. 계속 탐험하고, 더 깊은 지식과 모범 사례를 위해 공식 React Native 문서를 참조하는 것을 잊지 마세요!
+
+즐거운 코딩 되세요! 🚀
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

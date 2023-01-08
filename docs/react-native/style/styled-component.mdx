@@ -1,0 +1,209 @@
+---
+id: styled-component
+title: Styled Components
+sidebar_label: Styled Components
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner unit="DAN-YpcHf9p49U5ykXi8" className="adfit-top-mobile" />
+
+React Native inherently comes with an API named [StyleSheet](./built-in) for styling. 
+However, many developers prefer the CSS-in-JS style of styling. For this, they utilize external libraries like [styled-components](https://styled-components.com) or [@emotion/native](https://emotion.sh/docs/@emotion/native), allowing them to write style code in React Native in the same manner as the styled-components method found in web development.
+
+In other words, when developing a React Native app, besides the default styling method provided, there are several external libraries available that assist in importing the web styling experience directly.
+
+## CSS-in-JS
+
+[CSS-in-JS](https://cssinjs.org/?v=v10.10.0) is a paradigm in web development, offering a methodology for writing CSS styles directly within JavaScript code. The main advantages and features of CSS-in-JS include:
+
+1. **Component-based**: CSS-in-JS meshes well with component-based frameworks like React. Styles for each component are encapsulated within its respective file, enhancing component independence and reusability.
+
+2. **Dynamic Styling**: It leverages JavaScript variables and functions to dynamically generate styles. This is particularly useful when wanting to alter styles based on user interactions or state changes.
+
+3. **Scoping Solutions**: Traditional CSS can experience style clashes due to its global scoping issues. CSS-in-JS resolves this, reducing the risk of style conflicts.
+
+4. **Convenient Features**: Many CSS-in-JS libraries offer automated vendor prefixing, support for server-side rendering, theming, among other functionalities.
+
+5. **Build Optimization**: Unused styles can be stripped away, reducing the final bundle size.
+
+Prominent CSS-in-JS libraries include `styled-components`, `@emotion/core`, `styled-jsx`, and `jss`.
+
+However, there are several downsides to CSS-in-JS:
+
+1. **Learning Curve**: The approach deviates from conventional CSS or SCSS, potentially necessitating some time for acclimatization.
+2. **Runtime Overhead**: Calculating and applying styles through JavaScript can introduce minor performance overheads.
+3. **Tooling Support**: Some development tools or editors might not be fully optimized for the CSS-in-JS syntax.
+
+Ultimately, the decision to use CSS-in-JS or another styling methodology hinges on a project's requirements and the development team's preferences.
+
+## Styled Components
+
+[styled-components](https://styled-components.com) stands as one of the most popular libraries within the CSS-in-JS methodology. Designed for component-based libraries or frameworks like React (and React Native), `styled-components` facilitates styling directly within JavaScript files.
+
+Key features and advantages of `styled-components` include:
+
+1. **Explicit Component Styling**: It allows for defining styles for each component right where the component code resides.
+
+   ```tsx
+   const Button = styled.button`
+     background: palevioletred;
+     color: white;
+     border-radius: 3px;
+   `;
+   ```
+
+2. **Dynamic Styling**: Styles can be dynamically altered through props.
+
+   ```tsx
+   const Button = styled.button`
+     background: ${(props) => (props.primary ? "palevioletred" : "white")};
+     color: ${(props) => (props.primary ? "white" : "palevioletred")};
+   `;
+   ```
+
+3. **Theming Capabilities**: `styled-components` supports easy theming via `ThemeProvider`.
+
+   ```tsx
+   const theme = {
+     primaryColor: "palevioletred",
+     secondaryColor: "white",
+   };
+
+   <ThemeProvider theme={theme}>
+     <Button primary>Click Me</Button>
+   </ThemeProvider>;
+   ```
+
+4. **Support for Server-Side Rendering**: It caters to SEO and initial load performance by supporting server-side rendering.
+
+5. **Automatic Vendor Prefixing**: Vendor prefixes are automatically added to ensure cross-browser compatibility.
+
+6. **Global Styling**: `createGlobalStyle` can be utilized to define global styles.
+
+Beyond these, `styled-components` provides numerous other conveniences and extensibilities. Its active community backing further underscores its position as a favored styling library among many projects and development teams.
+
+<AdFitMobileBanner
+  unit="DAN-xs0r56ZGEL2yMihi"
+  className="adfit-middle-mobile"
+/>
+
+## Emotion 🏆
+
+Certainly! Here's the provided content translated into English:
+
+[Emotion](https://emotion.sh/docs/introduction) is one of the CSS-in-JS libraries, similar to `styled-components`, but offers its own unique features and benefits. It's popular as a convenient styling tool in web development.
+
+The main features and benefits of `Emotion` include:
+
+1. **High Performance**: Emotion emphasizes performance optimization. The difference in performance becomes more noticeable, especially in larger applications.
+
+2. **Flexibility in Writing Styles**: Emotion allows for multiple ways to write styles, including the `styled` API for tagged styling and the `css` prop for inline styling.
+
+   ```tsx
+   // Example using the styled API
+   const Button = styled.Text`
+     color: hotpink;
+   `;
+
+   // Example using the css prop
+   <Text
+     css={`
+       color: hotpink;
+     `}
+   >
+     Hello
+   </Text>;
+   ```
+
+3. **Theme Setting**: With the `ThemeProvider`, you can set and use themes across the entire application.
+
+4. **Composition**: You can easily combine and reuse styles.
+
+5. **Server-Side Rendering Support**: For improved initial load performance and SEO, Emotion provides seamless server-side rendering support.
+
+6. **Developer Experience**: Features like source maps, labeling, and handy debugging tools are included to enhance the developer experience.
+
+7. **Babel Plugin**: Emotion provides a Babel plugin to offer optimized CSS code generation and useful labeling during development.
+
+While `Emotion` and `styled-components` provide similar functionalities, they differ in their internal implementation, optimization strategies, and API design. Therefore, it's essential to choose the right library based on the project's requirements, team preferences, and specific feature needs.
+
+In our community, after sticking with built-in styles, [we've used styled-components for a long time](https://github.com/hyochan/hackatalk/blob/3fe58877c074766b0c25ac9a66492548431be839/package.json#L62). However, since April 2021, due to better performance and type safety experiences, we've been using `emotion`. - [Related PR](https://github.com/hyochan/hackatalk/pull/374).
+
+Moreover, the popular React UI library, [Material UI](https://material-ui.com), has been [using emotion since v5](https://github.com/mui/material-ui/issues/22342).
+
+Additionally, the Expo UI framework developed by our community, [dooboo-ui](https://github.com/hyochan/dooboo-ui), also utilizes `emotion`.
+
+### Installation
+
+Understood! Using `emotion` in React Native requires a slightly different approach.
+
+First, you need to install the necessary packages:
+```bash
+npm install @emotion/react @emotion/native
+```
+
+### Usage Examples
+
+#### 1. Styled Components
+
+```tsx
+import styled from '@emotion/native';
+
+const StyledButton = styled.TouchableOpacity`
+  background-color: hotpink;
+  padding: 10px 20px;
+  border-radius: 8px;
+`;
+
+const App = () => {
+  return (
+    <StyledButton onPress={() => alert('Clicked!')}>
+      <Text style={{ color: 'white' }}>Click me</Text>
+    </StyledButton>
+  );
+};
+
+export default App;
+```
+
+#### 2. `css` prop (inline style) example
+
+First, you need to add the `@emotion/babel-plugin` to your Babel setup to use the `css` prop.
+
+Add the plugin to your Babel configuration (`babel.config.js` or `.babelrc`):
+```json
+{
+  "plugins": ["@emotion"]
+}
+```
+
+Then, an example using the `css` prop:
+
+```tsx
+import { css } from '@emotion/native';
+
+const App = () => {
+  return (
+    <TouchableOpacity
+      onPress={() => alert('Clicked!')}
+      css={css`
+        background-color: hotpink;
+        padding: 10px 20px;
+        border-radius: 8px;
+      `}
+    >
+      <Text style={{ color: 'white' }}>Click me</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default App;
+```
+
+With `@emotion/native`, you can utilize Emotion's styling methods in React Native.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

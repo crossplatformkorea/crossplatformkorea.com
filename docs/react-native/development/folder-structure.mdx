@@ -1,0 +1,60 @@
+---
+id: folder-structure
+title: Folder Structure
+sidebar_label: Folder Structure
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+import ImgFolderApp from "@site/static/img/react-native/folder-app.png";
+import ImgFolderAssets from "@site/static/img/react-native/folder-assets.png";
+import ImgFolderSrc1 from "@site/static/img/react-native/folder-src-1.png";
+import ImgFolderSrc2 from "@site/static/img/react-native/folder-src-2.png";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+Deciding on a folder structure is still a significant challenge for many developers in the development process. Let's take a look at the structure of a project started with dooboo-cli.
+
+### 1. App Directory
+
+<details>
+  <summary>Capture Screen</summary>
+  <img src={ImgFolderApp} alt="img-folder-app" width={320}/>
+</details>
+
+The App directory is an essential part of file-based routing. It can be understood as a collection of top-level components that compose each screen. This directory may include various tab routers that bundle the screens, but the basic concept remains the same.
+
+### 2. Assets Directory
+
+<details>
+  <summary>Capture Screen</summary>
+  <img src={ImgFolderAssets} alt="img-folder-assets" width={320}/>
+</details>
+
+The Assets directory is where images, fonts, and other resources used in the app are gathered. It doesn't directly affect code execution but is crucial for managing the app's resources.
+
+### 3. Src Directory
+The Src directory is responsible for the core functionalities of the app. It includes the store managing the app's state, providers enabling state changes, custom UI components, utility functions, and constants, strings, themes used in the app.
+
+<details>
+  <summary>Capture Screen (apis, providers)</summary>
+  <img src={ImgFolderSrc1} alt="img-folder-src-1" width={320}/>
+</details>
+
+- The `apis` subdirectory seen in the above screen gathers codes for server communication in the app, utilizing [fetch](https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch) or [axios](https://axios-http.com/kr/docs/intro).
+- The `providers` subdirectory is where providers used in the app are collected. Providers manage the app's state and enable state changes. They can be implemented using [Redux](https://redux.js.org), [MobX](https://mobx.js.org/README.html), [Recoil](https://recoiljs.org), etc.
+
+<details>
+  <summary>Capture Screen (uis, utils)</summary>
+  <img src={ImgFolderSrc2} alt="img-folder-src-1" width={320}/>
+</details>
+
+- The `uis` subdirectory is where reusable components that go into the `app` directory are located. Not all reusable components need to be placed here; those commonly used across multiple screens can be stored here for efficiency.
+- The `utils` subdirectory gathers utility functions used in the app. This is for enhancing code reusability by centralizing necessary functionalities.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

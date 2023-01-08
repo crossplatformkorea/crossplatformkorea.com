@@ -1,0 +1,30 @@
+{
+  "title": {
+    "message": "크로스플랫폼 코리아",
+    "description": "The title in the navbar"
+  },
+  "item.label.Development": {
+    "message": "개발",
+    "description": "Navbar item with label Development"
+  },
+  "item.label.React Native": {
+    "message": "리엑트 네이티브",
+    "description": "Navbar item with label React Native"
+  },
+  "item.label.Community": {
+    "message": "커뮤니티",
+    "description": "Navbar item with label Community"
+  },
+  "item.label.Blog": {
+    "message": "블로그",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Forums": {
+    "message": "포럼",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.GitHub": {
+    "message": "깃허브",
+    "description": "Navbar item with label GitHub"
+  }
+}

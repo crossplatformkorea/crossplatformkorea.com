@@ -1,0 +1,172 @@
+---
+id: expo-router
+title: Expo Router
+sidebar_label: Expo Router
+sidebar_position: 2
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+In the [Router Section](./router) as mentioned, while React Native has various routers like [react-navigation](https://reactnavigation.org) and [react-native-navigation](https://github.com/wix/react-native-navigation),
+in our community, we recommend [expo-router](https://docs.expo.dev/routing/introduction). It's not just because it's a newly introduced router, but because it's a file-based router. This not only reduces unnecessary code but also makes the code itself more concise and intuitive.
+
+
+**Expo Router** is a file-based router designed for **Universal React Native** applications built with **Expo**.
+This router allows for managing screen transitions in both **React Native** and web applications, facilitating smooth navigation for users across different parts of the app's UI.
+Through this, it's possible to manage screen transitions within an app using the same components across multiple platforms (Android, iOS, and web).
+
+Detailed information on how to use Expo Router can be found [here](https://docs.expo.dev/routing/introduction).
+This document explains how to manage screen transitions using Expo Router.
+For instance, the following code demonstrates how to navigate between the `HomeScreen` and `ProfileScreen`.
+
+```tsx
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native';
+
+function HomeScreen() {
+  const navigation = useNavigation();
+
+  return (
+    <Button
+      title="Go to Profile"
+      onPress={() => {
+        navigation.navigate('Profile', { name: 'Jane' });
+      }}
+    />
+  );
+}
+
+function ProfileScreen({ route }) {
+  return <Text>This is {route.params.name}'s profile</Text>;
+}
+```
+
+In the code above, the `useNavigation` hook is employed to retrieve the `navigation` object, followed by rendering the `Button` component.
+Upon triggering the `onPress` handler, the `navigation.navigate` method is invoked to transition to the `ProfileScreen`.
+At this juncture, the `name` parameter is passed along. Within the `ProfileScreen`, the `name` parameter is accessed using `route.params.name`.
+
+## Tabs
+
+### 1. What is a Tab Layout?
+The Tab layout in Expo Router makes use of the bottom tabs provided by React Navigation.
+
+Expo Router introduces an `href` screen option, but this can only be used in object form screen options (e.g., `screenOptions={{ href: "/path" }}`), and it cannot be used in conjunction with `tabBarButton`.
+
+### 2. Hiding Tabs
+Sometimes you may want to keep a route but not have it displayed on the tab bar. In such cases, you can disable the button using `href: null`.
+
+```tsx
+import { Tabs } from 'expo-router/tabs';
+
+export default function AppLayout() {
+  return (
+    <Tabs>
+      <Tabs.Screen
+        // Name of the route you want to hide.
+        name="index"
+        options={{
+          // This tab will no longer appear on the tab bar.
+          href: null,
+        }}
+      />
+    </Tabs>
+  );
+}
+```
+
+### 3. Dynamic Routes
+When trying to use a dynamic route in the tab bar (e.g., a profile tab), you might want to ensure that the button always links to a specific `href`.
+
+```tsx
+import { Tabs } from 'expo-router/tabs';
+
+export default function AppLayout() {
+  return (
+    <Tabs>
+      <Tabs.Screen
+        // Name of the dynamic route.
+        name="[user]"
+        options={{
+          // Make the tab always link to this particular href.
+          href: '/evanbacon',
+          // Or you can use an Href object:
+          href: {
+            pathname: '/[user]',
+            params: {
+              user: 'evanbacon',
+            },
+          },
+        }}
+      />
+    </Tabs>
+  );
+}
+```
+
+Following the above guide, you can effectively utilize tab navigation in Expo Router.
+
+## Drawers
+
+Using the drawer layout in Expo Router allows you to create a side navigation menu, often referred to as a "drawer". This drawer is hidden off-screen and can be accessed through swipes or toggles.
+
+### How to set up Drawers:
+
+1. **Install the required packages:**
+   Before you can use the drawer navigator, you need to install a few packages:
+
+   ```bash
+   npx expo install @react-navigation/drawer react-native-gesture-handler react-native-reanimated
+   ```
+
+   - `@react-navigation/drawer`: The primary package for the drawer navigator.
+   - `react-native-gesture-handler`: Manages touch gestures in React Native.
+   - `react-native-reanimated`: Provides more variety in animation and gesture handling.
+
+2. **Update babel.config.js:**
+   After installing the packages, update `babel.config.js` to include the reanimated plugin:
+
+   ```tsx
+   module.exports = {
+     presets: [
+         ... 
+       ],
+     plugins: [
+       ... 
+       'react-native-reanimated/plugin',
+     ],
+   };
+   ```
+
+   - This configuration ensures the React Native Reanimated plugin integrates correctly with Babel. It's essential for smooth animations and gestures.
+
+3. **Clear the Babel cache:**
+   After making changes to `babel.config.js`, clear the babel cache and restart the development server:
+
+   ```bash
+   npx expo start --clear
+   ```
+
+4. **Implement the drawer in the layout:**
+   Now, you are ready to incorporate the drawer layout into your app:
+
+   ```tsx
+   import { Drawer } from 'expo-router/drawer';
+
+   export default function Layout() {
+     return <Drawer />;
+   }
+   ```
+
+   - This code showcases the basic implementation of Expo Router's drawer. You can expand upon this as needed to provide additional settings or content to the drawer.
+
+When working with tools or packages, it's a good idea to consult official documentation or in-depth tutorials if you're looking to build complex navigation patterns. This guide aims to provide basic information required to get started with Expo Router's drawer.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

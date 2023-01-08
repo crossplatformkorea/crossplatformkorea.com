@@ -1,0 +1,565 @@
+---
+id: es6
+title: ES6
+sidebar_label: ES6
+sidebar_position: 2
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+리엑트 네이티브에서는 [타입스크립트](https://www.typescriptlang.org) 언어가 기본적으로 사용됩니다. 타입스크립트는 자바스크립트의 슈퍼셋으로 타입을 지원해주지만 유용한 ES6 문법들이 내장되어 있습니다.
+개발을 할 때 필요한 [ES6 문법](https://www.w3schools.com/js/js_es6.asp)들을 알아보며 타입스크립트의 기본 문법을 익혀봅니다.
+아래 예시들은 [TypeScript Playground](https://www.typescriptlang.org/play)에서 실행할 수 있습니다.
+
+### 1. let과 const
+   ```typescript
+   let x = 10;
+   const y = 20;
+   console.log(x, y); // 10, 20
+   ```
+   타입스크립트에서 변수에 타입을 지정할 수 있습니다.
+   `let`은 재할당이 가능한 변수, `const`는 재할당이 불가능한 상수를 선언할 때 사용됩니다.
+
+  `let`과 `const`는 기존의 `var` 키워드와 비교했을 때 다음과 같은 중요한 차이점을 가집니다:
+
+  #### 블록 스코프(Block Scope)
+  - `var`는 함수 스코프(function scope)를 가지므로, 함수 내부 어디서든 접근 가능합니다. 반면, `let`과 `const`는 블록 스코프를 가지며, 이는 선언된 블록(예: if 문, for 루프 등) 내에서만 접근할 수 있다는 의미입니다.
+
+  #### 호이스팅(Hoisting)
+  - `var`로 선언된 변수는 호이스팅되어 함수의 최상단으로 끌어올려집니다. 하지만 `let`과 `const`는 호이스팅되지만, 선언 전에 접근하려고 하면 참조 오류(ReferenceError)가 발생합니다.
+
+  #### 재할당
+  - `var`과 `let`으로 선언된 변수는 재할당이 가능합니다. 그러나 `const`로 선언된 변수는 한 번 할당하면 그 값을 변경할 수 없습니다. 
+
+  #### 재선언
+  - `var`를 사용하면 같은 스코프 내에서 변수를 재선언할 수 있지만, `let`과 `const`는 같은 스코프 내에서 변수의 재선언을 허용하지 않습니다.
+
+  이러한 차이점들로 인해 `let`과 `const`는 보다 안전하고 예측 가능한 코드 작성을 가능하게 하며, 특히 `var`의 호이스팅으로 인한 혼란스러운 상황들을 방지합니다.
+
+### 2. 화살표 함수 (Arrow Functions)
+```typescript
+const add = (a: number, b: number): number => a + b;
+console.log(add(5, 3)); // 8
+```
+화살표 함수의 매개변수와 반환 타입에 타입을 지정할 수 있습니다.
+
+화살표 함수(Arrow Functions)는 JavaScript에서 `function` 키워드를 사용한 함수의 몇 가지 제한을 해결합니다.
+가장 큰 차이점은 `this` 키워드가 화살표 함수 내에서 어떻게 작동하는지에 있습니다.
+기존 함수에서 `this`는 함수가 호출되는 방식에 따라 다르게 바인딩되었지만, 화살표 함수에서는 `this`가 항상 함수를 포함하고 있는 렉시컬 스코프를 가리킵니다.
+이는 콜백 함수나 클로저에서 `this`가 예상대로 작동하도록 만들어, 코드를 더 간결하고 명확하게 작성하는 데 도움을 줍니다.
+
+> "렉시컬 스코프(Lexical Scope)"는 프로그래밍 언어에서 함수와 변수가 코드를 작성할 때의 구조에 따라 접근 범위가 결정되는 방식을 의미합니다. 다시 말해, 렉시컬 스코프는 변수가 선언된 위치에 기반하여 그 변수가 접근 가능한 범위를 결정합니다. 이는 실행 시점이 아닌 소스 코드의 구조에 의해 스코프가 결정된다는 것을 의미합니다.
+
+### 3. 클래스 (Classes)
+```typescript
+class Person {
+  private name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  public greet(): string {
+    return `Hello, ${this.name}`;
+  }
+}
+
+const person: Person = new Person("Alice");
+console.log(person.greet()); // Hello, Alice
+```
+클래스의 속성과 메소드에 타입을 지정할 수 있습니다. `public`과 `private` 같은 접근 제한자도 사용할 수 있습니다.
+
+### 4. 템플릿 리터럴 (Template Literals)
+```typescript
+const name: string = "Bob";
+console.log(`Hello, ${name}`); // Hello, Bob
+```
+문자열 변수에도 타입을 지정할 수 있습니다.
+
+### 5. 디스트럭처링 할당 (Destructuring Assignment)
+```typescript
+const obj: { a: number; b: number } = { a: 1, b: 2 };
+const { a, b }: { a: number; b: number } = obj;
+console.log(a, b); // 1, 2
+```
+객체에 타입을 지정하고, 디스트럭처링 할당을 사용할 때도 타입을 지정할 수 있습니다.
+
+### 6. 기본 매개변수 (Default Parameters)
+```typescript
+function greet(name: string = "Guest"): string {
+  return `Hello, ${name}`;
+}
+console.log(greet()); // Hello, Guest
+console.log(greet("John")); // Hello, John
+```
+함수 매개변수와 반환 값에 타입을 지정할 수 있습니다.
+
+### 7. Spread Operator와 Rest Parameters
+#### 확장 연산자 (Speard Operator)
+확장 연산자는 배열과 객체의 요소나 속성을 쉽게 복사하고 조합하는 데 유용하게 사용됩니다.
+
+<details>
+  <summary>객체에서의 확장 연산자 사용 예시</summary>
+  ```js
+  const obj = { a: 1, b: 2 };
+  const newObj = { ...obj, c: 3 };
+  console.log(newObj); // { a: 1, b: 2, c: 3 }
+  ```
+  이 예시에서 `...obj`는 `obj` 객체의 속성을 새 객체 `newObj`에 복사합니다.
+  이를 통해 기존 객체를 수정하지 않고 새로운 속성을 추가할 수 있습니다.
+
+  확장 연산자는 배열과 객체의 요소나 속성을 쉽게 복사하고 조합하는 데 유용하게 사용됩니다.
+</details>
+
+<details>
+  <summary>배열에서의 확장 연산자 사용 예시</summary>
+  ```js
+  const nums = [1, 2, 3];
+  const moreNums = [...nums, 4, 5];
+  console.log(moreNums); // [1, 2, 3, 4, 5]
+  ```
+  이 예시에서 `...nums`는 `nums` 배열의 각 요소를 개별 요소로 확장합니다.
+</details>
+
+#### 나머지 매개변수 (Rest Parameters)
+```typescript
+function sum(...numbers) {
+  let total = 0;
+  for (let num of numbers) {
+    total += num;
+  }
+  return total;
+}
+
+console.log(sum(1, 2, 3, 4, 5)); // 15
+```
+나머지 매개변수는 함수의 매개변수를 배열로 받아올 수 있게 해줍니다.
+이를 통해 함수에 전달되는 매개변수의 개수를 동적으로 처리할 수 있습니다.
+
+### 8. for..of
+`for...of` 루프는 ES6(JavaScript의 6번째 에디션)에서 도입된 반복문입니다. 이 문법을 사용하면 배열이나 문자열과 같은 반복 가능한 객체들을 편리하게 순회할 수 있습니다. 간단히 말해서, `for...of`는 컬렉션 내의 각 요소를 하나씩 꺼내서 사용할 수 있게 해줍니다.
+
+```ts
+for (const item of collection) {
+  // 여기서 'item'은 컬렉션의 현재 요소를 나타냄
+  // 이 안에 원하는 코드를 작성합니다.
+}
+```
+
+- `collection`: 순회하고자 하는 배열, 문자열 등의 반복 가능한 객체
+- `item`: 반복하는 동안 `collection`의 현재 요소
+
+#### 예시
+
+1. **배열에서 사용하기**:
+
+   배열에 숫자가 들어있다고 가정해보겠습니다. 각 숫자를 순서대로 출력하려면 `for...of` 루프를 사용할 수 있습니다.
+
+   ```javascript
+   const numbers = [1, 2, 3, 4, 5];
+   for (const num of numbers) {
+     console.log(num); // 1, 2, 3, 4, 5 순서로 출력됩니다.
+   }
+   ```
+
+2. **문자열에서 사용하기**:
+
+   문자열에서 각 문자를 순서대로 처리하려면 `for...of` 루프를 사용할 수 있습니다.
+
+   ```javascript
+   const greeting = "Hello";
+   for (const char of greeting) {
+     console.log(char); // 'H', 'e', 'l', 'l', 'o' 순서로 출력됩니다.
+   }
+   ```
+
+#### 장점
+
+- **간결함**: `for...of` 루프는 배열이나 문자열 등을 다룰 때 간결하고 명확한 코드를 작성할 수 있게 해줍니다.
+- **직관적**: 각 요소에 바로 접근할 수 있어 코드가 더 이해하기 쉽습니다.
+- **유연성**: 다양한 유형의 컬렉션(배열, 문자열, Map, Set 등)에 적용할 수 있습니다.
+
+### 9. `includes()` 메서드
+
+`includes()` 메서드는 JavaScript에서 배열이나 문자열에 특정 요소나 문자열이 포함되어 있는지 여부를 확인하는 데 사용됩니다. 이 메서드는 주어진 요소나 문자열이 대상에 존재하면 `true`를 반환하고, 그렇지 않으면 `false`를 반환합니다.
+
+#### 배열에서 `includes()` 사용하기
+
+```javascript
+const fruits = ["apple", "banana", "mango"];
+const hasMango = fruits.includes("mango"); // true
+const hasCherry = fruits.includes("cherry"); // false
+```
+
+여기서, `fruits` 배열에 `"mango"`와 `"cherry"`가 있는지 확인합니다. `"mango"`는 배열에 포함되어 있으므로 `hasMango`는 `true`를 반환하고, `"cherry"`는 배열에 없으므로 `hasCherry`는 `false`를 반환합니다.
+
+#### 문자열에서 `includes()` 사용하기
+
+```javascript
+const sentence = "Hello, world!";
+const hasHello = sentence.includes("Hello"); // true
+const hasGoodbye = sentence.includes("Goodbye"); // false
+```
+
+이 경우, `sentence` 문자열에 `"Hello"`와 `"Goodbye"`가 있는지 확인합니다. `"Hello"`는 문자열에 포함되어 있으므로 `hasHello`는 `true`를 반환하고, `"Goodbye"`는 문자열에 없으므로 `hasGoodbye`는 `false`를 반환합니다.
+
+### 특징 및 주의사항
+
+- `includes()`는 대소문자를 구분합니다.
+- `includes()`는 배열의 요소나 문자열의 부분 문자열을 정확히 찾습니다. 부분적인 일치나 패턴 매칭은 지원하지 않습니다.
+- `includes()`는 ES6에서 도입되었으므로, 이전 버전의 JavaScript에서는 지원되지 않습니다. 구형 브라우저에서는 `indexOf()` 메서드를 대신 사용할 수 있습니다.
+
+`includes()` 메서드는 배열이나 문자열에서 특정 요소나 문자열이 존재하는지 쉽게 확인할 수 있게 해주는 유용한 도구입니다.
+
+### 10. `async`/`await`
+
+`async`/`await`는 JavaScript에서 비동기 코드를 작성하는 현대적인 방법입니다. 이를 사용하면 비동기 작업을 더 쉽고 가독성 있게 처리할 수 있습니다.
+
+#### `async`/`await` 사용 예시
+
+```typescript
+// fetchData 함수가 프로미스를 반환하도록 정의
+async function fetchData(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Data fetched successfully");
+      // reject("Error fetching data");
+    }, 1000);
+  });
+}
+
+// async 함수 사용
+async function getData() {
+  try {
+    const data = await fetchData(); // fetchData가 resolve되면 결과를 data에 저장
+    console.log(data); // 성공 시 데이터 출력
+  } catch (error) {
+    console.log(error); // 실패 시 에러 출력
+  }
+}
+
+getData(); // 함수 호출
+```
+
+#### 설명
+
+- **`async` 함수**: `async` 키워드를 사용하여 함수를 선언하면 해당 함수는 항상 프로미스를 반환합니다. 함수 내에서 비동기 작업을 수행할 수 있습니다.
+- **`await` 연산자**: `await` 키워드는 `async` 함수 내에서만 사용할 수 있으며, 프로미스가 완료될 때까지 함수 실행을 일시적으로 중지합니다. 프로미스가 성공적으로 완료되면 결과 값을 반환하고, 실패하면 예외를 발생시킵니다.
+- **`try...catch` 블록**: `await` 표현식에서 발생할 수 있는 예외를 처리하기 위해 `try...catch` 블록을 사용합니다.
+
+<details>
+  <summary>과거 콜백 방식</summary>
+
+  과거의 JavaScript에서 비동기 작업을 처리하기 위해 콜백(callback) 함수를 사용하는 방법이 일반적이었습니다. 이 방식은 함수가 결과를 반환하기 전에 완료되어야 하는 비동기 작업에 대한 처리를 위해 콜백 함수를 인자로 전달합니다.
+
+  ```typescript
+  function getData(callback) {
+    setTimeout(() => {
+      callback('Sample Data');
+    }, 1000);
+  }
+
+  getData((data) => {
+    console.log(data); // Sample Data
+  });
+  ```
+
+  이 콜백 접근 방식은 간단한 사용 사례에서는 잘 작동하지만, 비동기 작업이 여러 개 중첩되거나 복잡해질 경우 코드의 가독성과 유지보수성이 떨어지는 "콜백 지옥"을 야기할 수 있습니다. `async`/`await`는 이러한 문제를 해결하기 위한 현대적인 대안으로, 코드를 더 명확하고 구조적으로 만들어 줍니다.
+</details>
+
+이러한 방식을 통해 `async`/`await`의 사용과 과거 콜백 방식의 차이를 이해할 수 있습니다. `async`/`await`는 코드의 가독성을 크게 향상시키고, 복잡한 비동기 로직을 더 간단하게 만들어 줍니다.
+
+### 11. 모듈 (Modules)
+```typescript
+// math.ts
+export const add = (a: number, b: number): number => a + b;
+
+// main.ts
+import { add } from './math';
+console.log(add(5, 3)); // 8
+```
+타입스크립트에서도 모듈을 사용할 수 있으며, 모듈 내 함수 및 변수에 타입을 지정할 수 있습니다.
+
+<details>
+<summary>단일 값 또는 함수 내보내기 (Export Default)</summary>
+
+```typescript
+// file: myModule.ts
+const myFunction = (): void => {
+  console.log("Hello from myFunction");
+}
+
+export default myFunction;
+```
+
+```typescript
+// file: main.ts
+import myFunction from './myModule';
+
+myFunction(); // Hello from myFunction
+```
+</details>
+
+<details>
+<summary>여러 값 또는 함수 내보내기 (Named Exports)</summary>
+
+```typescript
+// file: myModule.ts
+export const myFunction = (): void => {
+  console.log("Hello from myFunction");
+}
+
+export const anotherFunction = (): void => {
+  console.log("Hello from anotherFunction");
+}
+```
+
+```typescript
+// file: main.ts
+import { myFunction, anotherFunction } from './myModule';
+
+myFunction(); // Hello from myFunction
+anotherFunction(); // Hello from anotherFunction
+```
+</details>
+
+<details>
+<summary>전체 모듈을 객체로 가져오기</summary>
+
+```typescript
+// file: main.ts
+import * as myModule from './myModule';
+
+myModule.myFunction();
+myModule.anotherFunction();
+```
+</details>
+
+### 12. Map과 Set
+```typescript
+let map: Map<string, string> = new Map();
+map.set('key', 'value');
+console.log(map.get('key')); // value
+
+let set: Set<string> = new Set();
+set.add('item1');
+console.log(set.has('item1')); // true
+```
+`Map`과 `Set`에 저장되는 값의 타입을 명시할 수 있습니다.
+
+<details>
+<summary>Map 사용 예시</summary>
+
+```js
+// Map 생성
+let map = new Map();
+
+// 키-값 쌍 추가
+map.set('key1', 'value1');
+map.set('key2', 'value2');
+
+// 값 접근
+console.log(map.get('key1')); // 'value1'
+console.log(map.get('key2')); // 'value2'
+
+// 키 존재 여부 확인
+console.log(map.has('key1')); // true
+
+// 크기 확인
+console.log(map.size); // 2
+
+// 모든 키-값 쌍 삭제
+map.clear();
+
+// 크기 확인
+console.log(map.size); // 0
+```
+`Map`은 키-값 쌍을 저장할 수 있는 컬렉션입니다. `set`, `get`, `has`, `clear`와 같은 메소드를 사용하여 데이터를 관리할 수 있습니다.
+
+</details>
+
+<details>
+<summary>Set 사용 예시</summary>
+
+```js
+// Set 생성
+let set = new Set();
+
+// 값 추가
+set.add('value1');
+set.add('value2');
+
+// 값 존재 여부 확인
+console.log(set.has('value1')); // true
+
+// 크기 확인
+console.log(set.size); // 2
+
+// 값 삭제
+set.delete('value1');
+
+// 삭제 후 크기 확인
+console.log(set.size); // 1
+
+// 모든 값 삭제
+set.clear();
+
+// 크기 확인
+console.log(set.size); // 0
+```
+`Set`은 중복 없이 유일한 값을 저장할 수 있는 컬렉션입니다. `add`, `has`, `delete`, `clear`와 같은 메소드를 사용하여 데이터를 관리할 수 있습니다.
+
+</details>
+
+`Map`과 `Set`은 모두 ES6에서 도입된 데이터 구조로, 데이터를 보다 효율적으로 관리하고 접근할 수 있게 도와줍니다.
+
+### 13. 심볼 (Symbols)
+```typescript
+const sym: symbol = Symbol('description');
+console.log(sym); // Symbol(description)
+```
+타입스크립트에서도 심볼을 사용할 수 있으며, 심볼 타입을 지정할 수 있습니다.
+
+<details>
+<summary>Symbol 사용 예시</summary>
+
+```js
+// 심볼 생성
+let mySymbol = Symbol("mySymbolDescription");
+
+// 객체에 심볼 키 사용
+let obj = {
+  [mySymbol]: "value"
+};
+
+// 심볼 키를 사용한 객체 속성 접근
+console.log(obj[mySymbol]); // "value"
+
+// 심볼의 설명 접근
+console.log(mySymbol.description); // "mySymbolDescription"
+
+// 다른 심볼 생성 - 유일성 보장
+let anotherSymbol = Symbol("mySymbolDescription");
+console.log(mySymbol === anotherSymbol); // false
+```
+
+`Symbol`은 유일하고 변경 불가능한 데이터 타입으로, 주로 객체의 고유한 속성 키로 사용됩니다. 각 `Symbol`은 고유하기 때문에, 동일한 설명을 가진 다른 `Symbol`을 생성해도 두 심볼은 서로 다릅니다.
+
+</details>
+
+심볼은 고유한 값을 생성하여 객체의 속성 키로 사용할 수 있는 특별한 데이터 타입입니다. 이를 통해 객체의 속성이 겹치는 것을 방지하고, 속성의 은닉화나 특별한 처리가 필요한 경우에 유용하게 사용될 수 있습니다.
+
+### 14. Iterator와 Generator
+```typescript
+function* generator(): Generator<number> {
+  yield 1;
+  yield 2;
+}
+
+const gen: Generator<number> = generator();
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+```
+제너레이터 함수와 이터레이터에 타입을 지정할 수 있습니다.
+
+### 15. 향상된 객체 리터럴 (Enhanced Object Literals)
+```typescript
+const name: string = 'name';
+const obj: { [key: string]: any; method: () => string } = {
+  [name]: 'value',
+  method(): string {
+    return this[name];
+  }
+};
+console.log(obj.method()); // value
+```
+객체 리터럴에 타입을 지정하고, 동적 속성 및 메소드에 대한 타입도 정의할 수 있습니다.
+
+### 16. Proxy와 Reflection
+```typescript
+let target: any = {};
+let proxy: ProxyHandler<any> = new Proxy(target, {
+  get(target: any, prop: string, receiver: any): any {
+    return Reflect.get(target, prop, receiver);
+  }
+});
+proxy.someProp = 'value';
+console.log(proxy.someProp); // value
+```
+`Proxy`와 `Reflect`에 타입을 적용할 수 있으며, 이를 통해 객체의 작업을 가로채고 메타 프로그래밍을 수행할 수 있습니다.
+
+### 17. Number, Math, Array, Object에 새로운 메소드 추가
+```typescript
+console.log(Number.isInteger(42)); // true
+console.log(Math.log10(100)); // 2
+console.log(Array.from('hello')); // ['h', 'e', 'l', 'l', 'o']
+console.log(Object.assign({}, { a: 1 }, { b: 2 })); // { a: 1, b: 2 }
+```
+타입스크립트에서도 기존 JavaScript 객체의 새로운 메소드들을 사용할 수 있으며, 타입 안정성을 더욱 강화할 수 있습니다.
+
+> 타입스크립트는 정적 타입을 제공하여 코드의 안정성을 높이고, 개발 중 발생할 수 있는 많은 오류들을 미리 찾아낼 수 있게 해줍니다. 이러한 기능들은 개발자가 보다 안전하고 효율적으로 코드를 작성하도록 도와줍니다.
+
+## ES6 배열 메소드
+
+ES6에서 배열을 다루는 데 매우 유용한 몇 가지 메소드들을 소개하겠습니다.
+특히 map, filter, reduce와 같은 메소드들은 데이터를 다룰 때 자주 사용됩니다.
+
+### 1. **`map`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const squared: number[] = numbers.map(x => x * x);
+console.log(squared); // [1, 4, 9, 16, 25]
+```
+
+### 2. **`filter`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const even: number[] = numbers.filter(x => x % 2 === 0);
+console.log(even); // [2, 4]
+```
+
+### 3. **`reduce`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const sum: number = numbers.reduce((acc: number, current: number) => acc + current, 0);
+console.log(sum); // 15
+```
+
+### 4. **`forEach`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+numbers.forEach((x: number) => console.log(x));
+```
+
+### 5. **`find`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const firstEven: number | undefined = numbers.find(x => x % 2 === 0);
+console.log(firstEven); // 2
+```
+
+### 6. **`some`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const hasEven: boolean = numbers.some(x => x % 2 === 0);
+console.log(hasEven); // true
+```
+
+### 7. **`every`**
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+const allEven: boolean = numbers.every(x => x % 2 === 0);
+console.log(allEven); // false
+```
+
+TypeScript를 사용하면 배열의 요소 타입을 명시적으로 정의할 수 있어, 코드의 안정성을 높이고 타입 관련 오류를 사전에 방지할 수 있습니다.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

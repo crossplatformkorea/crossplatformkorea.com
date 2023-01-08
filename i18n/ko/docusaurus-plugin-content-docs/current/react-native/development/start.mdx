@@ -1,0 +1,55 @@
+---
+id: start
+title: 프로젝트 시작하기
+sidebar_label: 프로젝트 시작하기
+description: 우리 커뮤니티에서는 처음부터 앱 개발 과정을 직접 경험하면서, 이를 통해 입문자들에게 유익한 자료와 지침을 제공하려고 합니다.
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+import ImgDoobooInit from "@site/static/img/react-native/dooboo-init.png";
+import ImgDoobooInitRun1 from "@site/static/img/react-native/dooboo-init-run-1.png";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+우리 커뮤니티에서는 처음부터 앱 개발 과정을 직접 경험하면서, 이를 통해 입문자들에게 유익한 자료와 지침을 제공하려고 합니다.
+
+우리 커뮤니티는 프로젝트 개시를 위해 [dooboo-cli](https://github.com/hyochan/dooboo-cli)를 활용합니다.
+이 도구는 필요한 구성 요소들을 효율적으로 통합하여 프로젝트 시작을 용이하게 해주며, 7년 동안 꾸준히 유지보수되어 최신 스택을 잘 반영하고 있습니다.
+
+## 프로젝트 만들기
+
+먼저, Node.js가 정상적으로 설치된 터미널에서 아래 명령어를 입력합니다.
+'개발환경' 섹션을 확인하고 지침을 따른 분들은 이미 필요한 환경이 준비된 상태일 것입니다.
+
+```bash
+npx dooboo init
+```
+
+<img src={ImgDoobooInit} alt="dooboo-init" />
+
+이어서, 아래와 같은 방식으로 프로젝트명을 파스칼 케이스(PascalCase)로 입력하시면 프로젝트가 생성됩니다.
+
+<img src={ImgDoobooInitRun1} alt="dooboo-init-run-1" />
+
+dooboo-cli에 대한 자세한 내용은 [이 블로그 글](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0)에서 확인하실 수 있습니다.
+
+### 오류 해결
+iOS에서 다음과 같은 오류가 발생할 때:
+```
+Error: xcrun exited with non-zero code: 60
+An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=60):
+Unable to boot the Simulator.
+```
+
+다음 명령어를 실행한 후 다시 시도해 보세요.
+```
+rm -rf ~/Library/Developer/CoreSimulator/Caches
+```
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>
