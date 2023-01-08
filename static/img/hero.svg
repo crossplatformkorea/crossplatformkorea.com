@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 761">
+
+<defs>
+    <style type="text/css">
+        <![CDATA[
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=block");
+        ]]>
+    </style>
+    <linearGradient id="bgOverlayGradient" x1="540" y1="0" x2="540" y2="761" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#333333" stop-opacity="0"/>
+        <stop offset="1" stop-color="#333333" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="maskGradient" x1="448" y1="665" x2="448" y2="725" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-opacity="0"/>
+        <stop offset="0.25" stop-opacity="1"/>
+        <stop offset="0.5" stop-opacity="1"/>
+        <stop offset="0.75" stop-opacity="1"/>
+        <stop offset="1" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="text-mask" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="442" y="661" width="234" height="54">
+        <rect x="448" y="665" width="234" height="60" fill="url(#maskGradient)"/>
+    </mask>
+</defs>
+<g id="bgGroup">
+    <rect id="bgBase" width="1080" height="761" fill="none" opacity="0.75"/>
+    <rect id="bg" width="1080" height="761" fill="url(#bgOverlayGradient)"/>
+</g>
+<svg id="cross-platform-korea-logo-animation.svg" x="300" y="-60" width="480" viewBox="0 0 480 480" fill="none">
+    <defs>
+    <style>
+        .style-logo{fill: #fff;}
+        .style-logo-shadow{fill: #333;}
+        .style-bg-base{fill: url(#bg-linearGradient-base);}
+        .style-bg-vertical{fill: url(#bg-linearGradient-vertical);}
+        .style-bg-horizontal{fill: url(#bg-linearGradient-horizontal);}
+        .style-v-1{fill: url(#linearGradient-v-1);}
+        .style-v-2{fill: url(#linearGradient-v-2);}
+        .style-v-3{fill: url(#linearGradient-v-3);}
+        .style-v-4{fill: url(#linearGradient-v-4);}
+        .style-h-1{fill: url(#linearGradient-h-1);}
+        .style-h-2{fill: url(#linearGradient-h-2);}
+        .style-h-3{fill: url(#linearGradient-h-3);}
+        .style-h-4{fill: url(#linearGradient-h-4);}
+    </style>
+    <linearGradient id="bg-linearGradient-base" x1="43.1" y1="43.1" x2="436.9" y2="436.9" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#333" stop-opacity=".3"/>
+        <stop offset=".44" stop-color="#333" stop-opacity=".38"/>
+        <stop offset=".9" stop-color="#333" stop-opacity=".62"/>
+        <stop offset="1" stop-color="#333" stop-opacity=".7"/>
+    </linearGradient>
+    <linearGradient id="bg-linearGradient-vertical" x1="73.1" y1="73.1" x2="406.9" y2="406.9" xlink:href="#bg-linearGradient-base"/>
+    <linearGradient id="bg-linearGradient-horizontal" x1="189.1" y1="191.1" x2="286.9" y2="288.9" xlink:href="#bg-linearGradient-base"/>
+    <linearGradient id="linearGradient-v-1" x2="84.41" y2="84.41" x1="395.59" y1="395.59" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#333" stop-opacity=".3"/>
+        <stop offset=".44" stop-color="#333" stop-opacity=".38"/>
+        <stop offset=".9" stop-color="#333" stop-opacity=".62"/>
+        <stop offset="1" stop-color="#333" stop-opacity=".7"/>
+    </linearGradient>
+    <linearGradient id="linearGradient-v-2" x2="218.34" y2="18.34" x1="261.66" y1="61.66" xlink:href="#linearGradient-v-1"/>
+    <linearGradient id="linearGradient-v-3" x2="219.59" y2="425.59" x1="260.41" y1="466.41" xlink:href="#linearGradient-v-1"/>
+    <linearGradient id="linearGradient-h-1" x1="34.34" y1="76.34" x2="45.66" y2="87.66" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#333" stop-opacity=".3"/>
+        <stop offset=".44" stop-color="#333" stop-opacity=".38"/>
+        <stop offset=".9" stop-color="#333" stop-opacity=".62"/>
+        <stop offset="1" stop-color="#333" stop-opacity=".7"/>
+    </linearGradient>
+    <linearGradient id="linearGradient-h-2" x1="58.34" y1="76.34" x2="69.66" y2="87.66" xlink:href="#linearGradient-h-1"/>
+    <linearGradient id="linearGradient-h-3" x1="82.34" y1="76.34" x2="93.66" y2="87.66" xlink:href="#linearGradient-h-1"/>
+    <linearGradient id="linearGradient-h-4" x2="58.38" y2="66.31" x1="421.62" y1="429.55" xlink:href="#linearGradient-h-1"/>
+    <filter id="blur-logo-shadow">
+        <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    </defs>
+    <g id="dummy-group">
+    <rect>
+        <animate id="o1" begin="0;o1.end" dur="8s" attributeName="visibility" from="hide" to="hide"/>
+    </rect>
+    <path id="__baseShape" fill="none" d="M240,302c45.07,0,60-14.93,60-60v-4c0-45.07-14.93-60-60-60h-4c-45.07,0-60,14.93-60,60v4c0,45.07,14.93,60,60,60h4Z"/>
+    <path id="__verticalShape" fill="none" d="M300,480c45.07,0,60-14.93,60-60V60c0-45.07-14.93-60-60-60h-120c-45.07,0-60,14.93-60,60V420c0,45.07,14.93,60,60,60h120Z"/>
+    <path id="__horizontalShape" fill="none" d="M420,420c45.07,0,60-14.93,60-60V120c0-45.07-14.93-60-60-60H60C14.93,60,0,74.93,0,120v240c0,45.07,14.93,60,60,60H420Z"/>
+    </g>
+    <g id="background-group">
+    <path id="baseShape" class="style-bg-base" d="M240,302c45.07,0,60-14.93,60-60v-4c0-45.07-14.93-60-60-60h-4c-45.07,0-60,14.93-60,60v4c0,45.07,14.93,60,60,60h4Z"/>
+    <animate xlink:href="#baseShape" attributeName="d" begin="o1.begin" dur="0.25s" fill="freeze" to="M300,480c45.07,0,60-14.93,60-60V60c0-45.07-14.93-60-60-60h-120c-45.07,0-60,14.93-60,60V420c0,45.07,14.93,60,60,60h120Z"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x1" begin="o1.begin" dur="0.25s" fill="freeze" to="73.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y1" begin="o1.begin" dur="0.25s" fill="freeze" to="73.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x2" begin="o1.begin" dur="0.25s" fill="freeze" to="406.9"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y2" begin="o1.begin" dur="0.25s" fill="freeze" to="406.9"/>
+    <animate xlink:href="#baseShape" attributeName="d" begin="o1.begin+2s" dur="0.4s" fill="freeze" to="M240,302c45.07,0,60-14.93,60-60v-4c0-45.07-14.93-60-60-60h-4c-45.07,0-60,14.93-60,60v4c0,45.07,14.93,60,60,60h4Z"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x1" begin="o1.begin+2s" dur="0.4s" fill="freeze" to="43.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y1" begin="o1.begin+2s" dur="0.4s" fill="freeze" to="43.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x2" begin="o1.begin+2s" dur="0.4s" fill="freeze" to="436.9"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y2" begin="o1.begin+2s" dur="0.4s" fill="freeze" to="436.9"/>
+    <animate xlink:href="#baseShape" attributeName="d" begin="o1.begin+4s" dur="0.25s" fill="freeze" to="M420,420c45.07,0,60-14.93,60-60V120c0-45.07-14.93-60-60-60H60C14.93,60,0,74.93,0,120v240c0,45.07,14.93,60,60,60H420Z"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x1" begin="o1.begin+4s" dur="0.25s" fill="freeze" to="189.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y1" begin="o1.begin+4s" dur="0.25s" fill="freeze" to="191.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x2" begin="o1.begin+4s" dur="0.25s" fill="freeze" to="286.9"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y2" begin="o1.begi+4s" dur="0.25s" fill="freeze" to="288.9"/>
+    <animate xlink:href="#baseShape" attributeName="d" begin="o1.begin+6s" dur="0.4s" fill="freeze" to="M240,302c45.07,0,60-14.93,60-60v-4c0-45.07-14.93-60-60-60h-4c-45.07,0-60,14.93-60,60v4c0,45.07,14.93,60,60,60h4Z"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x1" begin="o1.begin+6s" dur="0.4s" fill="freeze" to="43.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y1" begin="o1.begin+6s" dur="0.4s" fill="freeze" to="43.1"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="x2" begin="o1.begin+6s" dur="0.4s" fill="freeze" to="436.9"/>
+    <animate xlink:href="#bg-linearGradient-base" attributeName="y2" begin="o1.begin+6s" dur="0.4s" fill="freeze" to="436.9"/>
+    </g>
+    <g id="v-element-group">
+    <path id="v-element-screen" class="style-v-1" opacity="0" d="M180,464c-18.54,0-29.85-2.67-35.59-8.41s-8.41-17.05-8.41-35.59V60c0-18.54,2.67-29.85,8.41-35.59s17.05-8.41,35.59-8.41h120c18.54,0,29.85,2.67,35.59,8.41s8.41,17.05,8.41,35.59V420c0,18.54-2.67,29.85-8.41,35.59s-17.05,8.41-35.59,8.41h-120Z"/>
+    <rect id="v-element-top" class="style-v-2" opacity="0" x="200" y="32" width="80" height="16" rx="8" ry="8"/>
+    <rect id="v-element-bot" class="style-v-3" opacity="0" x="200" y="444" width="80" height="4" rx="2" ry="2"/>
+    <animate xlink:href="#v-element-screen" attributeName="opacity" begin="o1.begin+0.2s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#v-element-top" attributeName="opacity" begin="o1.begin+0.4s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#v-element-bot" attributeName="opacity" begin="o1.begin+0.4s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#v-element-screen" attributeName="opacity" begin="o1.begin+1.8s" dur="0.2s" fill="freeze" to="0"/>
+    <animate xlink:href="#v-element-top" attributeName="opacity" begin="o1.begin+1.6s" dur="0.2s" fill="freeze" to="0"/>
+    <animate xlink:href="#v-element-bot" attributeName="opacity" begin="o1.begin+1.6s" dur="0.2s" fill="freeze" to="0"/>
+    </g>
+    <g id="h-element-group">
+    <circle id="h-element-dot-1" class="style-h-1" opacity="0" cx="40" cy="82" r="8"/>
+    <circle id="h-element-dot-2" class="style-h-2" opacity="0" cx="64" cy="82" r="8"/>
+    <circle id="h-element-dot-3" class="style-h-3" opacity="0" cx="88" cy="82" r="8"/>
+    <path id="h-element-screen" class="style-h-4" opacity="0" d="M24,104c-4.42,0-8,3.58-8,8v248c0,18.54,2.67,29.85,8.41,35.59s17.05,8.41,35.59,8.41H420c18.54,0,29.85-2.67,35.59-8.41s8.41-17.05,8.41-35.59V112c0-4.42-3.58-8-8-8H24Z"/>
+    <animate xlink:href="#h-element-screen" attributeName="opacity" begin="o1.begin+4.2s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#h-element-dot-1" attributeName="opacity" begin="o1.begin+4.4s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#h-element-dot-2" attributeName="opacity" begin="o1.begin+4.4s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#h-element-dot-3" attributeName="opacity" begin="o1.begin+4.4s" dur="0.2s" fill="freeze" to="1"/>
+    <animate xlink:href="#h-element-screen" attributeName="opacity" begin="o1.begin+5.8s" dur="0.2s" fill="freeze" to="0"/>
+    <animate xlink:href="#h-element-dot-1" attributeName="opacity" begin="o1.begin+5.6s" dur="0.2s" fill="freeze" to="0"/>
+    <animate xlink:href="#h-element-dot-2" attributeName="opacity" begin="o1.begin+5.6s" dur="0.2s" fill="freeze" to="0"/>
+    <animate xlink:href="#h-element-dot-3" attributeName="opacity" begin="o1.begin+5.6s" dur="0.2s" fill="freeze" to="0"/>
+    </g>
+    <g id="logo-group">
+    <polygon id="logo-shadow" class="style-logo-shadow" filter="url(#blur-logo-shadow)"/>
+    <polygon id="logo" class="style-logo" points="241.13 211 264 211 234.87 269 212 269 241.13 211"/>
+    <animate xlink:href="#logo-shadow" attributeName="opacity" begin="o1.begin" dur="0.4s" fill="freeze" from="0.1" to="0"/>
+    <animate xlink:href="#logo-shadow" attributeName="points" begin="o1.begin" dur="0.4s" fill="freeze" from="241.13 211 264 211 264 211 234.87 269 212 269 212 269 241.13 211" to="241.13 131 264 131 264 291 234.87 349 212 349 212 189 241.13 131"/>
+    <animate xlink:href="#logo-shadow" attributeName="opacity" begin="o1.begin+4s" dur="0.4s" fill="freeze" from="0.1" to="0"/>
+    <animate xlink:href="#logo-shadow" attributeName="points" begin="o1.begin+4s" dur="0.4s" fill="freeze" from="241.13 211 264 211 264 211 234.87 269 212 269 212 269 241.13 211" to="164.13 211 258 211 341 211 311.87 269 206 269 135 269 164.13 211"/>
+    </g>
+</svg>
+<g id="footerGroup">
+    <g id="titleGroup">
+        <text id="title" x="402" y="648" font-family="Roboto, Sans-Serif" font-weight="700" font-size="40px" fill="white" opacity="0.3">Cross Platform</text>
+    </g>
+    <g id="slashGroup">
+        <clipPath id="clipPath-text-slash">
+            <rect width="32" height="35" fill="white" transform="translate(404 674.5)"/>
+        </clipPath>
+        <g id="slash" clip-path="url(#clipPath-text-slash)">
+            <path d="M421.878 675.1H435.6L418.122 709.9H404.4L421.878 675.1Z" fill="white"/>
+        </g>
+    </g>
+    <g id="contentGroup" mask="url(#text-mask)">
+        <text id="text-item-01" x="450" y="743" font-family="Roboto, Sans-Serif" font-weight="700" font-size="36px" fill="white" opacity="1">Korea</text>
+        <text id="text-item-02" x="450" y="743" font-family="Roboto, Sans-Serif" font-weight="700" font-size="36px" fill="white" opacity="1">React Native</text>
+        <text id="text-item-03" x="450" y="743" font-family="Roboto, Sans-Serif" font-weight="700" font-size="36px" fill="white" opacity="1">Flutter</text>
+        <text id="text-item-04" x="450" y="743" font-family="Roboto, Sans-Serif" font-weight="700" font-size="36px" fill="white" opacity="1">.NET MAUI</text>
+    </g>
+</g>
+<rect>
+    <animate id="o0" begin="0;o0.end" dur="16s" attributeName="visibility" from="hide" to="hide"/>
+</rect>
+<!-- bg color -->
+<animate xlink:href="#bgBase" attributeName="fill" begin="o0.begin" dur="0.3s" fill="freeze" to="none"/>
+<animate xlink:href="#bgBase" attributeName="fill" begin="o0.begin+4s" dur="0.3s" fill="freeze" to="#00C8FF"/>
+<animate xlink:href="#bgBase" attributeName="fill" begin="o0.begin+8s" dur="0.3s" fill="freeze" to="#008CFF"/>
+<animate xlink:href="#bgBase" attributeName="fill" begin="o0.begin+12s" dur="0.3s" fill="freeze" to="#B800FF"/>
+<!-- text -->
+<animate xlink:href="#text-item-01" attributeName="y" begin="o0.begin" dur="0.2s" fill="freeze" from="747" to="706"/>
+<animate xlink:href="#text-item-01" attributeName="y" begin="o0.begin+4s" dur="0.2s" fill="freeze" from="706" to="665"/>
+<animate xlink:href="#text-item-02" attributeName="y" begin="o0.begin+4s" dur="0.2s" fill="freeze" from="747" to="706"/>
+<animate xlink:href="#text-item-02" attributeName="y" begin="o0.begin+8s" dur="0.2s" fill="freeze" from="706" to="665"/>
+<animate xlink:href="#text-item-03" attributeName="y" begin="o0.begin+8s" dur="0.2s" fill="freeze" from="747" to="706"/>
+<animate xlink:href="#text-item-03" attributeName="y" begin="o0.begin+12s" dur="0.2s" fill="freeze" from="706" to="665"/>
+<animate xlink:href="#text-item-04" attributeName="y" begin="o0.begin+12s" dur="0.2s" fill="freeze" from="747" to="706"/>
+<animate xlink:href="#text-item-04" attributeName="y" begin="o0.begin+16s" dur="0.2s" fill="freeze" from="706" to="665"/>
+</svg>
+<!-- content text y position : 747 -> 706 -> 665 -->
