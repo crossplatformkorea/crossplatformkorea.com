@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  title: "React Native Seoul",
+  title: "Cross-Platform Korea",
   url: "https://crossplatformkorea.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -37,7 +37,7 @@ module.exports = {
   ],
   themeConfig: {
     navbar: {
-      title: "React Native Seoul",
+      title: "Cross-Platform Korea",
       logo: {
         alt: "crossplatformkorea",
         src: "img/logo.png",

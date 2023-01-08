@@ -8,7 +8,7 @@ Our community regularly holds offline meetups.
 
 ### Apply for a meetup
 
-You can check the status of the meetup event at [React Native Seoul Meetup](https://www.meetup.com/crossplatformkorea).
+You can check the status of the meetup event at [Cross-Platform Korea Meetup](https://www.meetup.com/crossplatformkorea).
 
 ### Spatial support
 

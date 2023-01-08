@@ -46,7 +46,7 @@ function Home() {
         <div className={styles.heroSection}>
           <h1 className="hero__title">
             <Translate id="homepage.title" description="homepage.title title">
-              React Native Seoul
+              Cross-Platform Korea
             </Translate>
           </h1>
           <p className="hero__subtitle">
@@ -88,7 +88,7 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              From 2023, the official name was changed from React Native Seoul to Cross Platform Korea.
+              From 2023, the official name was changed from React Native Seoul to Cross-Platform Korea.
               This decision was made to gain insight into various cross-platform technologies.
               We hope to gain more knowledge and have discussions about it.
               Happy New Year and see you at the event 🙇.

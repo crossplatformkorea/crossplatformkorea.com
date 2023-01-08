@@ -164,7 +164,7 @@
     "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
   },
   "homepage.title": {
-    "message": "크로스플랫폼코리아",
+    "message": "크로스플랫폼 코리아",
     "description": "crossplatformkorea"
   },
   "homepage.section1": {
@@ -204,7 +204,7 @@
     "description": "homepage.news.title description"
   },
   "homepage.news.description": {
-    "message": "2023년부터 리액트네이티브서울에서 크로스플랫폼코리아로 공식 명칭이 변경되었습니다. 다양한 크로스플랫폼 기술에 대해 식견을 높이기 위한 결정입니다. 대해 더 많은 지식을 습득하고 토론을 해나갈 수 있기를 기원합니다. 새해복 많이 받으시고 행사장에서 뵙겠습니다 🙇. 아래 [신청하기] 버튼을 통해 밋업을 신청해주세요 👍",
+    "message": "2023년부터 리액트네이티브서울에서 크로스플랫폼 코리아로 공식 명칭이 변경되었습니다. 다양한 크로스플랫폼 기술에 대해 식견을 높이기 위한 결정입니다. 대해 더 많은 지식을 습득하고 토론을 해나갈 수 있기를 기원합니다. 새해복 많이 받으시고 행사장에서 뵙겠습니다 🙇. 아래 [신청하기] 버튼을 통해 밋업을 신청해주세요 👍",
     "description": "homepage.news.description description"
   },
   "homepage.apply": {

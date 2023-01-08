@@ -139,7 +139,7 @@
 </svg>
 <g id="footerGroup">
     <g id="titleGroup">
-        <text id="title" x="402" y="648" font-family="Roboto, Sans-Serif" font-weight="700" font-size="40px" fill="white" opacity="0.3">Cross Platform</text>
+        <text id="title" x="402" y="648" font-family="Roboto, Sans-Serif" font-weight="700" font-size="40px" fill="white" opacity="0.3">Cross-Platform</text>
     </g>
     <g id="slashGroup">
         <clipPath id="clipPath-text-slash">
