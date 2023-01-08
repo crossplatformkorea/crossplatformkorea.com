@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
-    <title>React Native Seoul Blog</title>
+    <title>Cross-Platform Korea Blog</title>
     <updated>2022-11-30T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
-    <subtitle>React Native Seoul Blog</subtitle>
+    <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[November Meetup]]></title>
@@ -122,8 +122,8 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
         <id>kakao-login-web</id>
         <link href="https://crossplatformkorea.com/en/blog/kakao-login-web"/>
         <updated>2022-09-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[This is the content of the React Native Seoul meetup on August 31st. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the React Native Kakao Login open source, the problems he encountered, and how he solved them.]]></summary>
-        <content type="html"><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">React Native Seoul meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a class="hash-link" href="#related-pr" title="Direct link to heading">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
+        <summary type="html"><![CDATA[This is the content of the Cross-Platform Korea meetup on August 31st. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the React Native Kakao Login open source, the problems he encountered, and how he solved them.]]></summary>
+        <content type="html"><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">Cross-Platform Korea meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a class="hash-link" href="#related-pr" title="Direct link to heading">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
         <author>
             <name>nain93</name>
             <uri>https://github.com/nain93</uri>
@@ -139,8 +139,8 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
         <id>intro</id>
         <link href="https://crossplatformkorea.com/en/blog/intro"/>
         <updated>2022-09-24T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Hello. This is Hyo, the organizer of React Native Seoul.]]></summary>
-        <content type="html"><![CDATA[<p>Hello. This is Hyo, the organizer of <strong>React Native Seoul</strong>.
+        <summary type="html"><![CDATA[Hello. This is Hyo, the organizer of Cross-Platform Korea.]]></summary>
+        <content type="html"><![CDATA[<p>Hello. This is Hyo, the organizer of <strong>Cross-Platform Korea</strong>.
 The community operation was not smooth for a long time as the event could not be held in <a href="https://www.coupang.com" target="_blank" rel="noopener noreferrer">Coupang</a> after COVID.
 In order to revitalize the community culture again, a new homepage has been opened.</p><p>Going forward, we will continue to share new news through our website and ensure smooth operation.</p>]]></content>
         <author>
