@@ -40,7 +40,11 @@ function Home() {
       description="Description will go into a meta tag in <head />"
     >
       <header className={classnames("hero hero--primary", styles.heroBanner)} style={{ backgroundColor: '#24272D' }}>
-        <img src='img/hero.svg' alt='hero' />
+        <img src='img/hero.svg' alt='hero' style={{
+          width: '100%',
+          minHeight: '100%',
+          objectFit: 'cover',
+        }}/>
       </header>
       <main>
         <div className={styles.heroSection}>
