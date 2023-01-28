@@ -24,10 +24,10 @@ There are not many executives at present, so the acceptance rate is high.
 1. Presentation
    - +2 points. +2 points for quality. 4 points total.
 1. Surprise missions and group activities
-  - One day, by chance, the community decided on a free topic and divided into groups to discuss
-    - Leader and top contributor +3 points, team member +1 point
-    - Excellent team member +1 point, leader and top contributor +3 points added
-    - If assigned to a team and absent, community score -1 point, if the leader does not attend -3 points
+   - One day, by chance, the community decided on a free topic and divided into groups to discuss
+     - Leader and top contributor +3 points, team member +1 point
+     - Excellent team member +1 point, leader and top contributor +3 points added
+     - If assigned to a team and absent, community score -1 point, if the leader does not attend -3 points
 1. Sponsors
    - Corporate sponsored broker +5 points
      - Monthly donation to [$200 Open Collective](https://opencollective.com/dooboolab-community)
