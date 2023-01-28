@@ -14,7 +14,7 @@ const sidebars = {
       label: "Resource",
       link: { type: "generated-index" },
       collapsed: false,
-      items: ["community", "forums", "meetup", "opensource"],
+      items: ["community", "forums", "meetup", "opensource", "plan"],
     },
   ],
 };
