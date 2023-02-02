@@ -92,10 +92,13 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              From 2023, the official name was changed from React Native Seoul to Cross-Platform Korea.
-              This decision was made to gain insight into various cross-platform technologies.
-              We hope to gain more knowledge and have discussions about it.
-              Happy New Year and see you at the event 🙇.
+              The meetup is scheduled for Wednesday, Feb 22th from 7:30pm to 9:50pm.
+              You can [apply for the meetup](https://www.meetup.com/ko-KR/crossplatformkorea/
+              events/291351883).
+
+              On the day, there will be a presentation on Flutter Application with GetX pattern and networking by group. While networking, you will be able to freely talk, set missions, and contribute to future meetups.
+              Any activity is irrelevant as long as the mission is to share cross-platform knowledge to community. I would appreciate it if you could confirm with the operator in advance.
+
               Please apply for the meetup through the [Apply] button below 👍
               </Translate>
           </p>
@@ -105,7 +108,7 @@ function Home() {
                 "button button--outline button--secondary button--lg",
                 styles.takeatour
               )}
-              to={'https://www.meetup.com/ko-KR/crossplatformkorea/events/290799845'}
+              to={'https://www.meetup.com/ko-KR/crossplatformkorea/events/291351883'}
               // to={useBaseUrl("/blog/20221114-meetup")}
             >
               <Translate
