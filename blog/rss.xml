@@ -4,10 +4,19 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Wed, 25 Jan 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 22 Feb 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ko</language>
+        <item>
+            <title><![CDATA[2월 밋업]]></title>
+            <link>https://crossplatformkorea.com/blog/meetup-20230222</link>
+            <guid>https://crossplatformkorea.com/blog/meetup-20230222</guid>
+            <pubDate>Wed, 22 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[이번 밋업에는 조촐하게 모여서 Flutter GetX 패턴에 대한 발표가 있었습니다. 그리고 이어서 밋업 후원금을 관리하기 위해 개발한 토이 플러터 프로젝트를 공유했습니다. 프로젝트명은 WeCount로 소스코드는 깃허브에 있습니다.]]></description>
+            <content:encoded><![CDATA[<p>이번 밋업에는 조촐하게 모여서 Flutter GetX 패턴에 대한 발표가 있었습니다. 그리고 이어서 밋업 후원금을 관리하기 위해 개발한 토이 플러터 프로젝트를 공유했습니다. 프로젝트명은 <code>WeCount</code>로 <a href="https://github.com/crossplatformkorea/wecount" target="_blank" rel="noopener noreferrer">소스코드는 깃허브</a>에 있습니다.</p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/222333157-757f2e57-be0b-419b-ab9f-224c62d0bd7a.png" width="600" class="img_ev3q"><p>또한 <a href="https://github.com/crossplatformkorea/koreanapps.md" target="_blank" rel="noopener noreferrer">crossplatform/koreanapps.md</a>에 Cross-Platforms로 제작된 일부 앱을 리스트업 했습니다. 추가하고 싶은 앱이 있으면 <code>PR</code>을 날려주시면 감사하겠습니다.</p>]]></content:encoded>
+            <category>Meetup</category>
+        </item>
         <item>
             <title><![CDATA[1월 밋업]]></title>
             <link>https://crossplatformkorea.com/blog/meetup-20230125</link>

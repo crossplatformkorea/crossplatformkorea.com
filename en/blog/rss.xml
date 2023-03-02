@@ -4,10 +4,19 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/en/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Wed, 25 Jan 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 22 Feb 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[February Meetup]]></title>
+            <link>https://crossplatformkorea.com/en/blog/meetup-20230222</link>
+            <guid>https://crossplatformkorea.com/en/blog/meetup-20230222</guid>
+            <pubDate>Wed, 22 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[At this meetup, there was a small presentation on the Flutter GetX pattern. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is WeCount and sourcecode is on Github.]]></description>
+            <content:encoded><![CDATA[<p>At this meetup, there was a small presentation on the Flutter GetX pattern. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is <code>WeCount</code> and <a href="https://github.com/crossplatformkorea/wecount" target="_blank" rel="noopener noreferrer">sourcecode is on Github</a>.</p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/222333157-757f2e57-be0b-419b-ab9f-224c62d0bd7a.png" width="600" class="img_ev3q"><p>In addition, some apps made with Cross-Platforms are listed in <a href="https://github.com/crossplatformkorea/koreanapps.md" target="_blank" rel="noopener noreferrer">crossplatform/koreanapps.md</a>. If there's an app you'd like to add, please push a <code>PR</code>.</p>]]></content:encoded>
+            <category>Meetup</category>
+        </item>
         <item>
             <title><![CDATA[January Meetup]]></title>
             <link>https://crossplatformkorea.com/en/blog/meetup-20230125</link>

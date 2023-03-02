@@ -2,11 +2,24 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-01-25T00:00:00.000Z</updated>
+    <updated>2023-02-22T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[February Meetup]]></title>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20230222</id>
+        <link href="https://crossplatformkorea.com/en/blog/meetup-20230222"/>
+        <updated>2023-02-22T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[At this meetup, there was a small presentation on the Flutter GetX pattern. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is WeCount and sourcecode is on Github.]]></summary>
+        <content type="html"><![CDATA[<p>At this meetup, there was a small presentation on the Flutter GetX pattern. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is <code>WeCount</code> and <a href="https://github.com/crossplatformkorea/wecount" target="_blank" rel="noopener noreferrer">sourcecode is on Github</a>.</p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/222333157-757f2e57-be0b-419b-ab9f-224c62d0bd7a.png" width="600" class="img_ev3q"><p>In addition, some apps made with Cross-Platforms are listed in <a href="https://github.com/crossplatformkorea/koreanapps.md" target="_blank" rel="noopener noreferrer">crossplatform/koreanapps.md</a>. If there's an app you'd like to add, please push a <code>PR</code>.</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[January Meetup]]></title>
         <id>https://crossplatformkorea.com/en/blog/meetup-20230125</id>
