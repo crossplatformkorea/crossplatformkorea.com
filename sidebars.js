@@ -9,6 +9,7 @@ const sidebars = {
   docs: [
     "introduction",
     "news",
+    "speaker",
     {
       type: "category",
       label: "Resource",

@@ -65,22 +65,22 @@ function Home() {
               id="homepage.description"
               description="homepage.description description"
             >
-              React Native, React and more
+              React Native, Flutter, MAUI and related technologies, etc.
             </Translate>
           </p>
           <div className={styles.buttons}>
             <Link
               className={classnames(
                 "button button--outline button--primary button--lg",
-                styles.takeatour
+                styles.beSpeaker
               )}
-              to={useBaseUrl("/docs/current/introduction")}
+              to={useBaseUrl("docs/current/speaker")}
             >
               <Translate
-                id="homepage.takeatour"
-                description="homepage.takeatour description"
+                id="homepage.beSpeaker"
+                description="homepage.beSpeaker description"
               >
-                Take a tour
+                Be our speaker
               </Translate>
             </Link>
           </div>
@@ -112,7 +112,7 @@ function Home() {
             <Link
               className={classnames(
                 "button button--outline button--secondary button--lg",
-                styles.takeatour
+                styles.beSpeaker
               )}
               to={"docs/current/news"}
             >
@@ -127,7 +127,7 @@ function Home() {
             <Link
               className={classnames(
                 "button button--outline button--secondary button--lg",
-                styles.takeatour
+                styles.beSpeaker
               )}
               to={
                 "https://www.meetup.com/ko-KR/crossplatformkorea/events/291975474"
@@ -142,8 +142,8 @@ function Home() {
               </Translate>
             </Link>
           </div>
+          <div style={{height: 12}}/>
         </div>
-        <div className={styles.newsContent}></div>
       </main>
     </Layout>
   );
