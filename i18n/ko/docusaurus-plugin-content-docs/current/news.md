@@ -4,6 +4,12 @@ title: 최근 소식
 sidebar_label: 최근 소식
 ---
 
+## 3월
+밋업은 3월 29일 수요일 오후 7시 30분부터 9시 40분까지 예정되어 있습니다.
+[여기서 밋업 신청](https://www.meetup.com/ko-KR/crossplatformkorea/events/291975474)을 하실 수 있습니다.
+
+당월에는 특별 스피커를 모셨습니다. [Florian Ludot](https://github.com/florianldt)님은 [Avanssion Inc](https://avanssion.com)의 CTO로 근무하고 계시며 프랑스에서 태어나고 자랐습니다. 이번 밋업에서는 수년 동안 개발 및 디자인팀과 긴밀하게 협업하면서 축적된 노하우를 공유해주실 예정입니다.
+
 ## 2월
 밋업은 2월 22일 수요일 오후 7시 30분부터 9시 50분까지 예정되어 있습니다.
 [여기서 밋업 신청](https://www.meetup.com/ko-KR/crossplatformkorea/events/291351883)을 하실 수 있습니다.

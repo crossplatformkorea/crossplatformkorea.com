@@ -39,12 +39,19 @@ function Home() {
       title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
-      <header className={classnames("hero hero--primary", styles.heroBanner)} style={{ backgroundColor: '#24272D' }}>
-        <img src='img/hero.svg' alt='hero' style={{
-          width: '100%',
-          minHeight: '100%',
-          objectFit: 'cover',
-        }}/>
+      <header
+        className={classnames("hero hero--primary", styles.heroBanner)}
+        style={{ backgroundColor: "#24272D" }}
+      >
+        <img
+          src="img/hero.svg"
+          alt="hero"
+          style={{
+            width: "100%",
+            minHeight: "100%",
+            objectFit: "cover",
+          }}
+        />
       </header>
       <main>
         <div className={styles.heroSection}>
@@ -79,7 +86,10 @@ function Home() {
           </div>
         </div>
         <div className={styles.newsSection}>
-          <p className={styles.newsTitle} style={{ fontSize: '1.8em', fontWeight: 'bold' }}>
+          <p
+            className={styles.newsTitle}
+            style={{ fontSize: "1.8em", fontWeight: "bold" }}
+          >
             <Translate
               id="homepage.news.title"
               description="homepage.news title"
@@ -92,15 +102,11 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              The meetup is scheduled for Wednesday, Feb 22th from 7:30pm to 9:50pm.
-              You can [apply for the meetup](https://www.meetup.com/ko-KR/crossplatformkorea/
-              events/291351883).
-
-              On the day, there will be a presentation on Flutter Application with GetX pattern and networking by group. While networking, you will be able to freely talk, set missions, and contribute to future meetups.
-              Any activity is irrelevant as long as the mission is to share cross-platform knowledge to community. I would appreciate it if you could confirm with the operator in advance.
-
-              Please apply for the meetup through the [Apply] button below 👍
-              </Translate>
+              The meetup is scheduled for Wednesday, March 29th from
+              7:30-9:40pm. We brought in a special speaker for the current
+              month. Check out the meetup and speakers through [Community] ➡
+              [Recent News].
+            </Translate>
           </p>
           <div className={styles.buttons}>
             <Link
@@ -108,20 +114,36 @@ function Home() {
                 "button button--outline button--secondary button--lg",
                 styles.takeatour
               )}
-              to={'https://www.meetup.com/ko-KR/crossplatformkorea/events/291351883'}
+              to={"docs/current/news"}
+            >
+              <Translate
+                id="homepage.recentNews"
+                description="homepage.recentNews description"
+              >
+                Recent News
+              </Translate>
+            </Link>
+            <div style={{width: 12}}/>
+            <Link
+              className={classnames(
+                "button button--outline button--secondary button--lg",
+                styles.takeatour
+              )}
+              to={
+                "https://www.meetup.com/ko-KR/crossplatformkorea/events/291975474"
+              }
               // to={useBaseUrl("/blog/20221114-meetup")}
             >
               <Translate
                 id="homepage.apply"
                 description="homepage.apply description"
               >
-                Apply
+                Apply for meetup
               </Translate>
             </Link>
           </div>
         </div>
-        <div className={styles.newsContent}>
-        </div>
+        <div className={styles.newsContent}></div>
       </main>
     </Layout>
   );

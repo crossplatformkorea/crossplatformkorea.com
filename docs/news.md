@@ -4,6 +4,12 @@ title: News
 sidebar_label: News
 ---
 
+## March
+The meetup is scheduled for Wednesday, March 29th from 7:30-9:40pm.
+You can [register for the meetup here](https://www.meetup.com/en-KR/crossplatformkorea/events/291975474).
+
+We brought in a special speaker for the current month. [Florian Ludot](https://github.com/florianldt) serves as CTO of [Avanssion Inc](https://avanssion.com) and was born and raised in France. At this meetup, he plans to share the know-how accumulated over many years of close collaboration with the development and design teams.
+
 ## February
 The meetup is scheduled for Wednesday, Feb 22th from 7:30pm to 9:50pm.
 You can [apply for the meetup](https://www.meetup.com/ko-KR/crossplatformkorea/
