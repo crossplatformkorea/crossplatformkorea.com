@@ -9,7 +9,7 @@
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[January Meetup]]></title>
-        <id>meetup-20230125</id>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20230125</id>
         <link href="https://crossplatformkorea.com/en/blog/meetup-20230125"/>
         <updated>2023-01-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[The first Cross-Platform Korea meetup was held. In 2023, there should be more beneficial knowledge sharing time.]]></summary>
@@ -24,7 +24,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[November Meetup]]></title>
-        <id>meetup-20221130</id>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20221130</id>
         <link href="https://crossplatformkorea.com/en/blog/meetup-20221130"/>
         <updated>2022-11-30T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[At this meetup, presentations were made in groups determined at the previous meetup. We would like to thank the presenters again for their hard work.]]></summary>
@@ -37,7 +37,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[November Meetup Notice]]></title>
-        <id>meetup-20221114</id>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20221114</id>
         <link href="https://crossplatformkorea.com/en/blog/meetup-20221114"/>
         <updated>2022-11-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hello 👋]]></summary>
@@ -54,7 +54,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[October Meetup]]></title>
-        <id>meetup-20221026</id>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20221026</id>
         <link href="https://crossplatformkorea.com/en/blog/meetup-20221026"/>
         <updated>2022-10-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[A meetup event was held on October 26th. We briefly introduced the contents of the current meetup.]]></summary>
@@ -67,7 +67,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[Code push experience]]></title>
-        <id>code-push</id>
+        <id>https://crossplatformkorea.com/en/blog/code-push</id>
         <link href="https://crossplatformkorea.com/en/blog/code-push"/>
         <updated>2022-10-24T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[JeffGuKang shared talks about updating mobile clients on the fly via CodePush.]]></summary>
@@ -83,7 +83,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[Easy Build & Test Deployments with App Center]]></title>
-        <id>app-center</id>
+        <id>https://crossplatformkorea.com/en/blog/app-center</id>
         <link href="https://crossplatformkorea.com/en/blog/app-center"/>
         <updated>2022-10-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.]]></summary>
@@ -99,7 +99,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[October Meetup Notice]]></title>
-        <id>meetup-20221026</id>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20221026</id>
         <link href="https://crossplatformkorea.com/en/blog/meetup-20221026"/>
         <updated>2022-10-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hello 👋]]></summary>
@@ -115,7 +115,7 @@ Please check the <a href="/en/docs/current/plan">meetup policy</a> for the meetu
     </entry>
     <entry>
         <title type="html"><![CDATA[New GitHub stats visualization]]></title>
-        <id>dooboo-stats</id>
+        <id>https://crossplatformkorea.com/en/blog/dooboo-stats</id>
         <link href="https://crossplatformkorea.com/en/blog/dooboo-stats"/>
         <updated>2022-09-29T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Introducing a new way to present your GitHub stats.]]></summary>
@@ -133,11 +133,11 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
     </entry>
     <entry>
         <title type="html"><![CDATA[Kakao Login Module Web Support]]></title>
-        <id>kakao-login-web</id>
+        <id>https://crossplatformkorea.com/en/blog/kakao-login-web</id>
         <link href="https://crossplatformkorea.com/en/blog/kakao-login-web"/>
         <updated>2022-09-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[This is the content of the Cross-Platform Korea meetup on August 31st. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the React Native Kakao Login open source, the problems he encountered, and how he solved them.]]></summary>
-        <content type="html"><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">Cross-Platform Korea meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a class="hash-link" href="#related-pr" title="Direct link to heading">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">Cross-Platform Korea meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a href="#related-pr" class="hash-link" aria-label="Direct link to Related PR" title="Direct link to Related PR">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
         <author>
             <name>nain93</name>
             <uri>https://github.com/nain93</uri>
@@ -150,7 +150,7 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
     </entry>
     <entry>
         <title type="html"><![CDATA[Greetings]]></title>
-        <id>intro</id>
+        <id>https://crossplatformkorea.com/en/blog/intro</id>
         <link href="https://crossplatformkorea.com/en/blog/intro"/>
         <updated>2022-09-24T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hello. This is Hyo, the organizer of Cross-Platform Korea.]]></summary>

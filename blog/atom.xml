@@ -9,7 +9,7 @@
     <icon>https://crossplatformkorea.com/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[1월 밋업]]></title>
-        <id>meetup-20230125</id>
+        <id>https://crossplatformkorea.com/blog/meetup-20230125</id>
         <link href="https://crossplatformkorea.com/blog/meetup-20230125"/>
         <updated>2023-01-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[첫 크로스플랫폼 코리아 밋업을 열었습니다. 앞으로 2023 계묘년에는 더욱 유익한 지식공유 시간이 있으면 합니다.]]></summary>
@@ -25,7 +25,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[11월 밋업]]></title>
-        <id>meetup-20221130</id>
+        <id>https://crossplatformkorea.com/blog/meetup-20221130</id>
         <link href="https://crossplatformkorea.com/blog/meetup-20221130"/>
         <updated>2022-11-30T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[이번 밋업은 저번 밋업에서 정해진 조별로 발표를 진행하였습니다. 수고해주신 발표자분들께 다시 한번 감사를 표합니다.]]></summary>
@@ -38,7 +38,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[11월 밋업 공지]]></title>
-        <id>meetup-20221114</id>
+        <id>https://crossplatformkorea.com/blog/meetup-20221114</id>
         <link href="https://crossplatformkorea.com/blog/meetup-20221114"/>
         <updated>2022-11-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[안녕하세요 👋]]></summary>
@@ -55,7 +55,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[10월 밋업]]></title>
-        <id>meetup-20221026</id>
+        <id>https://crossplatformkorea.com/blog/meetup-20221026</id>
         <link href="https://crossplatformkorea.com/blog/meetup-20221026"/>
         <updated>2022-10-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[10월 26일 밋업 행사를 진행했습니다. 간단하게 현재 진행중이 밋업 내용을 소개했습니다.]]></summary>
@@ -68,7 +68,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[CodePush 사용기]]></title>
-        <id>code-push</id>
+        <id>https://crossplatformkorea.com/blog/code-push</id>
         <link href="https://crossplatformkorea.com/blog/code-push"/>
         <updated>2022-10-24T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[강명구님이 CodePush를 통해 즉각적으로 모바일 클라이언트를 업데이트하는 방법에 대한 이야기를 공유해주셨습니다.]]></summary>
@@ -84,7 +84,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[App Center로 손쉬운 빌드 & 테스트 배포 구축]]></title>
-        <id>app-center</id>
+        <id>https://crossplatformkorea.com/blog/app-center</id>
         <link href="https://crossplatformkorea.com/blog/app-center"/>
         <updated>2022-10-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[React Native로 다양한 앱을 개발하면서 MS의 AppCenter를 어떻게 사용했는지 공유하고자 합니다. 주로 반복적으로 수행해야 하는 테스트를 빌드하고 배포하는 것에 관한 것입니다.]]></summary>
@@ -100,7 +100,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[10월 밋업 공지]]></title>
-        <id>meetup-20221026</id>
+        <id>https://crossplatformkorea.com/blog/meetup-20221026</id>
         <link href="https://crossplatformkorea.com/blog/meetup-20221026"/>
         <updated>2022-10-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[안녕하세요 👋]]></summary>
@@ -116,7 +116,7 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[새로운 GitHub 통계 시각화]]></title>
-        <id>dooboo-stats</id>
+        <id>https://crossplatformkorea.com/blog/dooboo-stats</id>
         <link href="https://crossplatformkorea.com/blog/dooboo-stats"/>
         <updated>2022-09-29T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[새로운 방식으로 나의 GitHub 통계를 주는 방법을 소개합니다.]]></summary>
@@ -134,11 +134,11 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
     </entry>
     <entry>
         <title type="html"><![CDATA[카카오로그인 모듈 웹 지원]]></title>
-        <id>kakao-login-web</id>
+        <id>https://crossplatformkorea.com/blog/kakao-login-web</id>
         <link href="https://crossplatformkorea.com/blog/kakao-login-web"/>
         <updated>2022-09-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[크로스플랫폼 코리아 8월 31일 밋업 내용입니다. 뉴뉴 프론트엔드 개발자 규남규님께서 리액트 네이티브 카카오로그인 오픈소스에 카카오 웹 로그인 기능을 기여해본 과정과 겪었던 문제들, 해결했던 방법등을 공유하였습니다.]]></summary>
-        <content type="html"><![CDATA[<p><a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">크로스플랫폼 코리아 8월 31일 밋업</a> 내용입니다. 뉴뉴 프론트엔드 개발자 규남규님께서 리액트 네이티브 카카오로그인 오픈소스에 카카오 웹 로그인 기능을 기여해본 과정과 겪었던 문제들, 해결했던 방법등을 공유하였습니다.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="관련-pr">관련 PR<a class="hash-link" href="#관련-pr" title="제목으로 바로 가기">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">크로스플랫폼 코리아 8월 31일 밋업</a> 내용입니다. 뉴뉴 프론트엔드 개발자 규남규님께서 리액트 네이티브 카카오로그인 오픈소스에 카카오 웹 로그인 기능을 기여해본 과정과 겪었던 문제들, 해결했던 방법등을 공유하였습니다.</p><p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="관련-pr">관련 PR<a href="#관련-pr" class="hash-link" aria-label="제목으로 바로 가기" title="제목으로 바로 가기">​</a></h3><ul><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li><li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li></ul>]]></content>
         <author>
             <name>nain93</name>
             <uri>https://github.com/nain93</uri>
@@ -151,7 +151,7 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
     </entry>
     <entry>
         <title type="html"><![CDATA[인사말]]></title>
-        <id>intro</id>
+        <id>https://crossplatformkorea.com/blog/intro</id>
         <link href="https://crossplatformkorea.com/blog/intro"/>
         <updated>2022-09-24T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[안녕하세요. 크로스플랫폼 코리아 주최자 장효찬입니다.]]></summary>
