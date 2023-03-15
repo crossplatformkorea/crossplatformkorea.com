@@ -8,7 +8,7 @@ sidebar_label: 밋업
 
 ### 밋업 신청
 
-밋업 이벤트 현황은 [리액트네이티스서울 밋업](https://www.meetup.com/crossplatformkorea)에서 확인 가능합니다.
+밋업 이벤트 현황은 [크로스플랫폼 코리아 밋업](https://www.meetup.com/crossplatformkorea)에서 확인 가능합니다.
 
 ### 공간 지원
 
