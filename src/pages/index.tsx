@@ -87,10 +87,10 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              The meetup is scheduled for Wednesday, March 29th from
-              7:30-9:40pm. We brought in a special speaker for the current
-              month. Check out the meetup and speakers through [Community] ➡
-              [Recent News].
+              The meetup is scheduled for Wednesday, April 26th from 7:30 PM to
+              9:40 PM. The topic for this month's event will be Microsoft's
+              MAUI. An official announcement will be posted soon, so please stay
+              tuned and show your interest by attending the event.
             </Translate>
           </p>
           <div className={styles.buttons}>
@@ -108,8 +108,8 @@ function Home() {
                 Recent News
               </Translate>
             </Link>
-            <div style={{width: 12}}/>
-            <Link
+            <div style={{ width: 12 }} />
+            {/* <Link
               className={classnames(
                 "button button--outline button--secondary button--lg",
                 styles.beSpeaker
@@ -117,7 +117,6 @@ function Home() {
               to={
                 "https://www.meetup.com/ko-KR/crossplatformkorea/events/291975474"
               }
-              // to={useBaseUrl("/blog/20221114-meetup")}
             >
               <Translate
                 id="homepage.apply"
@@ -125,9 +124,9 @@ function Home() {
               >
                 Apply for meetup
               </Translate>
-            </Link>
+            </Link> */}
           </div>
-          <div style={{height: 12}}/>
+          <div style={{ height: 12 }} />
         </div>
       </main>
     </Layout>

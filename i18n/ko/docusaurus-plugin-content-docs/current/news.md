@@ -4,6 +4,9 @@ title: 최근 소식
 sidebar_label: 최근 소식
 ---
 
+## 4월
+4월 밋업은 4월 26일 수요일 오후 7시 30분부터 9시 40까지 예정되어 있습니다. 밋업 신청은 곧 열릴 예정이며, 빠르게 확인하고 싶다면 [크로스플랫폼 코리아 슬랙](https://dooboolab.com/joinCPKorea)에 참여해주세요.
+
 ## 3월
 밋업은 3월 29일 수요일 오후 7시 30분부터 9시 40분까지 예정되어 있습니다.
 [여기서 밋업 신청](https://www.meetup.com/ko-KR/crossplatformkorea/events/291975474)을 하실 수 있습니다.

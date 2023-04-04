@@ -4,6 +4,9 @@ title: News
 sidebar_label: News
 ---
 
+## April
+The meetup is scheduled for Wednesday, April 26th from 7:30 PM to 9:40 PM. The registration for the meetup will be opened soon. To stay updated on the registration and get notified quickly, please join the [Cross-Platform Korea Slack community](https://dooboolab.com/joinCPKorea).
+
 ## March
 The meetup is scheduled for Wednesday, March 29th from 7:30-9:40pm.
 You can [register for the meetup here](https://www.meetup.com/en-KR/crossplatformkorea/events/291975474).
