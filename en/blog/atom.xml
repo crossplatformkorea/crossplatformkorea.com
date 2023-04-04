@@ -2,11 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-02-22T00:00:00.000Z</updated>
+    <updated>2023-03-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[March Meetup]]></title>
+        <id>https://crossplatformkorea.com/en/blog/meetup-20230329</id>
+        <link href="https://crossplatformkorea.com/en/blog/meetup-20230329"/>
+        <updated>2023-03-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Florian Ludot, the CTO of Avanssion Inc., gave a presentation introducing Storybook, a tool that helps developers build scalable and effective services. During the presentation, he guided the audience through the Storybook workflow, from the initial design phase to implementation, deployment, publishing and integration of component libraries, and shared tips and best practices for iterating products at lightning speed. He also emphasized the importance of innovating the UI development process and taking projects to the next level.]]></summary>
+        <content type="html"><![CDATA[<p>Florian Ludot, the CTO of Avanssion Inc., gave a presentation introducing Storybook, a tool that helps developers build scalable and effective services. During the presentation, he guided the audience through the Storybook workflow, from the initial design phase to implementation, deployment, publishing and integration of component libraries, and shared tips and best practices for iterating products at lightning speed. He also emphasized the importance of innovating the UI development process and taking projects to the next level.</p><p>Florian Ludot was born and raised in France, spent four years in Japan, and recently moved to Seoul as a developer. He expressed his delight in having had fantastic opportunities to work closely with development and design teams, and to share his knowledge with anyone interested in learning more about the field. He also announced that he is preparing the Seoul iOS Meetup, where everyone is welcome to gather and share knowledge.</p><p>For those who missed the meetup, the video is available on <a href="https://www.youtube.com/watch?v=ICpn4JrnIHY" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=ICpn4JrnIHY</a>.</p><h1>Picture of meetup</h1><p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788078-8a44dd2b-bdd5-4739-af7c-8194602527e2.jpg" alt="IMG_4117" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788063-c46111d6-71b2-4a73-9835-2aba7f865758.jpg" alt="IMG_4117" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788086-741c93e8-fa57-4be5-9e66-7c593c4a62a6.jpg" alt="IMG_4118" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788088-f37b3e28-1819-47fd-b854-bf6b6f684f2c.jpg" alt="IMG_4119" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788102-dbf73636-ac92-4599-9110-9214803adbce.jpg" alt="IMG_4122" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788106-eb05e05c-e168-43f9-be9f-eb7a4093f028.jpg" alt="IMG_4123" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788112-43af8d70-2efd-40fe-bf7d-26531c7724e1.jpg" alt="IMG_4125" class="img_ev3q"></p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[February Meetup]]></title>
         <id>https://crossplatformkorea.com/en/blog/meetup-20230222</id>

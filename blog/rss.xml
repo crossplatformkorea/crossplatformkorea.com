@@ -4,10 +4,25 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Wed, 22 Feb 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 29 Mar 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ko</language>
+        <item>
+            <title><![CDATA[3월 밋업]]></title>
+            <link>https://crossplatformkorea.com/blog/meetup-20230329</link>
+            <guid>https://crossplatformkorea.com/blog/meetup-20230329</guid>
+            <pubDate>Wed, 29 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Florian Ludot은 Avanssion Inc.의 CTO로서, 개발자가 확장 가능하고 효과적인 서비스를 구축할 수 있도록 도와주는 도구인 Storybook을 소개하는 발표를 했습니다. 이번 발표에서는 초기 디자인 단계부터 구현 및 배포, 구성 요소 라이브러리 게시 및 통합에 이르기까지 Storybook 워크플로우를 안내하였으며, UI 개발 프로세스를 혁신하고 프로젝트를 다음 단계로 끌어올릴 수 있는 팁과 모범 사례를 공유하였습니다.]]></description>
+            <content:encoded><![CDATA[<p>Florian Ludot은 Avanssion Inc.의 CTO로서, 개발자가 확장 가능하고 효과적인 서비스를 구축할 수 있도록 도와주는 도구인 Storybook을 소개하는 발표를 했습니다. 이번 발표에서는 초기 디자인 단계부터 구현 및 배포, 구성 요소 라이브러리 게시 및 통합에 이르기까지 Storybook 워크플로우를 안내하였으며, UI 개발 프로세스를 혁신하고 프로젝트를 다음 단계로 끌어올릴 수 있는 팁과 모범 사례를 공유하였습니다.</p><p>Florian Ludot은 프랑스에서 태어나고 자랐으며, 일본에서 4년을 보낸 후 최근에는 서울로 이사한 개발자입니다. 그는 개발 및 디자인 팀과 긴밀히 협력할 수 있는 환상적인 기회를 가졌으며, 이 분야에 대해 더 배우고 싶은 모든 사람과 지식을 공유할 수 있어 항상 기쁘다고 말하였습니다. </p><p>밋업 영상은 <a href="https://www.youtube.com/watch?v=ICpn4JrnIHY" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=ICpn4JrnIHY</a> 에서 확인해주세요.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="3월-밋업-사진">3월 밋업 사진<a href="#3월-밋업-사진" class="hash-link" aria-label="제목으로 바로 가기" title="제목으로 바로 가기">​</a></h2><p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788078-8a44dd2b-bdd5-4739-af7c-8194602527e2.jpg" alt="IMG_4117" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788063-c46111d6-71b2-4a73-9835-2aba7f865758.jpg" alt="IMG_4117" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788086-741c93e8-fa57-4be5-9e66-7c593c4a62a6.jpg" alt="IMG_4118" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788088-f37b3e28-1819-47fd-b854-bf6b6f684f2c.jpg" alt="IMG_4119" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788102-dbf73636-ac92-4599-9110-9214803adbce.jpg" alt="IMG_4122" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788106-eb05e05c-e168-43f9-be9f-eb7a4093f028.jpg" alt="IMG_4123" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788112-43af8d70-2efd-40fe-bf7d-26531c7724e1.jpg" alt="IMG_4125" class="img_ev3q"></p>]]></content:encoded>
+            <category>Meetup</category>
+        </item>
         <item>
             <title><![CDATA[2월 밋업]]></title>
             <link>https://crossplatformkorea.com/blog/meetup-20230222</link>
