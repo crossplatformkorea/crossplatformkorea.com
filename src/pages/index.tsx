@@ -109,13 +109,13 @@ function Home() {
               </Translate>
             </Link>
             <div style={{ width: 12 }} />
-            {/* <Link
+            <Link
               className={classnames(
                 "button button--outline button--secondary button--lg",
                 styles.beSpeaker
               )}
               to={
-                "https://www.meetup.com/ko-KR/crossplatformkorea/events/291975474"
+                "https://www.meetup.com/crossplatformkorea/events/292744647"
               }
             >
               <Translate
@@ -124,7 +124,7 @@ function Home() {
               >
                 Apply for meetup
               </Translate>
-            </Link> */}
+            </Link>
           </div>
           <div style={{ height: 12 }} />
         </div>
