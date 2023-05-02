@@ -2,11 +2,24 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-03-29T00:00:00.000Z</updated>
+    <updated>2023-04-26T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[4월 밋업]]></title>
+        <id>https://crossplatformkorea.com/blog/meetup-20230426</id>
+        <link href="https://crossplatformkorea.com/blog/meetup-20230426"/>
+        <updated>2023-04-26T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[4월 밋업에서는 2월 플러터 밋업에 이어서 마이크로소프트의 MAUI 관련 내용을 담았습니다. 우선 먼저 React Native 개발자로서 MAUI를 다룬 소감을 아이디어샘 박태성님이 공유해주셨습니다.]]></summary>
+        <content type="html"><![CDATA[<p>4월 밋업에서는 2월 플러터 밋업에 이어서 마이크로소프트의 <a href="https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-7.0" target="_blank" rel="noopener noreferrer">MAUI</a> 관련 내용을 담았습니다. 우선 먼저 <a href="https://www.youtube.com/watch?v=9JKgfVz_Q_4" target="_blank" rel="noopener noreferrer">React Native 개발자로서 MAUI</a>를 다룬 소감을 아이디어샘 박태성님이 공유해주셨습니다.</p><p>두번째로 Some other place의 김상현님의 발표가 이어졌습니다. 발표 제목은 <a href="https://www.youtube.com/watch?v=LgO6KIHc5OU" target="_blank" rel="noopener noreferrer">MAUI, 네이티브 친화적 크로스 플랫폼, 이것이 그것입니다</a>로 링크를 통해 발표 내용을 확인할 수 있습니다. MAUI가 React Native와 Flutter와 어떻게 다른지를 중점적으로 다루는 내용입니다.</p><p>저희는 발표자 분들께 $100불의 발표비를 지급드리고 있으며 발표 내용도 15~50분 자율적으로 캐주얼하게 제공해주시면 됩니다. 관심있으신 분은 <a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">발표 신청서</a>를 통해 진행해주세요. 감사합니다 🙇🏻‍♂️</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[3월 밋업]]></title>
         <id>https://crossplatformkorea.com/blog/meetup-20230329</id>

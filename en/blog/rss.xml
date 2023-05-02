@@ -4,10 +4,19 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/en/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Wed, 29 Mar 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 26 Apr 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[April Meetup]]></title>
+            <link>https://crossplatformkorea.com/en/blog/meetup-20230426</link>
+            <guid>https://crossplatformkorea.com/en/blog/meetup-20230426</guid>
+            <pubDate>Wed, 26 Apr 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[In the April meetup, we continued with content related to Microsoft's MAUI following the February Flutter meetup. First, Park Tae-sung from Idea Sam shared his thoughts on MAUI as a React Native developer.]]></description>
+            <content:encoded><![CDATA[<p>In the April meetup, we continued with content related to <a href="https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-7.0" target="_blank" rel="noopener noreferrer">Microsoft's MAUI</a> following the February Flutter meetup. First, Park Tae-sung from Idea Sam shared his <a href="https://www.youtube.com/watch?v=9JKgfVz_Q_4" target="_blank" rel="noopener noreferrer">thoughts on MAUI as a React Native developer</a>.</p><p>Secondly, Kim Sang-Hyun from Some Other Place gave a presentation. The title of the presentation was <a href="https://www.youtube.com/watch?v=LgO6KIHc5OU" target="_blank" rel="noopener noreferrer">MAUI, a Native-friendly Cross-platform, This is It</a>, and you can check the content through the link. The presentation mainly focuses on how MAUI is different from React Native and Flutter.</p><p>We provide a presentation fee of $100 to the speakers, and the presentation can be casually given for 15 to 50 minutes at your discretion. If you are interested, please proceed through the <a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">presentation application form</a>. Thank you 🙇🏻‍♂️</p>]]></content:encoded>
+            <category>Meetup</category>
+        </item>
         <item>
             <title><![CDATA[March Meetup]]></title>
             <link>https://crossplatformkorea.com/en/blog/meetup-20230329</link>
