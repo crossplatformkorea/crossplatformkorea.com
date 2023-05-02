@@ -87,10 +87,10 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              The meetup is scheduled for Wednesday, April 26th from 7:30 PM to
-              9:40 PM. The topic for this month's event will be Microsoft's
-              MAUI. An official announcement will be posted soon, so please stay
-              tuned and show your interest by attending the event.
+              The meetup is scheduled for Wednesday, May 31th from 7:30 PM to
+              9:50 PM. The topic for this month's event will be about React Native UI component consideration.
+              Also, the special event is prepared on that day, so please show your interest and participation 🙇🏻‍♂️.
+              Hurry up and [register for the meetup] through the link below.
             </Translate>
           </p>
           <div className={styles.buttons}>
@@ -115,7 +115,7 @@ function Home() {
                 styles.beSpeaker
               )}
               to={
-                "https://www.meetup.com/crossplatformkorea/events/292744647"
+                "https://www.meetup.com/crossplatformkorea/events/293270174"
               }
             >
               <Translate
