@@ -7,6 +7,8 @@ sidebar_label: News
 ## May
 The June meetup is scheduled for Wednesday, June 28, from 7:30 PM to 9:50 PM. On the day, there will be group discussions on the topic from May, and new groups will be formed afterwards. We look forward to your interest and participation 🙇🏻‍♂️. Please hurry and [apply for the meetup](https://www.meetup.com/ko-KR/crossplatformkorea/events/293904379).
 
+Reflecting the survey that preferred a simple after-party after the meet-up, there will be an after-party in June 🍻.
+
 ## April
 The meetup is scheduled for Wednesday, April 26th from 7:30 PM to 9:40 PM. The registration for the meetup will be opened soon. To stay updated on the registration and get notified quickly, please join the [Cross-Platform Korea Slack community](https://dooboolab.com/joinCPKorea).
 
