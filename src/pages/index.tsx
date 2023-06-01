@@ -87,7 +87,7 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              The meetup is scheduled for Wednesday, May 31th from 7:30 PM to
+              The meetup is scheduled for Wednesday, June 28th from 7:30 PM to
               9:50 PM. The topic for this month's event will be about React Native UI component consideration.
               Also, the special event is prepared on that day, so please show your interest and participation 🙇🏻‍♂️.
               Hurry up and [register for the meetup] through the link below.
@@ -115,7 +115,7 @@ function Home() {
                 styles.beSpeaker
               )}
               to={
-                "https://www.meetup.com/crossplatformkorea/events/293270174"
+                "https://www.meetup.com/crossplatformkorea/events/293904379"
               }
             >
               <Translate
