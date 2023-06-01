@@ -4,10 +4,19 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Wed, 26 Apr 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 01 May 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ko</language>
+        <item>
+            <title><![CDATA[5월 밋업]]></title>
+            <link>https://crossplatformkorea.com/blog/meetup-20230531</link>
+            <guid>https://crossplatformkorea.com/blog/meetup-20230531</guid>
+            <pubDate>Mon, 01 May 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[5월 밋업에서는 글쓴이가 UI 컴포넌트에 대한 고찰 그리고 디자인 시스템에 대해서 1시간 가량 발표를 진행했습니다.내용은 전반적으로 우리가 많은 UI 컴포넌트를 개발하면서 놓지는 중요한 요소들에 대한 설명들을 하였고 UI 컴포넌트 디자인 원칙(사용자 중심, 일관성, 단순성, 피드백)에 따라 기능 세트를 정의하고 props를 작성해나가는 방법에 대해 알아보았습니다. 마지막으로 단순성을 유지하기 위해 가능한 뺄 수 있는 모든 프롭스나 스텝들을 줄여야 하는 것을 한번 더 각인시켰습니다.]]></description>
+            <content:encoded><![CDATA[<p>5월 밋업에서는 <a href="https://github.com/hyochan" target="_blank" rel="noopener noreferrer">글쓴이</a>가 UI 컴포넌트에 대한 고찰 그리고 디자인 시스템에 대해서 1시간 가량 발표를 진행했습니다.내용은 전반적으로 우리가 많은 UI 컴포넌트를 개발하면서 놓지는 중요한 요소들에 대한 설명들을 하였고 UI 컴포넌트 디자인 원칙(사용자 중심, 일관성, 단순성, 피드백)에 따라 기능 세트를 정의하고 props를 작성해나가는 방법에 대해 알아보았습니다. 마지막으로 단순성을 유지하기 위해 가능한 뺄 수 있는 모든 프롭스나 스텝들을 줄여야 하는 것을 한번 더 각인시켰습니다.</p><p>마지막으로 <a href="https://www.youtube.com/shorts/2RPtB9LgfIw" target="_blank" rel="noopener noreferrer">리액트에서 inline style로 인한 리렌더 방지법을 쇼츠</a>로 제공해드렸습니다. 유익하였으면 <code>구독</code>과 <code>좋아요</code> <code>알림 설정</code> 부탁드립니다.</p><div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">"완벽이란 더 이상 뺄 것이 없는 상태를 이야기한다"는 프랑스의 작가 앙투안 드 생텍쥐페리가 쓴 "리틀 프린스"에서 유래했다고 널리 알려져 있습니다. 이 구문은 정확하게 번역하면 "완벽함이란 더 이상 더할 것이 없는 것이 아니라, 더 이상 뺄 것이 없는 상태를 의미한다"라는 의미입니다. 이것은 기능과 디자인, 그리고 생활의 많은 측면에서 균형과 심플함의 중요성을 강조합니다.</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="클립보드에 코드 복사" title="복사" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>저희는 발표자 분들께 $100불의 발표비를 지급드리고 있으며 발표 내용도 15~50분 자율적으로 캐주얼하게 제공해주시면 됩니다. 관심있으신 분은 <a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">발표 신청서</a>를 통해 진행해주세요. 감사합니다 🙇🏻‍♂️</p>]]></content:encoded>
+            <category>Meetup</category>
+        </item>
         <item>
             <title><![CDATA[4월 밋업]]></title>
             <link>https://crossplatformkorea.com/blog/meetup-20230426</link>
