@@ -87,10 +87,7 @@ function Home() {
               id="homepage.news.description"
               description="homepage.news description"
             >
-              The meetup is scheduled for Wednesday, June 28th from 7:30 PM to
-              9:50 PM. The topic for this month's event will be about React Native UI component consideration.
-              Also, the special event is prepared on that day, so please show your interest and participation 🙇🏻‍♂️.
-              Hurry up and [register for the meetup] through the link below.
+              In July, we have a special event on blockchain. We appreciate your interest and participation :)
             </Translate>
           </p>
           <div className={styles.buttons}>
@@ -108,7 +105,7 @@ function Home() {
                 Recent News
               </Translate>
             </Link>
-            <div style={{ width: 12 }} />
+            {/* <div style={{ width: 12 }} />
             <Link
               className={classnames(
                 "button button--outline button--secondary button--lg",
@@ -124,7 +121,7 @@ function Home() {
               >
                 Apply for meetup
               </Translate>
-            </Link>
+            </Link> */}
           </div>
           <div style={{ height: 12 }} />
         </div>
