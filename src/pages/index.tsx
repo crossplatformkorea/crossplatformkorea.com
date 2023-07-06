@@ -82,14 +82,11 @@ function Home() {
               Upcoming News
             </Translate>
           </p>
-          <p className={styles.newsDescription}>
-            <Translate
-              id="homepage.news.description"
-              description="homepage.news description"
-            >
-              In July, we have a special event on blockchain. We appreciate your interest and participation :)
-            </Translate>
-          </p>
+          <div className={styles.newsDescription}>
+            7월에는 블록체인 특별 행사가 있습니다. 주제: AI 시대, 블록체인이 왜 필요할까?<br/>
+            일정: 7월 19 (수) 오후 7시부터 9시 (2시간)<br/>
+            장소: 강남구 봉은사로 227 우정타워<br/><br/>
+          </div>
           <div className={styles.buttons}>
             <Link
               className={classnames(

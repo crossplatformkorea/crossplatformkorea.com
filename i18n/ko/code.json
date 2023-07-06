@@ -203,10 +203,6 @@
     "message": "다가오는 뉴스",
     "description": "homepage.news.title description"
   },
-  "homepage.news.description": {
-    "message": "7월에는 블록체인 특별 행사가 있습니다. 많은 관심과 참여 바랍니다 :)",
-    "description": "homepage.news.description description"
-  },
   "homepage.recentNews": {
     "message": "최근 소식",
     "description": "homepage.recentNews description"
