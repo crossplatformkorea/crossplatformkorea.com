@@ -11,12 +11,12 @@ Don't miss out on the chance to enter the lucky draw for a gift by participating
 
 📣 Conference Information
 
-· Topic: "Why is blockchain necessary in the age of AI?"
-· Date: July 19th (Wednesday), from 7 PM to 9 PM (2 hours)
-· Location: Woojeong Tower, 227 Bongeunsa-ro, Gangnam-gu
+· Topic: "Why is blockchain necessary in the age of AI?"<br/>
+· Date: July 19th (Wednesday), from 7 PM to 9 PM (2 hours)<br/>
+· Location: Woojeong Tower, 227 Bongeunsa-ro, Gangnam-gu<br/>
 
-· No admission fee
-· Salad catering and beverages will be provided
+· No admission fee<br/>
+· Salad catering and beverages will be provided<br/>
 
 📣 Conference Agenda
 
@@ -29,11 +29,11 @@ Don't miss out on the chance to enter the lucky draw for a gift by participating
 
 🎉 Raffle Event - Gifts worth 100,000 KRW, 50,000 KRW, and 30,000 KRW
 
-Participate in the Dooboo event mission, and those who submit an authenticated shot of the mission result will be entered into a raffle for a gift!
+Participate in the `dooboo` event mission, and those who submit an authenticated shot of the mission result will be entered into a raffle for a gift!
 
-📍 Gift worth 100,000 KRW: 1 person
-📍 Gift worth 50,000 KRW: 1 person
-📍 Gift worth 30,000 KRW: 1 person
+📍 Gift worth 100,000 KRW: 1 person<br/>
+📍 Gift worth 50,000 KRW: 1 person<br/>
+📍 Gift worth 30,000 KRW: 1 person<br/>
 
 
 📍 How to enter
@@ -41,14 +41,16 @@ Participate in the Dooboo event mission, and those who submit an authenticated s
 1. Participate in the mission
 2. Submit the mission result with a photo of the conference location
 
-※ Mission link: https://dooboo.page.link/HyQEDXZhJ7XXs5LG8
-※ Please participate in the mission before the event starts on the day!
-※ You can take the authenticated shot at the venue on the day!
-※ Please take a picture that includes the lecture screen!
+※ Mission link: https://dooboo.page.link/HyQEDXZhJ7XXs5LG8<br/>
+※ Please participate in the mission before the event starts on the day!<br/>
+※ You can take the authenticated shot at the venue on the day!<br/>
+※ Please take a picture that includes the lecture screen!<br/>
 
-📍 Mission participation deadline: July 19th (Wednesday), 7 PM
-📍 Mission result deadline: July 19th (Wednesday), 8:30 PM
+📍 Mission participation deadline: July 19th (Wednesday), 7 PM<br/>
+📍 Mission result deadline: July 19th (Wednesday), 8:30 PM<br/>
 📍 Announcement of the raffle result: The raffle will be held at the event venue on the day.
+
+※ For inquiries (E-mail): support@dooboolab.com
 
 We look forward to your interest and participation 🙇🏻‍♂️
 
