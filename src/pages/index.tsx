@@ -8,6 +8,7 @@
 import Translate, { translate } from "@docusaurus/Translate";
 
 import Layout from "@theme/Layout";
+import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
 import React from "react";
 import classnames from "classnames";
@@ -24,6 +25,13 @@ function Home() {
       title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
+      <Head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8181493727238996"
+          crossOrigin="anonymous"
+        />
+      </Head>
       <header
         className={classnames("hero hero--primary", styles.heroBanner)}
         style={{ backgroundColor: "#24272D" }}
@@ -83,9 +91,14 @@ function Home() {
             </Translate>
           </p>
           <div className={styles.newsDescription}>
-            7월에는 블록체인 특별 행사가 있습니다. 주제: AI 시대, 블록체인이 왜 필요할까?<br/>
-            일정: 7월 19 (수) 오후 7시부터 9시 (2시간)<br/>
-            장소: 강남구 봉은사로 227 우정타워<br/><br/>
+            7월에는 블록체인 특별 행사가 있습니다. 주제: AI 시대, 블록체인이 왜
+            필요할까?
+            <br />
+            일정: 7월 19 (수) 오후 7시부터 9시 (2시간)
+            <br />
+            장소: 강남구 봉은사로 227 우정타워
+            <br />
+            <br />
           </div>
           <div className={styles.buttons}>
             <Link
