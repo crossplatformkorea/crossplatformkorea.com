@@ -2,11 +2,53 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-06-28T00:00:00.000Z</updated>
+    <updated>2023-07-19T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[7월 밋업]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2023-07-19-blockchain</id>
+        <link href="https://crossplatformkorea.com/en/blog/2023-07-19-blockchain"/>
+        <updated>2023-07-19T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[At our July meetup, there was a surprise blockchain seminar. It was an enlightening session where we delved into the current blockchain trends and learned about Sam Altman's ambitious project, Worldcoin. Many were taken aback when an announcement of listing was made just 5 days later on the 24th 😅.]]></summary>
+        <content type="html"><![CDATA[<p>At our July meetup, there was a surprise blockchain seminar. It was an enlightening session where we delved into the current blockchain trends and learned about Sam Altman's ambitious project, Worldcoin. Many were taken aback when an <a href="https://www.coindeskkorea.com/news/articleView.html?idxno=92217" target="_blank" rel="noopener noreferrer">announcement of listing</a> was made just 5 days later on the 24th 😅.</p><p>A special thanks to those who participated in the <a href="https://dooboo.page.link/7Ae2co2wZ7mxACgG8" target="_blank" rel="noopener noreferrer">mission to review the announcement</a> on the <a href="https://dooboo.io" target="_blank" rel="noopener noreferrer">dooboo app</a>. It made the event even more memorable.</p><p>Check out the photos from the event on <a href="https://www.instagram.com/p/CvKD-eXS284/?img_index=1" target="_blank" rel="noopener noreferrer">Instagram</a>.</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hermes 엔진이란]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2023-07-16-hermes</id>
+        <link href="https://crossplatformkorea.com/en/blog/2023-07-16-hermes"/>
+        <updated>2023-07-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hermes is an open-source JavaScript engine developed by Facebook, specifically designed to improve the startup time of React Native apps. It was first introduced in React Native 0.60.4 in 2019.]]></summary>
+        <content type="html"><![CDATA[<p>Hermes is an open-source JavaScript engine developed by Facebook, specifically designed to improve the startup time of React Native apps. It was first introduced in React Native 0.60.4 in 2019.</p><p>React Native apps are typically written in JavaScript, and this code is interpreted by a JavaScript engine before being executed on a device. Previously, most React Native apps used JSC (JavaScriptCore) for code interpretation. However, with an aim to enhance performance, especially for mobile apps, Facebook introduced Hermes.</p><p>The key features and advantages of Hermes are:</p><ol><li><strong>Fast Startup Time</strong>: As Hermes directly executes JavaScript compiled into bytecode, it enhances the app's startup time.</li><li><strong>Low Memory Footprint</strong>: Hermes is designed to minimize memory usage, thereby reducing the overall memory consumption of the app.</li><li><strong>Optimized for React Native</strong>: Hermes is optimized for use with React Native, offering potential performance improvements for typical React Native operations.</li></ol><p>For more information, check out the blog <a href="https://medium.com/crossplatformkorea/hermes-%EC%97%94%EC%A7%84%EC%9D%B4%EB%9E%80-cbeb953e0f10" target="_blank" rel="noopener noreferrer">What is Hermes Engine?</a>.</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Blog" term="Blog"/>
+        <category label="React Native" term="React Native"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React Native New Architecture]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2023-07-16-new-architecture</id>
+        <link href="https://crossplatformkorea.com/en/blog/2023-07-16-new-architecture"/>
+        <updated>2023-07-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[React Native Architecture refers to the internal structure and operating principles of a React Native application. The initial architecture of React Native consisted of several main components, and over time, enhancements and updates were made to improve the performance and stability of the application. This explanation is based on information up to 2021.]]></summary>
+        <content type="html"><![CDATA[<p><code>React Native Architecture</code> refers to the internal structure and operating principles of a React Native application. The initial architecture of React Native consisted of several main components, and over time, enhancements and updates were made to improve the performance and stability of the application. This explanation is based on information up to 2021.</p><ol><li><p><strong>Bridge</strong>: This was a core component of React Native's initial architecture. The Bridge facilitated communication between the JavaScript thread and the Native thread. It was responsible for sending UI updates, events, etc., generated in JavaScript, to the Native code.</p></li><li><p><strong>JavaScript Core (JSC)</strong>: This is the JavaScript engine used in iOS. In Android, the JSC is bundled for distribution.</p></li><li><p><strong>Native Modules</strong>: These are modules in React Native applications that provide access to the native features of a device. For instance, they allow access to the camera, GPS, and file system.</p></li></ol><p>However, Facebook is continuously working to improve the performance and flexibility of React Native's architecture. New architectural updates, like "Fabric" and "TurboModules," have been introduced.</p><ul><li><p><strong>Fabric</strong>: This is a project to rewrite the UI layer of React Native. It aims to achieve faster UI updates and smoother animations. Fabric minimizes the communication between JavaScript and Native, thereby enhancing performance.</p></li><li><p><strong>TurboModules</strong>: These are a rewritten version of Native Modules, aiming to improve the communication performance between the JavaScript thread and the Native thread.</p></li></ul><p>The introduction of this new architecture aims to boost the performance of React Native applications and streamline their integration with Native components.</p><p>For a more detailed understanding, check out <a href="https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-fae32d16f651" target="_blank" rel="noopener noreferrer">The New Architecture of React Native</a>.</p>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Blog" term="Blog"/>
+        <category label="React Native" term="React Native"/>
+        <category label="New Architecture" term="New Architecture"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[June Meetup]]></title>
         <id>https://crossplatformkorea.com/en/blog/meetup-20230628</id>
