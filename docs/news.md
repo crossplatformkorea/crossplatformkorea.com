@@ -4,6 +4,32 @@ title: News
 sidebar_label: News
 ---
 
+## August
+On August 9th, we have a session introducing tRPC, a tool that allows you to easily create end-to-end typesafe APIs. Our speaker from ThetaWon will share their expertise and knowledge gained while developing a product using tRPC. We kindly ask for your interest and participation 🙇🏻‍♂️
+
+📍 Topic: tRPC
+
+📍 Time: August 9th (Wed) 7:30 PM ~ 9:40 PM (2 hours 10 minutes)
+
+📍 Location: 501 Teheran-ro, Gangnam-gu, Seoul (V-Flex)
+* Specific location details will be provided at the 1st floor on the day of the event.
+
+📍 Agenda
+
+- Introduction: Introduction to ThetaWon and sharing their tRPC experience
+- Chapter 1: Binding Frontend and Backend - "What is tRPC?"
+- Chapter 2: tRPC in the wild - Experience of ThetaWon
+- Chapter 3: How tRPC revolutionized startup MVP development
+- Chapter 4: Extra Credit - Implementing MSA on tRPC
+
+📍 How to participate
+
+1. Join the meetup
+2. Participate in the mission
+
+※ Meetup link: https://www.meetup.com/ko-KR/crossplatformkorea/events/295089559/<br/>
+※ Mission link: https://dooboo.page.link/fepBqQkCDvX8Nqun9<br/>
+
 ## July
 We have a special event in July that we would like to announce. It will be a great opportunity for existing Web2 developers to understand Web3.
 

@@ -4,6 +4,31 @@ title: 최근 소식
 sidebar_label: 최근 소식
 ---
 
+## 8월
+8월 9일은 End-to-end typesafe API를 손쉽게 만들 수 있는 tRPC를 소개해 드리는 시간입니다. 스피커로 참여하신 세타원에서 tRPC로 프로덕트를 만들면서 알게 되었던 노하우도 알려드릴 예정이니 많은 관심과 참여 부탁드리겠습니다 🙇🏻‍♂️
+
+#### 📍 주제 : tRPC
+
+#### 📍 시간 : 8월 9일 (수) 오후 7시 30분 ~ 9시 40분 (2시간 10분)
+
+#### 📍 장소 : 서울 강남구 테헤란로 501 (브이플렉스)
+상세 장소는 행사 당일 1층에서 안내해 드립니다.
+
+#### 📍 목차
+- Introduction: 세타원 소개와 tRPC 경험 공유
+- Chapter 1: 프론트엔드와 백엔드 묶기 - “tRPC가 뭔가요”
+- Chapter 2: tRPC in the wild - 세타원의 경험
+- Chapter 3: tRPC가 스타트업 MVP개발을 혁신화한 이유
+- Chapter 4: Extra Credit - tRPC에 MSA 얹기
+
+#### 📍 참여 방법
+
+1. 밋업 참여하기
+2. 미션 참여하기
+
+※ 밋업 링크 : https://www.meetup.com/ko-KR/crossplatformkorea/events/295089559/<br/>
+※ 미션 링크 : https://dooboo.page.link/fepBqQkCDvX8Nqun9<br/>
+
 ## 7월
 7월에는 특별 행사가 있어서 공지드립니다.
 기존의 웹2 개발자분들께 웹3에 대한 이해를 할 수 있는 좋은 기회가 될 것 같습니다.
