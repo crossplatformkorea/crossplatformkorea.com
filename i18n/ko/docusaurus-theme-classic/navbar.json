@@ -3,6 +3,14 @@
     "message": "크로스플랫폼 코리아",
     "description": "The title in the navbar"
   },
+  "item.label.Development": {
+    "message": "개발",
+    "description": "Navbar item with label Development"
+  },
+  "item.label.React Native": {
+    "message": "리액트네이티브",
+    "description": "Navbar item with label React Native"
+  },
   "item.label.Community": {
     "message": "커뮤니티",
     "description": "Navbar item with label Community"

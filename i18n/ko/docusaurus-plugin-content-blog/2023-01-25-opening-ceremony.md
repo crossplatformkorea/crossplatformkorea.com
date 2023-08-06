@@ -23,6 +23,3 @@ tags: [Meetup]
 이어서 [Flutter에서 Navigation을 다루는법 방법](https://www.youtube.com/watch?v=-t9h1dVzRIA&list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&index=2)에 대한 경험을 공유드렸습니다. Built-in 네비게이션과 Go Router에 대한 경험을 다루며 플러터에서 네비게이션을 선택하는데 사전에 알면 좋은 지식들을 담았습니다.
 
 그리고 이어서 [React Native에서 navigation을 다루는 방법](https://www.youtube.com/watch?v=R7uiKmfS1Wo&list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&index=4)을 공유드리며 리액트네이티브에서는 어떤 시도들이 있는지 알아보았습니다.
-
-끝으로 2023년 밋업 계획을 발표하였습니다.
-밋업 계획은 [밋업 방침](/docs/current/plan)에서 확인해주세요.

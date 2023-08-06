@@ -24,6 +24,3 @@ Youngji Noh, the leader, was unable to attend, so the agent awarded the prize mo
 Next, I shared my experience on [How to handle Navigation in Flutter](https://www.youtube.com/watch?v=-t9h1dVzRIA&list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&index=2). It deals with the experience of built-in navigation and Go Router, and contains knowledge that is good to know in advance when choosing navigation in Flutter.
 
 Then, we shared [How to handle navigation in React Native](https://www.youtube.com/watch?v=R7uiKmfS1Wo&list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&index=4) and looked into what React Native is trying to do.
-
-Finally, we announced plans for the 2023 meetup.
-Please check the [meetup policy](/docs/current/plan) for the meetup plan.

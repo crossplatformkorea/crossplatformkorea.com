@@ -5,10 +5,14 @@
   },
   "sidebar.docs.category.Meetup": {
     "message": "밋업",
-    "description": "The label for meetup"
+    "description": "The label for Meetup"
   },
-  "sidebar.docs.category.Resource": {
-    "message": "리소스",
-    "description": "The label for resources"
+  "sidebar.docs.category.Community": {
+    "message": "커뮤니티",
+    "description": "The label for Community"
+  },
+  "sidebar.docs.category.React Native": {
+    "message": "리액트네이티브",
+    "description": "The label for React Native"
   }
 }

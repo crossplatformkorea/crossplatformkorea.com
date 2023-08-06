@@ -12,10 +12,17 @@ const sidebars = {
     "speaker",
     {
       type: "category",
-      label: "Resource",
+      label: "Community",
+      link: { type: "generated-index" },
+      collapsed: true,
+      items: ["community/communication", "community/forums", "community/meetup", "community/opensource"],
+    },
+    {
+      type: "category",
+      label: "React Native",
       link: { type: "generated-index" },
       collapsed: false,
-      items: ["community", "forums", "meetup", "opensource", "plan"],
+      items: ["react-native/intro"],
     },
   ],
 };

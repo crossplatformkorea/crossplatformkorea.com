@@ -1,7 +1,7 @@
 ---
-id: community
-title: Community
-sidebar_label: Community
+id: communication
+title: Communication
+sidebar_label: Communication
 ---
 
 The main channel covered by the community is [Slack](https://slack.com).

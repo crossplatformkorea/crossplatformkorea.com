@@ -44,6 +44,17 @@ module.exports = {
       },
       items: [
         {
+          type: 'dropdown',
+          label: 'Development',
+          position: 'left',
+          items: [
+            {
+              label: 'React Native',
+              href: '/docs/current/category/react-native',
+            },
+          ],
+        },
+        {
           to: "/docs/current/introduction",
           label: "Community",
           position: "left",

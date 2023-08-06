@@ -1,7 +1,7 @@
 ---
-id: community
-title: 커뮤니티
-sidebar_label: 커뮤니티
+id: communication
+title: 커뮤니케이션
+sidebar_label: 커뮤니케이션
 ---
 
 커뮤니티에서 주로 다루는 채널은 [Slack](https://slack.com)입니다.
