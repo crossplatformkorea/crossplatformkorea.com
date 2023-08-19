@@ -6,7 +6,7 @@ sidebar_label: Development Environment for Mac
 
 In this section, we've prepared materials to help even those new to development set up their development environment. This is about the `Mac development environment`, so if you're a Windows user, please check out the [Windows development environment](development-environment-windows).
 
-Please also refer to the [Mac Development Environment Setup Video](https://www.youtube.com/watch?v=o3dfpDaICb4).
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
 
 # Development Environment
 
@@ -16,7 +16,9 @@ We also recommend installing [oh my zsh](https://ohmyz.sh) which further enriche
 
 ## 1. Oh My Zsh
 
-Now, let's install Oh My Zsh. For beginners, we provide an installation method through video. If needed, please watch from [00:05 seconds in the YouTube video](https://youtu.be/o3dfpDaICb4?t=5).
+Now, let's install Oh My Zsh. For beginners, we provide an installation method through video.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=6" title="Oh My Zsh" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 First, visit the [oh my zsh official website](https://ohmyz.sh). Then, scroll down and copy the command under `Install oh-my-zsh via curl` and paste it into your terminal. The copied command is as follows:
 
@@ -44,13 +46,17 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
 
-Copy and execute the command in the terminal to complete the installation. If you wish to specify a different download path, please refer to [the video](https://youtu.be/o3dfpDaICb4?t=53).
+Copy and execute the command in the terminal to complete the installation. If you wish to specify a different download path, please refer to [the video](https://youtu.be/o3dfpDaICb4?t=53) below.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=53" title="Zsh Syntax Highlighting" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Once installed, recognizable commands in the terminal will appear in `green`, and unrecognizable commands will appear in `red`, enhancing the convenience of development.
 
 ## 2. Homebrew
 
-Next, we will install the [package manager](https://en.wikipedia.org/wiki/Package_manager) for macOS called [Homebrew](https://brew.sh). Likewise, an [installation video starts at 1:14](https://youtu.be/o3dfpDaICb4?t=74).
+Next, we will install the [package manager](https://en.wikipedia.org/wiki/Package_manager) for macOS called [Homebrew](https://brew.sh).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=74" title="Homebrew" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 A package manager is a crucial tool for efficiently managing software dependencies within an OS. It might be challenging for those new to development to understand at first, but once you experience a package manager, you will clearly appreciate its significance and convenience.
 
@@ -64,7 +70,7 @@ Copy and paste the command into your terminal. The shell will request your login
 
 ## 3. Install NVM (Node Version Manager) and then Node.js
 
-[Node.js](https://nodejs.org/) is a tool that allows [JavaScript](https://en.wikipedia.org/wiki/JavaScript) to be executed outside the web browser. This has enabled the use of JavaScript when building servers or applications on computers. It allows for fast concurrent processing and has the advantage of being able to work in both [frontend and backend](https://en.wikipedia.org/wiki/Front_and_back_ends) using the same language.
+[Node.js](https://nodejs.org) is a tool that allows [JavaScript](https://en.wikipedia.org/wiki/JavaScript) to be executed outside the web browser. This has enabled the use of JavaScript when building servers or applications on computers. It allows for fast concurrent processing and has the advantage of being able to work in both [frontend and backend](https://en.wikipedia.org/wiki/Front_and_back_ends) using the same language.
 
 You might wonder why you need to install [NVM](https://github.com/nvm-sh/nvm) when you can just install `Node.js`. `NVM` (Node Version Manager) is a tool that allows you to install and manage multiple versions of `Node.js`. If you install `Node.js` directly, you can only use one version, but with `NVM`, you can easily switch between different versions. This has several advantages:
 
@@ -75,7 +81,7 @@ You might wonder why you need to install [NVM](https://github.com/nvm-sh/nvm) wh
 
 Therefore, managing versions through `NVM` is a much more flexible and effective method than just installing `Node.js`.
 
-[Reference video at 1 minute 46 seconds](https://www.youtube.com/watch?v=o3dfpDaICb4&t=106s).
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=106" title="NVM and Node.js" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ### Installing NVM
 
@@ -131,7 +137,9 @@ The `-g` option stands for `global`. Using this option installs the program glob
 
 # 4. iOS Development Environment
 
-Let's set up the `iOS` app development environment. The detailed process can be found at [2 minutes 47 seconds in the video](https://youtu.be/o3dfpDaICb4?t=167).
+Let's set up the `iOS` app development environment.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=167" title="iOS Development Environment" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Download [Xcode](https://developer.apple.com/xcode) from the [App Store](https://www.apple.com/app-store). Note that you must access directly through the built-in App Store application on Mac instead of the App Store link.
 
@@ -141,7 +149,9 @@ Download [Xcode](https://developer.apple.com/xcode) from the [App Store](https:/
 
 ## 5. Android Development Environment
 
-Next, we'll prepare the `Android` app development environment. The detailed process can be found at [3 minutes 23 seconds in the video](https://youtu.be/o3dfpDaICb4?t=203).
+Next, we'll prepare the `Android` app development environment.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=203" title="Android Studio" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ### Watchman
 
@@ -187,7 +197,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 Next, we'll install [Visual Studio Code](https://code.visualstudio.com). Often referred to as `vscode`, it's one of the most beloved code editors among developers worldwide. In the past, editors like [edit plus](https://www.editplus.com), [sublime text](https://www.sublimetext.com), and the now-discontinued [atom](https://github.blog/2022-06-08-sunsetting-atom) were popular. However, many developers have since switched to `vscode` due to its superior features and user experience.
 
-[Installation video reference: 5 minutes 53 seconds](https://youtu.be/o3dfpDaICb4?t=353)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=354" title="Visual Studio Code" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Install using `brew` as follows:
 
@@ -199,9 +209,9 @@ brew install --cask visual-studio-code
 
 Lastly, we'll install [React Native](https://reactnative.dev), which allows for development across `iOS`, `Android`, and `web`.
 
-[Video reference: 6 minutes 46 seconds](https://youtu.be/o3dfpDaICb4?t=406)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=406" title="NVM and Node.js" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For a richer and quicker start to a React Native project, we'll use [dooboo-cli](https://medium.com/crossplatformkorea/new-dooboo-cli-5c60e17a87e0), managed by [Dooboo Lab](https://dooboolab.com).
+For a richer and quicker start to a React Native project, we'll use [dooboo-cli](https://medium.com/crossplatformkorea/new-dooboo-cli-5c60e17a87e0), managed by [dooboolab](https://dooboolab.com).
 
 Open the terminal and input:
 
