@@ -6,7 +6,9 @@ sidebar_label: Development Environment for Windows
 
 In this section, we have prepared resources to help even those new to development set up their development environment. This is for a `Windows development environment`, so if you're a Mac user, please check out [Mac development environment](development-environment-mac).
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4" title="Development Environment for Windows" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
+</div>
 
 # Development Environment
 
@@ -38,7 +40,9 @@ In conclusion, using `Winget` makes software installation and management more st
 
 Let's now install [Oh My Posh](https://ohmyposh.dev).
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4?start=33" title="Oh My Posh" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 Please refer to the [Official Homepage ➡ Docs ➡️ Get Started ➡️ Installation ➡️ Windows](https://ohmyposh.dev/docs/installation/windows) section and enter the command below in the terminal.
 
@@ -109,7 +113,9 @@ While you could directly install `Node.js`, you might wonder why you should inst
 
 Thus, managing versions through `NVM` is more flexible and effective for development than just installing `Node.js`. Now, let's proceed with installing `NVM` and then `Node.js`.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4?start=239" title="Install NVM (Node Version Manager) followed by Node.js installation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ### NVM Installation
 
@@ -149,7 +155,9 @@ npm install - yarn
 
 Next, we'll install [Visual Studio Code](https://code.visualstudio.com). Often referred to as `vscode`, it is one of the most beloved code editors by developers worldwide. In the past, editors like [edit plus](https://www.editplus.com), [sublime text](https://www.sublimetext.com), and the now discontinued [atom](https://github.blog/2022-06-08-sunsetting-atom) were predominantly used. However, due to the advanced features and user experience of `vscode`, many developers have switched to this editor.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4?start=327" title="Installing Visual Studio Code" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 `Visual Studio Code` can be easily installed from the terminal using `winget` with the command below:
 
@@ -173,7 +181,9 @@ If the profile file opens in the `vscode` text editor, it means the installation
 
 `git` is a core tool for code management and collaboration and can be easily installed in a Windows environment through `winget`.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4?start=402" title="Git" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 You can simply install using the command below.
 
@@ -187,7 +197,9 @@ After installation, restart the terminal and check the version with the `git --v
 
 We will now install [Android Studio](https://developer.android.com/studio/install), which provides an integrated development environment for Android. It's also available through `winget`, making the installation process convenient.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4?start=455" title="Android Studio" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 To install the stable version, use `Google.AndroidStudio`, and for the latest version, install `Google.AndroidStudio.Canary`. Here, we'll install the latest version.
 
@@ -213,7 +225,9 @@ Once these settings are complete and you restart the terminal, the `adb` command
 
 Finally, we'll proceed with the installation of [React Native](https://reactnative.dev) which allows development for `iOS`, `Android`, and the `web`. 
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4?start=677" title="React Native and Expo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 To enrich and quickly start the React Native project, we'll use [dooboo-cli](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0) managed by [DoobooLab](https://dooboolab.com).
 

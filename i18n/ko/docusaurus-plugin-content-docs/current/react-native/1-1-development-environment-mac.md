@@ -6,7 +6,9 @@ sidebar_label: 맥 개발 환경
 
 이번 섹션에서는 개발을 입문하는 분들에게도 개발 환경을 설정하는데 도움이 될 수 있도록 자료를 준비했습니다. `맥 개발 환경`이니 윈도우 사용자는 [윈도우 개발 환경](development-environment-window)을 찾아주세요.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE" title="맥 개발 환경" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
+</div>
 
 # 개발 환경
 
@@ -18,7 +20,9 @@ macOS에서는 [Catalina](https://ko.wikipedia.org/wiki/MacOS_%EC%B9%B4%ED%83%88
 
 그러면 이제 Oh My Zsh를 설치해보겠습니다. 초보자 분들을 위해서 설치 방법을 영상으로 제공하고 있습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=5" title="Oh My Zsh" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 우선 [oh my zsh 공식 홈페이지](https://ohmyz.sh)에 방문합니다. 그리고 스크롤을 내려서 `Install oh-my-zsh via curl` 아래 명령어를 복사해서 터미널에 붙여넣습니다. 복사한 명령어는 아래와 같습니다.
 
@@ -54,7 +58,9 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 
 다음으로 맥 OS의 [패키지 관리자](https://ko.wikipedia.org/wiki/%ED%8C%A8%ED%82%A4%EC%A7%80_%EA%B4%80%EB%A6%AC%EC%9E%90)인 [Homebrew](https://brew.sh/index_ko)를 설치해보겠습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=74" title="Homebrew" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 패키지 관리자는 OS 내에서 소프트웨어의 종속성을 효율적으로 관리하는 핵심 도구입니다. 처음 개발을 시작하는 분들에게는 이해하기 어려울 수 있지만, 한번 패키지 관리자를 경험해보면 그 중요성과 편리함을 명확하게 느낄 수 있을 것입니다.
 
@@ -79,7 +85,9 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 
 따라서, `Node.js`만 설치하는 것보다 `NVM`을 통해 버전 관리를 하는 것은 개발에 있어서 훨씬 더 유연하고 효과적인 방법입니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=106" title="NVM (Node Version Manager) 설치 후 Node.js 설치" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ### NVM 설치
 
@@ -137,8 +145,9 @@ npm install -g yarn
 
 앞으로 `iOS` 앱 개발 환경을 살펴보겠습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=168" title="iOS 개발 환경" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
+</div>
 
 [앱 스토어](https://www.apple.com/kr/app-store)에서 [Xcode](https://developer.apple.com/kr/xcode)를 설치합니다. 참고로, 앱 스토어 링크 대신 맥의 내장 앱 스토어 애플리케이션을 통해 직접 접속하셔야 합니다.
 
@@ -150,7 +159,9 @@ npm install -g yarn
 
 다음으로 `Android` 앱 개발 환경을 준비해보겠습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=203" title="Android 개발 환경" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ### Watchman
 
@@ -192,13 +203,17 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 > 경로 설정 시, `ANDROID_HOME`의 경로가 본인의 PC에 맞게 정확하게 설정되었는지 꼭 확인하셔야 합니다. 이를 확인하는 방법은 아래 영상에서 확인하실 수 있습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=336" title="ANDROID_HOME 설정" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ## 6. Visual Studio Code
 
 다음으로, [Visual Studio Code](https://code.visualstudio.com)를 설치하겠습니다. `Visual Studio Code`는 종종 `vscode`로 불리며, 전세계 개발자들에게 사랑받는 코드 편집기 중 하나입니다. 과거에는 [edit plus](https://www.editplus.com), [sublime text](https://www.sublimetext.com), 그리고 현재 지원이 중단된 [atom](https://github.blog/2022-06-08-sunsetting-atom) 같은 편집기들이 주요하게 사용되었었습니다. 그러나 `vscode`의 뛰어난 기능과 사용자 경험으로 많은 개발자들이 이 편집기로 전환하게 되었습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=354" title="Visual Studio Code" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 설치는 `brew`로 아래와 같이 해주세요.
 
@@ -210,14 +225,18 @@ brew install --cask visual-studio-code
 
 마지막으로, `iOS`, `안드로이드`, 그리고 `웹` 등의 개발을 모두 함께 할 수 있는 [리액트네이티브](https://reactnative.dev) 설치를 진행합니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXlIzNcNSlE?start=406" title="리액트네이티브와 엑스포" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 리액트네이티브 프로젝트를 풍요롭게 그리고 빠르게 시작하기 위해 [두부랩](https://dooboolab.com)에서 관리하는 [dooboo-cli](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0)를 사용합니다.
 
 터미널을 열고 아래 명령어를 입력해줍니다.
+
 ```sh
 npx dooboo init
 ```
+
 > `npx`는 `npm` 패키지 실행 도구로, 2017년 `npm` 버전 5.2.0에서 소개되었습니다. 사용자가 전역으로 패키지를 설치하지 않고도 `npm` 레지스트리의 패키지 명령을 직접 실행할 수 있게 해줍니다. 이를 통해, 특정 패키지의 최신 버전을 쉽게 실행하거나, 임시로 패키지를 실행하는 등의 작업이 간편해집니다.
 
 ```sh
@@ -230,6 +249,7 @@ npx dooboo init
 > [Expo](https://docs.expo.dev)는 React Native를 위한 오픈 소스 플랫폼으로, 모바일 앱 개발을 간소화하고 가속화하는 데 도움을 줍니다. 개발자는 Expo를 사용하여 초기 설정 없이 즉시 새 프로젝트를 시작하고, 다양한 네이티브 API에 쉽게 접근할 수 있습니다. 또한, Expo의 개발 툴은 앱을 실시간으로 미리 보면서 즉시 업데이트를 반영할 수 있게 해, 개발 및 디버깅 과정을 더욱 효율적으로 만들어 줍니다.
 
 생성된 프로젝트 이름의 폴더로 이동한 뒤, `yarn`을 사용하여 필요한 로컬 패키지들을 설치합니다. 그 후 `yarn start` 명령어로 프로젝트를 실행합니다. 이후 터미널에 `i`, `a`, `w` 중 하나의 명령어를 입력하면 각각 `iOS` 시뮬레이터, 안드로이드 시뮬레이터, 웹 브라우저가 실행됩니다.
+
 > 만약 웹이 `w`로 실행되지 않는다면, `yarn web` 명령어로 다시 시도해보세요. 안드로이드 에뮬레이터가 실행되지 않는 경우, `Android Studio`를 사용해 새로운 에뮬레이터를 생성해보세요. 관련 자세한 정보는 [안드로이드 가상기기 만들기 및 관리하기](https://developer.android.com/studio/run/managing-avds?hl=ko)를 참조해주세요.
 
 이렇게 설치가 마무리 되었습니다. 앞으로는 코딩에 집중할 수 있습니다 🎉

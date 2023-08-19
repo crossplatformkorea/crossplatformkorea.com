@@ -6,7 +6,9 @@ sidebar_label: 윈도우 개발 환경
 
 이번 섹션에서는 개발을 입문하는 분들에게도 개발 환경을 설정하는데 도움이 될 수 있도록 자료를 준비했습니다. `윈도우 개발 환경`이니 맥 사용자는 [맥 개발 환경](development-environment-mac)을 찾아주세요.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/9Ezbq38_tdA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
+</div>
 
 # 개발 환경
 
@@ -38,7 +40,9 @@ sidebar_label: 윈도우 개발 환경
 
 그러면 이제 [Oh My Posh](https://ohmyposh.dev)를 설치해보겠습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xX-QMJ6VFno?start=33" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 [공식 홈페이지 ➡ Docs ➡️ Get Started ➡️ Installation ➡️ Windows](https://ohmyposh.dev/docs/installation/windows) 섹션을 참고하여 아래 명령어를 터미널에 입력해줍니다.
 
@@ -109,7 +113,9 @@ oh-my-posh init pwsh | Invoke-Expression
 
 따라서, `Node.js`만 설치하는 것보다 `NVM`을 통해 버전 관리를 하는 것은 개발에 있어서 훨씬 더 유연하고 효과적인 방법입니다. 그럼 이제부터 `NVM`을 설치한 후 `Node.js`를 설치해보겠습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xX-QMJ6VFno?start=238" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ### NVM 설치
 
@@ -171,7 +177,9 @@ code $PROFILE
 
 `git`은 코드 관리 및 협업의 핵심 도구로 널리 사용되며, `winget`을 통해 손쉽게 윈도우 환경에서 설치할 수 있습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xX-QMJ6VFno?start=402" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ```sh
 winget install Git.Git
@@ -183,7 +191,9 @@ winget install Git.Git
 
 안드로이드 통합 개발 환경을 제공하는 [안드로이드 스튜디오](https://developer.android.com/studio/install?hl=ko)를 설치해보겠습니다. 이 또한 `winget`으로 제공되어 편하게 설치할 수 있습니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xX-QMJ6VFno?start=455" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 안정적인 버전을 설치하려면 `Google.AndroidStudio`를 최신 버전을 설치하고 싶으시면 `Google.AndroidStudio.Canary`를 설치합니다. 여기서는 최신 버전을 설치합니다.
 
@@ -209,7 +219,9 @@ winget install Google.AndroidStudio.Canary
 
 마지막으로, `iOS`, `안드로이드`, 그리고 `웹` 등의 개발을 모두 함께 할 수 있는 [리액트네이티브](https://reactnative.dev) 설치를 진행합니다.
 
+<div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/xX-QMJ6VFno?start=677" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 리액트네이티브 프로젝트를 풍요롭게 그리고 빠르게 시작하기 위해 [두부랩](https://dooboolab.com)에서 관리하는 [dooboo-cli](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0)를 사용합니다.
 
