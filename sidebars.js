@@ -15,14 +15,23 @@ const sidebars = {
       label: "Community",
       link: { type: "generated-index" },
       collapsed: true,
-      items: ["community/communication", "community/forums", "community/meetup", "community/opensource"],
+      items: [
+        "community/communication",
+        "community/forums",
+        "community/meetup",
+        "community/opensource",
+      ],
     },
     {
       type: "category",
       label: "React Native",
       link: { type: "generated-index" },
       collapsed: false,
-      items: ["react-native/intro"],
+      items: [
+        "react-native/intro",
+        "react-native/development-environment-mac",
+        "react-native/development-environment-windows",
+      ],
     },
   ],
 };
