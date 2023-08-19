@@ -1,0 +1,223 @@
+---
+id: development-environment-mac
+title: 맥 개발 환경
+sidebar_label: 맥 개발 환경
+---
+
+이번 섹션에서는 개발을 입문하는 분들에게도 개발 환경을 설정하는데 도움이 될 수 있도록 자료를 준비했습니다. `맥 개발 환경`이니 윈도우 사용자는 [윈도우 개발 환경](development-environment-window)을 찾아주세요.
+
+[맥 개발 환경 설치 영상](https://www.youtube.com/watch?v=GXlIzNcNSlE)도 함께 참고해주세요.
+
+# 개발 환경
+
+macOS에서는 [Catalina](https://ko.wikipedia.org/wiki/MacOS_%EC%B9%B4%ED%83%88%EB%A6%AC%EB%82%98) 버전인 `10.15`부터 [`zsh`(Z shell)](https://ko.wikipedia.org/wiki/Z_%EC%85%B8)를 기본 쉘로 사용하기 시작했습니다. 이전에는 [`bash`(Bourne Again Shell)](<https://ko.wikipedia.org/wiki/%EB%B0%B0%EC%8B%9C_(%EC%9C%A0%EB%8B%89%EC%8A%A4_%EC%85%B8)>)가 macOS의 기본 쉘이었습니다. 2019년에 발표된 Catalina에서 이 변경이 이루어졌습니다. 이 변화의 배경에는 여러 이유가 있었는데, 그 중 하나는 GNU 프로젝트의 bash 버전의 라이선싱 문제와 관련된 것이었습니다.
+
+그리고 현재 기본쉘인 `zsh`를 더욱 풍부하게 해주는 [oh my zsh](https://ohmyz.sh)를 설치할 것을 권장드립니다. 이유는 전 세계의 개발자들이 즐겨 사용하는 플러그인과 테마를 포함하고 있어 개발이 더 친숙하게 다가올 수 있습니다.
+
+## 1. Oh My Zsh
+
+그러면 이제 Oh My Zsh를 설치해보겠습니다. 초보자 분들을 위해서 설치 방법을 영상으로 제공하고 있습니다. 필요하신 분들은 [유튜브 영상 00:05초](https://youtu.be/GXlIzNcNSlE?t=5)부터 시청하시기 바랍니다.
+
+우선 [oh my zsh 공식 홈페이지](https://ohmyz.sh)에 방문합니다. 그리고 스크롤을 내려서 `Install oh-my-zsh via curl` 아래 명령어를 복사해서 터미널에 붙여넣습니다. 복사한 명령어는 아래와 같습니다.
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+터미널에서 명령어를 실행하면 `Oh My Zsh`가 설치를 시작합니다. 설치 중 `command line developer tools`에 대한 팝업이 나타날 경우 '설치'를 선택해주세요. `Oh My Zsh` 설치에는 `git`이 필요한데, 이 도구는 `command line developer tools`에서 제공됩니다. 따라서, 이것은 설치에 필수적인 도구로 간주하시면 됩니다.
+
+설치가 완료되면 아래와 같이 이쁘게 터미널에서 표시됩니다.
+
+```sh
+         __                                     __
+  ____  / /_     ____ ___  __  __   ____  _____/ /_
+ / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \
+/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / /
+\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/
+                        /____/
+```
+
+그리고 추가적으로 [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)을 설치해보겠습니다. [설치 가이드](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)로 들어가면 [In your ~/.zshrc](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#in-your-zshrc)에 들어가서 아래 명령어를 복사합니다.
+
+```sh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+```
+
+터미널을 열어서 위 명령어를 그대로 복사하면 설치가 완료 됩니다. 혹시라도 다운로드 경로를 따로 지정하고 싶으시면 [영상](https://youtu.be/GXlIzNcNSlE?t=53)을 참고해주세요.
+
+설치가 완료되면 앞으로 터미널에서 인식이 가능한 명령어는 `초록색`으로 인식이 불가능한 명령어는 `빨강색`으로 표시되어 개발의 편의를 높여줍니다.
+
+## 2. Homebrew
+
+다음으로 맥 OS의 [패키지 관리자](https://ko.wikipedia.org/wiki/%ED%8C%A8%ED%82%A4%EC%A7%80_%EA%B4%80%EB%A6%AC%EC%9E%90)인 [Homebrew](https://brew.sh/index_ko)를 설치해보겠습니다. 마찬가지로 [설치 영상이 1:14](https://youtu.be/GXlIzNcNSlE?t=74)부터 제공됩니다.
+
+패키지 관리자는 OS 내에서 소프트웨어의 종속성을 효율적으로 관리하는 핵심 도구입니다. 처음 개발을 시작하는 분들에게는 이해하기 어려울 수 있지만, 한번 패키지 관리자를 경험해보면 그 중요성과 편리함을 명확하게 느낄 수 있을 것입니다.
+
+맥에서 가장 대중적으로 사용되는 패키지 관리자는 [Homebrew](https://brew.sh/index_ko)며 이는 공식 페이지에 있는 아래 명령어로 쉽게 설치가 가능합니다.
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+명령어를 복사하여 터미널에 붙여넣으면 쉘이 로그인 암호를 요청합니다. 해당 암호를 입력하여 설치를 계속 진행해주세요. 설치 과정에서 `Enter` 키 입력 등 다양한 반응을 요구할 수 있으며 터미널의 프롬프트 메시지를 주의 깊게 읽으며 알맞게 진행하시면 됩니다.
+
+## 3. NVM (Node Version Manager) 설치 후 Node.js 설치
+
+[Node.js](https://nodejs.org/ko)는 웹 브라우저 밖에서도 [자바스크립트](https://ko.wikipedia.org/wiki/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8)를 실행할 수 있게 해주는 도구입니다. 이를 통해 컴퓨터에서 서버나 애플리케이션을 만들 때 자바스크립트를 사용할 수 있게 되었습니다. 빠르게 동시 처리가 가능하며, [프론트엔드와 백엔드](https://ko.wikipedia.org/wiki/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C%EC%99%80_%EB%B0%B1%EC%97%94%EB%93%9C) 모두 같은 언어로 작업할 수 있는 장점이 있습니다.
+
+`Node.js`만 설치하면 되는데, 왜 [NVM](https://github.com/nvm-sh/nvm)을 설치해야 하는지 궁금할 수 있습니다. `NVM` (Node Version Manager)은 여러 버전의 `Node.js`를 설치하고 관리할 수 있게 해주는 도구입니다. `Node.js`를 직접 설치하면 하나의 버전만 사용할 수 있지만, `NVM`을 통해 여러 버전의 `Node.js`를 간편하게 설치하고 전환할 수 있습니다. 이렇게 함으로써 다음과 같은 장점이 있습니다.
+
+1. **호환성**: 프로젝트마다 필요한 `Node.js`의 버전이 다를 수 있습니다. `NVM`을 사용하면 프로젝트 별로 적절한 버전의 `Node.js`를 설정하여 사용할 수 있습니다.
+2. **편리성**: 명령어 한 번으로 `Node.js`의 버전을 간편하게 전환할 수 있습니다.
+3. **안정성**: 실험적인 기능이 포함된 최신 버전의 `Node.js`를 시험하고 싶을 때, 기존의 안정된 버전과 별도로 설치하고 사용할 수 있습니다.
+4. **업데이트와 롤백**: 새로운 버전의 `Node.js`를 쉽게 설치할 수 있고, 문제가 생겼을 때 이전 버전으로 쉽게 롤백할 수 있습니다.
+
+따라서, `Node.js`만 설치하는 것보다 `NVM`을 통해 버전 관리를 하는 것은 개발에 있어서 훨씬 더 유연하고 효과적인 방법입니다.
+
+[참고 영상 1분 46초](https://www.youtube.com/watch?v=GXlIzNcNSlE&t=106s).
+
+### NVM 설치
+
+그럼 이제 `NVM`을 설치하기 위해 [공식 홈페이지](https://github.com/nvm-sh/nvm)로 이동합니다. 그리고 아래 명령어를 찾아서 복사한 후 터미널에 붙여넣습니다.
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+```
+
+> 참고로 시간이 지남에 따라 위 `0.39.4` 버전 숫자는 높아질 수 있습니다.
+
+다음으로 `~/.zshrc`를 수정해주어야 하는데 개발자들은 [vim](https://www.vim.org) 등을 활용하여 편집해주면 되지만 개발을 입문하는 분들은 쉽지 않을 수 있어서 기본 프로그램인 `TextEdit`로 열어보겠습니다.
+
+```sh
+open -a TextEdit ~/.zshrc
+```
+
+`TextEdit`를 연 후 제일 아래 다음 명령어를 붙여넣습니다. 참고로 아래 명령어는 `nvm` 설치가 끝나면 터미널에 표시되는 명령어입니다.
+
+```sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
+
+저장을 하고 빠져나온 뒤 `zsh` 프로필을 `source ~/.zshrc` 명령어를 통해 새로 불러옵니다. 이후에 `nvm` 명령어가 인식되는 것을 확인할 수 있습니다.
+
+### Node.js 설치
+
+이제는 위에서 설치한 `NVM`으로 [Node.js](https://nodejs.org/ko)를 설치해보겠습니다. 우선 `nvm list` 명령어를 통해 설치된 버전을 확인해보겠습니다 (아무것도 없어야 정상입니다). `nvm install 18` 명령어를 통해 18버전의 `Node.js`를 설치합니다. 그리고 `nvm list`를 다시 실행하면 `v18` 버전이 설치된 것을 확인할 수 있습니다. 이후에 다음 명령어를 통해 기본 설정을 마칩니다.
+
+```sh
+nvm use 18
+```
+
+> `nvm`에서 `18` 버전의 `Node.js`를 사용하게 합니다.
+
+```sh
+nvm alias default 18
+```
+
+> `nvm`에서 `18` 버전의 `Node.js`를 기본으로 사용합니다.
+
+설치가 정상적으로 완료되었다면, `node -v` 명령어를 입력하여 설치된 `Node.js` 버전을 확인할 수 있습니다. 또한, `npm -v` 명령어를 통해 [npm](https://www.npmjs.com)의 버전도 확인해보세요. 여기서 `npm`은 `Node.js`에 대한 패키지 관리 도구로, `Homebrew`와 유사한 기능을 합니다. 쉽게 말해, `npm`은 `Node.js`로 설치된 소프트웨어 패키지를 관리하는데 매우 효과적입니다.
+
+`npm`에 추가하여, [yarn](https://yarnpkg.com) 설치를 추천드립니다. 설치 과정은 아주 간단한데 `npm`을 이용하면 됩니다. `Yarn`은 메타(이전의 페이스북)에서 개발된, `npm`과 유사한 패키지 관리 도구입니다. `Yarn`을 설치하는 주된 이유는 앞으로 설치할 [리액트네티이브](https://reactnative.dev)가 메타에서 개발된 프레임워크이기 때문입니다. `yarn` 설치는 아래의 명령어를 사용하면 됩니다.
+
+```sh
+npm install -g yarn
+```
+
+여기서 `-g` 옵션은 `global`을 의미합니다. 이 옵션을 사용해 글로벌로 설치하게 되면, 설치한 프로그램을 터미널의 어느 위치에서든지 접근할 수 있게 됩니다.
+
+## 4. iOS 개발 환경
+
+앞으로 `iOS` 앱 개발 환경을 준비해보겠습니다. 상세한 과정은 [영상 2분 47초](https://youtu.be/GXlIzNcNSlE?t=167)에서 확인할 수 있습니다.
+
+[앱 스토어](https://www.apple.com/kr/app-store)에서 [Xcode](https://developer.apple.com/kr/xcode)를 설치합니다. 참고로, 앱 스토어 링크 대신 맥의 내장 앱 스토어 애플리케이션을 통해 직접 접속하셔야 합니다.
+
+> 설치가 끝나면 [Command Line Tools](https://mac.install.guide/commandlinetools/index.html)가 올바로 설치되어 있는지 확인해줍니다. 이는 [1. Oh My Zsh](#1-oh-my-zsh)를 깔면서 이미 설치가 되어 있을 확률이 높습니다.
+
+> `Xcode Command Line Tools`는 macOS에서 프로그래밍을 할 때 필요한 컴파일러와 다양한 개발 도구를 제공합니다. 구체적으로, GCC나 Clang과 같은 [컴파일러](https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%8C%8C%EC%9D%BC%EB%9F%AC), [Git](https://git-scm.com)과 같은 버전 관리 시스템, 그리고 많은 UNIX 기반 명령어 도구들을 포함하고 있습니다. 이 도구들은 Xcode IDE 없이 터미널에서 코드 개발이나 패키지 관리 작업을 수행할 때 필요하며, 많은 개발 프로젝트나 소프트웨어 패키지에서의 컴파일과 설치에 필수적입니다.
+
+## 5. Android 개발 환경
+
+다음으로 `Android` 앱 개발 환경을 준비해보겠습니다. 상세한 과정은 [영상 3분 23초](https://youtu.be/GXlIzNcNSlE?t=203)에서 확인할 수 있습니다.
+
+### Watchman
+
+우선 [watchman](https://facebook.github.io/watchman)은 안드로이드와는 직접적인 관련이 없지만, 이전 설치 과정에서 누락되었으므로 영상의 순서와 맞추기 위해 이번 글에서 설치 과정을 안내하겠습니다. `Watchman`은 `Meta`에서 개발한 파일 시스템 모니터링 도구입니다. 이를 활용하면 `React Native` 개발 중 파일 변경을 실시간으로 빠르게 감지할 수 있어, 개발 경험을 향상시키게 됩니다. `RN`에서는 이런 이유로 코드 변경의 효율적 감지와 개발 서버와의 원활한 통합을 위해 필수는 아니지만 `Watchman` 사용을 권장합니다.
+
+### Java
+
+다음으로 `brew`를 통해 [java](https://www.java.com)를 설치해줍니다.
+
+```sh
+brew tap homebrew/cask-versions
+```
+
+```sh
+brew install --cask zulu11
+```
+
+### Android Studio
+
+마지막으로 [안드로이드 스튜디오](https://developer.android.com/studio/install?hl=ko)를 설치해줄 차례입니다. `brew`를 통해서도 설치가 가능하지만, 영상에서는 직접 다운로드하여 설치하는 방법을 보여드렸습니다. 참고하여 설치 방식을 선택해주시기 바랍니다.
+
+```sh
+brew install --cask android-studio
+```
+
+설치가 완료된 후, 영상에 따라 새로운 안드로이드 프로젝트를 만드는 것을 추천드립니다. 이 과정은 안드로이드 환경이 제대로 구성되었는지 확인하기 위한 단계입니다. 안드로이드 프로젝트가 정상적으로 실행된다면, 환경 구성이 성공적으로 이루어진 것입니다. 이후, `안드로이드 SDK`의 경로를 확인한 후 `zsh` 프로필에 추가해야 합니다. 아래 명령어를 입력하여 `zsh` 프로필을 엽니다.
+
+```sh
+open -a TextEdit ~/.zshrc
+```
+
+그 후, 아래와 같이 파일 맨 아래에 환경 변수를 추가해주세요.
+
+```sh
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+```
+
+> 경로 설정 시, `ANDROID_HOME`의 경로가 본인의 PC에 맞게 정확하게 설정되었는지 꼭 확인하셔야 합니다. 이를 확인하는 방법은 [해당 영상](https://youtu.be/GXlIzNcNSlE?t=332)에서 확인하실 수 있습니다.
+
+## 6. Visual Studio Code
+
+다음으로, [Visual Studio Code](https://code.visualstudio.com)를 설치하겠습니다. `Visual Studio Code`는 종종 `vscode`로 불리며, 전세계 개발자들에게 사랑받는 코드 편집기 중 하나입니다. 과거에는 [edit plus](https://www.editplus.com), [sublime text](https://www.sublimetext.com), 그리고 현재 지원이 중단된 [atom](https://github.blog/2022-06-08-sunsetting-atom) 같은 편집기들이 주요하게 사용되었었습니다. 그러나 `vscode`의 뛰어난 기능과 사용자 경험으로 많은 개발자들이 이 편집기로 전환하게 되었습니다.
+
+[설치 영상 참고: 5분 53초](https://youtu.be/GXlIzNcNSlE?t=353)
+
+설치는 `brew`로 아래와 같이 해주세요.
+
+```sh
+brew install --cask visual-studio-code
+```
+
+## 7. 리액트네이티브와 엑스포
+
+마지막으로, `iOS`, `안드로이드`, 그리고 `웹` 등의 개발을 모두 함께 할 수 있는 [리액트네이티브](https://reactnative.dev) 설치를 진행합니다.
+[영상 참고: 6분 46초](https://youtu.be/GXlIzNcNSlE?t=406)
+
+리액트네이티브 프로젝트를 풍요롭게 그리고 빠르게 시작하기 위해 [두부랩](https://dooboolab.com)에서 관리하는 [dooboo-cli](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0)를 사용합니다.
+
+터미널을 열고 아래 명령어를 입력해줍니다.
+```sh
+npx dooboo init
+```
+> `npx`는 `npm` 패키지 실행 도구로, 2017년 `npm` 버전 5.2.0에서 소개되었습니다. 사용자가 전역으로 패키지를 설치하지 않고도 `npm` 레지스트리의 패키지 명령을 직접 실행할 수 있게 해줍니다. 이를 통해, 특정 패키지의 최신 버전을 쉽게 실행하거나, 임시로 패키지를 실행하는 등의 작업이 간편해집니다.
+
+```sh
+ _| _  _ |_  _  _ | _ |_
+(_|(_)(_)|_)(_)(_)|(_||_)
+```
+
+터미널에서 위가 같이 표시 된 후 `Expo (Typescript)` 프로젝트가 caption 상태로 나타나면, `Enter`키를 눌러 계속 진행합니다. 그 다음, 원하시는 프로젝트 이름을 입력하고 `Enter`키를 다시 눌러 프로젝트를 생성합니다.
+
+> [Expo](https://docs.expo.dev)는 React Native를 위한 오픈 소스 플랫폼으로, 모바일 앱 개발을 간소화하고 가속화하는 데 도움을 줍니다. 개발자는 Expo를 사용하여 초기 설정 없이 즉시 새 프로젝트를 시작하고, 다양한 네이티브 API에 쉽게 접근할 수 있습니다. 또한, Expo의 개발 툴은 앱을 실시간으로 미리 보면서 즉시 업데이트를 반영할 수 있게 해, 개발 및 디버깅 과정을 더욱 효율적으로 만들어 줍니다.
+
+생성된 프로젝트 이름의 폴더로 이동한 뒤, `yarn`을 사용하여 필요한 로컬 패키지들을 설치합니다. 그 후 `yarn start` 명령어로 프로젝트를 실행합니다. 이후 터미널에 `i`, `a`, `w` 중 하나의 명령어를 입력하면 각각 `iOS` 시뮬레이터, 안드로이드 시뮬레이터, 웹 브라우저가 실행됩니다.
+> 만약 웹이 `w`로 실행되지 않는다면, `yarn web` 명령어로 다시 시도해보세요. 안드로이드 에뮬레이터가 실행되지 않는 경우, `Android Studio`를 사용해 새로운 에뮬레이터를 생성해보세요. 관련 자세한 정보는 [안드로이드 가상기기 만들기 및 관리하기](https://developer.android.com/studio/run/managing-avds?hl=ko)를 참조해주세요.
+
+이렇게 설치가 마무리 되었습니다. 앞으로는 코딩에 집중할 수 있습니다 🎉
