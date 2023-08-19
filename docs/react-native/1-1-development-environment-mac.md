@@ -50,7 +50,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
 
-Copy and execute the command in the terminal to complete the installation. If you wish to specify a different download path, please refer to [the video](https://youtu.be/o3dfpDaICb4?t=53) below.
+Paste and execute the command in the terminal to complete the installation. If you wish to specify a different download path, please refer to [the video](https://youtu.be/o3dfpDaICb4?t=53) below.
 
 <div class="video-container">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4?start=53" title="Zsh Syntax Highlighting" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

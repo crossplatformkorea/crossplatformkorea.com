@@ -50,7 +50,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 ```
 
-터미널을 열어서 위 명령어를 그대로 복사하면 설치가 완료 됩니다. 혹시라도 다운로드 경로를 따로 지정하고 싶으시면 [영상](https://youtu.be/GXlIzNcNSlE?t=53)을 참고해주세요.
+터미널을 열어서 위 명령어를 그대로 '붙여넣기' 하면 설치가 완료 됩니다. 혹시라도 다운로드 경로를 따로 지정하고 싶으시면 [영상](https://youtu.be/GXlIzNcNSlE?t=53)을 참고해주세요.
 
 설치가 완료되면 앞으로 터미널에서 인식이 가능한 명령어는 `초록색`으로 인식이 불가능한 명령어는 `빨강색`으로 표시되어 개발의 편의를 높여줍니다.
 
