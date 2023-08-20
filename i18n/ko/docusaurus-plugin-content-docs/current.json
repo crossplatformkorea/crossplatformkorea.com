@@ -14,5 +14,9 @@
   "sidebar.docs.category.React Native": {
     "message": "리액트네이티브",
     "description": "The label for React Native"
+  },
+  "sidebar.react-native.category.Development Environment": {
+    "message": "개발 환경",
+    "description": "Navbar item with label Development Environment"
   }
 }

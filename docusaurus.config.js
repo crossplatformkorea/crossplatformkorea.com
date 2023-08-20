@@ -50,7 +50,7 @@ module.exports = {
           items: [
             {
               label: 'React Native',
-              href: '/docs/current/category/react-native',
+              href: '/docs/current/react-native/intro',
             },
           ],
         },

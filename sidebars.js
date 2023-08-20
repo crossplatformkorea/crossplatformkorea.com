@@ -22,13 +22,15 @@ const sidebars = {
         "community/opensource",
       ],
     },
+  ],
+  "react-native": [
+    "react-native/intro",
     {
       type: "category",
-      label: "React Native",
+      label: "Development Environment",
       link: { type: "generated-index" },
       collapsed: false,
       items: [
-        "react-native/intro",
         "react-native/development-environment-mac",
         "react-native/development-environment-windows",
       ],
