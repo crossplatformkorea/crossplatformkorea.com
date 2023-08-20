@@ -121,7 +121,9 @@ Thus, managing versions through `NVM` is more flexible and effective for develop
 
 Visit the [nvm-windows](https://github.com/coreybutler/nvm-windows) website to download the installer. If you can't find it directly, you can download the latest `nvm-setup.exe` file from the [releases](https://github.com/coreybutler/nvm-windows/releases) page. As of August 20, 2023, `winget` does not support `nvm` 😔.
 
-Once the installation is complete, open a terminal and enter:
+> External programs not installed via package managers cannot be recognized by the terminal without a restart. To add, theoretically, programs installed via `winget` should be recognized without a restart. However, currently, as `winget` often operates with older Windows installation systems, there are times when you have to close and reopen the terminal. A tip to note: if you install a program with `winget` and a new window pops up to complete the installation, you'll likely need to restart the terminal to recognize the installed program.
+
+Once the installation is complete, close and open a terminal and enter:
 
 ```sh
 nvm list
