@@ -6,7 +6,7 @@ sidebar_label: Development Environment for Mac
 
 In this section, we've prepared materials to help even those new to development set up their development environment. This is about the `Mac development environment`, so if you're a Windows user, please check out the [Windows development environment](development-environment-windows).
 
-<div class="video-container">
+<div class="video-container" style={{marginBottom: 20}}>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/o3dfpDaICb4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
 </div>
 

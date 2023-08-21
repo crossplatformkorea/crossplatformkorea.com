@@ -6,8 +6,8 @@ sidebar_label: 윈도우 개발 환경
 
 이번 섹션에서는 개발을 입문하는 분들에게도 개발 환경을 설정하는데 도움이 될 수 있도록 자료를 준비했습니다. `윈도우 개발 환경`이니 맥 사용자는 [맥 개발 환경](development-environment-mac)을 찾아주세요.
 
-<div class="video-container">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9Ezbq38_tdA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
+<div class="video-container" style={{marginBottom: 20}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9Ezbq38_tdA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 # 개발 환경

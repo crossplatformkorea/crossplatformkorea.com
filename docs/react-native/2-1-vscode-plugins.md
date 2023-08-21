@@ -1,0 +1,109 @@
+---
+id: vscode-plugins
+title: VSCode Plugins
+sidebar_label: VSCode Plugins
+---
+
+In this section, we will explore essential plugins required for development in [Visual Studio Code](https://code.visualstudio.com).
+
+If you've initiated your project using [dooboo-cli](https://github.com/dooboolab-community/dooboo-cli), upon opening `vscode` within your project directory, you'll be prompted at the bottom right to install recommended plugins. Accepting these recommendations will automatically install the following 8 plugins, so please keep that in mind.
+
+We'll be presenting these plugins in order of ease of use.
+
+## 1. Auto Rename Tag
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=38" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) is an extremely useful plugin for tag-based syntaxes like [html](https://developer.mozilla.org/docs/Learn/HTML/Introduction_to_HTML/Getting_started) or [react](https://react.dev). Normally, when opening and closing tags, you have to write the same tag name twice. This plugin reduces that redundancy. It's especially handy when making modifications.
+
+Let's look at an example to illustrate this.
+
+```tsx
+<View>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+  <Text>HELLO</Text>
+</View>
+```
+
+If you want to change the `View` tag name to `ScrollView`, typically, you'd need to edit both the opening and closing tags. However, with the `Auto Rename Tag` plugin, just modifying the opening tag will automatically adjust the closing tag for you.
+
+> Note: If you use the `autocomplete` feature to auto-complete the tag, the closing tag might not be automatically adjusted. Please refer to the video above for more details.
+
+## 2. Better Comments
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=68" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) assists developers in expressing comments within their code more clearly and legibly. This plugin enhances the clarity and readability of annotations by allowing developers to differentiate comments with various colors. By doing so, the purpose and significance of each comment can be quickly grasped at a glance.
+
+## 3. vscode-icons
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=108" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons) is particularly beneficial when quickly scanning through code or understanding a project's structure. This extension provides intuitive and visually appealing icons for different file types and folders, enhancing the overall visual experience and making it easier for developers to navigate through their workspace.
+
+<img src="https://raw.githubusercontent.com/vscode-icons/vscode-icons/master/images/screenshot.gif" />
+
+## 4. Code Spell Checker
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=133" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) is a plugin I highly recommend, especially for those whose native language isn't English or who aren't proficient in typing in English. A primary benefit of this tool is its capability to maintain the professionalism of your code and prevent bugs or misunderstandings that might arise from inadvertent mistakes. It effectively detects spelling errors in variable names, function names, comments, strings, and other textual content within your code. Moreover, it includes support for various programming languages and natural languages. The ability to add specific words or terms through a user-defined dictionary means that domain-specific terms relevant to a team or project can easily undergo spell-checking. By leveraging these features, developers can enhance the readability and quality of their code and reduce unnecessary review time.
+
+More often than not, developers encounter typos during the code review process, and many have faced significant challenges because of such oversights.
+
+## 5. Import Cost
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=167" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) is an extension for Visual Studio Code that displays the size of a module or library in real-time as developers import it into their code. This instant feedback allows developers to be aware of potential bloat in their bundle size, offering them an opportunity to seek more lightweight alternatives if necessary. Such awareness is invaluable for optimizing web application loading times and overall performance.
+
+## 6. vscode-styled-components
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=188" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[vscode-styled-components](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components) is a tool that aids developers when working on styled React components using libraries like `styled-components` and similar ones such as [emotion.js](https://emotion.sh/docs/introduction).
+
+Key features and benefits include:
+
+- **Syntax Highlighting**: The extension improves code readability by emphasizing the CSS syntax inside the template literals of `styled-components`.
+- **Auto-Completion**: It offers auto-completion for CSS properties and values, facilitating quicker and more accurate code drafting.
+- **In-line Error Display**: If a mistaken CSS property or value is utilized, the extension promptly indicates the error.
+- **Go to Definition and Peek**: Developers can seamlessly navigate to the segment of code that concerns a particular CSS rule, or even get a quick preview, optimizing the workflow and productivity.
+
+## 7. ESLint
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=215" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[ESLint](https://eslint.org) is a JavaScript linter used for identifying and reporting on patterns in JavaScript. The [ESLint plugin for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) provides real-time feedback on issues in JavaScript and TypeScript code as you write. This plugin assists teams in maintaining a consistent coding standard across the board and helps avoid potential errors and anti-patterns. Through custom rules and extensions, linting can be tailored to suit the specific needs of a project. In essence, the `ESLint` plugin significantly aids in enhancing code quality, maintaining consistency among developers, and minimizing errors.
+
+## 8. Prettier
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://youtube.com/embed/fzvzPWJTeds?start=256" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[Prettier](https://prettier.io) is an automatic code formatter that aligns code in several supported programming and markup languages to a consistent style. The [Prettier plugin for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) optimizes code styling automatically upon saving, reducing the need for developers to manually adjust code style. This plugin enhances code readability and minimizes discussions related to style during code reviews, allowing developers to focus on the actual logic. Through Prettier's configurations, users can specify their desired code style, making this tool incredibly useful in maintaining a consistent code style throughout a project.
