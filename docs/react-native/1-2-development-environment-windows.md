@@ -6,8 +6,8 @@ sidebar_label: Development Environment for Windows
 
 In this section, we have prepared resources to help even those new to development set up their development environment. This is for a `Windows development environment`, so if you're a Mac user, please check out [Mac development environment](development-environment-mac).
 
-<div class="video-container">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4" title="Development Environment for Windows" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style={{marginBottom: 20}}></iframe>
+<div class="video-container" style={{marginBottom: 20}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ThByD_7_2v4" title="Development Environment for Windows" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 # Development Environment
