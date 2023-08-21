@@ -2,11 +2,24 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-07-19T00:00:00.000Z</updated>
+    <updated>2023-08-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[8월 밋업]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2023-08-09-trpc</id>
+        <link href="https://crossplatformkorea.com/en/blog/2023-08-09-trpc"/>
+        <updated>2023-08-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[At this conference, we delved deeply into introducing 'tRPC' and its usage. tRPC assists in constructing End-to-end typesafe APIs more efficiently. Through this technology, we discussed the specific ways in which project implementation can be simplified.]]></summary>
+        <content type="html"><![CDATA[<p>At this conference, we delved deeply into introducing 'tRPC' and its usage. tRPC assists in constructing End-to-end typesafe APIs more efficiently. Through this technology, we discussed the specific ways in which project implementation can be simplified.</p><p>The presentation by Kim Chanwoo, the representative of the AI English education startup 'SetaOne Korea', and former Tech Lead Shin Eunsoo was particularly noteworthy. They generously shared their experiences and insights from developing their product using tRPC. This gave a real-world example, illustrating how tRPC played a pivotal role when SetaOne successfully launched their initial MVP.</p><p>Kim Chanwoo discussed the patents related to AI English learning he worked on at LXPER, while Shin Eunsoo emphasized the utility of tRPC, drawing from her diverse experiences in various startups.</p><p>Importantly, this conference was enriched by various discussions and a QnA session. Thanks to the passionate participation and in-depth questions from the attendees, the debates were more vibrant and substantial than ever before.</p><p>Through this conference, we clearly grasped the significance and practicality of tRPC. The experiences and expertise shared by the presenters vividly showcased how tRPC can be applied in real-world settings. Especially, the case study of SetaOne Korea depicted a concrete and successful model of leveraging tRPC.</p><p>Lastly, heartfelt thanks to everyone who attended this conference. We look forward to continuously sharing valuable information and experiences in our upcoming events!</p><div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/UICl2R81x78" title="trpc 컨퍼런스" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[7월 밋업]]></title>
         <id>https://crossplatformkorea.com/en/blog/2023-07-19-blockchain</id>
