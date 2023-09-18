@@ -112,7 +112,7 @@ module.exports = {
             },
             {
               label: "Youtube",
-              href: "https://www.youtube.com/playlist?list=PLMu8UG37vF6oJLNhjsjoy_ApcJFZZwJOo",
+              href: "https://www.youtube.com/@crossplatformkorea",
             },
           ],
         },
