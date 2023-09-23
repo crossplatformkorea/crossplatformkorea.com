@@ -1,13 +1,19 @@
 import React from 'react';
 import AdFit from "./AdFit";
 
-export default function AdFitTopFixed(): JSX.Element {
+export default function AdFitMobileBanner({
+  unit,
+  className
+}: {
+  unit: string;
+  className: string;
+}): JSX.Element {
   return (
     <AdFit
-      unit="DAN-weLLBNA8C31gpo1t"
+      unit={unit}
       height={100}
       width={320}
-      className="adfit-top-mobile"
+      className={className}
       style={{
         flex: 1,
         marginTop: 24,

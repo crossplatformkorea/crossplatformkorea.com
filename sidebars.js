@@ -36,6 +36,7 @@ const sidebars = {
         "react-native/vscode-plugins",
       ],
     },
+    "react-native/components",
   ],
 };
 
