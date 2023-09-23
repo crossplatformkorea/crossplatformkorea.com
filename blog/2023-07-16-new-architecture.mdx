@@ -1,0 +1,35 @@
+---
+slug: 2023-07-16-new-architecture
+title: React Native New Architecture
+author: hyochan
+authorTitle: organizer
+authorURL: https://github.com/hyochan
+authorImageURL: https://avatars1.githubusercontent.com/u/27461460?s=460&u=b5860875e26d33fd70fd210f4ea74f81cdf9d99b&v=4
+authorTwitter: dooboolab
+tags: [Blog, React Native, New Architecture]
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+`React Native Architecture` refers to the internal structure and operating principles of a React Native application. The initial architecture of React Native consisted of several main components, and over time, enhancements and updates were made to improve the performance and stability of the application. This explanation is based on information up to 2021.
+
+1. **Bridge**: This was a core component of React Native's initial architecture. The Bridge facilitated communication between the JavaScript thread and the Native thread. It was responsible for sending UI updates, events, etc., generated in JavaScript, to the Native code.
+
+2. **JavaScript Core (JSC)**: This is the JavaScript engine used in iOS. In Android, the JSC is bundled for distribution.
+
+3. **Native Modules**: These are modules in React Native applications that provide access to the native features of a device. For instance, they allow access to the camera, GPS, and file system.
+
+However, Facebook is continuously working to improve the performance and flexibility of React Native's architecture. New architectural updates, like "Fabric" and "TurboModules," have been introduced.
+
+- **Fabric**: This is a project to rewrite the UI layer of React Native. It aims to achieve faster UI updates and smoother animations. Fabric minimizes the communication between JavaScript and Native, thereby enhancing performance.
+
+- **TurboModules**: These are a rewritten version of Native Modules, aiming to improve the communication performance between the JavaScript thread and the Native thread.
+
+The introduction of this new architecture aims to boost the performance of React Native applications and streamline their integration with Native components.
+
+For a more detailed understanding, check out [The New Architecture of React Native](https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-fae32d16f651).
+
+<AdFitMobileBanner
+  unit="DAN-ToBFS44DTfrAHzOv"
+  className="adfit-middle-mobile-2023-07-16-2"
+/>
