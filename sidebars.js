@@ -37,6 +37,7 @@ const sidebars = {
       ],
     },
     "react-native/components",
+    "react-native/routers",
   ],
 };
 

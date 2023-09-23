@@ -1,0 +1,56 @@
+---
+id: routers
+title: Router
+sidebar_label: Router
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+In React Native, there are various routers like [react-navigation](https://reactnavigation.org) and [react-native-navigation](https://github.com/wix/react-native-navigation). However, in our community, we recommend [expo-router](https://docs.expo.dev/routing/introduction).
+This recommendation isn't merely because it's the latest router available, but because it's a file-based router. This not only helps in eliminating unnecessary code but also results in more concise and intuitive code.
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+## Expo Router
+
+**Expo Router** is a file-based router designed for **Universal React Native** applications built with **Expo**.
+This router allows for managing screen transitions in both **React Native** and web applications, facilitating smooth navigation for users across different parts of the app's UI.
+Through this, it's possible to manage screen transitions within an app using the same components across multiple platforms (Android, iOS, and web).
+
+Detailed information on how to use Expo Router can be found [here](https://docs.expo.dev/routing/introduction).
+This document explains how to manage screen transitions using Expo Router.
+For instance, the following code demonstrates how to navigate between the `HomeScreen` and `ProfileScreen`.
+
+```tsx
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native';
+
+function HomeScreen() {
+  const navigation = useNavigation();
+
+  return (
+    <Button
+      title="Go to Profile"
+      onPress={() => {
+        navigation.navigate('Profile', { name: 'Jane' });
+      }}
+    />
+  );
+}
+
+function ProfileScreen({ route }) {
+  return <Text>This is {route.params.name}'s profile</Text>;
+}
+```
+
+In the code above, the `useNavigation` hook is employed to retrieve the `navigation` object, followed by rendering the `Button` component.
+Upon triggering the `onPress` handler, the `navigation.navigate` method is invoked to transition to the `ProfileScreen`.
+At this juncture, the `name` parameter is passed along. Within the `ProfileScreen`, the `name` parameter is accessed using `route.params.name`.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>
