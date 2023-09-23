@@ -17,6 +17,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import AdFit from "../uis/AdFit";
 import { useMediaQuery } from "react-responsive";
+import AdFitMobileBanner from "../uis/AdFitMobileBanner";
 
 function Home() {
   const context = useDocusaurusContext();
@@ -176,36 +177,13 @@ function Home() {
             </Link> */}
           </div>
 
-          {isMobile ? (
-            <div>
-              <AdFit
-                unit="DAN-weLLBNA8C31gpo1t"
-                height={100}
-                width={320}
-                className="adfit-bottom-mobile"
-                style={{
-                  flex: 1,
-                  marginTop: 48,
-                }}
-              />
-            </div>
-          ) : null}
-
-          {!isMobile ? (
-            <div>
-              <AdFit
-                unit="DAN-OfXmJb9N3gxAdtxW"
-                height={90}
-                width={728}
-                className="adfit-bottom"
-                style={{
-                  flex: 1,
-                  marginTop: 48,
-                  display: !isMobile ? "flex" : "none",
-                }}
-              />
-            </div>
-          ) : null}
+          <AdFitMobileBanner
+            unit="DAN-madoZ3R52KRmyt95"
+            height={250}
+            width={300}
+            className="adfit-bottom-1"
+            style={{ marginTop: 48 }}
+          />
         </div>
       </main>
     </Layout>
