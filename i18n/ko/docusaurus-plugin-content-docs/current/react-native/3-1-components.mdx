@@ -1,0 +1,605 @@
+---
+id: components
+title: 컴포넌트
+sidebar_label: 컴포넌트
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+리액트(React)에서 컴포넌트는 UI를 구성하는 독립적이고 재사용 가능한 코드 조각을 의미합니다.
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+컴포넌트는 각각의 상태(state)와 속성(props)을 가질 수 있으며, 리액트 애플리케이션의 UI는 이러한 컴포넌트들의 조합으로 이루어집니다.
+컴포넌트는 함수형(functional) 또는 클래스(class) 형태로 정의될 수 있습니다.
+최근에 개발되는 리액트 애플리케이션에서는 주로 함수형 컴포넌트를 사용합니다.
+
+리액트에서 컴포넌트를 설계할 때, `props`와 `state`는 두 가지 중요한 개념입니다. 이 둘은 컴포넌트가 정보를 처리하고 표시하는 방식을 정의하는 데 도움을 줍니다.
+
+### props (속성)
+
+**props**는 "속성(properties)"의 줄임말입니다.
+
+1. **정보 전달**: `props`는 부모 컴포넌트에서 자식 컴포넌트로 정보를 전달할 때 사용됩니다.
+2. **읽기 전용**: `props`는 컴포넌트 내에서 변경할 수 없습니다. 다시 말해, 컴포넌트는 받은 `props`를 그대로 사용해야 합니다.
+3. **예시**: 자신의 이름을 알려주기 위해 다른 사람에게 명함을 주는 것을 상상해보세요. 그 명함에 적힌 정보는 변경되지 않습니다. 이와 같이 컴포넌트에 전달된 `props`는 변경되지 않는 정보로 생각할 수 있습니다.
+
+### state (상태)
+
+**state**는 컴포넌트 내부에서 관리되는 정보입니다.
+
+1. **변경 가능**: `state`는 시간이 지나면서 변경될 수 있습니다. 사용자의 상호작용이나 서버에서 새로운 데이터를 받는 경우 등 다양한 이유로 `state`가 업데이트될 수 있습니다.
+2. **내부 관리**: `state`는 컴포넌트 내부에서만 관리되며, 외부에서 직접 변경할 수 없습니다.
+3. **예시**: 여러분의 기분이나 생각처럼, 시간이 지나면서 변할 수 있는 것들을 상상해보세요. 컴포넌트의 `state`도 이와 같이 시간에 따라 변할 수 있는 정보를 관리합니다.
+
+간단히 요약하면, 다음과 같습니다.
+
+> **props**: 부모로부터 받은, 변경할 수 없는 정보
+> - 공식 문서: [컴포넌트에 props 전달하기](https://ko.react.dev/learn/passing-props-to-a-component)
+
+> **state**: 컴포넌트 내부에서 관리하며, 시간이나 상황에 따라 변경될 수 있는 정보
+> - 공식 문서: [State 관리하기](https://ko.react.dev/learn/managing-state)
+
+## 리액트 네이티브의 컴포넌트
+
+리액트 네이티브(React Native)는 모바일 애플리케이션을 개발하기 위한 프레임워크로, 리액트의 개념을 기반으로 하면서 모바일에 특화된 컴포넌트를 제공합니다. 기본적인 리액트 네이티브 컴포넌트는 아래와 같습니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile1"
+/>
+
+## **1. View**
+`View`는 리액트 네이티브(React Native)에서 가장 기본적인 컴포넌트 중 하나로, UI의 빌딩 블록(building block) 역할을 합니다. 웹의 `<div>` 태그나 iOS의 `UIView`, Android의 `ViewGroup`과 유사한 역할을 합니다. 
+
+### **주요 특징**
+
+1. **컨테이너**: `View`는 다른 컴포넌트들을 묶어 주는 컨테이너 역할을 할 수 있습니다. 따라서 레이아웃을 구성하는 데 중요한 역할을 합니다.
+
+2. **스타일링**: `View` 컴포넌트는 `style` prop을 통해 스타일링될 수 있습니다. 여기에는 배경색, 패딩, 마진, 테두리 등의 스타일 속성을 적용할 수 있습니다.
+
+3. **터치 이벤트**: `View`는 사용자의 터치 이벤트에 반응할 수 있습니다. 예를 들면, 사용자의 탭(tap)이나 스와이프(swipe) 등의 동작을 감지하고 해당 동작에 응답할 수 있습니다.
+
+4. **접근성**: `View`는 접근성 기능도 지원합니다. 예를 들면, 스크린 리더(screen reader)와 같은 보조 기술에 대한 정보를 제공하는 역할을 합니다.
+
+5. **레이아웃**: 리액트 네이티브는 Flexbox 레이아웃을 사용합니다. `View` 컴포넌트는 이 Flexbox 레이아웃의 모든 속성을 지원하므로, 복잡한 UI 레이아웃을 구성하는 데에도 활용될 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Hello, React Native!</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export default MyComponent;
+```
+
+위의 예제에서는 `View` 컴포넌트를 사용하여 텍스트를 중앙에 위치하게 했습니다. `View`는 여러 가지 방식으로 활용될 수 있으며, 리액트 네이티브 앱 개발에 있어서 핵심적인 컴포넌트 중 하나입니다.
+
+## 2. **Text**
+`Text`는 리액트 네이티브(React Native)의 주요 컴포넌트 중 하나로, 스크린에 텍스트를 표시하기 위해 사용됩니다. 웹의 `<span>` 또는 `<p>` 태그와 유사한 역할을 합니다.
+
+### **주요 특징**
+
+1. **텍스트 표시**: `Text` 컴포넌트는 사용자에게 텍스트 정보를 표시하는 데 사용됩니다. 
+
+2. **스타일링**: `Text` 컴포넌트 역시 `style` prop을 통해 스타일링될 수 있습니다. 폰트 크기, 폰트 색상, 가중치 (두껍게), 텍스트 정렬 방식 등의 다양한 텍스트 스타일링 속성을 지원합니다.
+
+3. **중첩 가능**: `Text` 컴포넌트는 중첩될 수 있습니다, 즉, 한 `Text` 컴포넌트 내부에 또 다른 `Text` 컴포넌트를 포함할 수 있습니다. 이를 통해 일부 텍스트 세그먼트에 다른 스타일을 적용하는 등의 복잡한 스타일링이 가능합니다.
+
+4. **터치 이벤트**: `Text` 컴포넌트에도 터치 이벤트를 적용할 수 있습니다. 이를 통해 텍스트를 탭했을 때의 동작 등을 정의할 수 있습니다.
+
+5. **텍스트 특화 속성**: 텍스트의 줄 간격(line height), 글자 간격(letter spacing), 텍스트 자르기(ellipsis) 등의 텍스트 특화 속성을 설정할 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <Text style={styles.customText}>Hello, React Native!</Text>
+  );
+}
+
+const styles = StyleSheet.create({
+  customText: {
+    fontSize: 20,
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+});
+
+export default MyComponent;
+```
+
+위의 예제에서는 `Text` 컴포넌트를 사용하여 "Hello, React Native!"라는 메시지를 크고 파란색의 굵은 글씨로 표시합니다.
+
+`Text` 컴포넌트는 리액트 네이티브 앱 내에서 텍스트 정보를 표현하는 데 필수적인 컴포넌트입니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile2"
+/>
+
+## 3. **Image**
+`Image`는 React Native에서 이미지를 표시하기 위한 기본 컴포넌트입니다. 이 컴포넌트를 사용하면 앱 내에 포함된 정적 이미지 뿐만 아니라 외부 URL에서 가져온 이미지도 표시할 수 있습니다.
+
+### **주요 특징**
+
+1. **소스 타입**: `Image` 컴포넌트는 다양한 타입의 이미지 소스를 지원합니다. 이는 `require`를 통해 로컬에서 가져온 이미지 또는 웹 URL을 통해 가져온 이미지일 수 있습니다.
+
+2. **스타일링**: `Image`도 `style` prop을 통해 스타일링될 수 있습니다. 이를 통해 이미지의 크기, 둥근 모서리, 테두리 등의 스타일을 설정할 수 있습니다.
+
+3. **리사이징**: `resizeMode` prop을 사용하여 이미지의 리사이징 방식을 지정할 수 있습니다. 예를 들면, 'cover', 'contain', 'stretch', 'repeat', 'center' 등의 값이 있습니다.
+
+4. **이벤트 처리**: `Image` 컴포넌트는 이미지 로드 완료, 로드 실패와 같은 여러 이벤트에 대한 콜백을 제공합니다.
+
+5. **페이드 인 효과**: `fadeDuration` prop을 통해 이미지가 화면에 표시될 때의 페이드 인 효과의 지속 시간을 설정할 수 있습니다 (Android 전용).
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { Image, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <Image
+      style={styles.imageStyle}
+      source={{ uri: 'https://example.com/my-image.jpg' }}
+      resizeMode="cover"
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  imageStyle: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+});
+
+export default MyComponent;
+```
+
+위 예제에서는 웹 URL을 통해 이미지를 가져와 화면에 표시합니다. 또한, 이미지는 100x100 크기로 표시되며, 둥근 모서리 효과를 가지게 됩니다.
+
+`Image` 컴포넌트는 다양한 이미지 소스를 표시하는 데 유용하게 사용되며, 다양한 스타일링과 조정 옵션을 통해 이미지의 표시 방식을 다양하게 설정할 수 있습니다.
+
+## 4. **TextInput**
+`TextInput`은 React Native에서 사용자의 텍스트 입력을 받아들이기 위한 기본 컴포넌트입니다. 웹의 `<input type="text">` 요소와 유사하게 동작하며, 사용자가 텍스트를 입력하거나 수정할 수 있게 해줍니다.
+
+### **주요 특징**
+
+1. **텍스트 입력**: 사용자가 키보드를 통해 텍스트를 입력할 수 있습니다.
+
+2. **스타일링**: `TextInput`도 `style` prop을 사용하여 스타일링될 수 있습니다. 이를 통해 입력 필드의 크기, 테두리, 폰트 스타일 등을 지정할 수 있습니다.
+
+3. **플레이스홀더**: `placeholder` prop을 통해 사용자에게 입력 예시나 가이드를 제공할 수 있습니다.
+
+4. **값 제어**: `value` prop을 통해 현재의 입력 값에 접근하거나 변경할 수 있습니다. 또한, `onChangeText` prop을 사용하여 텍스트가 변경될 때 콜백 함수를 실행할 수 있습니다.
+
+5. **키보드 타입**: `keyboardType` prop을 사용하여 특정 타입의 키보드 레이아웃을 표시하도록 요청할 수 있습니다 (예: 숫자만 입력하는 경우 'numeric').
+
+6. **다중 행**: `multiline` prop을 통해 여러 줄의 텍스트 입력을 허용할 수 있습니다.
+
+7. **이벤트 처리**: 여러 가지 이벤트에 대한 콜백 함수를 제공합니다. 예를 들어, `onFocus`, `onBlur`, `onSubmitEditing` 등이 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React, { useState } from 'react';
+import { TextInput, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  const [text, setText] = useState('');
+
+  return (
+    <TextInput
+      style={styles.inputStyle}
+      placeholder="Enter your text here..."
+      value={text}
+      onChangeText={(newText) => setText(newText)}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  inputStyle: {
+    width: 300,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingLeft: 10,
+  },
+});
+
+export default MyComponent;
+```
+
+위 예제에서는 `TextInput` 컴포넌트를 사용하여 텍스트를 입력 받습니다. 입력된 텍스트는 `text` 상태에 저장되며, 사용자가 텍스트를 입력할 때마다 `onChangeText` 콜백을 통해 `setText` 함수가 호출되어 `text` 상태가 업데이트됩니다.
+
+`TextInput` 컴포넌트는 사용자의 입력을 받는 중요한 컴포넌트로, 사용자와의 상호 작용을 위해 자주 사용됩니다.
+
+## 5. **ScrollView**
+`ScrollView`는 React Native에서 콘텐츠가 화면 크기를 넘어서면 스크롤하여 보여주기 위한 기본 컴포넌트입니다. 일반적으로 화면의 크기보다 큰 컴포넌트나 리스트를 스크롤하여 볼 수 있게 해줍니다.
+
+### **주요 특징**
+
+1. **스크롤 가능한 컨테이너**: 화면에 표시할 수 있는 범위를 넘는 콘텐츠를 감싸서 사용자가 스크롤하여 전체 내용을 볼 수 있게 합니다.
+
+2. **방향**: 기본적으로 세로로 스크롤됩니다. 하지만 `horizontal` prop을 `true`로 설정하면 가로로 스크롤되게 할 수 있습니다.
+
+3. **통합 스타일링**: `ScrollView`도 `style` prop을 사용하여 스타일링할 수 있습니다.
+
+4. **이벤트 처리**: 여러 스크롤 이벤트에 대한 콜백 함수를 제공합니다. 예를 들면, `onScroll`, `onMomentumScrollStart`, `onMomentumScrollEnd` 등이 있습니다.
+
+5. **리프레시 컨트롤**: `refreshControl` prop을 통해 pull-to-refresh 기능을 구현할 수 있습니다.
+
+6. **퍼포먼스**: 대용량의 리스트나 그리드를 표시할 때는 `ScrollView`보다는 `FlatList`나 `SectionList` 같은 최적화된 컴포넌트를 사용하는 것이 좋습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { ScrollView, Text, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <ScrollView style={styles.container}>
+      <Text style={styles.textStyle}>Item 1</Text>
+      <Text style={styles.textStyle}>Item 2</Text>
+      <Text style={styles.textStyle}>Item 3</Text>
+      {/* ... 다른 콘텐츠 ... */}
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  textStyle: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+});
+
+export default MyComponent;
+```
+
+이 예제에서 `ScrollView`는 여러 `Text` 컴포넌트를 감싸서 화면 크기를 넘어가는 경우 스크롤하여 볼 수 있게 해줍니다.
+
+`ScrollView`는 간단한 스크롤 요구 사항에 적합하며, 특히 콘텐츠의 양이 화면 크기를 크게 넘어서지 않는 경우나 정적인 화면에서 유용하게 사용됩니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile3"
+/>
+
+## 6. **StyleSheet**
+`StyleSheet`는 React Native에서 컴포넌트의 스타일을 정의하고 최적화하기 위한 추상화된 API입니다. CSS와 유사하게 작동하지만, JavaScript 객체로 스타일을 정의하게 됩니다.
+
+### **주요 특징**
+
+1. **퍼포먼스**: `StyleSheet`를 사용하면 스타일을 정적으로 생성하여 애플리케이션의 퍼포먼스를 향상시킬 수 있습니다.
+
+2. **검증**: `StyleSheet`는 스타일 정의 시 잘못된 값이나 오타에 대해 경고를 제공합니다.
+
+3. **재사용성**: 한 번 정의된 스타일은 여러 컴포넌트에서 재사용할 수 있습니다.
+
+4. **플랫폼 특정 스타일**: 플랫폼에 따라 다른 스타일을 지정할 수 있습니다 (예: iOS와 Android).
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Hello, React Native!</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+});
+
+export default MyComponent;
+```
+
+위 예제에서는 `StyleSheet.create` 메소드를 사용하여 두 개의 스타일을 정의했습니다. `container` 스타일은 중앙에 컨텐츠를 배치하기 위한 스타일이고, `title` 스타일은 텍스트의 크기, 두께, 색상을 정의하기 위한 스타일입니다.
+
+이렇게 `StyleSheet`를 사용하면 스타일링이 좀 더 명확하고, 코드 재사용성 및 퍼포먼스에도 도움이 됩니다.
+
+## 7. **Button**
+`Button`은 React Native에서 기본적으로 제공되는 사용자 인터페이스 컴포넌트 중 하나로, 사용자가 터치할 수 있는 버튼 요소를 나타냅니다.
+
+### **주요 특징**
+
+1. **간단한 인터페이스**: `Button`은 간단한 API를 제공하며, 주로 제목과 이벤트 핸들러를 설정하는 데 사용됩니다.
+  
+2. **플랫폼에 따른 스타일링**: `Button`은 기본적으로 현재 플랫폼(iOS, Android 등)의 네이티브 스타일링을 따릅니다.
+   
+3. **제한된 커스터마이징**: `Button` 컴포넌트는 커스터마이징 옵션이 제한적입니다. 더 많은 스타일링이나 기능을 원한다면, 다른 컴포넌트나 서드파티 라이브러리를 검토하는 것이 좋습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { Button, Alert, View, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+
+  const handlePress = () => {
+    Alert.alert('버튼이 클릭되었습니다!');
+  }
+
+  return (
+    <View style={styles.container}>
+      <Button
+        title="클릭해주세요"
+        color="#841584"
+        onPress={handlePress}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
+
+export default MyComponent;
+```
+
+위의 예제에서는 `Button` 컴포넌트를 사용하여 버튼을 생성하고, `onPress` prop를 통해 클릭 시 발생하는 이벤트 핸들러를 정의했습니다. `color` prop은 버튼의 배경색을 설정합니다.
+
+`Button`은 간단한 사용 사례에 적합합니다. 더 복잡한 요구 사항이나 디자인을 원한다면, `TouchableOpacity`나 `TouchableHighlight`와 같은 다른 터치 가능한 컴포넌트를 사용하여 직접 버튼을 구현하거나, 서드파티 라이브러리를 검토할 수 있습니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile4"
+/>
+
+## 8. **FlatList**
+
+`FlatList`는 React Native에서 큰 목록 데이터를 효율적으로 표시하기 위한 컴포넌트입니다. 이 컴포넌트는 뷰가 화면에 표시될 때만 렌더링하는 'windowing' 기술을 사용하여 성능을 최적화합니다.
+
+### **주요 특징**
+
+1. **성능 최적화**: 화면에 보이지 않는 항목은 렌더링되지 않아 렌더링 부하를 줄입니다.
+2. **풀링 기술**: 이전에 사용된 항목 뷰는 재사용될 수 있습니다.
+3. **내장된 스크롤**: 자동으로 스크롤 기능이 내장되어 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+
+const data = [
+  { id: '1', text: 'Item 1' },
+  { id: '2', text: 'Item 2' },
+  // ... 기타 항목들
+];
+
+const MyComponent = () => {
+  return (
+    <FlatList
+      data={data}
+      renderItem={({ item }) => <Text style={styles.item}>{item.text}</Text>}
+      keyExtractor={item => item.id}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  }
+});
+
+export default MyComponent;
+```
+
+## 9. **SectionList**
+
+`SectionList`는 섹션 헤더와 함께 목록 데이터를 표시하는 컴포넌트입니다. `FlatList`와 유사하게 성능 최적화 기능을 제공하지만, 섹션별로 데이터를 구분하여 표시할 수 있습니다.
+
+### **주요 특징**
+
+1. **섹션 표시**: 데이터를 여러 섹션으로 나누어 표시합니다.
+2. **섹션 헤더**: 각 섹션의 시작 부분에 헤더를 제공할 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { SectionList, View, Text, StyleSheet } from 'react-native';
+
+const sections = [
+  { title: 'A', data: ['Apple', 'Apricot'] },
+  { title: 'B', data: ['Banana', 'Blueberry'] },
+  // ... 기타 섹션들
+];
+
+const MyComponent = () => {
+  return (
+    <SectionList
+      sections={sections}
+      renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+      renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+      keyExtractor={(item, index) => index.toString()}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: '#f5f5f5',
+  }
+});
+
+export default MyComponent;
+```
+
+이렇게 `FlatList`와 `SectionList`는 대량의 데이터나 섹션별로 구분된 데이터를 효율적으로 표시하는 데 유용한 컴포넌트입니다.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile5"
+/>
+
+## 10. **ActivityIndicator**
+`ActivityIndicator`는 React Native에서 제공하는 로딩 인디케이터(또는 스피너) 컴포넌트입니다. 데이터를 가져오는 동안 또는 처리 중일 때 사용자에게 앱이 여전히 작동 중임을 알려주는 데 유용합니다.
+
+### **주요 특징**
+
+1. **플랫폼 특화 스타일**: 기본적으로 `ActivityIndicator`는 현재 플랫폼(iOS 또는 Android)의 네이티브 로딩 인디케이터 스타일을 사용합니다.
+2. **커스터마이징**: 다양한 속성을 사용하여 인디케이터의 크기, 색상 등을 커스터마이즈할 수 있습니다.
+
+### **사용 예제**
+
+```jsx
+import React from 'react';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
+
+const LoadingScreen = () => {
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
+
+export default LoadingScreen;
+```
+
+### **주요 props**
+
+- **size**: 인디케이터의 크기를 설정합니다. 'small' 또는 'large' 중 하나의 문자열 값을 받거나, 숫자 값을 직접 지정할 수 있습니다.
+- **color**: 인디케이터의 색상을 설정합니다. 이 값은 유효한 색상 문자열이어야 합니다 (예: '#0000ff' 또는 'blue').
+- **animating**: 인디케이터가 회전하는지 여부를 결정합니다. 기본값은 `true`입니다.
+
+이 외에도 다양한 속성들이 있으며, 필요에 따라 문서를 참조하여 추가로 설정할 수 있습니다.
+
+## 11. **Touchable****
+React Native에서는 여러 종류의 "Touchable" 컴포넌트를 제공하여 사용자의 터치 입력을 처리합니다. 이 컴포넌트들은 사용자가 화면의 요소를 탭할 때 반응하도록 만드는 데 사용됩니다. 여기서는 `TouchableHighlight`, `TouchableOpacity` 및 `TouchableWithoutFeedback`에 대해 설명하겠습니다.
+
+### **TouchableHighlight**
+
+- **기능**: 사용자가 터치하면 밝기가 변경되는 효과를 주는 컴포넌트입니다.
+- **주요 특징**: 터치하면 지정된 색상의 뒷 배경이 나타납니다.
+- **사용 예제**:
+
+  ```jsx
+  import { TouchableHighlight, Text } from 'react-native';
+
+  <TouchableHighlight onPress={() => alert('Tapped!')} underlayColor="gray">
+    <Text>Tap Me!</Text>
+  </TouchableHighlight>
+  ```
+
+- **주요 props**:
+  - `underlayColor`: 터치하면 나타나는 배경색입니다.
+
+### **TouchableOpacity**
+
+- **기능**: 사용자가 터치하면 투명도가 변경되는 효과를 주는 컴포넌트입니다.
+- **주요 특징**: 터치하면 컴포넌트의 투명도가 줄어듭니다.
+- **사용 예제**:
+
+  ```jsx
+  import { TouchableOpacity, Text } from 'react-native';
+
+  <TouchableOpacity onPress={() => alert('Tapped!')} activeOpacity={0.7}>
+    <Text>Tap Me!</Text>
+  </TouchableOpacity>
+  ```
+
+- **주요 props**:
+  - `activeOpacity`: 터치 시 적용되는 투명도의 값입니다. 기본값은 0.2입니다.
+
+### **TouchableWithoutFeedback**
+
+- **기능**: 터치에 대한 어떠한 시각적 효과 없이 터치 이벤트만을 처리하는 컴포넌트입니다.
+- **주요 특징**: 시각적 효과가 없기 때문에 일반적으로 다른 커스텀 효과와 함께 사용됩니다.
+- **사용 예제**:
+
+  ```jsx
+  import { TouchableWithoutFeedback, Text } from 'react-native';
+
+  <TouchableWithoutFeedback onPress={() => alert('Tapped!')}>
+    <Text>Tap Me!</Text>
+  </TouchableWithoutFeedback>
+  ```
+
+각 "Touchable" 컴포넌트는 다양한 상황과 요구 사항에 따라 적절하게 선택되어 사용될 수 있습니다. 예를 들어, 터치 시 빠른 시각적 반응이 필요한 경우 `TouchableOpacity`를, 터치 효과 없이 추가 동작만 필요한 경우 `TouchableWithoutFeedback`을 선택할 수 있습니다.
+
+> 리액트 네이티브는 이 외에도 다양한 내장 컴포넌트와 API를 제공합니다. 또한, 커뮤니티에서 제공하는 수많은 라이브러리를 통해 추가적인 컴포넌트나 기능을 활용할 수 있습니다.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

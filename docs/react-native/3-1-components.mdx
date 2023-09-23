@@ -1,0 +1,541 @@
+---
+id: components
+title: Components
+sidebar_label: Components
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+In React, a component represents an independent and reusable piece of code that constructs the UI.
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+Components can have their own state and properties (props), and the UI of a React application is composed of a combination of these components. Components can be defined either as functional or class-based. In modern React applications, functional components are predominantly used.
+
+When designing components in React, `props` and `state` are two crucial concepts. These two help define how a component processes and displays information.
+
+### props (Properties)
+
+**props** is short for "properties".
+
+1. **Information Transfer**: `props` are used to pass information from a parent component to a child component.
+2. **Read-only**: `props` cannot be modified within a component. In other words, a component must use the `props` as they are received.
+3. **Example**: Imagine giving someone your business card to convey your name. The information on that card doesn't change. Similarly, `props` passed to a component can be thought of as unchangeable information.
+
+### state (Status)
+
+**state** is information managed within the component.
+
+1. **Changeable**: `state` can change over time. It can be updated for various reasons, such as user interactions or receiving new data from a server.
+2. **Internally Managed**: `state` is managed only within the component, and it cannot be directly modified from outside.
+3. **Example**: Imagine things like your mood or thoughts, which can change as time passes. The component's `state` manages information that can change over time in a similar way.
+
+To summarize briefly:
+
+> **props**: Information received from the parent that cannot be changed.
+> - Official Documentation: [Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)
+
+> **state**: Information managed within the component that can change depending on time or circumstances.
+> - Official Documentation: [Managing State](https://react.dev/learn/managing-state)
+
+## 리액트 네이티브의 컴포넌트
+
+## React Native Components
+
+React Native is a framework for developing mobile applications, building on the concepts of React while offering components specialized for mobile. The basic React Native components are as follows.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile1"
+/>
+
+## **1. View**
+`View` is one of the most basic components in React Native, serving as a building block for UI. It plays a role similar to the `<div>` tag in web, `UIView` in iOS, and `ViewGroup` in Android.
+
+### **Key Features**
+
+1. **Container**: The `View` can act as a container, grouping other components together, playing a vital role in constructing layouts.
+
+2. **Styling**: The `View` component can be styled using the `style` prop. This includes applying styles like background color, padding, margin, borders, and more.
+
+3. **Touch Events**: The `View` can respond to user touch events. For instance, it can detect and respond to user taps, swipes, etc.
+
+4. **Accessibility**: The `View` supports accessibility features, helping provide information to assistive technologies like screen readers.
+
+5. **Layout**: React Native employs the Flexbox layout. The `View` component fully supports all Flexbox properties, making it versatile for constructing complex UI layouts.
+
+### **Usage Example**
+
+```jsx
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Hello, React Native!</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export default MyComponent;
+```
+
+In the example above, the `View` component is utilized to center the text. The `View` is versatile and stands as one of the core components in React Native development.
+
+## 2. **Text**
+`Text` is a key component in React Native, used to display text on the screen. It functions similarly to the `<span>` or `<p>` tags in web.
+
+### **Key Features**
+
+1. **Displaying Text**: The `Text` component is used to convey textual information to the user.
+
+2. **Styling**: Just like the `View`, the `Text` component can be styled using the `style` prop. It supports a range of text-styling properties like font size, font color, weight (boldness), text alignment, and more.
+
+3. **Nesting**: The `Text` component can be nested, meaning one `Text` component can contain another. This allows for complex styling, where certain segments of text can have distinct styles.
+
+4. **Touch Events**: Touch events can also be applied to the `Text` component, defining behaviors like what happens when the text is tapped.
+
+5. **Text-Specific Properties**: You can set text-specific properties like line height, letter spacing, ellipsis (text truncation), and more.
+
+### **Usage Example**
+
+```jsx
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <Text style={styles.customText}>Hello, React Native!</Text>
+  );
+}
+
+const styles = StyleSheet.create({
+  customText: {
+    fontSize: 20,
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+});
+
+export default MyComponent;
+```
+
+In the example above, the `Text` component displays the message "Hello, React Native!" in a large, blue, bold font.
+
+The `Text` component is essential for representing textual information within a React Native app.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile2"
+/>
+
+## 3. **Image**
+The `Image` is a fundamental component in React Native for displaying images. Using this component, you can display both static images included in the app and images fetched from an external URL.
+
+### **Key Features**
+
+1. **Source Type**: The `Image` component supports various types of image sources. This can be an image imported locally via `require` or fetched through a web URL.
+
+2. **Styling**: The `Image` can also be styled using the `style` prop. Through this, you can set styles such as image size, rounded corners, and borders.
+
+3. **Resizing**: You can specify the resizing mode of the image using the `resizeMode` prop. For instance, values include 'cover', 'contain', 'stretch', 'repeat', and 'center'.
+
+4. **Event Handling**: The `Image` component offers callbacks for various events, such as image load completion and load failure.
+
+5. **Fade-in Effect**: The `fadeDuration` prop allows you to set the duration of the fade-in effect when the image is displayed on the screen (Android exclusive).
+
+### **Usage Example**
+```jsx
+import React from 'react';
+import { Image, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <Image
+      style={styles.imageStyle}
+      source={{ uri: 'https://example.com/my-image.jpg' }}
+      resizeMode="cover"
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  imageStyle: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+});
+
+export default MyComponent;
+```
+
+In the example above, the image is fetched and displayed using a web URL. Additionally, the image is displayed at a size of 100x100 and has a rounded corner effect.
+
+The `Image` component is useful for displaying various image sources and offers diverse styling and adjustment options to customize the display of the image.
+
+## 4. **TextInput**
+The `TextInput` is a basic component in React Native for receiving user text input. It operates similarly to the web's `<input type="text">` element, allowing users to enter or modify text.
+
+### **Key Features**
+
+1. **Text Input**: Users can enter text via the keyboard.
+
+2. **Styling**: The `TextInput` can also be styled using the `style` prop. This allows you to specify attributes like input field size, borders, and font styles.
+
+3. **Placeholder**: You can provide input examples or guidelines to users using the `placeholder` prop.
+
+4. **Value Control**: You can access or modify the current input value using the `value` prop. Additionally, the `onChangeText` prop lets you run a callback function when the text changes.
+
+5. **Keyboard Type**: Using the `keyboardType` prop, you can request to display a specific type of keyboard layout (e.g., 'numeric' for entering numbers only).
+
+6. **Multiple Lines**: The `multiline` prop allows for the input of multiple lines of text.
+
+7. **Event Handling**: Callback functions are provided for various events, such as `onFocus`, `onBlur`, and `onSubmitEditing`.
+
+### **Usage Example**
+```jsx
+import React, { useState } from 'react';
+import { TextInput, StyleSheet } from 'react-native';
+
+const MyComponent = () => {
+  const [text, setText] = useState('');
+
+  return (
+    <TextInput
+      style={styles.inputStyle}
+      placeholder="Enter your text here..."
+      value={text}
+      onChangeText={(newText) => setText(newText)}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  inputStyle: {
+    width: 300,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingLeft: 10,
+  },
+});
+
+export default MyComponent;
+```
+
+In the example above, the `TextInput` component is used to receive text input. The entered text is stored in the `text` state, and the `text` state is updated every time the user enters text through the `onChangeText` callback using the `setText` function.
+
+The `TextInput` component is a crucial component for receiving user input and is frequently used for interactions with users.
+
+## 5. **ScrollView**
+`ScrollView` is a basic component in React Native that allows content to be scrolled when it exceeds the screen size. Typically, it's used to view components or lists that are larger than the screen.
+
+### **Key Features**
+
+1. **Scrollable Container**: Wraps content that exceeds the visible range of the screen, enabling users to scroll and see the entire content.
+2. **Direction**: By default, it scrolls vertically. However, by setting the `horizontal` prop to `true`, you can make it scroll horizontally.
+3. **Integrated Styling**: `ScrollView` can also be styled using the `style` prop.
+4. **Event Handling**: It provides callback functions for various scroll events. For example, there are `onScroll`, `onMomentumScrollStart`, `onMomentumScrollEnd`, and so on.
+5. **Refresh Control**: The `refreshControl` prop allows implementing the pull-to-refresh functionality.
+6. **Performance**: For displaying large lists or grids, it's recommended to use optimized components like `FlatList` or `SectionList` instead of `ScrollView`.
+
+In the example, the `ScrollView` wraps multiple `Text` components to allow scrolling when the content exceeds the screen size. `ScrollView` is suitable for simple scrolling requirements and is especially useful on static screens or when the content doesn't greatly exceed the screen size.
+
+## 6. **StyleSheet**
+`StyleSheet` is an abstracted API in React Native for defining and optimizing component styles. It operates similarly to CSS but defines styles as JavaScript objects.
+
+### **Key Features**
+
+1. **Performance**: Using `StyleSheet` allows styles to be statically generated, enhancing the performance of the application.
+2. **Validation**: `StyleSheet` provides warnings for incorrect values or typos when defining styles.
+3. **Reusability**: Once defined, styles can be reused across multiple components.
+4. **Platform-Specific Styles**: Different styles can be specified depending on the platform (e.g., iOS and Android).
+
+In the example above, the `StyleSheet.create` method was used to define two styles. The `container` style aligns content in the center, and the `title` style defines the text's size, weight, and color. Using `StyleSheet` makes styling more clear and helps with code reusability and performance.
+
+## 7. **Button**
+`Button` is one of the basic user interface components provided in React Native, representing a button element that users can touch.
+
+### **Key Features**
+
+1. **Simple Interface**: `Button` provides a simple API, mainly used for setting the title and event handler.
+2. **Platform-Dependent Styling**: By default, `Button` follows the native styling of the current platform (e.g., iOS, Android).
+3. **Limited Customization**: The customization options for the `Button` component are limited. If more styling or functionality is desired, it's recommended to consider other components or third-party libraries.
+
+In the provided example, the `Button` component was used to create a button, and the event handler for when it's clicked was defined using the `onPress` prop. The `color` prop sets the background color of the button. The `Button` is suitable for simple use cases. For more complex requirements or designs, you might consider implementing buttons directly using touchable components like `TouchableOpacity` or `TouchableHighlight`, or exploring third-party libraries.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile4"
+/>
+
+## 8. **FlatList**
+
+`FlatList` is a component in React Native designed to efficiently display large lists of data. This component uses the 'windowing' technique to optimize performance, rendering only the views that are displayed on the screen.
+
+### **Key Features**
+
+1. **Performance Optimization**: Items that are not visible on the screen are not rendered, reducing rendering load.
+2. **Pooling Technique**: Previously used item views can be reused.
+3. **Built-in Scrolling**: Scrolling functionality is automatically incorporated.
+
+### **Usage Example**
+
+```jsx
+import React from 'react';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+
+const data = [
+  { id: '1', text: 'Item 1' },
+  { id: '2', text: 'Item 2' },
+  // ... other items
+];
+
+const MyComponent = () => {
+  return (
+    <FlatList
+      data={data}
+      renderItem={({ item }) => <Text style={styles.item}>{item.text}</Text>}
+      keyExtractor={item => item.id}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  }
+});
+
+export default MyComponent;
+```
+
+## 9. **SectionList**
+
+`SectionList` is a component that displays list data with section headers. While it provides performance optimization features similar to `FlatList`, it distinguishes and displays data by sections.
+
+### **Key Features**
+
+1. **Section Display**: Data is displayed divided into multiple sections.
+2. **Section Headers**: Headers can be provided at the beginning of each section.
+
+### **Usage Example**
+
+```jsx
+import React from 'react';
+import { SectionList, View, Text, StyleSheet } from 'react-native';
+
+const sections = [
+  { title: 'A', data: ['Apple', 'Apricot'] },
+  { title: 'B', data: ['Banana', 'Blueberry'] },
+  // ... other sections
+];
+
+const MyComponent = () => {
+  return (
+    <SectionList
+      sections={sections}
+      renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+      renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+      keyExtractor={(item, index) => index.toString()}
+    />
+  );
+}
+
+const styles = StyleSheet.create({
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: '#f5f5f5',
+  }
+});
+
+export default MyComponent;
+```
+
+Thus, `FlatList` and `SectionList` are useful components for efficiently displaying large amounts of data or data divided by sections.
+
+<AdFitMobileBanner
+  unit="DAN-iG6z7ELkAvyoFlIS"
+  className="adfit-middle-mobile5"
+/>
+
+## 10. **ActivityIndicator**
+
+`ActivityIndicator` is a loading indicator (or spinner) component provided in React Native. It's useful for informing users that the app is still operating, especially during data fetching or processing.
+
+### **Key Features**
+
+1. **Platform-Specific Style**: By default, the `ActivityIndicator` uses the native loading indicator style of the current platform (e.g., iOS or Android).
+2. **Customization**: You can customize the size, color, etc., of the indicator using various attributes.
+
+### **Usage Example**
+
+```jsx
+import React from 'react';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
+
+const LoadingScreen = () => {
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
+
+export default LoadingScreen;
+```
+
+### **Main props**
+
+- **size**: Sets the size of the indicator. It can take one of the string values 'small' or 'large', or you can specify a number directly.
+- **color**: Sets the color of the indicator. This value should be a valid color string (e.g., '#0000ff' or 'blue').
+- **animating**: Determines whether the indicator rotates. The default is `true`.
+
+There are other various properties, and you can refer to the documentation to set them additionally as needed.
+
+## 11. **Touchable****
+
+In React Native, several types of "Touchable" components are provided to handle user touch input. These components are used to make elements on the screen responsive to user taps. Here, we will cover `TouchableHighlight`, `TouchableOpacity`, and `TouchableWithoutFeedback`.
+
+### **TouchableHighlight
+
+**
+
+This component responds to the user's touch with a highlighted visual feedback. It's mainly used to create buttons or clickable elements.
+
+**Usage Example**:
+
+```jsx
+import React from 'react';
+import { TouchableHighlight, Text, StyleSheet } from 'react-native';
+
+const MyButton = () => {
+  return (
+    <TouchableHighlight style={styles.button} onPress={() => console.log('Button Pressed!')}>
+      <Text style={styles.buttonText}>Click Me!</Text>
+    </TouchableHighlight>
+  );
+}
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  buttonText: {
+    fontSize: 18,
+  }
+});
+
+export default MyButton;
+```
+
+### **TouchableOpacity**
+
+This component responds to user touch by reducing the element's opacity. It's softer compared to `TouchableHighlight`.
+
+**Usage Example**:
+
+```jsx
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+
+const MyButton = () => {
+  return (
+    <TouchableOpacity style={styles.button} onPress={() => console.log('Button Pressed!')}>
+      <Text style={styles.buttonText}>Click Me!</Text>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  buttonText: {
+    fontSize: 18,
+  }
+});
+
+export default MyButton;
+```
+
+### **TouchableWithoutFeedback**
+
+This component doesn't provide any visual feedback on touch, but you can still attach an `onPress` handler to respond to user input.
+
+**Usage Example**:
+
+```jsx
+import React from 'react';
+import { TouchableWithoutFeedback, View, Text, StyleSheet } from 'react-native';
+
+const MyButton = () => {
+  return (
+    <TouchableWithoutFeedback onPress={() => console.log('Button Pressed!')}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>Click Me!</Text>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  buttonText: {
+    fontSize: 18,
+  }
+});
+
+export default MyButton;
+```
+
+It's essential to select the appropriate touchable component based on the desired user feedback and design aesthetics.
+
+---
+
+Now that we've covered the main components of React Native, you're better equipped to start building diverse and responsive mobile applications. The power of React Native lies in the rich ecosystem and community that supports it. Continue exploring, and don't forget to check out the official React Native documentation for more in-depth knowledge and best practices!
+
+Happy coding! 🚀
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>
