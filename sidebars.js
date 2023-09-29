@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 const sidebars = {
   docs: [
     "introduction",
@@ -31,13 +24,35 @@ const sidebars = {
       link: { type: "generated-index" },
       collapsed: false,
       items: [
-        "react-native/development-environment-mac",
-        "react-native/development-environment-windows",
+        "react-native/development-environment/macos",
+        "react-native/development-environment/windows",
         "react-native/vscode-plugins",
       ],
     },
-    "react-native/components",
-    "react-native/routers",
+    {
+      type: "category",
+      label: "Style",
+      link: { type: "generated-index" },
+      items: [
+        "react-native/style/built-in",
+      ],
+    },
+    {
+      type: "category",
+      label: "Component",
+      link: { type: "generated-index" },
+      items: [
+        "react-native/component/built-in",
+      ],
+    },
+    {
+      type: "category",
+      label: "Router",
+      link: { type: "generated-index" },
+      items: [
+        "react-native/router/expo-router",
+      ],
+    },
   ],
 };
 

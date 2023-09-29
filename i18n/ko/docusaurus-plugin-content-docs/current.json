@@ -18,5 +18,17 @@
   "sidebar.react-native.category.Development Environment": {
     "message": "개발 환경",
     "description": "Navbar item with label Development Environment"
+  },
+  "sidebar.react-native.category.Component": {
+    "message": "컴포넌트",
+    "description": "Navbar item with label Component"
+  },
+  "sidebar.react-native.category.Style": {
+    "message": "스타일",
+    "description": "Navbar item with label Style"
+  },
+  "sidebar.react-native.category.Router": {
+    "message": "라우터",
+    "description": "Navbar item with label Router"
   }
 }
