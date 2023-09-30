@@ -35,6 +35,7 @@ const sidebars = {
       link: { type: "generated-index" },
       items: [
         "react-native/style/built-in",
+        "react-native/style/styled-component",
       ],
     },
     {
