@@ -26,7 +26,7 @@ const sidebars = {
       items: [
         "react-native/development-environment/macos",
         "react-native/development-environment/windows",
-        "react-native/vscode-plugins",
+        "react-native/development-environment/vscode-plugins",
       ],
     },
     {
