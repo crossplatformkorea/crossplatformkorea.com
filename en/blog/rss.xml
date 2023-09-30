@@ -4,12 +4,26 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/en/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Mon, 21 Aug 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 01 Oct 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[8월 밋업]]></title>
+            <title><![CDATA[August meetup]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2023-10-01-expo-announcement</link>
+            <guid>https://crossplatformkorea.com/en/blog/2023-10-01-expo-announcement</guid>
+            <pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[📢 Explore Expo's journey and its latest features in our meetup!]]></description>
+            <content:encoded><![CDATA[<p>📢 Explore Expo's journey and its latest features in our meetup!
+Discover Expo's 7-year evolution, the latest changes, and get introduced to Expo's newest features, EAS and Dev Client. We will also discuss the challenges faced while using Expo and share solutions.</p><p><a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/296446972" target="_blank" rel="noopener noreferrer">RSVP for the Meetup</a>
+<a href="https://dooboo.page.link/ztBYJA3qZkUUCnsM7" target="_blank" rel="noopener noreferrer">상금 미션 참여 링크</a></p><p>📅 Date: October 25th, 7:30 PM
+📍 Location: Gangnam-gu, Seoul
+💡 Topics: Expo's Evolution, EAS, Dev Client
+💰 Registration Fee: KRW 10,000</p><p>#Expo #Meetup #Developers</p><div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-10-01"></div></div>]]></content:encoded>
+            <category>Meetup</category>
+        </item>
+        <item>
+            <title><![CDATA[August meetup]]></title>
             <link>https://crossplatformkorea.com/en/blog/2023-08-09-trpc</link>
             <guid>https://crossplatformkorea.com/en/blog/2023-08-09-trpc</guid>
             <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
@@ -18,7 +32,7 @@
             <category>Meetup</category>
         </item>
         <item>
-            <title><![CDATA[7월 밋업]]></title>
+            <title><![CDATA[July meetup]]></title>
             <link>https://crossplatformkorea.com/en/blog/2023-07-19-blockchain</link>
             <guid>https://crossplatformkorea.com/en/blog/2023-07-19-blockchain</guid>
             <pubDate>Wed, 19 Jul 2023 00:00:00 GMT</pubDate>
