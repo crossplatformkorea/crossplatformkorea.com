@@ -6,7 +6,7 @@ sidebar_label: 엑스포 라우터
 
 import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
 
-리액트네이티브에는 [react-navigation](https://reactnavigation.org), [react-native-navigation](https://github.com/wix/react-native-navigation) 등 각종 라우터들이 있지만 저희 커뮤니티에서는 [expo-router](https://docs.expo.dev/routing/introduction)를 추천합니다.
+[라우터 섹션](./router)에서 설명한 것과 같이 리액트네이티브에는 [react-navigation](https://reactnavigation.org), [react-native-navigation](https://github.com/wix/react-native-navigation) 등 각종 라우터들이 있지만 저희 커뮤니티에서는 [expo-router](https://docs.expo.dev/routing/introduction)를 추천합니다.
 이는 단순히 최신에 나온 라우터라서 그런 것은 아니고 파일 기반 라우터라서 불필요한 코드를 제거해줄 뿐만아니라 코드 자체도 간결해지고 직관적이기 때문입니다.
 
 <AdFitMobileBanner
@@ -47,6 +47,514 @@ function ProfileScreen({ route }) {
 위 코드에서 `useNavigation` 훅을 사용하여 `navigation` 객체를 가져온 다음, `Button` 컴포넌트를 렌더링합니다.
 `onPress` 핸들러에서 `navigation.navigate` 메서드를 호출하여 `ProfileScreen`으로 이동합니다.
 이 때, `name` 매개변수를 전달합니다. `ProfileScreen`에서는 `route.params.name`을 사용하여 `name` 매개변수를 가져옵니다.
+
+## Stack
+
+### 1. Stack Layout이란?
+Expo Router의 Stack Layout은 React Navigation에서 제공하는 Native Stack Navigator를 활용합니다. 이것은 예전에 사용하던 JS Stack Navigator와는 다릅니다. 
+
+### 2. 기본 사용법
+```javascript
+import { Stack } from 'expo-router/stack';
+
+export default function Layout() {
+  return <Stack />;
+}
+```
+
+### 3. 헤더 바 설정
+헤더의 스타일과 같은 옵션을 전역적으로 설정하려면 `screenOptions` prop을 사용하십시오.
+```javascript
+import { Stack } from 'expo-router';
+
+export default function Layout() {
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    />
+  );
+}
+```
+또한, 각 라우트 내에서 동적으로 헤더 바를 설정할 수도 있습니다. 이는 UI의 동적 변경에 유용합니다.
+```javascript
+import { Link, Stack } from 'expo-router';
+import { Image, Text, View } from 'react-native';
+
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 50, height: 50 }}
+      source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+    />
+  );
+}
+
+export default function Home() {
+  return (
+    // ... 기타 코드 생략
+  );
+}
+```
+
+### 4. 동적 파라미터 설정
+`router.setParams()` 함수를 사용하여 라우트의 동적 설정을 할 수 있습니다.
+```javascript
+import { View, Text } from 'react-native';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+
+export default function Details() {
+  const router = useRouter();
+  const params = useLocalSearchParams();
+
+  return (
+    // ... 기타 코드 생략
+  );
+}
+```
+
+### 5. 헤더 버튼 사용
+화면 옵션을 정적으로 구성하려면 layout component route에 있는 `<Stack.Screen name={routeName} />` 컴포넌트를 사용합니다.
+```javascript
+import { Stack } from 'expo-router';
+
+export default function Layout() {
+  return (
+    <Stack
+      screenOptions={{
+        // ... 기타 옵션
+      }}>
+      <Stack.Screen name="home" options={{}} />
+    </Stack>
+  );
+}
+```
+자식 라우트에서 옵션을 동적으로 구성하려면 `<Stack.Screen />` 컴포넌트를 사용하십시오.
+```javascript
+import { Button, Text, Image } from 'react-native';
+import { Stack } from 'expo-router';
+
+export default function Home() {
+  // ... 기타 코드 생략
+}
+```
+
+### 6. 사용자 정의 푸시 동작
+기본적으로 Stack은 스택에 이미 있는 라우트를 푸시할 때 중복된 페이지를 제거합니다. 라우트의 푸시 동작을 수정하려면 `getId` 함수를 제공하십시오.
+```javascript
+import { Stack } from 'expo-router';
+
+export default function Layout() {
+  return (
+    <Stack>
+      <Stack.Screen
+        name="[user]"
+        getId={({ params }) => String(Date.now())}
+      />
+    </Stack>
+  );
+}
+```
+
+이 지침을 따르면 Expo Router의 Stack 네비게이션을 쉽게 구현하고 사용할 수 있습니다.
+
+<AdFitMobileBanner
+  unit="DAN-mhiKCkCNnnFtwxGh"
+  className="adfit-middle-mobile-1"
+/>
+
+## Tabs
+
+### 1. Tabs Layout이란?
+Expo Router의 Tabs Layout은 React Navigation에서 제공하는 Bottom Tabs를 활용합니다.
+
+Expo Router는 `href` 화면 옵션을 추가하는데, 이는 오직 객체 형태의 화면 옵션(예: `screenOptions={{ href: "/path" }}`)에서만 사용될 수 있고, `tabBarButton`과 동시에 사용될 수 없습니다.
+
+### 2. 탭 숨기기
+때로는 라우트를 유지하면서 탭 바에 표시되지 않기를 원할 수 있습니다. 이 경우, `href: null`을 전달하여 버튼을 비활성화할 수 있습니다.
+
+```javascript
+import { Tabs } from 'expo-router/tabs';
+
+export default function AppLayout() {
+  return (
+    <Tabs>
+      <Tabs.Screen
+        // 숨기려는 라우트의 이름.
+        name="index"
+        options={{
+          // 이 탭은 탭 바에 더 이상 표시되지 않습니다.
+          href: null,
+        }}
+      />
+    </Tabs>
+  );
+}
+```
+
+### 3. 동적 라우트
+탭 바에 동적 라우트(예: 프로필 탭)를 사용하려는 경우가 있습니다. 이 경우, 버튼이 항상 특정 `href`로 연결되도록 설정하려고 할 것입니다.
+
+```javascript
+import { Tabs } from 'expo-router/tabs';
+
+export default function AppLayout() {
+  return (
+    <Tabs>
+      <Tabs.Screen
+        // 동적 라우트의 이름.
+        name="[user]"
+        options={{
+          // 탭이 항상 동일한 href로 연결되도록 합니다.
+          href: '/evanbacon',
+          // 또는 Href 객체를 사용할 수 있습니다:
+          href: {
+            pathname: '/[user]',
+            params: {
+              user: 'evanbacon',
+            },
+          },
+        }}
+      />
+    </Tabs>
+  );
+}
+```
+
+위의 가이드를 따르면, Expo Router의 Tabs 네비게이션을 효과적으로 사용할 수 있습니다.
+
+알겠습니다. Expo Router의 Drawer에 대해 한국어로 설명하겠습니다.
+
+## Drawer
+
+Expo Router의 Drawer 레이아웃을 사용하면 사이드 내비게이션 메뉴, 즉 "서랍"을 만들 수 있습니다. 이 서랍은 화면 바깥쪽에 숨겨져 있고, 스와이프하거나 토글하여 볼 수 있습니다.
+
+### Drawer 설정 방법
+
+1. **필요한 패키지 설치:**
+   Drawer 내비게이터를 사용하기 전에 추가적인 패키지를 설치해야 합니다:
+
+   ```bash
+   npx expo install @react-navigation/drawer react-native-gesture-handler react-native-reanimated
+   ```
+
+   - `@react-navigation/drawer`: Drawer 내비게이터의 주요 패키지입니다.
+   - `react-native-gesture-handler`: React Native에서 터치 제스처를 처리합니다.
+   - `react-native-reanimated`: 애니메이션과 제스처 처리 기능을 보다 포괄적으로 제공합니다.
+
+2. **babel.config.js 업데이트:**
+   필요한 패키지를 설치한 후에는 `babel.config.js`를 업데이트하여 reanimated 플러그인을 포함시켜야 합니다:
+
+   ```javascript
+   module.exports = {
+     presets: [
+         ... 
+       ],
+     plugins: [
+       ... 
+       'react-native-reanimated/plugin',
+     ],
+   };
+   ```
+
+   - 이 설정은 React Native Reanimated 플러그인이 Babel과 올바르게 설정되도록 합니다. 이는 더 부드러운 애니메이션과 제스처를 위해 필수적입니다.
+
+3. **Babel 캐시 지우기:**
+   `babel.config.js`에 변경 사항을 한 후에는 babel 캐시를 지우고 개발 서버를 재시작해야 합니다:
+
+   ```bash
+   npx expo start --clear
+   ```
+
+4. **레이아웃에 Drawer 사용:**
+   이제 앱에 Drawer 레이아웃을 통합할 준비가 되었습니다:
+
+   ```javascript
+   import { Drawer } from 'expo-router/drawer';
+
+   export default function Layout() {
+     return <Drawer />;
+   }
+   ```
+
+   - 위의 코드는 Expo Router의 Drawer의 기본 사용 방법을 보여줍니다. 필요에 따라 이를 확장하여 Drawer에 추가 설정 및 내용을 제공하면 됩니다.
+
+도구나 패키지를 사용할 때는 복잡한 내비게이션 패턴을 구축하려면 공식 문서나 보다 깊은 튜토리얼을 참조하는 것이 좋습니다. 제공된 단계는 Expo Router의 Drawer를 시작하는 데 필요한 기본 소개를 제공합니다.
+
+<AdFitMobileBanner
+  unit="DAN-ECUZO05s14SU0P7d"
+  className="adfit-middle-mobile-2"
+/>
+
+## 네비게이터 중첩 (Nesting navigators)
+
+Expo Router에서는 다른 네비게이터 내부에 네비게이터를 포함시켜 중첩된 네비게이션 구조를 만들 수 있습니다. 이 가이드는 React Navigation에서의 네비게이터 중첩을 Expo Router로 확장한 내용입니다.
+
+앞으로 Navigation UI 요소들 (Link, Tabs, Stack)은 Expo Router 라이브러리에서 분리될 가능성이 있습니다.
+
+이 가이드에서는 아래와 같은 파일 구조를 예제로 사용합니다:
+```
+app
+├── _layout.js
+├── index.js
+└── home
+    ├── _layout.js
+    ├── feed.js
+    └── messages.js
+```
+
+위의 예제에서, `app/home/feed.js`는 `/home/feed`에 해당하며, `app/home/messages.js`는 `/home/messages`에 해당합니다.
+
+```javascript
+import { Stack } from 'expo-router';
+export default Stack;
+```
+위 코드에서 `app/home/_layout.js`와 `app/index.js`는 `app/_layout.js` 레이아웃 내에 중첩되므로 스택(stack)으로 렌더링됩니다.
+
+```javascript
+import { Tabs } from 'expo-router';
+export default Tabs;
+```
+
+```javascript
+import { Link } from 'expo-router';
+export default function Root() {
+  return <Link href="/home/messages">Navigate to nested route</Link>;
+}
+```
+
+위 코드에서 `app/home/feed.js`와 `app/home/messages.js`는 `home/_layout.js` 레이아웃 내에 중첩되어 있으므로 탭(tab)으로 렌더링됩니다.
+
+```javascript
+import { View, Text } from 'react-native';
+export default function Feed() {
+  return (
+    <View>
+      <Text>Feed screen</Text>
+    </View>
+  );
+}
+
+import { View, Text } from 'react-native';
+export default function Messages() {
+  return (
+    <View>
+      <Text>Messages screen</Text>
+    </View>
+  );
+}
+```
+
+종합적으로, Expo Router를 사용하면 복잡한 네비게이션 구조를 간단하게 중첩하여 구현할 수 있습니다.
+
+Expo Router에서 모달을 사용하는 방법에 대해 한국어로 설명하겠습니다.
+
+<AdFitMobileBanner
+  unit="DAN-kjanuOssm1H2Rd7Z"
+  className="adfit-middle-mobile-3"
+/>
+
+## 모달 (Modals)
+
+모바일 앱에서 모달은 일반적인 패턴입니다. 현재 화면 위에 새로운 화면을 표시하는 방법입니다. 계정 생성 또는 사용자가 목록에서 옵션을 선택할 때 자주 사용됩니다.
+
+모달을 구현하려면 특정 경로를 모달로 렌더링하는 루트 레이아웃 경로를 만들 수 있습니다.
+
+```
+app
+├── _layout.js
+├── home.js
+└── modal.js
+```
+
+레이아웃 경로 `app/_layout.js`는 컴포넌트를 모달로 표시할 수 있습니다. 모달을 렌더링하는 데 사용되는 새로운 경로인 `modal`을 추가하세요.
+
+```javascript
+import { Stack } from 'expo-router';
+export default function Layout() {
+  return (
+    <Stack>
+      <Stack.Screen
+        name="home"
+        options={{
+          // 다른 모든 경로의 헤더를 숨깁니다.
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="modal"
+        options={{
+          // 모달 경로의 표시 모드를 모달로 설정합니다.
+          presentation: 'modal',
+        }}
+      />
+    </Stack>
+  );
+}
+```
+
+```javascript
+import { View, Text } from 'react-native';
+import { Link } from 'expo-router';
+export default function Home() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Link href="/modal">Present modal</Link>
+    </View>
+  );
+}
+```
+
+이제 모달이 이전 컨텍스트를 잃었을 때 뒤로 가기 버튼을 추가하여 독립적인 페이지로 표시되어야 하는 모달을 만듭니다.
+
+```javascript
+import { View } from 'react-native';
+import { Link, router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+export default function Modal() {
+  // 페이지가 새로 고침되거나 직접 이동된 경우 모달은 전체 화면 페이지로 표시되어야 합니다.
+  const isPresented = router.canGoBack();
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      {/* 루트로 이동하기 위해 `../`를 사용하세요. 이것은 "goBack"과 동일하지 않습니다. */}
+      {!isPresented && <Link href="../">Dismiss</Link>}
+      {/* iOS에서는 네이티브 모달이 어두운 배경을 가지므로 상태 바를 밝은 콘텐츠로 설정하세요. */}
+      <StatusBar style="light" />
+    </View>
+  );
+}
+```
+
+위의 방법을 통해 Expo Router에서 모달을 성공적으로 구현하고 화면 위에 다른 화면을 표시할 수 있습니다.
+
+알겠습니다. Expo Router에서 플랫폼 별로 모듈을 교체하는 방법에 대해 한국어로 설명하겠습니다.
+
+<AdFitMobileBanner
+  unit="DAN-h9aPNdWQH8MvhaeY"
+  className="adfit-middle-mobile-4"
+/>
+
+## 플랫폼 별 모듈 (Platform-specific Modules)
+
+앱을 구축할 때 현재 플랫폼에 기반하여 특정 콘텐츠를 표시하고자 할 수 있습니다. 플랫폼 별 모듈을 사용하면 해당 플랫폼에 더 원래대로 경험을 할 수 있습니다. 다음 섹션에서는 Expo Router로 이를 어떻게 달성할 수 있는지 설명합니다.
+
+### 플랫폼 모듈 (Platform module)
+
+React Native의 Platform 모듈을 사용하여 현재 플랫폼을 감지하고 결과에 기반하여 적절한 콘텐츠를 렌더링할 수 있습니다. 예를 들어, 네이티브에서는 탭 레이아웃을 렌더링하고 웹에서는 사용자 정의 레이아웃을 렌더링할 수 있습니다.
+
+```javascript
+import { Platform } from 'react-native';
+import { Link, Slot, Tabs } from 'expo-router';
+
+export default function Layout() {
+  if (Platform.OS === 'web') {
+    // 웹에서는 기본 사용자 정의 레이아웃을 사용합니다.
+    return (
+      <div style={{ flex: 1 }}>
+        <header>
+          <Link href="/">Home</Link>
+          <Link href="/settings">Settings</Link>
+        </header>
+        <Slot />
+      </div>
+    );
+  }
+  // 네이티브 플랫폼에서는 네이티브 하단 탭 레이아웃을 사용합니다.
+  return (
+    <Tabs>
+      <Tabs.Screen name="index" options={{ title: 'Home' }} />
+      <Tabs.Screen name="settings" options={{ title: 'Settings' }} />
+    </Tabs>
+  );
+}
+```
+
+### 플랫폼 별 확장자 (Platform specific extensions)
+
+Metro bundler의 플랫폼 특정 확장자(예: .ios.js 또는 .native.ts)는 앱 디렉토리에서 지원되지 않습니다. 이는 라우트가 딥 링크를 위해 플랫폼 간에 보편적으로 작동하기 때문입니다. 그러나 앱 디렉토리 외부에서 플랫폼 별 파일을 생성하고 앱 디렉토리 내에서 사용할 수 있습니다.
+
+예를 들어, 다음과 같은 프로젝트를 생각해봅시다:
+
+```
+app
+├── _layout.js
+├── index.js
+└── about.js
+
+components
+├── about.js
+├── about.ios.js
+└── about.web.js
+```
+
+예를 들면, 각 플랫폼에 대해 다른 about 화면을 구축해야 하는 디자인 요구 사항이 있을 수 있습니다. 이 경우 components 디렉토리에서 플랫폼 확장을 사용하여 각 플랫폼에 대한 컴포넌트를 생성할 수 있습니다. 가져올 때 Metro는 현재 플랫폼을 기반으로 올바른 컴포넌트 버전이 사용되도록 합니다. 그런 다음 앱 디렉토리에서 컴포넌트를 화면으로 다시 내보낼 수 있습니다.
+
+```javascript
+export { default } from '../components/about';
+```
+
+이렇게 함으로써 Expo Router를 사용하여 플랫폼 별로 다른 모듈 또는 컴포넌트를 동적으로 렌더링하는 방법을 구현할 수 있습니다.
+
+
+<AdFitMobileBanner
+  unit="DAN-MKrQwsmxT8uLhukP"
+  className="adfit-middle-mobile-4"
+/>
+
+## 공유 라우트 (Shared routes)
+
+같은 URL을 다른 레이아웃과 매치하려면 겹치는 자식 라우트와 함께 그룹을 사용하십시오. 이 패턴은 네이티브 앱에서 매우 일반적입니다. 예를 들어, Twitter 앱에서는 프로필을 모든 탭(홈, 검색, 프로필 등)에서 볼 수 있습니다. 그러나 이 라우트에 액세스하기 위해 필요한 URL은 하나뿐입니다.
+
+아래 예에서 app/_layout.js는 탭 바이며 각 라우트는 고유한 헤더가 있습니다. app/(profile)/[user].js 라우트는 각 탭 간에 공유됩니다.
+
+```
+app
+├── _layout.js
+│ 
+├── (home)
+│   ├── _layout.js
+│   └── [user].js
+│ 
+├── (search)
+│   ├── _layout.js
+│   └── [user].js
+│ 
+└── (profile)
+    ├── _layout.js
+    └── [user].js
+```
+
+페이지를 다시 로드하면 첫 번째 알파벳 순서로 정렬된 매치가 렌더링됩니다.
+
+공유 라우트는 라우트에 그룹 이름을 포함하여 직접 탐색할 수 있습니다. 예를 들어, /(search)/baconbrix는 "search" 레이아웃의 /baconbrix로 이동합니다.
+
+### 배열 (Arrays)
+
+배열 구문은 네이티브 앱 개발에 특화된 고급 개념입니다.
+
+다른 레이아웃으로 동일한 라우트를 여러 번 정의하는 대신 배열 구문(,)을 사용하여 그룹의 자식을 복제합니다. 예를 들어, app/(home,search)/[user].js는 메모리에서 app/(home)/[user].js와 app/(search)/[user].js를 생성합니다.
+
+두 라우트를 구분하기 위해 레이아웃의 segment prop를 사용하십시오:
+
+```javascript
+export default function DynamicLayout({ segment }) {
+  if (segment === '(search)') {
+    return <SearchStack />;
+  }
+
+  return <Stack />;
+}
+```
+
+이렇게 함으로써 동일한 경로를 여러 레이아웃과 함께 여러 번 정의하는 대신 라우트를 유동적으로 관리하고 배열 구문을 사용하여 공유 라우트를 쉽게 구현할 수 있습니다.
 
 <AdFitMobileBanner
   unit="DAN-weLLBNA8C31gpo1t"

@@ -51,6 +51,7 @@ const sidebars = {
       label: "Router",
       link: { type: "generated-index" },
       items: [
+        "react-native/router/router",
         "react-native/router/expo-router",
       ],
     },
