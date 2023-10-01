@@ -1,29 +1,29 @@
+
 ---
 id: react
-title: 리액트
-sidebar_label: 리액트
+title: React
+sidebar_label: React
 sidebar_position: 2
 ---
 
 import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
 
-리액트 네이티브는 모바일 앱 개발을 위한 프레임워크로, 리액트의 기본 원칙에 기반합니다.
-리액트의 핵심 개념을 이해하는 것은 리액트 네이티브를 효과적으로 사용하는 데 큰 도움이 됩니다.
+React Native is a framework for mobile app development, based on the fundamental principles of React. Understanding React's core concepts greatly assists in using React Native effectively.
 
 <AdFitMobileBanner
   unit="DAN-YpcHf9p49U5ykXi8"
   className="adfit-top-mobile"
 />
 
-## 리액트네이티브를 위한 리액트
+## React for React Native
 
-이 아티클에서는 리액트의 핵심 개념을 짚어보며 리액트 네이티브에서 어떻게 적용되는지 살펴보겠습니다.
+In this article, we'll delve into React's core concepts and see how they apply to React Native.
 
-### 1. 컴포넌트
+### 1. Component
 
-컴포넌트는 리액트와 리액트 네이티브의 핵심입니다. UI를 구성하는 재사용 가능한 단위로써, 독립적이며 재사용 가능합니다.
+Components are the core of both React and React Native. They are reusable units that make up the UI and are independent and recyclable.
 
-**리액트 예시:**
+**React Example:**
 
 ```javascript
 function Welcome(props) {
@@ -31,7 +31,7 @@ function Welcome(props) {
 }
 ```
 
-**리액트 네이티브 예시:**
+**React Native Example:**
 
 ```javascript
 import { Text } from 'react-native';
@@ -41,11 +41,11 @@ function Welcome(props) {
 }
 ```
 
-### 2. 상태와 속성 (State & Props)
+### 2. State & Props
 
-리액트 컴포넌트는 `state`와 `props`를 통해 데이터를 관리합니다. `props`는 부모 컴포넌트로부터 전달받는 데이터를 의미하며, `state`는 컴포넌트 내부에서 변경 가능한 데이터를 의미합니다.
+React components manage data through `state` and `props`. `Props` are data passed down from parent components, while `state` represents data that can change within a component.
 
-**리액트 네이티브 예시:**
+**React Native Example:**
 
 ```javascript
 import { Text, Button } from 'react-native';
@@ -70,11 +70,11 @@ class Counter extends React.Component {
 }
 ```
 
-### 3. 라이프사이클과 훅 (Lifecycle & Hooks)
+### 3. Lifecycle & Hooks
 
-라이프사이클 메서드는 클래스 컴포넌트에서 사용되며, 컴포넌트의 생명 주기 동안 특정한 시점에 실행됩니다. 함수 컴포넌트에서는 `Hooks`를 통해 비슷한 기능을 사용할 수 있습니다.
+Lifecycle methods are used in class components and get executed at specific times during a component's life. In function components, similar functionalities can be achieved using `Hooks`.
 
-**리액트 네이티브의 Hooks 예시:**
+**React Native Hooks Example:**
 
 ```javascript
 import { useState, useEffect } from 'react';
@@ -84,20 +84,20 @@ function Counter() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // 컴포넌트가 마운트되거나 업데이트될 때 실행됩니다.
+    // Executes when the component mounts or updates.
     console.log('Component updated!');
 
     return () => {
-      // 컴포넌트가 언마운트될 때 실행됩니다.
+      // Executes when the component will unmount.
       console.log('Component will unmount!');
     };
-  }, [count]); // count가 변경될 때마다 실행됩니다.
+  }, [count]); // Executes every time 'count' changes.
 
   return <Text>{count}</Text>;
 }
 ```
 
-리액트의 이러한 기본 개념은 리액트 네이티브에 그대로 적용됩니다. 리액트를 기반으로 하는 리액트 네이티브는 이런 기본 원칙을 통해 더욱 효과적인 모바일 앱 개발을 가능하게 합니다. 따라서 리액트의 기본 원칙을 잘 이해하면 리액트 네이티브로의 확장도 자연스럽게 이루어질 것입니다.
+These fundamental concepts of React apply directly to React Native. Building on these React principles allows for more effective mobile app development in React Native. Thus, a solid grasp of React's fundamentals will naturally lead to a smoother transition to React Native.
 
 <AdFitMobileBanner
   unit="DAN-weLLBNA8C31gpo1t"
