@@ -63,7 +63,7 @@ export default function Layout() {
 ```
 
 ### 3. 헤더 바 설정
-헤더의 스타일과 같은 옵션을 전역적으로 설정하려면 `screenOptions` prop을 사용하십시오.
+헤더의 스타일과 같은 옵션을 전역적으로 설정하려면 `screenOptions` prop을 사용합니다.
 ```javascript
 import { Stack } from 'expo-router';
 
@@ -136,7 +136,7 @@ export default function Layout() {
   );
 }
 ```
-자식 라우트에서 옵션을 동적으로 구성하려면 `<Stack.Screen />` 컴포넌트를 사용하십시오.
+자식 라우트에서 옵션을 동적으로 구성하려면 `<Stack.Screen />` 컴포넌트를 사용해야 합니다.
 ```javascript
 import { Button, Text, Image } from 'react-native';
 import { Stack } from 'expo-router';
@@ -147,7 +147,7 @@ export default function Home() {
 ```
 
 ### 6. 사용자 정의 푸시 동작
-기본적으로 Stack은 스택에 이미 있는 라우트를 푸시할 때 중복된 페이지를 제거합니다. 라우트의 푸시 동작을 수정하려면 `getId` 함수를 제공하십시오.
+기본적으로 Stack은 스택에 이미 있는 라우트를 푸시할 때 중복된 페이지를 제거합니다. 라우트의 푸시 동작을 수정하려면 `getId` 함수를 사용하면 됩니다.
 ```javascript
 import { Stack } from 'expo-router';
 
@@ -511,7 +511,7 @@ export { default } from '../components/about';
 
 ## 공유 라우트 (Shared routes)
 
-같은 URL을 다른 레이아웃과 매치하려면 겹치는 자식 라우트와 함께 그룹을 사용하십시오. 이 패턴은 네이티브 앱에서 매우 일반적입니다. 예를 들어, Twitter 앱에서는 프로필을 모든 탭(홈, 검색, 프로필 등)에서 볼 수 있습니다. 그러나 이 라우트에 액세스하기 위해 필요한 URL은 하나뿐입니다.
+같은 URL을 다른 레이아웃과 매치하려면 겹치는 자식 라우트와 함께 그룹을 사용합니다. 이 패턴은 네이티브 앱에서 매우 일반적입니다. 예를 들어, Twitter 앱에서는 프로필을 모든 탭(홈, 검색, 프로필 등)에서 볼 수 있습니다. 그러나 이 라우트에 액세스하기 위해 필요한 URL은 하나뿐입니다.
 
 아래 예에서 app/_layout.js는 탭 바이며 각 라우트는 고유한 헤더가 있습니다. app/(profile)/[user].js 라우트는 각 탭 간에 공유됩니다.
 
