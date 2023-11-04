@@ -129,10 +129,10 @@ function Home() {
             </Translate>
           </p>
           <div className={styles.newsDescription}>
-            10월에는 Expo의 변천사와 EAS, Dev Client 실용 가이드 밋업이 열립니다.
+            11월의 밋업에서는 React Native와 Flutter 개발자를 위한 혁신적인 SSO 솔루션 사용 가이드에 대해 다룹니다.
             <br />
             <br />
-            일정: 10월 25일 (수) 오후 7시 30분부터 9시 40분 (2시간 10분)
+            일정: 11월 29일 (수) 오후 7시 30분부터 9시 20분 (1시간 50분)
             <br />
             장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서
             안내드립니다.
