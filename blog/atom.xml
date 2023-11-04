@@ -2,11 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-08-21T00:00:00.000Z</updated>
+    <updated>2023-10-25T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[10월 밋업]]></title>
+        <id>https://crossplatformkorea.com/blog/2023-10-25-expo</id>
+        <link href="https://crossplatformkorea.com/blog/2023-10-25-expo"/>
+        <updated>2023-10-25T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[해당 밋업에서는 7년 간의 Expo 변천사를 알아보고 최신 Expo의 변화와 현황을 알아봅니다. 또한, Expo의 최신 기능인 EAS와 Dev Client에 대해서도 소개하며, Expo를 사용하면서 마주한 어려움과 해결 방법에 대해 이야기 합니다.]]></summary>
+        <content type="html"><![CDATA[<p>해당 밋업에서는 7년 간의 Expo 변천사를 알아보고 최신 Expo의 변화와 현황을 알아봅니다. 또한, Expo의 최신 기능인 EAS와 Dev Client에 대해서도 소개하며, Expo를 사용하면서 마주한 어려움과 해결 방법에 대해 이야기 합니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/q5tK2cW7Pn8" title="trpc 컨퍼런스" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-10-01"></div></div>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+        <category label="Expo" term="Expo"/>
+        <category label="EAS" term="EAS"/>
+        <category label="Dev Client" term="Dev Client"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[8월 밋업]]></title>
         <id>https://crossplatformkorea.com/blog/2023-08-09-trpc</id>

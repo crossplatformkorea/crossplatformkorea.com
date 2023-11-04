@@ -2,11 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-08-21T00:00:00.000Z</updated>
+    <updated>2023-10-25T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[October meetup]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2023-10-25-expo</id>
+        <link href="https://crossplatformkorea.com/en/blog/2023-10-25-expo"/>
+        <updated>2023-10-25T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[In this meetup, we will explore the 7-year history of Expo's evolution and examine the latest changes and current state of Expo. Additionally, we will introduce Expo's newest features, such as EAS (Expo Application Services) and the Dev Client, and discuss the challenges encountered while using Expo and their solutions.]]></summary>
+        <content type="html"><![CDATA[<p>In this meetup, we will explore the 7-year history of Expo's evolution and examine the latest changes and current state of Expo. Additionally, we will introduce Expo's newest features, such as EAS (Expo Application Services) and the Dev Client, and discuss the challenges encountered while using Expo and their solutions.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/q5tK2cW7Pn8" title="trpc 컨퍼런스" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-10-01"></div></div>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="Meetup" term="Meetup"/>
+        <category label="Expo" term="Expo"/>
+        <category label="EAS" term="EAS"/>
+        <category label="Dev Client" term="Dev Client"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[August meetup]]></title>
         <id>https://crossplatformkorea.com/en/blog/2023-08-09-trpc</id>
