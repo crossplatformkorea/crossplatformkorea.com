@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[8375],{6981:function(e){e.exports=JSON.parse('{"label":"New Architecture","permalink":"/blog/tags/new-architecture","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);
