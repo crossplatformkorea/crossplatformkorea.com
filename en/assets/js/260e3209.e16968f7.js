@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[4390],{9217:function(e){e.exports=JSON.parse('{"label":"Meetup","permalink":"/en/blog/tags/meetup","allTagsPath":"/en/blog/tags","count":15}')}}]);

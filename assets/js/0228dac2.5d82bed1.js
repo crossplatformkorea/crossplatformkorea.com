@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[8113],{2127:function(e){e.exports=JSON.parse('{"permalink":"/blog/tags/meetup","page":1,"postsPerPage":10,"totalPages":2,"totalCount":12,"nextPage":"/blog/tags/meetup/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
