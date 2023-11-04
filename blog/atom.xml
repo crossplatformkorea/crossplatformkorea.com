@@ -15,6 +15,8 @@
         <summary type="html"><![CDATA[해당 밋업에서는 7년 간의 Expo 변천사를 알아보고 최신 Expo의 변화와 현황을 알아봅니다. 또한, Expo의 최신 기능인 EAS와 Dev Client에 대해서도 소개하며, Expo를 사용하면서 마주한 어려움과 해결 방법에 대해 이야기 합니다.]]></summary>
         <content type="html"><![CDATA[<p>해당 밋업에서는 7년 간의 Expo 변천사를 알아보고 최신 Expo의 변화와 현황을 알아봅니다. 또한, Expo의 최신 기능인 EAS와 Dev Client에 대해서도 소개하며, Expo를 사용하면서 마주한 어려움과 해결 방법에 대해 이야기 합니다.</p>
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/q5tK2cW7Pn8" title="trpc 컨퍼런스" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<h3 id="우리의-추억">우리의 추억</h3>
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><img src="https://crossplatformkorea.com/assets/images/2023-10-25-expo-1-80753177394ca2b792aa1cb4646c4320.png" height="300" alt="expo-1"></td><td><img src="https://crossplatformkorea.com/assets/images/2023-10-25-expo-2-36e4781245fb9dc4bf6df45552f7cb92.png" height="300" alt="expo-2"></td></tr></tbody></table>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-10-01"></div></div>]]></content>
         <author>
             <name>hyochan</name>
