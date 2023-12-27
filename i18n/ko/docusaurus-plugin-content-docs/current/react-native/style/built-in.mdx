@@ -19,13 +19,13 @@ import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
 
 1. **필요한 모듈 불러오기**:
 먼저 `StyleSheet`을 React Native에서 가져옵니다. 이 모듈은 구 organized styles을 생성하는 데 필수적입니다.
-   ```javascript
+   ```tsx
    import { StyleSheet } from 'react-native';
    ```
 
 2. **스타일 정의하기**:
 `StyleSheet.create` 메소드를 사용하여 스타일을 정의합니다. 각 스타일은 이름을 가지며, 각 스타일 내에서 컴포넌트의 모양을 결정하는 속성을 설정합니다.
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({
      container: {
        flex: 1,
@@ -43,7 +43,7 @@ import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
 
 3. **스타일 적용하기**:
    정의한 스타일을 React Native 컴포넌트에 적용합니다.
-   ```javascript
+   ```tsx
    import React from 'react';
    import { View, Text } from 'react-native';
    
@@ -85,7 +85,7 @@ React Native에서는 `StyleSheet` 외에도 인라인 스타일을 지원합니
 
 예시:
 
-```javascript
+```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 

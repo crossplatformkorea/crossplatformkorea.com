@@ -59,7 +59,7 @@ Expo Router introduces an `href` screen option, but this can only be used in obj
 ### 2. Hiding Tabs
 Sometimes you may want to keep a route but not have it displayed on the tab bar. In such cases, you can disable the button using `href: null`.
 
-```javascript
+```tsx
 import { Tabs } from 'expo-router/tabs';
 
 export default function AppLayout() {
@@ -81,7 +81,7 @@ export default function AppLayout() {
 ### 3. Dynamic Routes
 When trying to use a dynamic route in the tab bar (e.g., a profile tab), you might want to ensure that the button always links to a specific `href`.
 
-```javascript
+```tsx
 import { Tabs } from 'expo-router/tabs';
 
 export default function AppLayout() {
@@ -129,7 +129,7 @@ Using the drawer layout in Expo Router allows you to create a side navigation me
 2. **Update babel.config.js:**
    After installing the packages, update `babel.config.js` to include the reanimated plugin:
 
-   ```javascript
+   ```tsx
    module.exports = {
      presets: [
          ... 
@@ -153,7 +153,7 @@ Using the drawer layout in Expo Router allows you to create a side navigation me
 4. **Implement the drawer in the layout:**
    Now, you are ready to incorporate the drawer layout into your app:
 
-   ```javascript
+   ```tsx
    import { Drawer } from 'expo-router/drawer';
 
    export default function Layout() {

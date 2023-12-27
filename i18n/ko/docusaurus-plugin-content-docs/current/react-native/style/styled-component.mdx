@@ -48,7 +48,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 
 1. **명확한 컴포넌트 스타일링**: 각 컴포넌트에 대한 스타일을 해당 컴포넌트 코드와 같은 위치에서 정의할 수 있습니다.
 
-   ```javascript
+   ```tsx
    const Button = styled.button`
      background: palevioletred;
      color: white;
@@ -58,7 +58,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 
 2. **동적 스타일링**: Props를 통해 동적으로 스타일을 바꿀 수 있습니다.
 
-   ```javascript
+   ```tsx
    const Button = styled.button`
      background: ${(props) => (props.primary ? "palevioletred" : "white")};
      color: ${(props) => (props.primary ? "white" : "palevioletred")};
@@ -67,7 +67,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 
 3. **테마 설정**: `styled-components`는 `ThemeProvider`를 통해 쉽게 테마링을 지원합니다.
 
-   ```javascript
+   ```tsx
    const theme = {
      primaryColor: "palevioletred",
      secondaryColor: "white",
@@ -101,7 +101,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 
 2. **스타일 작성의 유연성**: `Emotion`은 `styled` API와 `css` prop을 이용한 인라인 스타일링을 통해 다양한 방식으로 스타일을 작성할 수 있습니다.
 
-   ```javascript
+   ```tsx
    // styled API 예시
    const Button = styled.Text`
      color: hotpink;

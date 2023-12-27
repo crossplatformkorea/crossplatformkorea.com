@@ -45,7 +45,7 @@ Key features and advantages of `styled-components` include:
 
 1. **Explicit Component Styling**: It allows for defining styles for each component right where the component code resides.
 
-   ```javascript
+   ```tsx
    const Button = styled.button`
      background: palevioletred;
      color: white;
@@ -55,7 +55,7 @@ Key features and advantages of `styled-components` include:
 
 2. **Dynamic Styling**: Styles can be dynamically altered through props.
 
-   ```javascript
+   ```tsx
    const Button = styled.button`
      background: ${(props) => (props.primary ? "palevioletred" : "white")};
      color: ${(props) => (props.primary ? "white" : "palevioletred")};
@@ -64,7 +64,7 @@ Key features and advantages of `styled-components` include:
 
 3. **Theming Capabilities**: `styled-components` supports easy theming via `ThemeProvider`.
 
-   ```javascript
+   ```tsx
    const theme = {
      primaryColor: "palevioletred",
      secondaryColor: "white",
@@ -100,7 +100,7 @@ The main features and benefits of `Emotion` include:
 
 2. **Flexibility in Writing Styles**: Emotion allows for multiple ways to write styles, including the `styled` API for tagged styling and the `css` prop for inline styling.
 
-   ```javascript
+   ```tsx
    // Example using the styled API
    const Button = styled.Text`
      color: hotpink;
@@ -147,7 +147,7 @@ npm install @emotion/react @emotion/native
 
 #### 1. Styled Components
 
-```javascript
+```tsx
 import styled from '@emotion/native';
 
 const StyledButton = styled.TouchableOpacity`
@@ -180,7 +180,7 @@ Add the plugin to your Babel configuration (`babel.config.js` or `.babelrc`):
 
 Then, an example using the `css` prop:
 
-```javascript
+```tsx
 import { css } from '@emotion/native';
 
 const App = () => {

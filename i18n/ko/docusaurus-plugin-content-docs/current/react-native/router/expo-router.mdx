@@ -54,7 +54,7 @@ function ProfileScreen({ route }) {
 Expo Router의 Stack Layout은 React Navigation에서 제공하는 Native Stack Navigator를 활용합니다. 이것은 예전에 사용하던 JS Stack Navigator와는 다릅니다. 
 
 ### 2. 기본 사용법
-```javascript
+```tsx
 import { Stack } from 'expo-router/stack';
 
 export default function Layout() {
@@ -64,7 +64,7 @@ export default function Layout() {
 
 ### 3. 헤더 바 설정
 헤더의 스타일과 같은 옵션을 전역적으로 설정하려면 `screenOptions` prop을 사용합니다.
-```javascript
+```tsx
 import { Stack } from 'expo-router';
 
 export default function Layout() {
@@ -84,7 +84,7 @@ export default function Layout() {
 }
 ```
 또한, 각 라우트 내에서 동적으로 헤더 바를 설정할 수도 있습니다. 이는 UI의 동적 변경에 유용합니다.
-```javascript
+```tsx
 import { Link, Stack } from 'expo-router';
 import { Image, Text, View } from 'react-native';
 
@@ -106,7 +106,7 @@ export default function Home() {
 
 ### 4. 동적 파라미터 설정
 `router.setParams()` 함수를 사용하여 라우트의 동적 설정을 할 수 있습니다.
-```javascript
+```tsx
 import { View, Text } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
@@ -122,7 +122,7 @@ export default function Details() {
 
 ### 5. 헤더 버튼 사용
 화면 옵션을 정적으로 구성하려면 layout component route에 있는 `<Stack.Screen name={routeName} />` 컴포넌트를 사용합니다.
-```javascript
+```tsx
 import { Stack } from 'expo-router';
 
 export default function Layout() {
@@ -137,7 +137,7 @@ export default function Layout() {
 }
 ```
 자식 라우트에서 옵션을 동적으로 구성하려면 `<Stack.Screen />` 컴포넌트를 사용해야 합니다.
-```javascript
+```tsx
 import { Button, Text, Image } from 'react-native';
 import { Stack } from 'expo-router';
 
@@ -148,7 +148,7 @@ export default function Home() {
 
 ### 6. 사용자 정의 푸시 동작
 기본적으로 Stack은 스택에 이미 있는 라우트를 푸시할 때 중복된 페이지를 제거합니다. 라우트의 푸시 동작을 수정하려면 `getId` 함수를 사용하면 됩니다.
-```javascript
+```tsx
 import { Stack } from 'expo-router';
 
 export default function Layout() {
@@ -180,7 +180,7 @@ Expo Router는 `href` 화면 옵션을 추가하는데, 이는 오직 객체 형
 ### 2. 탭 숨기기
 때로는 라우트를 유지하면서 탭 바에 표시되지 않기를 원할 수 있습니다. 이 경우, `href: null`을 전달하여 버튼을 비활성화할 수 있습니다.
 
-```javascript
+```tsx
 import { Tabs } from 'expo-router/tabs';
 
 export default function AppLayout() {
@@ -202,7 +202,7 @@ export default function AppLayout() {
 ### 3. 동적 라우트
 탭 바에 동적 라우트(예: 프로필 탭)를 사용하려는 경우가 있습니다. 이 경우, 버튼이 항상 특정 `href`로 연결되도록 설정하려고 할 것입니다.
 
-```javascript
+```tsx
 import { Tabs } from 'expo-router/tabs';
 
 export default function AppLayout() {
@@ -230,8 +230,6 @@ export default function AppLayout() {
 
 위의 가이드를 따르면, Expo Router의 Tabs 네비게이션을 효과적으로 사용할 수 있습니다.
 
-알겠습니다. Expo Router의 Drawer에 대해 한국어로 설명하겠습니다.
-
 ## Drawer
 
 Expo Router의 Drawer 레이아웃을 사용하면 사이드 내비게이션 메뉴, 즉 "서랍"을 만들 수 있습니다. 이 서랍은 화면 바깥쪽에 숨겨져 있고, 스와이프하거나 토글하여 볼 수 있습니다.
@@ -252,7 +250,7 @@ Expo Router의 Drawer 레이아웃을 사용하면 사이드 내비게이션 메
 2. **babel.config.js 업데이트:**
    필요한 패키지를 설치한 후에는 `babel.config.js`를 업데이트하여 reanimated 플러그인을 포함시켜야 합니다:
 
-   ```javascript
+   ```tsx
    module.exports = {
      presets: [
          ... 
@@ -276,7 +274,7 @@ Expo Router의 Drawer 레이아웃을 사용하면 사이드 내비게이션 메
 4. **레이아웃에 Drawer 사용:**
    이제 앱에 Drawer 레이아웃을 통합할 준비가 되었습니다:
 
-   ```javascript
+   ```tsx
    import { Drawer } from 'expo-router/drawer';
 
    export default function Layout() {
@@ -312,18 +310,18 @@ app
 
 위의 예제에서, `app/home/feed.js`는 `/home/feed`에 해당하며, `app/home/messages.js`는 `/home/messages`에 해당합니다.
 
-```javascript
+```tsx
 import { Stack } from 'expo-router';
 export default Stack;
 ```
 위 코드에서 `app/home/_layout.js`와 `app/index.js`는 `app/_layout.js` 레이아웃 내에 중첩되므로 스택(stack)으로 렌더링됩니다.
 
-```javascript
+```tsx
 import { Tabs } from 'expo-router';
 export default Tabs;
 ```
 
-```javascript
+```tsx
 import { Link } from 'expo-router';
 export default function Root() {
   return <Link href="/home/messages">Navigate to nested route</Link>;
@@ -332,7 +330,7 @@ export default function Root() {
 
 위 코드에서 `app/home/feed.js`와 `app/home/messages.js`는 `home/_layout.js` 레이아웃 내에 중첩되어 있으므로 탭(tab)으로 렌더링됩니다.
 
-```javascript
+```tsx
 import { View, Text } from 'react-native';
 export default function Feed() {
   return (
@@ -376,7 +374,7 @@ app
 
 레이아웃 경로 `app/_layout.js`는 컴포넌트를 모달로 표시할 수 있습니다. 모달을 렌더링하는 데 사용되는 새로운 경로인 `modal`을 추가하세요.
 
-```javascript
+```tsx
 import { Stack } from 'expo-router';
 export default function Layout() {
   return (
@@ -400,7 +398,7 @@ export default function Layout() {
 }
 ```
 
-```javascript
+```tsx
 import { View, Text } from 'react-native';
 import { Link } from 'expo-router';
 export default function Home() {
@@ -415,7 +413,7 @@ export default function Home() {
 
 이제 모달이 이전 컨텍스트를 잃었을 때 뒤로 가기 버튼을 추가하여 독립적인 페이지로 표시되어야 하는 모달을 만듭니다.
 
-```javascript
+```tsx
 import { View } from 'react-native';
 import { Link, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -435,14 +433,12 @@ export default function Modal() {
 
 위의 방법을 통해 Expo Router에서 모달을 성공적으로 구현하고 화면 위에 다른 화면을 표시할 수 있습니다.
 
-알겠습니다. Expo Router에서 플랫폼 별로 모듈을 교체하는 방법에 대해 한국어로 설명하겠습니다.
-
 <AdFitMobileBanner
   unit="DAN-h9aPNdWQH8MvhaeY"
   className="adfit-middle-mobile-4"
 />
 
-## 플랫폼 별 모듈 (Platform-specific Modules)
+## 플랫폼 별 모듈 (Platform-Specific Modules)
 
 앱을 구축할 때 현재 플랫폼에 기반하여 특정 콘텐츠를 표시하고자 할 수 있습니다. 플랫폼 별 모듈을 사용하면 해당 플랫폼에 더 원래대로 경험을 할 수 있습니다. 다음 섹션에서는 Expo Router로 이를 어떻게 달성할 수 있는지 설명합니다.
 
@@ -450,7 +446,7 @@ export default function Modal() {
 
 React Native의 Platform 모듈을 사용하여 현재 플랫폼을 감지하고 결과에 기반하여 적절한 콘텐츠를 렌더링할 수 있습니다. 예를 들어, 네이티브에서는 탭 레이아웃을 렌더링하고 웹에서는 사용자 정의 레이아웃을 렌더링할 수 있습니다.
 
-```javascript
+```tsx
 import { Platform } from 'react-native';
 import { Link, Slot, Tabs } from 'expo-router';
 
@@ -477,7 +473,7 @@ export default function Layout() {
 }
 ```
 
-### 플랫폼 별 확장자 (Platform specific extensions)
+### 플랫폼 별 확장자 (Platform-Specific extensions)
 
 Metro bundler의 플랫폼 특정 확장자(예: .ios.js 또는 .native.ts)는 앱 디렉토리에서 지원되지 않습니다. 이는 라우트가 딥 링크를 위해 플랫폼 간에 보편적으로 작동하기 때문입니다. 그러나 앱 디렉토리 외부에서 플랫폼 별 파일을 생성하고 앱 디렉토리 내에서 사용할 수 있습니다.
 
@@ -497,7 +493,7 @@ components
 
 예를 들면, 각 플랫폼에 대해 다른 about 화면을 구축해야 하는 디자인 요구 사항이 있을 수 있습니다. 이 경우 components 디렉토리에서 플랫폼 확장을 사용하여 각 플랫폼에 대한 컴포넌트를 생성할 수 있습니다. 가져올 때 Metro는 현재 플랫폼을 기반으로 올바른 컴포넌트 버전이 사용되도록 합니다. 그런 다음 앱 디렉토리에서 컴포넌트를 화면으로 다시 내보낼 수 있습니다.
 
-```javascript
+```tsx
 export { default } from '../components/about';
 ```
 
@@ -506,7 +502,7 @@ export { default } from '../components/about';
 
 <AdFitMobileBanner
   unit="DAN-MKrQwsmxT8uLhukP"
-  className="adfit-middle-mobile-4"
+  className="adfit-middle-mobile-5"
 />
 
 ## 공유 라우트 (Shared routes)
@@ -544,7 +540,7 @@ app
 
 두 라우트를 구분하기 위해 레이아웃의 segment prop를 사용하십시오:
 
-```javascript
+```tsx
 export default function DynamicLayout({ segment }) {
   if (segment === '(search)') {
     return <SearchStack />;

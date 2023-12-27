@@ -161,7 +161,7 @@ Click on the <a href="https://snack.expo.dev/@dooboolab/cpk-text">image</a> to r
 
 #### Code Explanation
 1. **Imports**
-   ```javascript
+   ```tsx
    import React, {useState} from 'react';
    import {Text, StyleSheet} from 'react-native';
    ```
@@ -184,7 +184,7 @@ Click on the <a href="https://snack.expo.dev/@dooboolab/cpk-text">image</a> to r
    - The second nested `Text` component displays the value of `bodyText`. It is configured to show a maximum of 5 lines using the `numberOfLines` prop.
 
 3. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({
      baseText: {
        fontFamily: 'Cochin',
@@ -200,7 +200,7 @@ Click on the <a href="https://snack.expo.dev/@dooboolab/cpk-text">image</a> to r
    - `titleText` style sets the font size to 20 and displays the text in bold.
 
 4. **Export**
-   ```javascript
+   ```tsx
    export default TextInANest;
    ```
    - Set `TextInANest` component as the default export so it can be imported and used in other files.
@@ -269,7 +269,7 @@ Click on the <a href="https://snack.expo.dev/@dooboolab/cpk-image">picture</a> t
 The code defines a simple component in React Native to display images on the screen.
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {View, Image, StyleSheet} from 'react-native';
    ```
@@ -277,7 +277,7 @@ The code defines a simple component in React Native to display images on the scr
    - Imports `View`, `Image`, and `StyleSheet` from React Native.
 
 2. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({
      container: {
        paddingTop: 50
@@ -298,7 +298,7 @@ The code defines a simple component in React Native to display images on the scr
    - The second `Image` component displays an image fetched from a web URL, specifically `https://reactnative.dev/img/tiny_logo.png`.
 
 4. **Export**
-   ```javascript
+   ```tsx
    export default DisplayAnImage;
    ```
    - The `DisplayAnImage` component is set as the default export, allowing it to be imported and used in other files.
@@ -372,7 +372,7 @@ export default TextInputExample;
 This code defines a component using React Native that displays two text input boxes on the screen.
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
    ```
@@ -386,7 +386,7 @@ This code defines a component using React Native that displays two text input bo
      - The second `TextInput` displays the `number` value, updates its state using `onChangeNumber` when the value changes, sets the `keyboardType` attribute to "numeric" to display a numeric keyboard, and uses the `placeholder` attribute to show the text "useless placeholder" when the input box is empty.
 
 3. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({
      input: {
        height: 40,
@@ -399,7 +399,7 @@ This code defines a component using React Native that displays two text input bo
    - Input box styles are defined using the `StyleSheet.create` method. The input box has a height of 40, margin of 12, border width of 1, and padding of 10.
 
 4. **Export**
-   ```javascript
+   ```tsx
    export default TextInputExample;
    ```
    - The `TextInputExample` component is set as a default export, making it importable for use in other files.
@@ -473,7 +473,7 @@ export default App;
 This code describes a simple application using React Native that displays a scrollable text area.
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {
      StyleSheet,
@@ -491,7 +491,7 @@ This code describes a simple application using React Native that displays a scro
    - The `Text` component displays sample text like "Lorem ipsum...".
 
 3. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({
      container: {
        flex: 1,
@@ -512,7 +512,7 @@ This code describes a simple application using React Native that displays a scro
    - The `text` style sets the font size of the text to 42.
 
 4. **Export**
-   ```javascript
+   ```tsx
    export default App;
    ```
    - The `App` component is set to default export so that it can be imported and used in other files.
@@ -524,7 +524,7 @@ This code describes a simple application using React Native that displays a scro
 ### **Key Features**
 
 1. **Simple Interface**: The `Button` offers a straightforward API, primarily used to set a title and event handler.
-2. **Platform-specific Styling**: By default, the `Button` adopts the native styling of the current platform (e.g., iOS, Android).
+2. **Platform-Specific Styling**: By default, the `Button` adopts the native styling of the current platform (e.g., iOS, Android).
 3. **Limited Customization**: The customization options for the `Button` component are limited. If you're looking for more advanced styling or features, you might want to consider other components or third-party libraries.
 
 ### **Usage Example**
@@ -626,7 +626,7 @@ By clicking on the <a href="https://snack.expo.dev/@dooboolab/cpk-button">image<
 This code illustrates an application using React Native that displays buttons with various attributes on the screen.
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {
      StyleSheet,
@@ -640,7 +640,7 @@ This code illustrates an application using React Native that displays buttons wi
    Here, the necessary modules and components are imported from React Native.
 
 2. **Separator Component**
-   ```javascript
+   ```tsx
    const Separator = () => <View style={styles.separator} />;
    ```
    This is a simple component to create vertical spacing and a separator line.
@@ -654,7 +654,7 @@ This code illustrates an application using React Native that displays buttons wi
    - The last `two buttons` are positioned side by side in the same row, which is achieved by setting the `flexDirection: 'row'` property via the `styles.fixToText` style.
 
 4. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({ ... });
    ```
    This is where the styles of the application are defined. Each style controls the visual representation of the components.
@@ -665,7 +665,7 @@ This code illustrates an application using React Native that displays buttons wi
    - The `separator` style defines the separator line distinguishing each section.
 
 5. **Export**
-   ```javascript
+   ```tsx
    export default App;
    ```
    The `App` component is set as the default export, allowing it to be imported and used in other files.
@@ -752,7 +752,7 @@ By clicking on the <a href="https://snack.expo.dev/@dooboolab/cpk-flatlist">imag
 This code demonstrates an example of creating a simple list view using React Native. Let's break down the key sections:
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {
      SafeAreaView,
@@ -766,7 +766,7 @@ This code demonstrates an example of creating a simple list view using React Nat
    Here, the necessary components and modules from React Native are imported for constructing the app.
 
 2. **DATA Constant**
-   ```javascript
+   ```tsx
    const DATA = [ ... ];
    ```
    This is an array of data to be displayed in the list view. Each item has a unique `id` and `title`.
@@ -778,13 +778,13 @@ This code demonstrates an example of creating a simple list view using React Nat
    Using TypeScript, the type for the `props` of the `Item` component is defined. Here, it includes only a `title` property which is a string.
 
 4. **Item Component**
-   ```javascript
+   ```tsx
    const Item = ({title}: ItemProps) => ( ... );
    ```
    This is a component for displaying individual list items. It contains a `Text` component with a background color, padding, and text style.
 
 5. **App Component**
-   ```javascript
+   ```tsx
    const App = () => { ... };
    ```
    This is the main component of the app. It uses the `FlatList` component to display the items from the `DATA` array. 
@@ -794,13 +794,13 @@ This code demonstrates an example of creating a simple list view using React Nat
    - The `keyExtractor` prop specifies a function to extract a unique key for each item. Here, the `id` of each item is used.
 
 6. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({ ... });
    ```
    This section defines the styles for the application. Styles for the container, item, and title are defined here.
 
 7. **Export**
-   ```javascript
+   ```tsx
    export default App;
    ```
    The `App` component is set as the default export, allowing it to be imported and used in other files.
@@ -896,7 +896,7 @@ code.
 This code is an example of using React Native to create a list that displays items grouped by sections. The main components are:
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {
      StyleSheet,
@@ -910,13 +910,13 @@ This code is an example of using React Native to create a list that displays ite
    Import the necessary React Native components and modules for the app's construction.
 
 2. **DATA Constant**
-   ```javascript
+   ```tsx
    const DATA = [ ... ];
    ```
    This is the data for the items grouped by sections. Each section consists of a `title` and `data`, where `data` contains the items for that section as an array.
 
 3. **App Component**
-   ```javascript
+   ```tsx
    const App = () => { ... };
    ```
    This is the main component of the app. It uses the `SectionList` component to display items from the `DATA` array divided by sections.
@@ -927,13 +927,13 @@ This code is an example of using React Native to create a list that displays ite
    - The `renderSectionHeader` prop defines how the header for each section will be rendered.
 
 4. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({ ... });
    ```
    This part defines the application's styles. Here, the styles for the container, items, section headers, and item titles are defined.
 
 5. **Export**
-   ```javascript
+   ```tsx
    export default App;
    ```
    The `App` component is set as the default export, allowing it to be imported and used in other files.
@@ -949,7 +949,7 @@ This code is an example of using React Native to create a list that displays ite
 
 ### **Key Features**
 
-1. **Platform-specific Style**: By default, the `ActivityIndicator` uses the native loading indicator style of the current platform (iOS or Android).
+1. **Platform-Specific Style**: By default, the `ActivityIndicator` uses the native loading indicator style of the current platform (iOS or Android).
 2. **Customizability**: You can customize various properties of the indicator, such as its size and color.
 
 ### **Main props**
@@ -999,14 +999,14 @@ This code demonstrates a React Native application that displays multiple `Activi
 Here's a breakdown of each section:
 
 1. **Imports**
-   ```javascript
+   ```tsx
    import React from 'react';
    import {ActivityIndicator, StyleSheet, View} from 'react-native';
    ```
    This section imports the required React Native components and modules for building the app.
 
 2. **App Component**
-   ```javascript
+   ```tsx
    const App = () => { ... };
    ```
    This is the main component of the app. Here, four different `ActivityIndicator` components are rendered.
@@ -1015,7 +1015,7 @@ Here's a breakdown of each section:
    - The third and fourth `ActivityIndicator` have both size and color specified.
 
 3. **Styles**
-   ```javascript
+   ```tsx
    const styles = StyleSheet.create({ ... });
    ```
    This section defines the application's styles.
@@ -1024,7 +1024,7 @@ Here's a breakdown of each section:
    - `horizontal`: Sets the component's orientation to horizontal and evenly spaces components. Padding is added to ensure components aren't too close to the screen edges.
 
 4. **Export**
-   ```javascript
+   ```tsx
    export default App;
    ```
    This line sets `App` component as the default export, making it importable in other files.
@@ -1126,13 +1126,13 @@ Breaking down the main sections of the code:
    Import the necessary components and modules from React Native.
 
 2. **State Initialization**
-   ```javascript
+   ```tsx
    const [count, setCount] = useState(0);
    ```
    Create a state variable named `count` and a function, `setCount`, to modify its value. It's initialized to 0.
 
 3. **onPress Function**
-   ```javascript
+   ```tsx
    const onPress = () => setCount(count + 1);
    ```
    Define a function that gets triggered on button press. This function increments the `count` by 1.
