@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">리액트 | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/docs/current/react-native/react"><meta data-rh="true" property="og:locale" content="ko"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="ko"><meta data-rh="true" name="docsearch:language" content="ko"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="리액트 | Cross-Platform Korea"><meta data-rh="true" name="description" content="리액트 네이티브는 모바일 앱 개발을 위한 프레임워크로, 리액트의 기본 원칙에 기반합니다."><meta data-rh="true" property="og:description" content="리액트 네이티브는 모바일 앱 개발을 위한 프레임워크로, 리액트의 기본 원칙에 기반합니다."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/docs/current/react-native/react"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/react" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/react" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/react" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/assets/css/styles.0e73e348.css">
-<script src="/assets/js/runtime~main.bdbb4dda.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.7923a2c6.js" defer="defer"></script>
 <script src="/assets/js/main.1882cac0.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -17,12 +17,12 @@
 <h3 id="1-컴포넌트">1. 컴포넌트</h3>
 <p>컴포넌트는 리액트와 리액트 네이티브의 핵심입니다. UI를 구성하는 재사용 가능한 단위로써, 독립적이며 재사용 가능합니다.</p>
 <p><strong>리액트 예시</strong></p>
-<pre><code class="language-javascript">function Welcome(props) {
+<pre><code class="language-tsx">function Welcome(props) {
   return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
 }
 </code></pre>
 <p><strong>리액트네이티브 예시</strong></p>
-<pre><code class="language-javascript">import { Text } from &#x27;react-native&#x27;;
+<pre><code class="language-tsx">import { Text } from &#x27;react-native&#x27;;
 
 function Welcome(props) {
   return &lt;Text&gt;Hello, {props.name}&lt;/Text&gt;;
@@ -39,7 +39,7 @@ function Welcome(props) {
 <ol>
 <li><strong>정보 전달</strong>: <code>props</code>는 부모 컴포넌트에서 자식 컴포넌트로 정보를 전달할 때 사용됩니다.</li>
 <li><strong>읽기 전용</strong>: <code>props</code>는 컴포넌트 내에서 변경할 수 없습니다. 다시 말해, 컴포넌트는 받은 <code>props</code>를 그대로 사용해야 합니다.</li>
-<li><strong>예시</strong>: 자신의 이름을 알려주기 위해 다른 사람에게 명함을 주는 것을 상상해보세요. 그 명함에 적힌 정보는 변경되지 않습니다. 이와 같이 컴포넌트에 전  달된 <code>props</code>는 변경되지 않는 정보로 생각할 수 있습니다.</li>
+<li><strong>예시</strong>: 자신의 이름을 알려주기 위해 다른 사람에게 명함을 주는 것을 상상해보세요. 그 명함에 적힌 정보는 변경되지 않습니다. 이와 같이 컴포넌트에 전달된 <code>props</code>는 변경되지 않는 정보로 생각할 수 있습니다.</li>
 </ol>
 <h4 id="state-상태">state (상태)</h4>
 <p><strong>state</strong>는 컴포넌트 내부에서 관리되는 정보입니다.</p>
@@ -62,7 +62,7 @@ function Welcome(props) {
 </ul>
 </blockquote>
 <p><strong>리액트 네이티브 예시:</strong></p>
-<pre><code class="language-javascript">import React, { useState } from &#x27;react&#x27;;
+<pre><code class="language-tsx">import React, { useState } from &#x27;react&#x27;;
 import { Text, Button } from &#x27;react-native&#x27;;
 
 function Counter(): JSX.Element {
@@ -86,7 +86,7 @@ export default Counter;
 <h3 id="3-라이프사이클과-훅-lifecycle--hooks">3. 라이프사이클과 훅 (Lifecycle &amp; Hooks)</h3>
 <p>라이프사이클 메서드는 클래스 컴포넌트에서 사용되며, 컴포넌트의 생명 주기 동안 특정한 시점에 실행됩니다. 함수 컴포넌트에서는 <code>Hooks</code>를 통해 비슷한 기능을 사용할 수 있습니다.</p>
 <p><strong>리액트 네이티브의 Hooks 예시:</strong></p>
-<pre><code class="language-javascript">import { useState, useEffect } from &#x27;react&#x27;;
+<pre><code class="language-tsx">import { useState, useEffect } from &#x27;react&#x27;;
 import { Text } from &#x27;react-native&#x27;;
 
 function Counter() {

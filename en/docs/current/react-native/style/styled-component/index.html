@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">Styled Components | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/en/docs/current/react-native/style/styled-component"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="ko"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Styled Components | Cross-Platform Korea"><meta data-rh="true" name="description" content="React Native inherently comes with an API named StyleSheet for styling."><meta data-rh="true" property="og:description" content="React Native inherently comes with an API named StyleSheet for styling."><link data-rh="true" rel="icon" href="/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/en/docs/current/react-native/style/styled-component"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/style/styled-component" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/styled-component" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/styled-component" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/en/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/en/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/en/assets/css/styles.0e73e348.css">
-<script src="/en/assets/js/runtime~main.3c700725.js" defer="defer"></script>
+<script src="/en/assets/js/runtime~main.a430f090.js" defer="defer"></script>
 <script src="/en/assets/js/main.ae4af4be.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -46,7 +46,7 @@ However, many developers prefer the CSS-in-JS style of styling. For this, they u
 <ol>
 <li>
 <p><strong>Explicit Component Styling</strong>: It allows for defining styles for each component right where the component code resides.</p>
-<pre><code class="language-javascript">const Button = styled.button`
+<pre><code class="language-tsx">const Button = styled.button`
   background: palevioletred;
   color: white;
   border-radius: 3px;
@@ -55,7 +55,7 @@ However, many developers prefer the CSS-in-JS style of styling. For this, they u
 </li>
 <li>
 <p><strong>Dynamic Styling</strong>: Styles can be dynamically altered through props.</p>
-<pre><code class="language-javascript">const Button = styled.button`
+<pre><code class="language-tsx">const Button = styled.button`
   background: ${(props) =&gt; (props.primary ? &quot;palevioletred&quot; : &quot;white&quot;)};
   color: ${(props) =&gt; (props.primary ? &quot;white&quot; : &quot;palevioletred&quot;)};
 `;
@@ -63,7 +63,7 @@ However, many developers prefer the CSS-in-JS style of styling. For this, they u
 </li>
 <li>
 <p><strong>Theming Capabilities</strong>: <code>styled-components</code> supports easy theming via <code>ThemeProvider</code>.</p>
-<pre><code class="language-javascript">const theme = {
+<pre><code class="language-tsx">const theme = {
   primaryColor: &quot;palevioletred&quot;,
   secondaryColor: &quot;white&quot;,
 };
@@ -95,7 +95,7 @@ However, many developers prefer the CSS-in-JS style of styling. For this, they u
 </li>
 <li>
 <p><strong>Flexibility in Writing Styles</strong>: Emotion allows for multiple ways to write styles, including the <code>styled</code> API for tagged styling and the <code>css</code> prop for inline styling.</p>
-<pre><code class="language-javascript">// Example using the styled API
+<pre><code class="language-tsx">// Example using the styled API
 const Button = styled.Text`
   color: hotpink;
 `;
@@ -137,7 +137,7 @@ const Button = styled.Text`
 </code></pre>
 <h3 id="usage-examples">Usage Examples</h3>
 <h4 id="1-styled-components">1. Styled Components</h4>
-<pre><code class="language-javascript">import styled from &#x27;@emotion/native&#x27;;
+<pre><code class="language-tsx">import styled from &#x27;@emotion/native&#x27;;
 
 const StyledButton = styled.TouchableOpacity`
   background-color: hotpink;
@@ -163,7 +163,7 @@ export default App;
 }
 </code></pre>
 <p>Then, an example using the <code>css</code> prop:</p>
-<pre><code class="language-javascript">import { css } from &#x27;@emotion/native&#x27;;
+<pre><code class="language-tsx">import { css } from &#x27;@emotion/native&#x27;;
 
 const App = () =&gt; {
   return (

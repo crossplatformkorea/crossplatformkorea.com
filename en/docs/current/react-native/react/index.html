@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">React | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/en/docs/current/react-native/react"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="ko"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="React | Cross-Platform Korea"><meta data-rh="true" name="description" content="React Native is a framework for mobile app development, based on the fundamental principles of React. Understanding React&#x27;s core concepts greatly assists in using React Native effectively."><meta data-rh="true" property="og:description" content="React Native is a framework for mobile app development, based on the fundamental principles of React. Understanding React&#x27;s core concepts greatly assists in using React Native effectively."><link data-rh="true" rel="icon" href="/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/en/docs/current/react-native/react"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/react" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/react" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/react" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/en/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/en/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/en/assets/css/styles.0e73e348.css">
-<script src="/en/assets/js/runtime~main.3c700725.js" defer="defer"></script>
+<script src="/en/assets/js/runtime~main.a430f090.js" defer="defer"></script>
 <script src="/en/assets/js/main.ae4af4be.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -16,12 +16,12 @@
 <h3 id="1-component">1. Component</h3>
 <p>Components are the core of both React and React Native. They are reusable units that make up the UI and are independent and recyclable.</p>
 <p><strong>React Example:</strong></p>
-<pre><code class="language-javascript">function Welcome(props) {
+<pre><code class="language-tsx">function Welcome(props) {
   return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
 }
 </code></pre>
 <p><strong>React Native Example:</strong></p>
-<pre><code class="language-javascript">import { Text } from &#x27;react-native&#x27;;
+<pre><code class="language-tsx">import { Text } from &#x27;react-native&#x27;;
 
 function Welcome(props) {
   return &lt;Text&gt;Hello, {props.name}&lt;/Text&gt;;
@@ -82,7 +82,7 @@ export default Counter;
 <h3 id="3-lifecycle--hooks">3. Lifecycle &amp; Hooks</h3>
 <p>Lifecycle methods are used in class components and get executed at specific times during a component&#x27;s life. In function components, similar functionalities can be achieved using <code>Hooks</code>.</p>
 <p><strong>React Native Hooks Example:</strong></p>
-<pre><code class="language-javascript">import { useState, useEffect } from &#x27;react&#x27;;
+<pre><code class="language-tsx">import { useState, useEffect } from &#x27;react&#x27;;
 import { Text } from &#x27;react-native&#x27;;
 
 function Counter() {

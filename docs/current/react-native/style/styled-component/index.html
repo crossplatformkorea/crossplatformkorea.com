@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">스타일 컴포넌트 | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/docs/current/react-native/style/styled-component"><meta data-rh="true" property="og:locale" content="ko"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="ko"><meta data-rh="true" name="docsearch:language" content="ko"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="스타일 컴포넌트 | Cross-Platform Korea"><meta data-rh="true" name="description" content="React Native에는 기본적으로 스타일링을 위한 StyleSheet이라는 API가 존재합니다."><meta data-rh="true" property="og:description" content="React Native에는 기본적으로 스타일링을 위한 StyleSheet이라는 API가 존재합니다."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/docs/current/react-native/style/styled-component"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/style/styled-component" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/styled-component" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/styled-component" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/assets/css/styles.0e73e348.css">
-<script src="/assets/js/runtime~main.bdbb4dda.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.7923a2c6.js" defer="defer"></script>
 <script src="/assets/js/main.1882cac0.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -49,7 +49,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 <ol>
 <li>
 <p><strong>명확한 컴포넌트 스타일링</strong>: 각 컴포넌트에 대한 스타일을 해당 컴포넌트 코드와 같은 위치에서 정의할 수 있습니다.</p>
-<pre><code class="language-javascript">const Button = styled.button`
+<pre><code class="language-tsx">const Button = styled.button`
   background: palevioletred;
   color: white;
   border-radius: 3px;
@@ -58,7 +58,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 </li>
 <li>
 <p><strong>동적 스타일링</strong>: Props를 통해 동적으로 스타일을 바꿀 수 있습니다.</p>
-<pre><code class="language-javascript">const Button = styled.button`
+<pre><code class="language-tsx">const Button = styled.button`
   background: ${(props) =&gt; (props.primary ? &quot;palevioletred&quot; : &quot;white&quot;)};
   color: ${(props) =&gt; (props.primary ? &quot;white&quot; : &quot;palevioletred&quot;)};
 `;
@@ -66,7 +66,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 </li>
 <li>
 <p><strong>테마 설정</strong>: <code>styled-components</code>는 <code>ThemeProvider</code>를 통해 쉽게 테마링을 지원합니다.</p>
-<pre><code class="language-javascript">const theme = {
+<pre><code class="language-tsx">const theme = {
   primaryColor: &quot;palevioletred&quot;,
   secondaryColor: &quot;white&quot;,
 };
@@ -89,7 +89,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 <p><code>styled-components</code>는 그 외에도 많은 편리한 기능과 확장성을 제공하며, 커뮤니티에서도 활발하게 지원되고 있습니다. 그렇기 때문에 많은 프로젝트와 개발팀에서 선호하는 스타일링 라이브러리 중 하나입니다.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile"></div></div>
 <h2 id="emotion-">Emotion 🏆</h2>
-<p><a href="https://emotion.sh/docs/introduction">Emotion</a>은 CSS-in-JS 라이브러리 중 하나이며, <code>styled-components</code>와 유사한 기능을 제공하는 동시에 자신만의 특징과 장점을 가지고 있습니다. 웹 뿐만 아니라 React Native와 같은 플랫폼에서도 간편하게 스타일링할 수 있게 도 와줍니다.</p>
+<p><a href="https://emotion.sh/docs/introduction">Emotion</a>은 CSS-in-JS 라이브러리 중 하나이며, <code>styled-components</code>와 유사한 기능을 제공하는 동시에 자신만의 특징과 장점을 가지고 있습니다. 웹 뿐만 아니라 React Native와 같은 플랫폼에서도 간편하게 스타일링할 수 있게 도와줍니다.</p>
 <p><code>Emotion</code>의 주요 특징 및 장점은 다음과 같습니다:</p>
 <ol>
 <li>
@@ -97,7 +97,7 @@ React (그리고 React Native)와 같은 컴포넌트 기반의 라이브러리�
 </li>
 <li>
 <p><strong>스타일 작성의 유연성</strong>: <code>Emotion</code>은 <code>styled</code> API와 <code>css</code> prop을 이용한 인라인 스타일링을 통해 다양한 방식으로 스타일을 작성할 수 있습니다.</p>
-<pre><code class="language-javascript">// styled API 예시
+<pre><code class="language-tsx">// styled API 예시
 const Button = styled.Text`
   color: hotpink;
 `;

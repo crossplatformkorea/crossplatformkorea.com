@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">Built-in Styling | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/en/docs/current/react-native/style/built-in"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="ko"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Built-in Styling | Cross-Platform Korea"><meta data-rh="true" name="description" content="When developing an application, regardless of mobile or web, how it appears and feels to the user is crucial. This appearance and feel are achieved through &quot;styling.&quot; Styles have key attributes such as color, size, and position, determining how various parts (or components) of an app are represented."><meta data-rh="true" property="og:description" content="When developing an application, regardless of mobile or web, how it appears and feels to the user is crucial. This appearance and feel are achieved through &quot;styling.&quot; Styles have key attributes such as color, size, and position, determining how various parts (or components) of an app are represented."><link data-rh="true" rel="icon" href="/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/en/docs/current/react-native/style/built-in"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/style/built-in" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/built-in" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/built-in" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/en/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/en/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/en/assets/css/styles.0e73e348.css">
-<script src="/en/assets/js/runtime~main.3c700725.js" defer="defer"></script>
+<script src="/en/assets/js/runtime~main.a430f090.js" defer="defer"></script>
 <script src="/en/assets/js/main.ae4af4be.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -17,13 +17,13 @@
 <li>
 <p><strong>Importing Necessary Modules</strong>:
 First, fetch <code>StyleSheet</code> from React Native. This module is essential for creating organized styles.</p>
-<pre><code class="language-javascript">import { StyleSheet } from &#x27;react-native&#x27;;
+<pre><code class="language-tsx">import { StyleSheet } from &#x27;react-native&#x27;;
 </code></pre>
 </li>
 <li>
 <p><strong>Defining Styles</strong>:
 Use the <code>StyleSheet.create</code> method to define styles. Each style has a name and sets attributes that determine the appearance of the component within.</p>
-<pre><code class="language-javascript">const styles = StyleSheet.create({
+<pre><code class="language-tsx">const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: &#x27;center&#x27;,
@@ -41,7 +41,7 @@ Use the <code>StyleSheet.create</code> method to define styles. Each style has a
 <li>
 <p><strong>Applying Styles</strong>:
 Apply the defined styles to the React Native components.</p>
-<pre><code class="language-javascript">import React from &#x27;react&#x27;;
+<pre><code class="language-tsx">import React from &#x27;react&#x27;;
 import { View, Text } from &#x27;react-native&#x27;;
 
 export default function App() {
@@ -71,7 +71,7 @@ export default function App() {
 <h2 id="inline-styles">Inline Styles</h2>
 <p>React Native also supports inline styles, besides <code>StyleSheet</code>. This method defines style attributes directly within the component. It&#x27;s useful for quick styling or testing changes, but for larger projects or recurring styles, using <code>StyleSheet</code> is recommended.</p>
 <p>Example:</p>
-<pre><code class="language-javascript">import React from &#x27;react&#x27;;
+<pre><code class="language-tsx">import React from &#x27;react&#x27;;
 import { View, Text } from &#x27;react-native&#x27;;
 
 export default function App() {

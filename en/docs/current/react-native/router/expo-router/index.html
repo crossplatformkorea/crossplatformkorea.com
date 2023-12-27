@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">Expo Router | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/en/docs/current/react-native/router/expo-router"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="ko"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Expo Router | Cross-Platform Korea"><meta data-rh="true" name="description" content="In the Router Section as mentioned, while React Native has various routers like react-navigation and react-native-navigation,"><meta data-rh="true" property="og:description" content="In the Router Section as mentioned, while React Native has various routers like react-navigation and react-native-navigation,"><link data-rh="true" rel="icon" href="/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/en/docs/current/react-native/router/expo-router"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/router/expo-router" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/router/expo-router" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/router/expo-router" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/en/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/en/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/en/assets/css/styles.0e73e348.css">
-<script src="/en/assets/js/runtime~main.3c700725.js" defer="defer"></script>
+<script src="/en/assets/js/runtime~main.a430f090.js" defer="defer"></script>
 <script src="/en/assets/js/main.ae4af4be.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -47,7 +47,7 @@ At this juncture, the <code>name</code> parameter is passed along. Within the <c
 <p>Expo Router introduces an <code>href</code> screen option, but this can only be used in object form screen options (e.g., <code>screenOptions={{ href: &quot;/path&quot; }}</code>), and it cannot be used in conjunction with <code>tabBarButton</code>.</p>
 <h3 id="2-hiding-tabs">2. Hiding Tabs</h3>
 <p>Sometimes you may want to keep a route but not have it displayed on the tab bar. In such cases, you can disable the button using <code>href: null</code>.</p>
-<pre><code class="language-javascript">import { Tabs } from &#x27;expo-router/tabs&#x27;;
+<pre><code class="language-tsx">import { Tabs } from &#x27;expo-router/tabs&#x27;;
 
 export default function AppLayout() {
   return (
@@ -66,7 +66,7 @@ export default function AppLayout() {
 </code></pre>
 <h3 id="3-dynamic-routes">3. Dynamic Routes</h3>
 <p>When trying to use a dynamic route in the tab bar (e.g., a profile tab), you might want to ensure that the button always links to a specific <code>href</code>.</p>
-<pre><code class="language-javascript">import { Tabs } from &#x27;expo-router/tabs&#x27;;
+<pre><code class="language-tsx">import { Tabs } from &#x27;expo-router/tabs&#x27;;
 
 export default function AppLayout() {
   return (
@@ -109,7 +109,7 @@ Before you can use the drawer navigator, you need to install a few packages:</p>
 <li>
 <p><strong>Update babel.config.js:</strong>
 After installing the packages, update <code>babel.config.js</code> to include the reanimated plugin:</p>
-<pre><code class="language-javascript">module.exports = {
+<pre><code class="language-tsx">module.exports = {
   presets: [
       ... 
     ],
@@ -132,7 +132,7 @@ After making changes to <code>babel.config.js</code>, clear the babel cache and 
 <li>
 <p><strong>Implement the drawer in the layout:</strong>
 Now, you are ready to incorporate the drawer layout into your app:</p>
-<pre><code class="language-javascript">import { Drawer } from &#x27;expo-router/drawer&#x27;;
+<pre><code class="language-tsx">import { Drawer } from &#x27;expo-router/drawer&#x27;;
 
 export default function Layout() {
   return &lt;Drawer /&gt;;

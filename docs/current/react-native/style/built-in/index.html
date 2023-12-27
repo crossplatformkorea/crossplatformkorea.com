@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">내장 스타일링 | Cross-Platform Korea</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://crossplatformkorea.com/docs/current/react-native/style/built-in"><meta data-rh="true" property="og:locale" content="ko"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="ko"><meta data-rh="true" name="docsearch:language" content="ko"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="내장 스타일링 | Cross-Platform Korea"><meta data-rh="true" name="description" content="애플리케이션을 개발할 때, 모바일이나 웹에 관계없이 사용자에게 어떻게 보이고 느껴지는지가 중요합니다. 이러한 외관과 느낌은 &quot;스타일링&quot;을 통해 달성됩니다. 스타일은 색상, 크기, 위치 등의 대표 속성을 가지며 앱의 다양한 부분(또는 컴포넌트)이 어떻게 표현되는지 결정합니다."><meta data-rh="true" property="og:description" content="애플리케이션을 개발할 때, 모바일이나 웹에 관계없이 사용자에게 어떻게 보이고 느껴지는지가 중요합니다. 이러한 외관과 느낌은 &quot;스타일링&quot;을 통해 달성됩니다. 스타일은 색상, 크기, 위치 등의 대표 속성을 가지며 앱의 다양한 부분(또는 컴포넌트)이 어떻게 표현되는지 결정합니다."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://crossplatformkorea.com/docs/current/react-native/style/built-in"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/en/docs/current/react-native/style/built-in" hreflang="en"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/built-in" hreflang="ko"><link data-rh="true" rel="alternate" href="https://crossplatformkorea.com/docs/current/react-native/style/built-in" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="Cross-Platform Korea RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="Cross-Platform Korea Atom Feed"><link rel="stylesheet" href="/assets/css/styles.0e73e348.css">
-<script src="/assets/js/runtime~main.bdbb4dda.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.7923a2c6.js" defer="defer"></script>
 <script src="/assets/js/main.1882cac0.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -17,13 +17,13 @@
 <li>
 <p><strong>필요한 모듈 불러오기</strong>:
 먼저 <code>StyleSheet</code>을 React Native에서 가져옵니다. 이 모듈은 구 organized styles을 생성하는 데 필수적입니다.</p>
-<pre><code class="language-javascript">import { StyleSheet } from &#x27;react-native&#x27;;
+<pre><code class="language-tsx">import { StyleSheet } from &#x27;react-native&#x27;;
 </code></pre>
 </li>
 <li>
 <p><strong>스타일 정의하기</strong>:
 <code>StyleSheet.create</code> 메소드를 사용하여 스타일을 정의합니다. 각 스타일은 이름을 가지며, 각 스타일 내에서 컴포넌트의 모양을 결정하는 속성을 설정합니다.</p>
-<pre><code class="language-javascript">const styles = StyleSheet.create({
+<pre><code class="language-tsx">const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: &#x27;center&#x27;,
@@ -41,7 +41,7 @@
 <li>
 <p><strong>스타일 적용하기</strong>:
 정의한 스타일을 React Native 컴포넌트에 적용합니다.</p>
-<pre><code class="language-javascript">import React from &#x27;react&#x27;;
+<pre><code class="language-tsx">import React from &#x27;react&#x27;;
 import { View, Text } from &#x27;react-native&#x27;;
 
 export default function App() {
@@ -67,13 +67,13 @@ export default function App() {
 <div class="video-container" style="margin-bottom:8px"><iframe width="560" height="315" src="https://www.youtube.com/embed/07ioPW-VKd4?si=-mku-ztYHU2siXJx" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
 <h3 id="주의-사항">주의 사항</h3>
 <ul>
-<li><strong>Camel Case</strong>: React Native는 속성 이름에 camelCase를 사용합니다. 예를 들면,</li>
+<li><strong>Camel Case</strong>: React Native는 속 성 이름에 camelCase를 사용합니다. 예를 들면,</li>
 </ul>
 <p><code>background-color</code> 대신 <code>backgroundColor</code>와 같이 표기합니다.</p>
 <h2 id="인라인-스타일">인라인 스타일</h2>
 <p>React Native에서는 <code>StyleSheet</code> 외에도 인라인 스타일을 지원합니다. 이 방법은 컴포넌트 내에서 직접 스타일 속성을 정의하여 사용합니다. 빠른 스타일링이나 변화를 시험할 때 유용하나, 큰 프로젝트나 반복적으로 사용되는 스타일의 경우 <code>StyleSheet</code> 사용이 권장됩니다.</p>
 <p>예시:</p>
-<pre><code class="language-javascript">import React from &#x27;react&#x27;;
+<pre><code class="language-tsx">import React from &#x27;react&#x27;;
 import { View, Text } from &#x27;react-native&#x27;;
 
 export default function App() {
