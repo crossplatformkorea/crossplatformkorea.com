@@ -16,7 +16,7 @@
             <description><![CDATA[In this meetup, we will explore the 7-year history of Expo's evolution and examine the latest changes and current state of Expo. Additionally, we will introduce Expo's newest features, such as EAS (Expo Application Services) and the Dev Client, and discuss the challenges encountered while using Expo and their solutions.]]></description>
             <content:encoded><![CDATA[<p>In this meetup, we will explore the 7-year history of Expo's evolution and examine the latest changes and current state of Expo. Additionally, we will introduce Expo's newest features, such as EAS (Expo Application Services) and the Dev Client, and discuss the challenges encountered while using Expo and their solutions.</p>
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/q5tK2cW7Pn8" title="trpc 컨퍼런스" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
-<h3 id="our-memories">Our Memories</h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="our-memories">Our Memories<a href="https://crossplatformkorea.com/en/blog/2023-10-25-expo#our-memories" class="hash-link" aria-label="Direct link to Our Memories" title="Direct link to Our Memories">​</a></h3>
 <table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><img src="https://crossplatformkorea.com/en/assets/images/2023-10-25-expo-1-80753177394ca2b792aa1cb4646c4320.png" height="300" alt="expo-1"></td><td><img src="https://crossplatformkorea.com/en/assets/images/2023-10-25-expo-2-36e4781245fb9dc4bf6df45552f7cb92.png" height="300" alt="expo-2"></td></tr></tbody></table>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-10-01"></div></div>]]></content:encoded>
             <category>Meetup</category>
@@ -46,9 +46,9 @@
             <guid>https://crossplatformkorea.com/en/blog/2023-07-19-blockchain</guid>
             <pubDate>Wed, 19 Jul 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[At our July meetup, there was a surprise blockchain seminar. It was an enlightening session where we delved into the current blockchain trends and learned about Sam Altman's ambitious project, Worldcoin. Many were taken aback when an announcement of listing was made just 5 days later on the 24th 😅.]]></description>
-            <content:encoded><![CDATA[<p>At our July meetup, there was a surprise blockchain seminar. It was an enlightening session where we delved into the current blockchain trends and learned about Sam Altman's ambitious project, Worldcoin. Many were taken aback when an <a href="https://www.coindeskkorea.com/news/articleView.html?idxno=92217">announcement of listing</a> was made just 5 days later on the 24th 😅.</p>
-<p>A special thanks to those who participated in the <a href="https://dooboo.page.link/7Ae2co2wZ7mxACgG8">mission to review the announcement</a> on the <a href="https://dooboo.io/">dooboo app</a>. It made the event even more memorable.</p>
-<p>Check out the photos from the event on <a href="https://www.instagram.com/p/CvKD-eXS284/?img_index=1">Instagram</a>.</p>
+            <content:encoded><![CDATA[<p>At our July meetup, there was a surprise blockchain seminar. It was an enlightening session where we delved into the current blockchain trends and learned about Sam Altman's ambitious project, Worldcoin. Many were taken aback when an <a href="https://www.coindeskkorea.com/news/articleView.html?idxno=92217" target="_blank" rel="noopener noreferrer">announcement of listing</a> was made just 5 days later on the 24th 😅.</p>
+<p>A special thanks to those who participated in the <a href="https://dooboo.page.link/7Ae2co2wZ7mxACgG8" target="_blank" rel="noopener noreferrer">mission to review the announcement</a> on the <a href="https://dooboo.io/" target="_blank" rel="noopener noreferrer">dooboo app</a>. It made the event even more memorable.</p>
+<p>Check out the photos from the event on <a href="https://www.instagram.com/p/CvKD-eXS284/?img_index=1" target="_blank" rel="noopener noreferrer">Instagram</a>.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-07-19"></div></div>]]></content:encoded>
             <category>Meetup</category>
         </item>
@@ -66,7 +66,7 @@
 <li><strong>Low Memory Footprint</strong>: Hermes is designed to minimize memory usage, thereby reducing the overall memory consumption of the app.</li>
 <li><strong>Optimized for React Native</strong>: Hermes is optimized for use with React Native, offering potential performance improvements for typical React Native operations.</li>
 </ol>
-<p>For more information, check out the blog <a href="https://medium.com/crossplatformkorea/hermes-%EC%97%94%EC%A7%84%EC%9D%B4%EB%9E%80-cbeb953e0f10">What is Hermes Engine?</a>.</p>
+<p>For more information, check out the blog <a href="https://medium.com/crossplatformkorea/hermes-%EC%97%94%EC%A7%84%EC%9D%B4%EB%9E%80-cbeb953e0f10" target="_blank" rel="noopener noreferrer">What is Hermes Engine?</a>.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-07-16-1"></div></div>]]></content:encoded>
             <category>Blog</category>
             <category>React Native</category>
@@ -99,7 +99,7 @@
 </li>
 </ul>
 <p>The introduction of this new architecture aims to boost the performance of React Native applications and streamline their integration with Native components.</p>
-<p>For a more detailed understanding, check out <a href="https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-fae32d16f651">The New Architecture of React Native</a>.</p>
+<p>For a more detailed understanding, check out <a href="https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90-fae32d16f651" target="_blank" rel="noopener noreferrer">The New Architecture of React Native</a>.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-07-16-2"></div></div>]]></content:encoded>
             <category>Blog</category>
             <category>React Native</category>
@@ -113,15 +113,15 @@
             <description><![CDATA[At our June meetup, we continued our discussion from May about UI components, this time with a live coding session. We tackled the Accordion component, which is a bit more challenging and offers more points of consideration than a simple button.]]></description>
             <content:encoded><![CDATA[<p>At our June meetup, we continued our discussion from May about UI components, this time with a live coding session. We tackled the Accordion component, which is a bit more challenging and offers more points of consideration than a simple button.</p>
 <p>We've brought back live coding to our meetups after a long hiatus. If you're interested in participating, we offer a presentation fee worth 150,000 KRW. As you'll see in our videos, our goal is not to intimidate, but rather to learn and help each other. We encourage you to apply in a relaxed manner.</p>
-<p><a href="https://forms.gle/x6oAt28FnepAAJtp6">Presentation application form</a></p>
+<p><a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">Presentation application form</a></p>
 <p>Thank you.</p>
-<h4 id="on-site-photo">On-site photo</h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="on-site-photo">On-site photo<a href="https://crossplatformkorea.com/en/blog/meetup-20230628#on-site-photo" class="hash-link" aria-label="Direct link to On-site photo" title="Direct link to On-site photo">​</a></h4>
 <img src="https://github.com/crossplatformkorea/crossplatformkorea.com/assets/27461460/a338f047-19ba-43bc-be1c-560070a6dc71" width="480">
 <img src="https://github.com/crossplatformkorea/crossplatformkorea.com/assets/27461460/ac91beb2-1548-4e8a-90fb-3b465a2c3387" width="480">
-<h4 id="part-of-presentation-video">Part of Presentation Video</h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="part-of-presentation-video">Part of Presentation Video<a href="https://crossplatformkorea.com/en/blog/meetup-20230628#part-of-presentation-video" class="hash-link" aria-label="Direct link to Part of Presentation Video" title="Direct link to Part of Presentation Video">​</a></h4>
 <ul>
-<li><a href="https://youtu.be/zjiXDrMJ-R0">Live Coding UI Components - Part 1 (Feat. Accordion)</a></li>
-<li><a href="https://youtu.be/MLJ4gXdeDHg">Live Coding UI Components - Part 2 (Feat. Accordion)</a></li>
+<li><a href="https://youtu.be/zjiXDrMJ-R0" target="_blank" rel="noopener noreferrer">Live Coding UI Components - Part 1 (Feat. Accordion)</a></li>
+<li><a href="https://youtu.be/MLJ4gXdeDHg" target="_blank" rel="noopener noreferrer">Live Coding UI Components - Part 2 (Feat. Accordion)</a></li>
 </ul>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-06-28"></div></div>]]></content:encoded>
             <category>Meetup</category>
@@ -132,12 +132,12 @@
             <guid>https://crossplatformkorea.com/en/blog/meetup-20230531</guid>
             <pubDate>Wed, 31 May 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[In the May meetup, the author presented a thoughtful discourse on UI components and design systems for about an hour. The talk broadly covered crucial aspects we often overlook when developing numerous UI components and examined how to define functional sets and write props according to UI component design principles (user-centric, consistency, simplicity, feedback). Lastly, the importance of reducing all possible props or steps to maintain simplicity was underscored once again.]]></description>
-            <content:encoded><![CDATA[<p>In the May meetup, <a href="https://github.com/hyochan">the author</a> presented a thoughtful discourse on UI components and design systems for about an hour. The talk broadly covered crucial aspects we often overlook when developing numerous UI components and examined how to define functional sets and write props according to UI component design principles (user-centric, consistency, simplicity, feedback). Lastly, the importance of reducing all possible props or steps to maintain simplicity was underscored once again.</p>
-<p>Finally, we shared a <a href="https://www.youtube.com/shorts/2RPtB9LgfIw">short clip</a> on how to prevent re-rendering caused by inline styles in React. If you found this useful, please don't forget to <code>subscribe</code>, <code>like</code>, and turn <code>notifications</code> on.</p>
+            <content:encoded><![CDATA[<p>In the May meetup, <a href="https://github.com/hyochan" target="_blank" rel="noopener noreferrer">the author</a> presented a thoughtful discourse on UI components and design systems for about an hour. The talk broadly covered crucial aspects we often overlook when developing numerous UI components and examined how to define functional sets and write props according to UI component design principles (user-centric, consistency, simplicity, feedback). Lastly, the importance of reducing all possible props or steps to maintain simplicity was underscored once again.</p>
+<p>Finally, we shared a <a href="https://www.youtube.com/shorts/2RPtB9LgfIw" target="_blank" rel="noopener noreferrer">short clip</a> on how to prevent re-rendering caused by inline styles in React. If you found this useful, please don't forget to <code>subscribe</code>, <code>like</code>, and turn <code>notifications</code> on.</p>
 <p>"The state of perfection is not when there is nothing more to add, but when there is nothing left to take away," is a widely known quote from "The Little Prince" written by the French author Antoine de Saint-Exupéry. It emphasizes the importance of balance and simplicity in various aspects of functionality, design, and life.</p>
-<p>We offer a presentation fee of $100 to our presenters, and the presentation contents can be casually delivered at your discretion for 20 to 50 minutes. If you're interested, please proceed through our <a href="https://forms.gle/x6oAt28FnepAAJtp6">presentation application form</a>. Thank you 🙇🏻‍♂️</p>
-<h4 id="part-of-presentation-video">Part of Presentation Video</h4>
-<p><a href="https://www.youtube.com/watch?v=Zbph_vQwGc0">https://www.youtube.com/watch?v=Zbph_vQwGc0</a></p>
+<p>We offer a presentation fee of $100 to our presenters, and the presentation contents can be casually delivered at your discretion for 20 to 50 minutes. If you're interested, please proceed through our <a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">presentation application form</a>. Thank you 🙇🏻‍♂️</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="part-of-presentation-video">Part of Presentation Video<a href="https://crossplatformkorea.com/en/blog/meetup-20230531#part-of-presentation-video" class="hash-link" aria-label="Direct link to Part of Presentation Video" title="Direct link to Part of Presentation Video">​</a></h4>
+<p><a href="https://www.youtube.com/watch?v=Zbph_vQwGc0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=Zbph_vQwGc0</a></p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-05-31"></div></div>]]></content:encoded>
             <category>Meetup</category>
         </item>
@@ -147,9 +147,9 @@
             <guid>https://crossplatformkorea.com/en/blog/meetup-20230426</guid>
             <pubDate>Wed, 26 Apr 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[In the April meetup, we continued with content related to Microsoft's MAUI following the February Flutter meetup. First, Park Tae-sung from Idea Sam shared his thoughts on MAUI as a React Native developer.]]></description>
-            <content:encoded><![CDATA[<p>In the April meetup, we continued with content related to <a href="https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-7.0">Microsoft's MAUI</a> following the February Flutter meetup. First, Park Tae-sung from Idea Sam shared his <a href="https://www.youtube.com/watch?v=9JKgfVz_Q_4">thoughts on MAUI as a React Native developer</a>.</p>
-<p>Secondly, Kim Sang-Hyun from Some Other Place gave a presentation. The title of the presentation was <a href="https://www.youtube.com/watch?v=LgO6KIHc5OU">MAUI, a Native-friendly Cross-platform, This is It</a>, and you can check the content through the link. The presentation mainly focuses on how MAUI is different from React Native and Flutter.</p>
-<p>We provide a presentation fee of $100 to the speakers, and the presentation can be casually given for 15 to 50 minutes at your discretion. If you are interested, please proceed through the <a href="https://forms.gle/x6oAt28FnepAAJtp6">presentation application form</a>. Thank you 🙇🏻‍♂️</p>
+            <content:encoded><![CDATA[<p>In the April meetup, we continued with content related to <a href="https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-7.0" target="_blank" rel="noopener noreferrer">Microsoft's MAUI</a> following the February Flutter meetup. First, Park Tae-sung from Idea Sam shared his <a href="https://www.youtube.com/watch?v=9JKgfVz_Q_4" target="_blank" rel="noopener noreferrer">thoughts on MAUI as a React Native developer</a>.</p>
+<p>Secondly, Kim Sang-Hyun from Some Other Place gave a presentation. The title of the presentation was <a href="https://www.youtube.com/watch?v=LgO6KIHc5OU" target="_blank" rel="noopener noreferrer">MAUI, a Native-friendly Cross-platform, This is It</a>, and you can check the content through the link. The presentation mainly focuses on how MAUI is different from React Native and Flutter.</p>
+<p>We provide a presentation fee of $100 to the speakers, and the presentation can be casually given for 15 to 50 minutes at your discretion. If you are interested, please proceed through the <a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">presentation application form</a>. Thank you 🙇🏻‍♂️</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-04-26"></div></div>]]></content:encoded>
             <category>Meetup</category>
         </item>
@@ -161,14 +161,14 @@
             <description><![CDATA[Florian Ludot, the CTO of Avanssion Inc., gave a presentation introducing Storybook, a tool that helps developers build scalable and effective services. During the presentation, he guided the audience through the Storybook workflow, from the initial design phase to implementation, deployment, publishing and integration of component libraries, and shared tips and best practices for iterating products at lightning speed. He also emphasized the importance of innovating the UI development process and taking projects to the next level.]]></description>
             <content:encoded><![CDATA[<p>Florian Ludot, the CTO of Avanssion Inc., gave a presentation introducing Storybook, a tool that helps developers build scalable and effective services. During the presentation, he guided the audience through the Storybook workflow, from the initial design phase to implementation, deployment, publishing and integration of component libraries, and shared tips and best practices for iterating products at lightning speed. He also emphasized the importance of innovating the UI development process and taking projects to the next level.</p>
 <p>Florian Ludot was born and raised in France, spent four years in Japan, and recently moved to Seoul as a developer. He expressed his delight in having had fantastic opportunities to work closely with development and design teams, and to share his knowledge with anyone interested in learning more about the field. He also announced that he is preparing the Seoul iOS Meetup, where everyone is welcome to gather and share knowledge.</p>
-<p>For those who missed the meetup, the video is available on <a href="https://www.youtube.com/watch?v=ICpn4JrnIHY">https://www.youtube.com/watch?v=ICpn4JrnIHY</a>.</p>
-<p><img src="https://user-images.githubusercontent.com/27461460/229788078-8a44dd2b-bdd5-4739-af7c-8194602527e2.jpg" alt="IMG_4117">
-<img src="https://user-images.githubusercontent.com/27461460/229788063-c46111d6-71b2-4a73-9835-2aba7f865758.jpg" alt="IMG_4117">
-<img src="https://user-images.githubusercontent.com/27461460/229788086-741c93e8-fa57-4be5-9e66-7c593c4a62a6.jpg" alt="IMG_4118">
-<img src="https://user-images.githubusercontent.com/27461460/229788088-f37b3e28-1819-47fd-b854-bf6b6f684f2c.jpg" alt="IMG_4119">
-<img src="https://user-images.githubusercontent.com/27461460/229788102-dbf73636-ac92-4599-9110-9214803adbce.jpg" alt="IMG_4122">
-<img src="https://user-images.githubusercontent.com/27461460/229788106-eb05e05c-e168-43f9-be9f-eb7a4093f028.jpg" alt="IMG_4123">
-<img src="https://user-images.githubusercontent.com/27461460/229788112-43af8d70-2efd-40fe-bf7d-26531c7724e1.jpg" alt="IMG_4125"></p>
+<p>For those who missed the meetup, the video is available on <a href="https://www.youtube.com/watch?v=ICpn4JrnIHY" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=ICpn4JrnIHY</a>.</p>
+<p><img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788078-8a44dd2b-bdd5-4739-af7c-8194602527e2.jpg" alt="IMG_4117" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788063-c46111d6-71b2-4a73-9835-2aba7f865758.jpg" alt="IMG_4117" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788086-741c93e8-fa57-4be5-9e66-7c593c4a62a6.jpg" alt="IMG_4118" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788088-f37b3e28-1819-47fd-b854-bf6b6f684f2c.jpg" alt="IMG_4119" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788102-dbf73636-ac92-4599-9110-9214803adbce.jpg" alt="IMG_4122" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788106-eb05e05c-e168-43f9-be9f-eb7a4093f028.jpg" alt="IMG_4123" class="img_ev3q">
+<img loading="lazy" src="https://user-images.githubusercontent.com/27461460/229788112-43af8d70-2efd-40fe-bf7d-26531c7724e1.jpg" alt="IMG_4125" class="img_ev3q"></p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-03-29"></div></div>]]></content:encoded>
             <category>Meetup</category>
         </item>
@@ -178,9 +178,9 @@
             <guid>https://crossplatformkorea.com/en/blog/meetup-20230222</guid>
             <pubDate>Wed, 22 Feb 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[At this meetup, there was a small presentation on the Flutter GetX pattern. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is WeCount and sourcecode is on Github.]]></description>
-            <content:encoded><![CDATA[<p>At this meetup, there was a small <a href="https://youtu.be/vD8ldHv5D6Q">presentation on the Flutter GetX pattern</a>. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is <code>WeCount</code> and <a href="https://github.com/crossplatformkorea/wecount">sourcecode is on Github</a>.</p>
+            <content:encoded><![CDATA[<p>At this meetup, there was a small <a href="https://youtu.be/vD8ldHv5D6Q" target="_blank" rel="noopener noreferrer">presentation on the Flutter GetX pattern</a>. Then, we shared the toy Flutter project which was developed to manage meetup donations. The project name is <code>WeCount</code> and <a href="https://github.com/crossplatformkorea/wecount" target="_blank" rel="noopener noreferrer">sourcecode is on Github</a>.</p>
 <img src="https://user-images.githubusercontent.com/27461460/222333157-757f2e57-be0b-419b-ab9f-224c62d0bd7a.png" width="600">
-<p>In addition, some apps made with Cross-Platforms are listed in <a href="https://github.com/crossplatformkorea/koreanapps.md">crossplatform/koreanapps.md</a>. If there's an app you'd like to add, please push a <code>PR</code>.</p>
+<p>In addition, some apps made with Cross-Platforms are listed in <a href="https://github.com/crossplatformkorea/koreanapps.md" target="_blank" rel="noopener noreferrer">crossplatform/koreanapps.md</a>. If there's an app you'd like to add, please push a <code>PR</code>.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-02-22"></div></div>]]></content:encoded>
             <category>Meetup</category>
         </item>
@@ -193,12 +193,12 @@
             <content:encoded><![CDATA[<p>The first Cross-Platform Korea meetup was held. In 2023, there should be more beneficial knowledge sharing time.
 First of all, since it was the first day, I, the organizer, continued my presentation while looking back at the React Native Seoul meetup last year.</p>
 <img src="https://user-images.githubusercontent.com/27461460/215254735-c2646085-bf23-47d2-8bf0-913f764f7808.png" width="800">
-<p>There was <a href="https://www.youtube.com/watch?v=-t9h1dVzRIA&amp;list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&amp;index=2">a retrospective of last year's meetup and a return for the informative presentations made at the end of the year.</a>.</p>
-<p>Since there was no winner by voting, it was determined by the number of likes and views on YouTube, and a prize of 500,000 won was given to the team that announced the <a href="https://www.youtube.com/watch?v=KnTh4iCEiNo&amp;list=PLMu8UG37vF6oJLNhjsjoy_ApcJFZZwJOo">FlatLane automated distribution</a>.</p>
+<p>There was <a href="https://www.youtube.com/watch?v=-t9h1dVzRIA&amp;list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&amp;index=2" target="_blank" rel="noopener noreferrer">a retrospective of last year's meetup and a return for the informative presentations made at the end of the year.</a>.</p>
+<p>Since there was no winner by voting, it was determined by the number of likes and views on YouTube, and a prize of 500,000 won was given to the team that announced the <a href="https://www.youtube.com/watch?v=KnTh4iCEiNo&amp;list=PLMu8UG37vF6oJLNhjsjoy_ApcJFZZwJOo" target="_blank" rel="noopener noreferrer">FlatLane automated distribution</a>.</p>
 <p>Youngji Noh, the leader, was unable to attend, so the agent awarded the prize money.<br></p>
 <img src="https://user-images.githubusercontent.com/27461460/215254744-82769df0-0b40-4bdd-8094-223fa258ca38.png" width="360">
-<p>Next, I shared my experience on <a href="https://www.youtube.com/watch?v=-t9h1dVzRIA&amp;list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&amp;index=2">How to handle Navigation in Flutter</a>. It deals with the experience of built-in navigation and Go Router, and contains knowledge that is good to know in advance when choosing navigation in Flutter.</p>
-<p>Then, we shared <a href="https://www.youtube.com/watch?v=R7uiKmfS1Wo&amp;list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&amp;index=4">How to handle navigation in React Native</a> and looked into what React Native is trying to do.</p>
+<p>Next, I shared my experience on <a href="https://www.youtube.com/watch?v=-t9h1dVzRIA&amp;list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&amp;index=2" target="_blank" rel="noopener noreferrer">How to handle Navigation in Flutter</a>. It deals with the experience of built-in navigation and Go Router, and contains knowledge that is good to know in advance when choosing navigation in Flutter.</p>
+<p>Then, we shared <a href="https://www.youtube.com/watch?v=R7uiKmfS1Wo&amp;list=PLMu8UG37vF6p5betw-J2_b4IdXSE01HvH&amp;index=4" target="_blank" rel="noopener noreferrer">How to handle navigation in React Native</a> and looked into what React Native is trying to do.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-01-25"></div></div>]]></content:encoded>
             <category>Meetup</category>
         </item>
@@ -233,10 +233,10 @@ First of all, since it was the first day, I, the organizer, continued my present
             <pubDate>Mon, 14 Nov 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Hello 👋]]></description>
             <content:encoded><![CDATA[<p>Hello 👋
-<a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685">November 30 meetup application</a> is now applicable.</p>
+<a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">November 30 meetup application</a> is now applicable.</p>
 <p>As announced last time, this meetup will select a topic for each group and make a presentation. The group that provides the most highly rated content will receive a prize worth 500,000 won ($376).</p>
-<p>For the prize money, each leader can claim directly to our <a href="https://opencollective.com/dooboolab-community">community sponsored organization</a>. It is believed that each leader will reasonably spend the prize money with the members, but you can decide freely :)</p>
-<p>For details, please check the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685">meetup page</a>.</p>
+<p>For the prize money, each leader can claim directly to our <a href="https://opencollective.com/dooboolab-community" target="_blank" rel="noopener noreferrer">community sponsored organization</a>. It is believed that each leader will reasonably spend the prize money with the members, but you can decide freely :)</p>
+<p>For details, please check the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">meetup page</a>.</p>
 <p>Then see you at the meetup 🙇🏻</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-11-14"></div></div>]]></content:encoded>
             <category>meetup</category>
@@ -254,7 +254,7 @@ First of all, since it was the first day, I, the organizer, continued my present
 <p>A meetup event was held on October 26th. We briefly introduced the contents of the current meetup.</p>
 <img src="https://user-images.githubusercontent.com/27461460/198086670-925d4fa1-6282-44d2-aa38-98f1b40262a3.jpeg" width="600">
 <img src="https://user-images.githubusercontent.com/27461460/198086674-44aa40f2-42a0-4318-97bf-321a05ddcf98.jpeg" width="600">
-<p>Groups were organized and leaders were selected to continue a pleasant discussion. The leader was selected as the person with the highest stat score on <a href="https://dooboo.io/">dooboo.io</a>. We are very much looking forward to the next time to see what useful content each group will provide in the future 🙂</p>
+<p>Groups were organized and leaders were selected to continue a pleasant discussion. The leader was selected as the person with the highest stat score on <a href="https://dooboo.io/" target="_blank" rel="noopener noreferrer">dooboo.io</a>. We are very much looking forward to the next time to see what useful content each group will provide in the future 🙂</p>
 <img src="https://user-images.githubusercontent.com/27461460/198088266-5ee23468-0623-4dcb-9d35-af4565479c43.jpeg" width="600">
 <p>Also, thank you to Pang for making the participants so much fun 🙏</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-26"></div></div>]]></content:encoded>
@@ -267,7 +267,7 @@ First of all, since it was the first day, I, the organizer, continued my present
             <pubDate>Mon, 24 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[JeffGuKang shared talks about updating mobile clients on the fly via CodePush.]]></description>
             <content:encoded><![CDATA[<p>JeffGuKang shared talks about updating mobile clients on the fly via CodePush.</p>
-<p><a href="https://youtu.be/78UAlT4z9XE">https://youtu.be/78UAlT4z9XE</a></p>
+<p><a href="https://youtu.be/78UAlT4z9XE" target="_blank" rel="noopener noreferrer">https://youtu.be/78UAlT4z9XE</a></p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-24"></div></div>]]></content:encoded>
             <category>Meetup</category>
             <category>App Center</category>
@@ -281,7 +281,7 @@ First of all, since it was the first day, I, the organizer, continued my present
             <pubDate>Fri, 21 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.]]></description>
             <content:encoded><![CDATA[<p>JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.</p>
-<p><a href="https://youtu.be/SyN7nYejzSo">https://youtu.be/SyN7nYejzSo</a></p>
+<p><a href="https://youtu.be/SyN7nYejzSo" target="_blank" rel="noopener noreferrer">https://youtu.be/SyN7nYejzSo</a></p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-21"></div></div>]]></content:encoded>
             <category>Meetup</category>
             <category>App Center</category>
@@ -295,9 +295,9 @@ First of all, since it was the first day, I, the organizer, continued my present
             <pubDate>Sun, 09 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Hello 👋]]></description>
             <content:encoded><![CDATA[<p>Hello 👋
-<a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565">October 26 meetup application</a> is now applicable.</p>
-<p>The meeting place for this meetup will be provided by <a href="https://www.monymony.co/">Monymony</a>, which is making <a href="http://sumone.co/">Sumone</a>, a service chosen by couples with 4 million subscribers and 1 million monthly visitors.</p>
-<p>Please check the <a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565">Meetup page</a> for the detailed location and details.</p>
+<a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565" target="_blank" rel="noopener noreferrer">October 26 meetup application</a> is now applicable.</p>
+<p>The meeting place for this meetup will be provided by <a href="https://www.monymony.co/" target="_blank" rel="noopener noreferrer">Monymony</a>, which is making <a href="http://sumone.co/" target="_blank" rel="noopener noreferrer">Sumone</a>, a service chosen by couples with 4 million subscribers and 1 million monthly visitors.</p>
+<p>Please check the <a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565" target="_blank" rel="noopener noreferrer">Meetup page</a> for the detailed location and details.</p>
 <p>Then see you at the meetup 🙇🏻</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-09"></div></div>]]></content:encoded>
             <category>meetup</category>
@@ -312,9 +312,9 @@ First of all, since it was the first day, I, the organizer, continued my present
             <pubDate>Thu, 29 Sep 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Introducing a new way to present your GitHub stats.]]></description>
             <content:encoded><![CDATA[<p>Introducing a new way to present your GitHub stats.
-Show your performance with <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7">GitHub Stats Visualization</a>.</p>
-<p>English: <a href="https://medium.com/dooboolab/a-new-fancy-way-to-visualize-your-github-stats-418b5d59498">Medium</a><br>
-Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7">Medium</a></p>
+Show your performance with <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7" target="_blank" rel="noopener noreferrer">GitHub Stats Visualization</a>.</p>
+<p>English: <a href="https://medium.com/dooboolab/a-new-fancy-way-to-visualize-your-github-stats-418b5d59498" target="_blank" rel="noopener noreferrer">Medium</a><br>
+Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7" target="_blank" rel="noopener noreferrer">Medium</a></p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-29"></div></div>]]></content:encoded>
             <category>소식</category>
             <category>깃허브</category>
@@ -327,13 +327,13 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
             <guid>https://crossplatformkorea.com/en/blog/kakao-login-web</guid>
             <pubDate>Mon, 26 Sep 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[This is the content of the Cross-Platform Korea meetup on August 31st. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the React Native Kakao Login open source, the problems he encountered, and how he solved them.]]></description>
-            <content:encoded><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080">Cross-Platform Korea meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p>
-<p><a href="https://www.youtube.com/watch?v=DZypUEUWth0">https://www.youtube.com/watch?v=DZypUEUWth0</a></p>
-<h3 id="related-pr">Related PR</h3>
+            <content:encoded><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">Cross-Platform Korea meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p>
+<p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a href="https://crossplatformkorea.com/en/blog/kakao-login-web#related-pr" class="hash-link" aria-label="Direct link to Related PR" title="Direct link to Related PR">​</a></h3>
 <ul>
-<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li>
-<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li>
-<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li>
+<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li>
+<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li>
+<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li>
 </ul>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-26"></div></div>]]></content:encoded>
             <category>Meetup</category>
@@ -349,7 +349,7 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
             <pubDate>Sat, 24 Sep 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Hello. This is Hyo, the organizer of Cross-Platform Korea.]]></description>
             <content:encoded><![CDATA[<p>Hello. This is Hyo, the organizer of <strong>Cross-Platform Korea</strong>.
-The community operation was not smooth for a long time as the event could not be held in <a href="https://www.coupang.com/">Coupang</a> after COVID.
+The community operation was not smooth for a long time as the event could not be held in <a href="https://www.coupang.com/" target="_blank" rel="noopener noreferrer">Coupang</a> after COVID.
 In order to revitalize the community culture again, a new homepage has been opened.</p>
 <p>Going forward, we will continue to share new news through our website and ensure smooth operation.</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-24"></div></div>]]></content:encoded>
