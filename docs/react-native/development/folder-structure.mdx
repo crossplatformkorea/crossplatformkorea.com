@@ -31,6 +31,13 @@ It includes the store for managing the app's state, providers for enabling state
 - The `apis` sub-directory seen in the above screen is where APIs used in the app are collected. This includes code for communicating with servers using tools like [fetch](https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch) or [axios](https://axios-http.com/kr/docs/intro).
 - The `providers` sub-directory is where providers used in the app are collected. Providers manage the app's state and enable state changes. They can be implemented using tools like [Redux](https://redux.js.org), [MobX](https://mobx.js.org/README.html), [Recoil](https://recoiljs.org).
 
+<img src={ImgFolderSrc2} alt="img-folder-src-1" width={320}/>
+- The `uis` subdirectory is located inside the `app` directory and is the place for reusable components.
+  It's not necessary to put all reusable components in this location; they can also be placed within the components of individual screens.
+  However, it is advisable to store components that are commonly used across multiple screens here.
+- The `utils` subdirectory is where utility functions used in the app are collected.
+  This is a collection of necessary functionalities to increase the reusability of code.
+
 <AdFitMobileBanner
   unit="DAN-weLLBNA8C31gpo1t"
   className="adfit-bottom-mobile"
