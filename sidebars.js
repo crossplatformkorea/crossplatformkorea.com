@@ -57,6 +57,15 @@ const sidebars = {
         "react-native/router/expo-router",
       ],
     },
+    {
+      type: "category",
+      label: "Development",
+      link: { type: "generated-index" },
+      items: [
+        "react-native/development/start",
+        "react-native/development/folder-structure",
+      ],
+    },
   ],
 };
 

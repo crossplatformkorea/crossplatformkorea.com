@@ -30,5 +30,9 @@
   "sidebar.react-native.category.Router": {
     "message": "라우터",
     "description": "Navbar item with label Router"
+  },
+  "sidebar.react-native.category.Development": {
+    "message": "개발",
+    "description": "Navbar item with label Development"
   }
 }
