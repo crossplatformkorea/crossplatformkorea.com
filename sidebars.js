@@ -23,7 +23,6 @@ const sidebars = {
       type: "category",
       label: "Development Environment",
       link: { type: "generated-index" },
-      collapsed: false,
       items: [
         "react-native/development-environment/macos",
         "react-native/development-environment/windows",
@@ -60,6 +59,7 @@ const sidebars = {
     {
       type: "category",
       label: "Development",
+      collapsed: false,
       link: { type: "generated-index" },
       items: [
         "react-native/development/start",
