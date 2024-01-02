@@ -129,10 +129,10 @@ function Home() {
             </Translate>
           </p>
           <div className={styles.newsDescription}>
-            11월의 밋업에서는 React Native와 Flutter 개발자를 위한 혁신적인 SSO 솔루션 사용 가이드에 대해 다룹니다.
+            다음 밋업 일정은 2월 중순입니다. 또한 3월 이후 발표자를 모집중입니다.
             <br />
             <br />
-            일정: 11월 29일 (수) 오후 7시 30분부터 9시 20분 (1시간 50분)
+            일정: 추후 공지
             <br />
             장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서
             안내드립니다.
