@@ -160,6 +160,9 @@ In addition to `npm`, I recommend installing [yarn](https://yarnpkg.com). The in
 npm install - yarn
 ```
 
+#### Install Bun
+From 2024, all community projects depends on [bun](https://bun.sh). Therefore it is recommended to install bun globally.
+
 # 4. Installing Visual Studio Code
 
 Next, we'll install [Visual Studio Code](https://code.visualstudio.com). Often referred to as `vscode`, it is one of the most beloved code editors by developers worldwide. In the past, editors like [edit plus](https://www.editplus.com), [sublime text](https://www.sublimetext.com), and the now discontinued [atom](https://github.blog/2022-06-08-sunsetting-atom) were predominantly used. However, due to the advanced features and user experience of `vscode`, many developers have switched to this editor.
@@ -256,11 +259,11 @@ When the above appears in the terminal and the `Expo (Typescript)` project shows
 
 > [Expo](https://docs.expo.dev) is an open-source platform for React Native that simplifies and accelerates mobile app development. With Expo, developers can immediately start a new project without initial setup, and easily access various native APIs. Moreover, Expo's development tools allow real-time previews with immediate updates, making the development and debugging process much more efficient.
 
-Once you've moved to the project folder, use `yarn` to install necessary local packages. Then run the project using the `yarn start` command. Following that, entering either `a` or `w` in the terminal will launch the Android simulator or a web browser, respectively.
-> If the web does not execute with `w`, try the `yarn web` command. If the Android emulator doesn't launch, use `Android Studio` to create a new emulator. For detailed information, refer to [Creating and Managing Android Virtual Devices](https://developer.android.com/studio/run/managing-avds).
+Once you've moved to the project folder, use `bun` to install necessary local packages. Then run the project using the `bun start` command. Following that, entering either `a` or `w` in the terminal will launch the Android simulator or a web browser, respectively.
+> If the web does not execute with `w`, try the `bun web` command. If the Android emulator doesn't launch, use `Android Studio` to create a new emulator. For detailed information, refer to [Creating and Managing Android Virtual Devices](https://developer.android.com/studio/run/managing-avds).
 
 ### Testing on iOS
-Projects created through `dooboo` utilize [Expo](https://expo.dev), so even in a Windows environment, you can run the app on an iOS device. However, for this, you'll need a physical iPhone. After executing the `yarn start` command, scan the displayed `QR` code to run the project through the [Expo Go](https://apps.apple.com/us/app/expo-go/id982107779) app. You can check out the detailed information and usage guide in the [Expo Go Official Documentation](https://docs.expo.dev/get-started/expo-go).
+Projects created through `dooboo` utilize [Expo](https://expo.dev), so even in a Windows environment, you can run the app on an iOS device. However, for this, you'll need a physical iPhone. After executing the `bun start` command, scan the displayed `QR` code to run the project through the [Expo Go](https://apps.apple.com/us/app/expo-go/id982107779) app. You can check out the detailed information and usage guide in the [Expo Go Official Documentation](https://docs.expo.dev/get-started/expo-go).
 
 The installation is now complete. From here on, you can focus solely on coding 🎉.
 

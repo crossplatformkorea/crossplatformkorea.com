@@ -131,13 +131,13 @@ Save and exit. Then reload your `zsh` profile using the `source ~/.zshrc` comman
 Now, using the previously installed `NVM`, we'll install [Node.js](https://nodejs.org/). First, check the installed versions using the `nvm list` command (it should be empty if everything's right). Use the `nvm install 18` command to install version 18 of `Node.js`. Running `nvm list` again, you should see the `v18` version installed. Then finish the default settings with the following commands:
 
 ```sh
-nvm use 18
+nvm use 20
 ```
 
-> This sets `Node.js` version `18` in `nvm`.
+> This sets `Node.js` version `20` in `nvm`.
 
 ```sh
-nvm alias default 18
+nvm alias default 20
 ```
 
 > This sets `Node.js` version `18` as the default in `nvm`.
@@ -151,6 +151,13 @@ npm install -g yarn
 ```
 
 The `-g` option stands for `global`. Using this option installs the program globally, allowing you to access the installed program from anywhere in the terminal.
+
+#### Install Bun
+From 2024, all community projects depends on [bun](https://bun.sh). Therefore it is recommended to install bun globally.
+
+```
+npm install -g bun
+```
 
 # 4. iOS Development Environment
 
@@ -254,14 +261,14 @@ Once you see the above in the terminal and the `Expo (Typescript)` project appea
 
 > [Expo](https://docs.expo.dev) is an open-source platform for React Native, simplifying and accelerating mobile app development. Developers can instantly start new projects without initial setup using Expo, with easy access to various native APIs. Additionally, Expo's development tools allow real-time previews and instant updates, making the development and debugging process more efficient.
 
-Navigate to the folder with the project name, use `yarn` to install necessary local packages, and
+Navigate to the folder with the project name, run `bun install` to install necessary local packages, and
 
  start the project:
 
 ```sh
 cd your-project-name
-yarn install
-yarn start
+bun install
+bun start
 ```
 
 Then, follow the on-screen prompts to launch your React Native app on the iOS simulator or Android emulator. Also, check out [dooboo-ui](https://dooboo-ui.dooboolab.com), an open-source React Native UI kit developed by dooboolab for various components, designs, and utilities.
