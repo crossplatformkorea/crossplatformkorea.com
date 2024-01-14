@@ -29,6 +29,7 @@ const sidebars = {
         "react-native/development-environment/vscode-plugins",
       ],
     },
+    "react-native/es6",
     "react-native/react",
     {
       type: "category",

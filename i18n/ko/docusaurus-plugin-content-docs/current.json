@@ -12,7 +12,7 @@
     "description": "The label for Community"
   },
   "sidebar.docs.category.React Native": {
-    "message": "리액트네이티브",
+    "message": "리엑트 네이티브",
     "description": "The label for React Native"
   },
   "sidebar.react-native.category.Development Environment": {
