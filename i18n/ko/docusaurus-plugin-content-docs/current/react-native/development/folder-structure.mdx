@@ -10,30 +10,48 @@ import ImgFolderAssets from "@site/static/img/react-native/folder-assets.png";
 import ImgFolderSrc1 from "@site/static/img/react-native/folder-src-1.png";
 import ImgFolderSrc2 from "@site/static/img/react-native/folder-src-2.png";
 
-개발 과정에서 폴더 구조를 결정하는 것은 여전히 많은 개발자들에게 중요한 도전 과제 중 하나입니다. dooboo-cli로 시작한 프로젝트의 구성을 살펴보도록 하겠습니다.
-
 <AdFitMobileBanner
   unit="DAN-YpcHf9p49U5ykXi8"
   className="adfit-top-mobile"
 />
 
+개발 과정에서 폴더 구조를 결정하는 것은 여전히 많은 개발자들에게 중요한 도전 과제 중 하나입니다. dooboo-cli로 시작한 프로젝트의 구성을 살펴보도록 하겠습니다.
+
 ### 1. App 디렉토리
-<img src={ImgFolderApp} alt="img-folder-app" width={320}/>
+
+<details>
+  <summary>캡처 화면</summary>
+  <img src={ImgFolderApp} alt="img-folder-app" width={320}/>
+</details>
+
 앱 디렉토리는 파일 기반 라우팅에서 필수적인 부분입니다. 이 디렉토리는 각 화면을 구성하는 최상위 컴포넌트들을 모아놓은 곳으로 이해하면 됩니다. 여기에는 화면을 묶는 다양한 탭 라우터들도 포함될 수 있지만, 기본적인 개념은 이와 같습니다.
 
 ### 2. Assets 디렉토리
-<img src={ImgFolderAssets} alt="img-folder-assets" width={320}/>
+
+<details>
+  <summary>캡처 화면</summary>
+  <img src={ImgFolderAssets} alt="img-folder-assets" width={320}/>
+</details>
+
 Assets 디렉토리는 앱에서 사용되는 이미지, 폰트, 기타 리소스들을 모아놓은 곳입니다.
 직접적인 코드 실행에는 영향을 주지 않지만, 앱의 리소스들을 관리하는데 필수적인 부분입니다.
 
 ### 3. Src 디렉토리
 Src 디렉토리는 앱의 핵심 기능을 담당합니다. 여기에는 앱의 상태를 관리하는 스토어, 상태 변경을 가능하게 하는 프로바이더, 사용자 정의 UI 컴포넌트, 유틸리티 함수, 그리고 앱에서 사용되는 상수, 문자열, 테마 등이 포함됩니다.
 
-<img src={ImgFolderSrc1} alt="img-folder-src-1" width={320}/>
+<details>
+  <summary>캡처 화면 (apis, providers)</summary>
+  <img src={ImgFolderSrc1} alt="img-folder-src-1" width={320}/>
+</details>
+
 - 위 화면에서 보는 `apis` 하위 디렉토리는 앱에서 사용되는 API들을 모아놓은 곳입니다. 이는 [fetch](https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch)나 [axios](https://axios-http.com/kr/docs/intro) 등을 활용해서 서버와 통신하는 코드들을 모아놓은 곳입니다.
 - `providers` 하위 디렉토리는 앱에서 사용되는 프로바이더들을 모아놓은 곳입니다. 프로바이더는 앱의 상태를 관리하고, 상태 변경을 가능하게 하는 역할을 합니다. 이는 [Redux](https://redux.js.org), [MobX](https://mobx.js.org/README.html), [Recoil](https://recoiljs.org) 등을 활용해서 구현할 수 있습니다.
 
-<img src={ImgFolderSrc2} alt="img-folder-src-1" width={320}/>
+<details>
+  <summary>캡처 화면 (uis, utils)</summary>
+  <img src={ImgFolderSrc2} alt="img-folder-src-1" width={320}/>
+</details>
+
 - `uis` 하위 디렉토리는 `app` 디렉토리 안에 들어가는 재사용 컴포넌트들이 위치하는 곳입니다.
    재사용 컴포넌트를 모두 이곳에 넣을 필요없고 화면 단위 컴포넌트 안에 넣어도 되지만 여러 화면에서 공통으로 쓰는 컴포넌트들은 이곳에 넣어두는 것이 좋습니다.
 - `utils` 하위 디렉토리는 앱에서 사용되는 유틸리티 함수들을 모아놓은 곳입니다. 이는 코드의 재사용성을 높이기 위해 필요한 기능들을 모아놓은 곳입니다.
