@@ -35,6 +35,19 @@ npx dooboo init
 
 dooboo-cli에 대한 자세한 내용은 [이 블로그 글](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0)에서 확인하실 수 있습니다.
 
+### 오류 해결
+iOS에서 다음과 같은 오류가 발생할 때:
+```
+Error: xcrun exited with non-zero code: 60
+An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=60):
+Unable to boot the Simulator.
+```
+
+다음 명령어를 실행한 후 다시 시도해 보세요.
+```
+rm -rf ~/Library/Developer/CoreSimulator/Caches
+```
+
 <AdFitMobileBanner
   unit="DAN-weLLBNA8C31gpo1t"
   className="adfit-bottom-mobile"
