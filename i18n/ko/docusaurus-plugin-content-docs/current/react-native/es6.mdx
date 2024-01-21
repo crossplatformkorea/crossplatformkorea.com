@@ -18,8 +18,8 @@ import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
 
 ### 1. let과 const
    ```typescript
-   let x: number = 10;
-   const y: number = 20;
+   let x = 10;
+   const y = 20;
    console.log(x, y); // 10, 20
    ```
    타입스크립트에서 변수에 타입을 지정할 수 있습니다.
@@ -43,7 +43,7 @@ import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
 
 ### 2. 화살표 함수 (Arrow Functions)
 ```typescript
-const add: (a: number, b: number) => number = (a, b) => a + b;
+const add = (a: number, b: number): number => a + b;
 console.log(add(5, 3)); // 8
 ```
 화살표 함수의 매개변수와 반환 타입에 타입을 지정할 수 있습니다.
@@ -141,24 +141,122 @@ console.log(sum(1, 2, 3, 4, 5)); // 15
 나머지 매개변수는 함수의 매개변수를 배열로 받아올 수 있게 해줍니다.
 이를 통해 함수에 전달되는 매개변수의 개수를 동적으로 처리할 수 있습니다.
 
-### 8. 프로미스 (Promises)
-```typescript
-const fetchData: Promise<string> = new Promise((resolve, reject) => {
-  // 비동기 작업 수행 후 성공하면 resolve, 실패하면 reject 호출
-  setTimeout(() => {
-    resolve("Data fetched successfully");
-    // reject("Error fetching data");
-  }, 1000);
-});
+### 8. for..of
+`for...of` 루프는 ES6(JavaScript의 6번째 에디션)에서 도입된 반복문입니다. 이 문법을 사용하면 배열이나 문자열과 같은 반복 가능한 객체들을 편리하게 순회할 수 있습니다. 간단히 말해서, `for...of`는 컬렉션 내의 각 요소를 하나씩 꺼내서 사용할 수 있게 해줍니다.
 
-fetchData
-  .then((data: string) => console.log(data)) // 성공 시 출력
-  .catch((error: string) => console.log(error)); // 실패 시 출력
+```ts
+for (const item of collection) {
+  // 여기서 'item'은 컬렉션의 현재 요소를 나타냄
+  // 이 안에 원하는 코드를 작성합니다.
+}
 ```
-프로미스의 반환 타입을 지정할 수 있습니다. 이 예시에서는 `Promise<string>`으로 선언되었습니다.
+
+- `collection`: 순회하고자 하는 배열, 문자열 등의 반복 가능한 객체
+- `item`: 반복하는 동안 `collection`의 현재 요소
+
+#### 예시
+
+1. **배열에서 사용하기**:
+
+   배열에 숫자가 들어있다고 가정해보겠습니다. 각 숫자를 순서대로 출력하려면 `for...of` 루프를 사용할 수 있습니다.
+
+   ```javascript
+   const numbers = [1, 2, 3, 4, 5];
+   for (const number of numbers) {
+     console.log(number); // 1, 2, 3, 4, 5 순서로 출력됩니다.
+   }
+   ```
+
+2. **문자열에서 사용하기**:
+
+   문자열에서 각 문자를 순서대로 처리하려면 `for...of` 루프를 사용할 수 있습니다.
+
+   ```javascript
+   const greeting = "Hello";
+   for (const char of greeting) {
+     console.log(char); // 'H', 'e', 'l', 'l', 'o' 순서로 출력됩니다.
+   }
+   ```
+
+#### 장점
+
+- **간결함**: `for...of` 루프는 배열이나 문자열 등을 다룰 때 간결하고 명확한 코드를 작성할 수 있게 해줍니다.
+- **직관적**: 각 요소에 바로 접근할 수 있어 코드가 더 이해하기 쉽습니다.
+- **유연성**: 다양한 유형의 컬렉션(배열, 문자열, Map, Set 등)에 적용할 수 있습니다.
+
+### 9. `includes()` 메서드
+
+`includes()` 메서드는 JavaScript에서 배열이나 문자열에 특정 요소나 문자열이 포함되어 있는지 여부를 확인하는 데 사용됩니다. 이 메서드는 주어진 요소나 문자열이 대상에 존재하면 `true`를 반환하고, 그렇지 않으면 `false`를 반환합니다.
+
+#### 배열에서 `includes()` 사용하기
+
+```javascript
+const fruits = ["apple", "banana", "mango"];
+const hasMango = fruits.includes("mango"); // true
+const hasCherry = fruits.includes("cherry"); // false
+```
+
+여기서, `fruits` 배열에 `"mango"`와 `"cherry"`가 있는지 확인합니다. `"mango"`는 배열에 포함되어 있으므로 `hasMango`는 `true`를 반환하고, `"cherry"`는 배열에 없으므로 `hasCherry`는 `false`를 반환합니다.
+
+#### 문자열에서 `includes()` 사용하기
+
+```javascript
+const sentence = "Hello, world!";
+const hasHello = sentence.includes("Hello"); // true
+const hasGoodbye = sentence.includes("Goodbye"); // false
+```
+
+이 경우, `sentence` 문자열에 `"Hello"`와 `"Goodbye"`가 있는지 확인합니다. `"Hello"`는 문자열에 포함되어 있으므로 `hasHello`는 `true`를 반환하고, `"Goodbye"`는 문자열에 없으므로 `hasGoodbye`는 `false`를 반환합니다.
+
+### 특징 및 주의사항
+
+- `includes()`는 대소문자를 구분합니다.
+- `includes()`는 배열의 요소나 문자열의 부분 문자열을 정확히 찾습니다. 부분적인 일치나 패턴 매칭은 지원하지 않습니다.
+- `includes()`는 ES6에서 도입되었으므로, 이전 버전의 JavaScript에서는 지원되지 않습니다. 구형 브라우저에서는 `indexOf()` 메서드를 대신 사용할 수 있습니다.
+
+`includes()` 메서드는 배열이나 문자열에서 특정 요소나 문자열이 존재하는지 쉽게 확인할 수 있게 해주는 유용한 도구입니다.
+
+### 10. `async`/`await`
+
+`async`/`await`는 JavaScript에서 비동기 코드를 작성하는 현대적인 방법입니다. 이를 사용하면 비동기 작업을 더 쉽고 가독성 있게 처리할 수 있습니다.
+
+#### `async`/`await` 사용 예시
+
+```typescript
+// fetchData 함수가 프로미스를 반환하도록 정의
+async function fetchData(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Data fetched successfully");
+      // reject("Error fetching data");
+    }, 1000);
+  });
+}
+
+// async 함수 사용
+async function getData() {
+  try {
+    const data = await fetchData(); // fetchData가 resolve되면 결과를 data에 저장
+    console.log(data); // 성공 시 데이터 출력
+  } catch (error) {
+    console.log(error); // 실패 시 에러 출력
+  }
+}
+
+getData(); // 함수 호출
+```
+
+#### 설명
+
+- **`async` 함수**: `async` 키워드를 사용하여 함수를 선언하면 해당 함수는 항상 프로미스를 반환합니다. 함수 내에서 비동기 작업을 수행할 수 있습니다.
+- **`await` 연산자**: `await` 키워드는 `async` 함수 내에서만 사용할 수 있으며, 프로미스가 완료될 때까지 함수 실행을 일시적으로 중지합니다. 프로미스가 성공적으로 완료되면 결과 값을 반환하고, 실패하면 예외를 발생시킵니다.
+- **`try...catch` 블록**: `await` 표현식에서 발생할 수 있는 예외를 처리하기 위해 `try...catch` 블록을 사용합니다.
 
 <details>
   <summary>과거 콜백 방식</summary>
+
+  과거의 JavaScript에서 비동기 작업을 처리하기 위해 콜백(callback) 함수를 사용하는 방법이 일반적이었습니다. 이 방식은 함수가 결과를 반환하기 전에 완료되어야 하는 비동기 작업에 대한 처리를 위해 콜백 함수를 인자로 전달합니다.
+
   ```typescript
   function getData(callback) {
     setTimeout(() => {
@@ -170,10 +268,13 @@ fetchData
     console.log(data); // Sample Data
   });
   ```
-  콜백 함수를 사용하면 getData 함수가 데이터를 받아온 후에 callback 함수를 실행합니다. 이 방식은 중첩이 많아질수록 코드가 복잡해질 수 있습니다.
+
+  이 콜백 접근 방식은 간단한 사용 사례에서는 잘 작동하지만, 비동기 작업이 여러 개 중첩되거나 복잡해질 경우 코드의 가독성과 유지보수성이 떨어지는 "콜백 지옥"을 야기할 수 있습니다. `async`/`await`는 이러한 문제를 해결하기 위한 현대적인 대안으로, 코드를 더 명확하고 구조적으로 만들어 줍니다.
 </details>
 
-### 9. 모듈 (Modules)
+이러한 방식을 통해 `async`/`await`의 사용과 과거 콜백 방식의 차이를 이해할 수 있습니다. `async`/`await`는 코드의 가독성을 크게 향상시키고, 복잡한 비동기 로직을 더 간단하게 만들어 줍니다.
+
+### 11. 모듈 (Modules)
 ```typescript
 // math.ts
 export const add = (a: number, b: number): number => a + b;
@@ -239,7 +340,7 @@ myModule.anotherFunction();
 ```
 </details>
 
-### 10. Map과 Set
+### 12. Map과 Set
 ```typescript
 let map: Map<string, string> = new Map();
 map.set('key', 'value');
@@ -317,7 +418,7 @@ console.log(set.size); // 0
 
 `Map`과 `Set`은 모두 ES6에서 도입된 데이터 구조로, 데이터를 보다 효율적으로 관리하고 접근할 수 있게 도와줍니다.
 
-### 11. 심볼 (Symbols)
+### 13. 심볼 (Symbols)
 ```typescript
 const sym: symbol = Symbol('description');
 console.log(sym); // Symbol(description)
@@ -353,7 +454,7 @@ console.log(mySymbol === anotherSymbol); // false
 
 심볼은 고유한 값을 생성하여 객체의 속성 키로 사용할 수 있는 특별한 데이터 타입입니다. 이를 통해 객체의 속성이 겹치는 것을 방지하고, 속성의 은닉화나 특별한 처리가 필요한 경우에 유용하게 사용될 수 있습니다.
 
-### 12. Iterator와 Generator
+### 14. Iterator와 Generator
 ```typescript
 function* generator(): Generator<number> {
   yield 1;
@@ -366,7 +467,7 @@ console.log(gen.next().value); // 2
 ```
 제너레이터 함수와 이터레이터에 타입을 지정할 수 있습니다.
 
-### 13. 향상된 객체 리터럴 (Enhanced Object Literals)
+### 15. 향상된 객체 리터럴 (Enhanced Object Literals)
 ```typescript
 const name: string = 'name';
 const obj: { [key: string]: any; method: () => string } = {
@@ -379,7 +480,7 @@ console.log(obj.method()); // value
 ```
 객체 리터럴에 타입을 지정하고, 동적 속성 및 메소드에 대한 타입도 정의할 수 있습니다.
 
-### 14. Proxy와 Reflection
+### 16. Proxy와 Reflection
 ```typescript
 let target: any = {};
 let proxy: ProxyHandler<any> = new Proxy(target, {
@@ -392,7 +493,7 @@ console.log(proxy.someProp); // value
 ```
 `Proxy`와 `Reflect`에 타입을 적용할 수 있으며, 이를 통해 객체의 작업을 가로채고 메타 프로그래밍을 수행할 수 있습니다.
 
-### 15. Number, Math, Array, Object에 새로운 메소드 추가
+### 17. Number, Math, Array, Object에 새로운 메소드 추가
 ```typescript
 console.log(Number.isInteger(42)); // true
 console.log(Math.log10(100)); // 2
