@@ -186,12 +186,20 @@ npm install -g bun
 
 다음으로 `brew`를 통해 [java](https://www.java.com)를 설치해줍니다.
 
+OpenJDK 17 버전을 설치합니다.
+> React Native 0.63 버전부터는 Java 17 버전을 지원합니다.
 ```sh
-brew tap homebrew/cask-versions
+brew install openjdk@17
 ```
 
+`zshrc` 설정 파일에 환경변수를 추가합니다.
 ```sh
-brew install --cask zulu11
+echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
+```
+
+`zshrc` 설정 파일을 다시 불러옵니다.
+```sh
+source ~/.zshrc
 ```
 
 ### Android Studio

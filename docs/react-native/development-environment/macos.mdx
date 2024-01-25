@@ -187,14 +187,19 @@ Firstly, [watchman](https://facebook.github.io/watchman) is not directly related
 
 ### Java
 
-Next, install [java](https://www.java.com) using `brew`.
-
+To install OpenJDK 17, which is supported by React Native version 0.63 and later, use this command:
 ```sh
-brew tap homebrew/cask-versions
+brew install openjdk@17
 ```
 
+To add the OpenJDK 17 to your path in the `zshrc` configuration file, enter:
 ```sh
-brew install --cask zulu11
+echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
+```
+
+Finally, to apply the changes to your current terminal session, reload the `zshrc` file with:
+```sh
+source ~/.zshrc
 ```
 
 ### Android Studio
