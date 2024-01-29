@@ -2,11 +2,38 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2023-10-25T00:00:00.000Z</updated>
+    <updated>2024-01-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Guidance Document for Development Beginners]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2024-01-29-chobo-intro</id>
+        <link href="https://crossplatformkorea.com/en/blog/2024-01-29-chobo-intro"/>
+        <updated>2024-01-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[While conducting our Private Membership program, I have compiled reference materials for those who are less familiar with app development. I hope the following blog posts will be helpful for beginners.]]></summary>
+        <content type="html"><![CDATA[<p>While conducting our <a href="https://crossplatformkorea.com/docs/current/membership" target="_blank" rel="noopener noreferrer">Private Membership program</a>, I have compiled reference materials for those who are less familiar with app development. I hope the following blog posts will be helpful for beginners.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="blog-posts">Blog Posts<a href="https://crossplatformkorea.com/en/blog/2024-01-29-chobo-intro#blog-posts" class="hash-link" aria-label="Direct link to Blog Posts" title="Direct link to Blog Posts">​</a></h3>
+<ul>
+<li><a href="https://medium.com/crossplatformkorea/%EC%95%B1-%EA%B0%9C%EB%B0%9C-%EC%9E%85%EB%AC%B8%EC%9A%A9-%EB%AC%B8%ED%97%8C-e676bfb2f998" target="_blank" rel="noopener noreferrer">Guidance Document for Development Beginners</a></li>
+<li><a href="https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%9E%85%EB%AC%B8-1-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-baf69e8e663f" target="_blank" rel="noopener noreferrer">React Native Introduction 1 - TypeScript</a></li>
+</ul>
+<p>These resources are only available in Korean, but if you need an English translation, please email <a href="mailto:crossplatformkorea@gmail.com" target="_blank" rel="noopener noreferrer">crossplatformkorea@gmail.com</a>.</p>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-01-29-chobo-intro"></div></div>]]></content>
+        <author>
+            <name>hyochan</name>
+            <uri>https://github.com/hyochan</uri>
+        </author>
+        <category label="development" term="development"/>
+        <category label="beginner" term="beginner"/>
+        <category label="introduction" term="introduction"/>
+        <category label="reference" term="reference"/>
+        <category label="document" term="document"/>
+        <category label="developer" term="developer"/>
+        <category label="programmer" term="programmer"/>
+        <category label="programming" term="programming"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[October meetup]]></title>
         <id>https://crossplatformkorea.com/en/blog/2023-10-25-expo</id>
@@ -416,24 +443,5 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
         <category label="Web" term="Web"/>
         <category label="Web Support" term="Web Support"/>
         <category label="react-native-web" term="react-native-web"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Greetings]]></title>
-        <id>https://crossplatformkorea.com/en/blog/intro</id>
-        <link href="https://crossplatformkorea.com/en/blog/intro"/>
-        <updated>2022-09-24T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Hello. This is Hyo, the organizer of Cross-Platform Korea.]]></summary>
-        <content type="html"><![CDATA[<p>Hello. This is Hyo, the organizer of <strong>Cross-Platform Korea</strong>.
-The community operation was not smooth for a long time as the event could not be held in <a href="https://www.coupang.com/" target="_blank" rel="noopener noreferrer">Coupang</a> after COVID.
-In order to revitalize the community culture again, a new homepage has been opened.</p>
-<p>Going forward, we will continue to share new news through our website and ensure smooth operation.</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-24"></div></div>]]></content>
-        <author>
-            <name>hyochan</name>
-            <uri>https://github.com/hyochan</uri>
-        </author>
-        <category label="News" term="News"/>
-        <category label="Resume" term="Resume"/>
-        <category label="Operations" term="Operations"/>
     </entry>
 </feed>

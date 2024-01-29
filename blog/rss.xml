@@ -4,10 +4,33 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Wed, 25 Oct 2023 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 29 Jan 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ko</language>
+        <item>
+            <title><![CDATA[개발 입무자를 위한 안내 문서]]></title>
+            <link>https://crossplatformkorea.com/blog/2024-01-29-chobo-intro</link>
+            <guid>https://crossplatformkorea.com/blog/2024-01-29-chobo-intro</guid>
+            <pubDate>Mon, 29 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[프라이빗 멤버십을 진행하면서, 앱 개발에 대해 잘 모르시는 분들을 위해 참고 자료를 작성해 보았습니다. 입문자분들께 아래 블로그 글이 도움이 되시길 바랍니다.]]></description>
+            <content:encoded><![CDATA[<p><a href="https://crossplatformkorea.com/docs/current/membership" target="_blank" rel="noopener noreferrer">프라이빗 멤버십</a>을 진행하면서, 앱 개발에 대해 잘 모르시는 분들을 위해 참고 자료를 작성해 보았습니다. 입문자분들께 아래 블로그 글이 도움이 되시길 바랍니다.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="블로그-글">블로그 글<a href="https://crossplatformkorea.com/blog/2024-01-29-chobo-intro#%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B8%80" class="hash-link" aria-label="제목으로 바로 가기" title="제목으로 바로 가기">​</a></h3>
+<ul>
+<li><a href="https://medium.com/crossplatformkorea/%EC%95%B1-%EA%B0%9C%EB%B0%9C-%EC%9E%85%EB%AC%B8%EC%9A%A9-%EB%AC%B8%ED%97%8C-e676bfb2f998" target="_blank" rel="noopener noreferrer">개발 입문자를 위한 안내 문서</a></li>
+<li><a href="https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%9E%85%EB%AC%B8-1-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-baf69e8e663f" target="_blank" rel="noopener noreferrer">리액트네이티브 입문 1 - 타입스크립트</a></li>
+</ul>
+<p>이 자료들은 한국어로만 작성되었습니다만, 영문 번역이 필요하시면 <a href="mailto:crossplatformkorea@gmail.com" target="_blank" rel="noopener noreferrer">crossplatformkorea@gmail.com</a>으로 이메일을 보내주시기 바랍니다.</p>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-01-29-chobo-intro"></div></div>]]></content:encoded>
+            <category>개발</category>
+            <category>초보</category>
+            <category>입문</category>
+            <category>참고</category>
+            <category>문서</category>
+            <category>개발자</category>
+            <category>프로그래머</category>
+            <category>프로그래밍</category>
+        </item>
         <item>
             <title><![CDATA[10월 밋업]]></title>
             <link>https://crossplatformkorea.com/blog/2023-10-25-expo</link>
@@ -349,21 +372,6 @@ Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github
             <category>웹</category>
             <category>웹 지원</category>
             <category>react-native-web</category>
-        </item>
-        <item>
-            <title><![CDATA[인사말]]></title>
-            <link>https://crossplatformkorea.com/blog/intro</link>
-            <guid>https://crossplatformkorea.com/blog/intro</guid>
-            <pubDate>Sat, 24 Sep 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[안녕하세요. 크로스플랫폼 코리아 주최자 장효찬입니다.]]></description>
-            <content:encoded><![CDATA[<p>안녕하세요. 크로스플랫폼 코리아 주최자 장효찬입니다.
-코로나 이후로 <a href="https://www.coupang.com/" target="_blank" rel="noopener noreferrer">쿠팡</a>에서도 행사를 하지 못하게 되어 오랫동안 커뮤니티 운영이 원활하지 못했습니다.
-다시금 커뮤니티 문화를 활성화하기 위하여 홈페이지를 새로 오픈하였습니다.</p>
-<p>앞으로 홈페이지를 통해 새로운 소식을 지속해서 공유하고 원활한 운영을 해나가겠습니다.</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-24"></div></div>]]></content:encoded>
-            <category>소식</category>
-            <category>재개</category>
-            <category>운영</category>
         </item>
     </channel>
 </rss>

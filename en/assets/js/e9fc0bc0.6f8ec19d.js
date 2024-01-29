@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[6996],{3569:function(e){e.exports=JSON.parse('{"label":"reference","permalink":"/en/blog/tags/reference","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);
