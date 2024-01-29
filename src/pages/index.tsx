@@ -129,10 +129,23 @@ function Home() {
             </Translate>
           </p>
           <div className={styles.newsDescription}>
-            다음 밋업 일정은 2월 중순입니다. 또한 3월 이후 발표자를 모집중입니다.
+            밋업에서 발표자를 모집하고 있습니다. 편안한 분위기에서 재미있는 주제로 이야기를 나눠요.<br />
+            발표자께는 20만원 상당의 발표비 지급 기회가 제공되며 발표 시간은 30~80분 자유롭게 준비하시면 됩니다.<br />
+            원할한 밋업이 진행 될 수 있도록 많은 참여 바랍니다.
+            <p>
             <br />
+            <Link
+              className={classnames(
+                "button button--outline button--primary button--lg",
+                styles.beSpeaker
+              )}
+              to={"docs/current/speaker"}
+            >
+              스피커 신청 바로가기
+            </Link>
+            </p>
             <br />
-            일정: 추후 공지
+            일정: 추후 공지 (발표자 모집 중)
             <br />
             장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서
             안내드립니다.
