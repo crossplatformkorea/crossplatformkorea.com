@@ -145,10 +145,17 @@ function Home() {
             </Link>
             </p>
             <br />
-            일정: 추후 공지 (발표자 모집 중)
+            차후 일정: 3월 27일 수요일 오후 7시 ~ 8시 30분
             <br />
             장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서
             안내드립니다.
+            <p style={{
+              fontSize: 20,
+              textDecoration: 'underline',
+              textDecorationColor: 'blueviolet',
+            }}>
+            <a href="https://www.meetup.com/crossplatformkorea/events/299808458/">밋업 링크</a>
+            </p>
             <br />
             <br />
           </div>
