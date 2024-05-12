@@ -3,7 +3,6 @@ const sidebars = {
     "introduction",
     "news",
     "speaker",
-    "membership",
     {
       type: "category",
       label: "Community",
