@@ -145,17 +145,17 @@ function Home() {
             </Link>
             </p>
             <br />
-            차후 일정: 3월 27일 수요일 오후 7시 ~ 8시 30분
+            차후 일정: 6월 26일 수요일 오후 7시 30분 ~ 8시 30분, 네트워킹 8시 45분 ~
             <br />
             장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서
-            안내드립니다.
-            <p style={{
+            안내 드립니다. 밋업 링크는 조만간 공지드리겠습니다.
+            {/* <p style={{
               fontSize: 20,
               textDecoration: 'underline',
               textDecorationColor: 'blueviolet',
             }}>
-            <a href="https://www.meetup.com/crossplatformkorea/events/299808458/">밋업 링크</a>
-            </p>
+              <a href="">밋업 링크</a>
+            </p> */}
             <br />
             <br />
           </div>
