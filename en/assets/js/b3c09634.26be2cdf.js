@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[4436],{3031:function(e){e.exports=JSON.parse('{"label":"IDE","permalink":"/en/blog/tags/ide","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);

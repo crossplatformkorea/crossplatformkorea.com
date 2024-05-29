@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[8872],{4835:function(a){a.exports=JSON.parse('{"label":"React Native","permalink":"/en/blog/tags/react-native","allTagsPath":"/en/blog/tags","count":2,"unlisted":false}')}}]);

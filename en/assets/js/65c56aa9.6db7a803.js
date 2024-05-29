@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[1328],{9385:function(e){e.exports=JSON.parse('{"label":"Youtube","permalink":"/en/blog/tags/youtube","allTagsPath":"/en/blog/tags","count":5,"unlisted":false}')}}]);

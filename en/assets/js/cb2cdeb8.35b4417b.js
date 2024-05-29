@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[583],{2096:function(s){s.exports=JSON.parse('{"label":"GPT","permalink":"/en/blog/tags/gpt","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);

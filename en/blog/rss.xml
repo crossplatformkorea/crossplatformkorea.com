@@ -4,10 +4,96 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/en/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Mon, 29 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 28 May 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Expo Module 만들기]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2024-05-28-expo-module</link>
+            <guid>https://crossplatformkorea.com/en/blog/2024-05-28-expo-module</guid>
+            <pubDate>Tue, 28 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Expo로 네이티브 모듈을 만들어보는 영상입니다.]]></description>
+            <content:encoded><![CDATA[<p>Expo로 네이티브 모듈을 만들어보는 영상입니다.
+기존에 네이티브 모듈을 만드는 것과 확실히 더 장점이 많이 보입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/LfRVFBptiXI?si=Nz4evPbLxhkBJJEJ" title="Expo Module 만들기" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-05-28"></div></div>]]></content:encoded>
+            <category>Expo</category>
+            <category>엑스포</category>
+            <category>리액트네이티브</category>
+            <category>React Native</category>
+            <category>Module</category>
+            <category>모듈</category>
+            <category>네이티브 모듈</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
+        <item>
+            <title><![CDATA[GPT 코드리뷰]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2024-05-26-gpt-codereview</link>
+            <guid>https://crossplatformkorea.com/en/blog/2024-05-26-gpt-codereview</guid>
+            <pubDate>Sun, 26 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[코드 리뷰를 GPT가 대신 해주는 프로젝트를 소개합니다.]]></description>
+            <content:encoded><![CDATA[<p>코드 리뷰를 GPT가 대신 해주는 프로젝트를 소개합니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/sZoh0aLXq5g?si=rqL9M9xbTuzG74ZF" title="GPT 코드 리뷰" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-05-26"></div></div>]]></content:encoded>
+            <category>GPT</category>
+            <category>ChatGPT</category>
+            <category>챗지피티</category>
+            <category>지피티</category>
+            <category>코드리뷰</category>
+            <category>Code Review</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
+        <item>
+            <title><![CDATA[Expo SDK 51 업데이트]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2024-05-23-expo-51</link>
+            <guid>https://crossplatformkorea.com/en/blog/2024-05-23-expo-51</guid>
+            <pubDate>Thu, 23 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Expo SDK 51 업데이트 내용 브리핑입니다.]]></description>
+            <content:encoded><![CDATA[<p>Expo SDK 51 업데이트 내용 브리핑입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/f802npsOQII?si=nkQUoeJtF8ypeWww" title="Expo SDK 51 업데이트" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-05-23"></div></div>]]></content:encoded>
+            <category>Expo</category>
+            <category>51</category>
+            <category>React Native</category>
+            <category>엑스포</category>
+            <category>리액트네이티브</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
+        <item>
+            <title><![CDATA[리액트네이티브 0.74 업데이트]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2024-05-20-react-native-0.74</link>
+            <guid>https://crossplatformkorea.com/en/blog/2024-05-20-react-native-0.74</guid>
+            <pubDate>Mon, 20 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[리액트네이티브 0.74 업데이트 내용 브리핑입니다.]]></description>
+            <content:encoded><![CDATA[<p>리액트네이티브 0.74 업데이트 내용 브리핑입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/n6CjIk_dLTY?si=LBrkOMIFC3BgdSlD" title="리액트네이티브 0.74" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-05-20"></div></div>]]></content:encoded>
+            <category>React Native</category>
+            <category>리액트네이티브</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
+        <item>
+            <title><![CDATA[새로운 React Native IDE 소개]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2024-05-19-react-native-ide</link>
+            <guid>https://crossplatformkorea.com/en/blog/2024-05-19-react-native-ide</guid>
+            <pubDate>Sun, 19 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[리액트네이티브 개발자분들에게 좋은 소식입니다. Software Mansion에서 아주 혁신적인 React Native 용 IDE를 출시했습니다 🎉]]></description>
+            <content:encoded><![CDATA[<p>리액트네이티브 개발자분들에게 좋은 소식입니다. Software Mansion에서 아주 혁신적인 React Native 용 IDE를 출시했습니다 🎉</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/2JFoSiUT7A0?si=W66XbWsM6hBJeQTq" title="새로운 React Native IDE 소개" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-05-19"></div></div>]]></content:encoded>
+            <category>React Native</category>
+            <category>IDE</category>
+            <category>Expo</category>
+            <category>리액트네이티브</category>
+            <category>엑스포</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
         <item>
             <title><![CDATA[Guidance Document for Development Beginners]]></title>
             <link>https://crossplatformkorea.com/en/blog/2024-01-29-chobo-intro</link>
@@ -284,88 +370,6 @@ First of all, since it was the first day, I, the organizer, continued my present
 <p>Also, thank you to Pang for making the participants so much fun 🙏</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-26"></div></div>]]></content:encoded>
             <category>Meetup</category>
-        </item>
-        <item>
-            <title><![CDATA[Code push experience]]></title>
-            <link>https://crossplatformkorea.com/en/blog/code-push</link>
-            <guid>https://crossplatformkorea.com/en/blog/code-push</guid>
-            <pubDate>Mon, 24 Oct 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[JeffGuKang shared talks about updating mobile clients on the fly via CodePush.]]></description>
-            <content:encoded><![CDATA[<p>JeffGuKang shared talks about updating mobile clients on the fly via CodePush.</p>
-<p><a href="https://youtu.be/78UAlT4z9XE" target="_blank" rel="noopener noreferrer">https://youtu.be/78UAlT4z9XE</a></p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-24"></div></div>]]></content:encoded>
-            <category>Meetup</category>
-            <category>App Center</category>
-            <category>CI</category>
-            <category>CD</category>
-        </item>
-        <item>
-            <title><![CDATA[Easy Build & Test Deployments with App Center]]></title>
-            <link>https://crossplatformkorea.com/en/blog/app-center</link>
-            <guid>https://crossplatformkorea.com/en/blog/app-center</guid>
-            <pubDate>Fri, 21 Oct 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.]]></description>
-            <content:encoded><![CDATA[<p>JeffGuKang shared how to use MS's AppCenter while developing various apps with React Native. It's mainly about building and deploying tests that you have to do iteratively.</p>
-<p><a href="https://youtu.be/SyN7nYejzSo" target="_blank" rel="noopener noreferrer">https://youtu.be/SyN7nYejzSo</a></p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-21"></div></div>]]></content:encoded>
-            <category>Meetup</category>
-            <category>App Center</category>
-            <category>CI</category>
-            <category>CD</category>
-        </item>
-        <item>
-            <title><![CDATA[October Meetup Notice]]></title>
-            <link>https://crossplatformkorea.com/en/blog/meetup-20221009</link>
-            <guid>https://crossplatformkorea.com/en/blog/meetup-20221009</guid>
-            <pubDate>Sun, 09 Oct 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[Hello 👋]]></description>
-            <content:encoded><![CDATA[<p>Hello 👋
-<a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565" target="_blank" rel="noopener noreferrer">October 26 meetup application</a> is now applicable.</p>
-<p>The meeting place for this meetup will be provided by <a href="https://www.monymony.co/" target="_blank" rel="noopener noreferrer">Monymony</a>, which is making <a href="http://sumone.co/" target="_blank" rel="noopener noreferrer">Sumone</a>, a service chosen by couples with 4 million subscribers and 1 million monthly visitors.</p>
-<p>Please check the <a href="https://www.meetup.com/en-KR/crossplatformkorea/events/289001565" target="_blank" rel="noopener noreferrer">Meetup page</a> for the detailed location and details.</p>
-<p>Then see you at the meetup 🙇🏻</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-09"></div></div>]]></content:encoded>
-            <category>meetup</category>
-            <category>announcement</category>
-            <category>october</category>
-            <category>monymony</category>
-        </item>
-        <item>
-            <title><![CDATA[New GitHub stats visualization]]></title>
-            <link>https://crossplatformkorea.com/en/blog/dooboo-stats</link>
-            <guid>https://crossplatformkorea.com/en/blog/dooboo-stats</guid>
-            <pubDate>Thu, 29 Sep 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[Introducing a new way to present your GitHub stats.]]></description>
-            <content:encoded><![CDATA[<p>Introducing a new way to present your GitHub stats.
-Show your performance with <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7" target="_blank" rel="noopener noreferrer">GitHub Stats Visualization</a>.</p>
-<p>English: <a href="https://medium.com/dooboolab/a-new-fancy-way-to-visualize-your-github-stats-418b5d59498" target="_blank" rel="noopener noreferrer">Medium</a><br>
-Korean: <a href="https://dooboolab.medium.com/%EC%83%88%EB%A1%9C%EC%9A%B4-github-%ED%86%B5%EA%B3%84-%EC%8B%9C%EA%B0%81%ED%99%94-61b000b032d7" target="_blank" rel="noopener noreferrer">Medium</a></p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-29"></div></div>]]></content:encoded>
-            <category>소식</category>
-            <category>깃허브</category>
-            <category>전투력</category>
-            <category>통계</category>
-        </item>
-        <item>
-            <title><![CDATA[Kakao Login Module Web Support]]></title>
-            <link>https://crossplatformkorea.com/en/blog/kakao-login-web</link>
-            <guid>https://crossplatformkorea.com/en/blog/kakao-login-web</guid>
-            <pubDate>Mon, 26 Sep 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[This is the content of the Cross-Platform Korea meetup on August 31st. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the React Native Kakao Login open source, the problems he encountered, and how he solved them.]]></description>
-            <content:encoded><![CDATA[<p>This is the content of the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/287894080" target="_blank" rel="noopener noreferrer">Cross-Platform Korea meetup on August 31st</a>. KnewKnew front-end developer, Namkyu Kyu shared the process of contributing the web feature to the <a href="https://github.com/crossplatformkorea/react-native-kakao-login" target="_blank" rel="noopener noreferrer">React Native Kakao Login</a> open source, the problems he encountered, and how he solved them.</p>
-<p><a href="https://www.youtube.com/watch?v=DZypUEUWth0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=DZypUEUWth0</a></p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="related-pr">Related PR<a href="https://crossplatformkorea.com/en/blog/kakao-login-web#related-pr" class="hash-link" aria-label="Direct link to Related PR" title="Direct link to Related PR">​</a></h3>
-<ul>
-<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/319" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/319</a></li>
-<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/322" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/322</a></li>
-<li><a href="https://github.com/crossplatformkorea/react-native-kakao-login/pull/329" target="_blank" rel="noopener noreferrer">https://github.com/crossplatformkorea/react-native-kakao-login/pull/329</a></li>
-</ul>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-09-26"></div></div>]]></content:encoded>
-            <category>Meetup</category>
-            <category>Kakao Login</category>
-            <category>Web</category>
-            <category>Web Support</category>
-            <category>react-native-web</category>
         </item>
     </channel>
 </rss>

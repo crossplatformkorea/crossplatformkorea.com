@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[8904],{1785:function(s){s.exports=JSON.parse('{"label":"\uc720\ud29c\ube0c","permalink":"/en/blog/tags/\uc720\ud29c\ube0c","allTagsPath":"/en/blog/tags","count":5,"unlisted":false}')}}]);

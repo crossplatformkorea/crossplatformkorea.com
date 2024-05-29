@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[9825],{8097:function(s){s.exports=JSON.parse('{"label":"\uc9c0\ud53c\ud2f0","permalink":"/blog/tags/\uc9c0\ud53c\ud2f0","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[9109],{3478:function(a){a.exports=JSON.parse('{"label":"Kakao Login","permalink":"/en/blog/tags/kakao-login","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);
