@@ -195,6 +195,10 @@
     "message": "스피커 신청",
     "description": "homepage.beSpeaker description"
   },
+  "homepage.subscribe": {
+    "message": "구독하기",
+    "description": "homepage.subscribe description"
+  },
   "homepage.description": {
     "message": "리엑트 네이티브, 플러터, MAUI 그리고 관련 기술 등",
     "description": "homepage.description description"

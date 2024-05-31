@@ -6,7 +6,7 @@
  */
 
 import Translate, { translate } from "@docusaurus/Translate";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "@theme/Layout";
 import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
@@ -18,6 +18,8 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import AdFit from "../uis/AdFit";
 import { useMediaQuery } from "react-responsive";
 import AdFitMobileBanner from "../uis/AdFitMobileBanner";
+import { faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faMicrophone, faNewspaper } from "@fortawesome/free-solid-svg-icons";
 
 function Home() {
   const context = useDocusaurusContext();
@@ -69,22 +71,25 @@ function Home() {
               React Native, Flutter, MAUI and related technologies, etc.
             </Translate>
           </p>
-          <div className={styles.buttons}>
-            <Link
-              className={classnames(
-                "button button--outline button--primary button--lg",
-                styles.beSpeaker
-              )}
-              to={useBaseUrl("docs/current/speaker")}
-            >
-              <Translate
-                id="homepage.beSpeaker"
-                description="homepage.beSpeaker description"
-              >
-                Be our speaker
-              </Translate>
-            </Link>
-          </div>
+          <Link
+            className={classnames(
+              "button button--outline button--danger button--lg",
+              styles.beSpeaker
+            )}
+            to={
+              "https://www.youtube.com/channel/UCAhwyJNL9wdnBJV9HBBz97w?sub_confirmation=1"
+            }
+          >
+            <FontAwesomeIcon icon={faYoutube} style={{ marginRight: "10px" }} />
+            <Translate id="homepage.subscribe">Subscribe</Translate>
+          </Link>
+          <a href="https://www.youtube.com/channel/UCAhwyJNL9wdnBJV9HBBz97w?sub_confirmation=1">
+            <img
+              src="img/cpk.png"
+              alt="cpk"
+              style={{ marginTop: 16, width: "58%" }}
+            />
+          </a>
           {isMobile ? (
             <div>
               <AdFit
@@ -129,26 +134,42 @@ function Home() {
             </Translate>
           </p>
           <div className={styles.newsDescription}>
-            밋업에서 발표자를 모집하고 있습니다. 편안한 분위기에서 재미있는 주제로 이야기를 나눠요.<br />
-            발표자께는 20만원 상당의 발표비 지급 기회가 제공되며 발표 시간은 30~80분 자유롭게 준비하시면 됩니다.<br />
+            밋업에서 발표자를 모집하고 있습니다. 편안한 분위기에서 재미있는
+            주제로 이야기를 나눠요.
+            <br />
+            발표자께는 20만원 상당의 발표비 지급 기회가 제공되며 발표 시간은
+            20~60분 자유롭게 준비하시면 됩니다.
+            <br />
             원할한 밋업이 진행 될 수 있도록 많은 참여 바랍니다.
             <p>
-            <br />
-            <Link
-              className={classnames(
-                "button button--outline button--primary button--lg",
-                styles.beSpeaker
-              )}
-              to={"docs/current/speaker"}
-            >
-              스피커 신청 바로가기
-            </Link>
+              <br />
+              <div className={styles.buttons}>
+                <Link
+                  className={classnames(
+                    "button button--outline button--primary button--lg",
+                    styles.beSpeaker
+                  )}
+                  to={useBaseUrl("docs/current/speaker")}
+                >
+                  <FontAwesomeIcon
+                    icon={faMicrophone}
+                    style={{ marginRight: "10px" }}
+                  />
+                  <Translate
+                    id="homepage.beSpeaker"
+                    description="homepage.beSpeaker description"
+                  >
+                    Be our speaker
+                  </Translate>
+                </Link>
+              </div>
             </p>
             <br />
-            차후 일정: 6월 26일 수요일 오후 7시 30분 ~ 8시 30분, 네트워킹 8시 45분 ~
+            차후 일정: 6월 26일 수요일 오후 7시 30분 ~ 8시 30분, 네트워킹 8시
+            45분 ~
             <br />
-            장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서
-            안내 드립니다. 밋업 링크는 조만간 공지드리겠습니다.
+            장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서 안내
+            드립니다. 밋업 링크는 조만간 공지드리겠습니다.
             {/* <p style={{
               fontSize: 20,
               textDecoration: 'underline',
@@ -167,6 +188,10 @@ function Home() {
               )}
               to={"docs/current/news"}
             >
+              <FontAwesomeIcon
+                icon={faNewspaper}
+                style={{ marginRight: "10px" }}
+              />
               <Translate
                 id="homepage.recentNews"
                 description="homepage.recentNews description"
