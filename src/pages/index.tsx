@@ -170,13 +170,6 @@ function Home() {
             <br />
             장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서 안내
             드립니다. 밋업 링크는 조만간 공지드리겠습니다.
-            {/* <p style={{
-              fontSize: 20,
-              textDecoration: 'underline',
-              textDecorationColor: 'blueviolet',
-            }}>
-              <a href="">밋업 링크</a>
-            </p> */}
             <br />
             <br />
           </div>
@@ -199,15 +192,13 @@ function Home() {
                 Recent News
               </Translate>
             </Link>
-            {/* <div style={{ width: 12 }} />
+            <div style={{ width: 12 }} />
             <Link
               className={classnames(
                 "button button--outline button--secondary button--lg",
                 styles.beSpeaker
               )}
-              to={
-                "https://www.meetup.com/crossplatformkorea/events/293904379"
-              }
+              to={"https://www.meetup.com/crossplatformkorea/events/301357125"}
             >
               <Translate
                 id="homepage.apply"
@@ -215,9 +206,32 @@ function Home() {
               >
                 Apply for meetup
               </Translate>
-            </Link> */}
+            </Link>
           </div>
-
+          {/* 후원사 */}
+          <div
+            style={{
+              marginTop: 60,
+            }}
+          >
+            <p
+              className={styles.newsTitle}
+              style={{ fontSize: "1.8em", fontWeight: "bold" }}
+            >
+              <Translate
+                id="homepage.thisMonthSponsors"
+                description="homepage.thisMonthSponsors title"
+              >
+                This month sponsors
+              </Translate>
+            </p>
+            <a href="https://apps.apple.com/kr/app/%EB%B3%B4%EB%8B%A5-%EC%86%90%EC%8B%A4%EC%97%86%EB%8A%94-%EB%B3%B4%ED%97%98%EA%B4%80%EB%A6%AC/id1447862053">
+              <img width="200" src="img/sponsors/bodoc.png" />
+            </a>
+            <p style={{ fontWeight: "bold" }}>
+              보닥 - 보험조회, 비교, 청구, 진단, 분석을 하나로
+            </p>
+          </div>
           <AdFitMobileBanner
             unit="DAN-madoZ3R52KRmyt95"
             height={250}

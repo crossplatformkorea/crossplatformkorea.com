@@ -214,5 +214,13 @@
   "homepage.apply": {
     "message": "밋업 신청",
     "description": "apply description"
+  },
+  "homepage.sponsors": {
+    "message": "스폰서",
+    "description": "sponsor description"
+  },
+  "homepage.thisMonthSponsors": {
+    "message": "이달의 스폰서",
+    "description": "This month sponsor description"
   }
 }
