@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[4632],{7736:function(a){a.exports=JSON.parse('{"label":"programmer","permalink":"/en/blog/tags/programmer","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);

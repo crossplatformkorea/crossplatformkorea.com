@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[1898],{6504:function(o){o.exports=JSON.parse('{"permalink":"/blog/tags/\ud504\ub85c\uadf8\ub798\ubc0d","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

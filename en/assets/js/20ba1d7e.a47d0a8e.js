@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[7978],{7310:function(s){s.exports=JSON.parse('{"label":"\uae43\ud5c8\ube0c","permalink":"/en/blog/tags/\uae43\ud5c8\ube0c","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);

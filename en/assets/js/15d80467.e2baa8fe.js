@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[9099],{9349:function(s){s.exports=JSON.parse('{"label":"\uc804\ud22c\ub825","permalink":"/en/blog/tags/\uc804\ud22c\ub825","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);

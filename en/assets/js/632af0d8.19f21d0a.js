@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[2460],{9720:function(s){s.exports=JSON.parse('{"label":"\ub124\uc774\ud2f0\ube0c \ubaa8\ub4c8","permalink":"/en/blog/tags/\ub124\uc774\ud2f0\ube0c-\ubaa8\ub4c8","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);

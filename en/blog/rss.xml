@@ -101,7 +101,7 @@
             <pubDate>Mon, 29 Jan 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[I have compiled reference materials for those who are less familiar with app development. I hope the following blog posts will be helpful for beginners.]]></description>
             <content:encoded><![CDATA[<p>I have compiled reference materials for those who are less familiar with app development. I hope the following blog posts will be helpful for beginners.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="blog-posts">Blog Posts<a href="https://crossplatformkorea.com/en/blog/2024-01-29-chobo-intro#blog-posts" class="hash-link" aria-label="Direct link to Blog Posts" title="Direct link to Blog Posts">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="blog-posts">Blog Posts<a class="hash-link" aria-label="Direct link to Blog Posts" title="Direct link to Blog Posts" href="https://crossplatformkorea.com/en/blog/2024-01-29-chobo-intro#blog-posts">​</a></h3>
 <ul>
 <li><a href="https://medium.com/crossplatformkorea/%EC%95%B1-%EA%B0%9C%EB%B0%9C-%EC%9E%85%EB%AC%B8%EC%9A%A9-%EB%AC%B8%ED%97%8C-e676bfb2f998" target="_blank" rel="noopener noreferrer">Guidance Document for Development Beginners</a></li>
 <li><a href="https://medium.com/crossplatformkorea/%EB%A6%AC%EC%95%A1%ED%8A%B8%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EC%9E%85%EB%AC%B8-1-%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-baf69e8e663f" target="_blank" rel="noopener noreferrer">React Native Introduction 1 - TypeScript</a></li>
@@ -127,7 +127,7 @@
             <description><![CDATA[In this meetup, we will explore the 7-year history of Expo's evolution and examine the latest changes and current state of Expo. Additionally, we will introduce Expo's newest features, such as EAS (Expo Application Services) and the Dev Client, and discuss the challenges encountered while using Expo and their solutions.]]></description>
             <content:encoded><![CDATA[<p>In this meetup, we will explore the 7-year history of Expo's evolution and examine the latest changes and current state of Expo. Additionally, we will introduce Expo's newest features, such as EAS (Expo Application Services) and the Dev Client, and discuss the challenges encountered while using Expo and their solutions.</p>
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/q5tK2cW7Pn8" title="trpc 컨퍼런스" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="our-memories">Our Memories<a href="https://crossplatformkorea.com/en/blog/2023-10-25-expo#our-memories" class="hash-link" aria-label="Direct link to Our Memories" title="Direct link to Our Memories">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="our-memories">Our Memories<a class="hash-link" aria-label="Direct link to Our Memories" title="Direct link to Our Memories" href="https://crossplatformkorea.com/en/blog/2023-10-25-expo#our-memories">​</a></h3>
 <table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><img src="https://crossplatformkorea.com/en/assets/images/2023-10-25-expo-1-80753177394ca2b792aa1cb4646c4320.png" height="300" alt="expo-1"></td><td><img src="https://crossplatformkorea.com/en/assets/images/2023-10-25-expo-2-36e4781245fb9dc4bf6df45552f7cb92.png" height="300" alt="expo-2"></td></tr></tbody></table>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-10-01"></div></div>]]></content:encoded>
             <category>Meetup</category>
@@ -226,10 +226,10 @@
 <p>We've brought back live coding to our meetups after a long hiatus. If you're interested in participating, we offer a presentation fee worth 150,000 KRW. As you'll see in our videos, our goal is not to intimidate, but rather to learn and help each other. We encourage you to apply in a relaxed manner.</p>
 <p><a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">Presentation application form</a></p>
 <p>Thank you.</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="on-site-photo">On-site photo<a href="https://crossplatformkorea.com/en/blog/meetup-20230628#on-site-photo" class="hash-link" aria-label="Direct link to On-site photo" title="Direct link to On-site photo">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="on-site-photo">On-site photo<a class="hash-link" aria-label="Direct link to On-site photo" title="Direct link to On-site photo" href="https://crossplatformkorea.com/en/blog/meetup-20230628#on-site-photo">​</a></h4>
 <img src="https://github.com/crossplatformkorea/crossplatformkorea.com/assets/27461460/a338f047-19ba-43bc-be1c-560070a6dc71" width="480">
 <img src="https://github.com/crossplatformkorea/crossplatformkorea.com/assets/27461460/ac91beb2-1548-4e8a-90fb-3b465a2c3387" width="480">
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="part-of-presentation-video">Part of Presentation Video<a href="https://crossplatformkorea.com/en/blog/meetup-20230628#part-of-presentation-video" class="hash-link" aria-label="Direct link to Part of Presentation Video" title="Direct link to Part of Presentation Video">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="part-of-presentation-video">Part of Presentation Video<a class="hash-link" aria-label="Direct link to Part of Presentation Video" title="Direct link to Part of Presentation Video" href="https://crossplatformkorea.com/en/blog/meetup-20230628#part-of-presentation-video">​</a></h4>
 <ul>
 <li><a href="https://youtu.be/zjiXDrMJ-R0" target="_blank" rel="noopener noreferrer">Live Coding UI Components - Part 1 (Feat. Accordion)</a></li>
 <li><a href="https://youtu.be/MLJ4gXdeDHg" target="_blank" rel="noopener noreferrer">Live Coding UI Components - Part 2 (Feat. Accordion)</a></li>
@@ -247,7 +247,7 @@
 <p>Finally, we shared a <a href="https://www.youtube.com/shorts/2RPtB9LgfIw" target="_blank" rel="noopener noreferrer">short clip</a> on how to prevent re-rendering caused by inline styles in React. If you found this useful, please don't forget to <code>subscribe</code>, <code>like</code>, and turn <code>notifications</code> on.</p>
 <p>"The state of perfection is not when there is nothing more to add, but when there is nothing left to take away," is a widely known quote from "The Little Prince" written by the French author Antoine de Saint-Exupéry. It emphasizes the importance of balance and simplicity in various aspects of functionality, design, and life.</p>
 <p>We offer a presentation fee of $150 to our presenters, and the presentation contents can be casually delivered at your discretion for 20 to 50 minutes. If you're interested, please proceed through our <a href="https://forms.gle/x6oAt28FnepAAJtp6" target="_blank" rel="noopener noreferrer">presentation application form</a>. Thank you 🙇🏻‍♂️</p>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="part-of-presentation-video">Part of Presentation Video<a href="https://crossplatformkorea.com/en/blog/meetup-20230531#part-of-presentation-video" class="hash-link" aria-label="Direct link to Part of Presentation Video" title="Direct link to Part of Presentation Video">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="part-of-presentation-video">Part of Presentation Video<a class="hash-link" aria-label="Direct link to Part of Presentation Video" title="Direct link to Part of Presentation Video" href="https://crossplatformkorea.com/en/blog/meetup-20230531#part-of-presentation-video">​</a></h4>
 <p><a href="https://www.youtube.com/watch?v=Zbph_vQwGc0" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=Zbph_vQwGc0</a></p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-05-31"></div></div>]]></content:encoded>
             <category>Meetup</category>

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[4185],{3440:function(e){e.exports=JSON.parse('{"label":"Dev Client","permalink":"/blog/tags/dev-client","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

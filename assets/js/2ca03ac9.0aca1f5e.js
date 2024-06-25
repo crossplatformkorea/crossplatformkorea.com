@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[3479],{3742:function(e){e.exports=JSON.parse('{"label":"Code Review","permalink":"/blog/tags/code-review","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

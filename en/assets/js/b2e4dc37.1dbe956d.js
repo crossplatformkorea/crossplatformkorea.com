@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcrossplatformkorea_com=self.webpackChunkcrossplatformkorea_com||[]).push([[3232],{2066:function(s){s.exports=JSON.parse('{"label":"EAS","permalink":"/en/blog/tags/eas","allTagsPath":"/en/blog/tags","count":1,"unlisted":false}')}}]);
