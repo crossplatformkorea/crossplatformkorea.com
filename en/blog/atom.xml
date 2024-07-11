@@ -2,11 +2,35 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2024-05-28T00:00:00.000Z</updated>
+    <updated>2024-07-12T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2024-07-12-new-architecture-meetup</id>
+        <link href="https://crossplatformkorea.com/en/blog/2024-07-12-new-architecture-meetup"/>
+        <updated>2024-07-12T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[크로스플랫폼 코리아 6월 밋업 영상입니다.]]></summary>
+        <content type="html"><![CDATA[<p>크로스플랫폼 코리아 6월 밋업 영상입니다.
+이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/rQGq6eZlhH4?si=QDPAXcGsz_nbeWSd" title="[밋업] React Native New Architecture 라이브러리 제작하기" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-12"></div></div>]]></content>
+        <author>
+            <name>mym0404</name>
+            <uri>https://github.com/mym0404</uri>
+        </author>
+        <category label="리액트네이티브" term="리액트네이티브"/>
+        <category label="React Native" term="React Native"/>
+        <category label="New Architecture" term="New Architecture"/>
+        <category label="뉴 아키텍쳐" term="뉴 아키텍쳐"/>
+        <category label="Module" term="Module"/>
+        <category label="모듈" term="모듈"/>
+        <category label="네이티브 모듈" term="네이티브 모듈"/>
+        <category label="Youtube" term="Youtube"/>
+        <category label="유튜브" term="유튜브"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Expo Module 만들기]]></title>
         <id>https://crossplatformkorea.com/en/blog/2024-05-28-expo-module</id>
@@ -429,25 +453,5 @@ First of all, since it was the first day, I, the organizer, continued my present
         <category label="announcement" term="announcement"/>
         <category label="october" term="october"/>
         <category label="dooboolab" term="dooboolab"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[October Meetup]]></title>
-        <id>https://crossplatformkorea.com/en/blog/meetup-20221026</id>
-        <link href="https://crossplatformkorea.com/en/blog/meetup-20221026"/>
-        <updated>2022-10-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[A meetup event was held on October 26th. We briefly introduced the contents of the current meetup.]]></summary>
-        <content type="html"><![CDATA[<img src="https://user-images.githubusercontent.com/27461460/198086669-908514bb-3f53-4c30-a8a7-6e7f2315c0fd.jpeg" width="600">
-<p>A meetup event was held on October 26th. We briefly introduced the contents of the current meetup.</p>
-<img src="https://user-images.githubusercontent.com/27461460/198086670-925d4fa1-6282-44d2-aa38-98f1b40262a3.jpeg" width="600">
-<img src="https://user-images.githubusercontent.com/27461460/198086674-44aa40f2-42a0-4318-97bf-321a05ddcf98.jpeg" width="600">
-<p>Groups were organized and leaders were selected to continue a pleasant discussion. The leader was selected as the person with the highest stat score on <a href="https://dooboo.io/" target="_blank" rel="noopener noreferrer">dooboo.io</a>. We are very much looking forward to the next time to see what useful content each group will provide in the future 🙂</p>
-<img src="https://user-images.githubusercontent.com/27461460/198088266-5ee23468-0623-4dcb-9d35-af4565479c43.jpeg" width="600">
-<p>Also, thank you to Pang for making the participants so much fun 🙏</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-10-26"></div></div>]]></content>
-        <author>
-            <name>hyochan</name>
-            <uri>https://github.com/hyochan</uri>
-        </author>
-        <category label="Meetup" term="Meetup"/>
     </entry>
 </feed>
