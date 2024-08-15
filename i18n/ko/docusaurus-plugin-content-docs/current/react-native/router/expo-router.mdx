@@ -2,6 +2,7 @@
 id: expo-router
 title: 엑스포 라우터
 sidebar_label: 엑스포 라우터
+description: 라우터 섹션에서 설명한 것과 같이 리엑트 네이티브에는 react-navigation, react-native-navigation 등 각종 라우터들이 있지만 저희 커뮤니티에서는 expo-router를 추천합니다.
 ---
 
 import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
@@ -51,7 +52,7 @@ function ProfileScreen({ route }) {
 ## Stack
 
 ### 1. Stack Layout이란?
-Expo Router의 Stack Layout은 React Navigation에서 제공하는 Native Stack Navigator를 활용합니다. 이것은 예전에 사용하던 JS Stack Navigator와는 다릅니다. 
+Expo Router의 Stack Layout은 React Navigation에서 제공하는 Native Stack Navigator를 활용합니다. 이것은 예전에 사용하던 JS Stack Navigator와는 다릅니다.
 
 ### 2. 기본 사용법
 ```tsx
@@ -253,10 +254,10 @@ Expo Router의 Drawer 레이아웃을 사용하면 사이드 내비게이션 메
    ```tsx
    module.exports = {
      presets: [
-         ... 
+         ...
        ],
      plugins: [
-       ... 
+       ...
        'react-native-reanimated/plugin',
      ],
    };
@@ -514,15 +515,15 @@ export { default } from '../components/about';
 ```
 app
 ├── _layout.js
-│ 
+│
 ├── (home)
 │   ├── _layout.js
 │   └── [user].js
-│ 
+│
 ├── (search)
 │   ├── _layout.js
 │   └── [user].js
-│ 
+│
 └── (profile)
     ├── _layout.js
     └── [user].js
