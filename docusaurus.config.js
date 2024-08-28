@@ -24,13 +24,17 @@ module.exports = {
       {
         redirects: [
           {
+            to: "https://docs.google.com/forms/d/1YMo_RNSCfZfxfYxYV27EGM0ScZP8b-Ct80_wSTJRlDs",
+            from: "/welcome",
+          },
+          {
             to: "/docs/current/introduction",
             from: "/docs",
           },
           {
             to: "/docs/current/introduction",
             from: "/docs/introduction",
-          }
+          },
         ],
       },
     ],
@@ -44,13 +48,13 @@ module.exports = {
       },
       items: [
         {
-          type: 'dropdown',
-          label: 'Development',
-          position: 'left',
+          type: "dropdown",
+          label: "Development",
+          position: "left",
           items: [
             {
-              label: 'React Native',
-              href: '/docs/current/react-native/intro',
+              label: "React Native",
+              href: "/docs/current/react-native/intro",
             },
           ],
         },
@@ -60,7 +64,11 @@ module.exports = {
           position: "left",
         },
         { to: "/blog", label: "Blog", position: "left" },
-        { href: "https://forums.crossplatformkorea.com", label: "Forums", position: "left" },
+        {
+          href: "https://forums.crossplatformkorea.com",
+          label: "Forums",
+          position: "left",
+        },
         {
           href: "https://github.com/crossplatformkorea/crossplatformkorea.com",
           label: "GitHub",
