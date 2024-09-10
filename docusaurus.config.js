@@ -124,6 +124,23 @@ module.exports = {
             },
           ],
         },
+        {
+          title: "App",
+          items: [
+            {
+              label: "App",
+              href: "https://app.crossplatformkorea.com",
+            },
+            {
+              label: "Privacy and Policy",
+              href: "https://app.crossplatformkorea.com/privacyandpolicy",
+            },
+            {
+              label: "Terms of Service",
+              href: "https://app.crossplatformkorea.com/termsofservice",
+            },
+          ],
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} dooboolab.`,
     },
