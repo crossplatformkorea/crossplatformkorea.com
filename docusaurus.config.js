@@ -35,6 +35,14 @@ module.exports = {
             to: "/docs/current/introduction",
             from: "/docs/introduction",
           },
+          {
+            to: "https://app.crossplatformkorea.com/privacyandpolicy",
+            from: "/privacyandpolicy",
+          },
+          {
+            to: "https://app.crossplatformkorea.com/termsofservice",
+            from: "/termsofservice",
+          }
         ],
       },
     ],
@@ -133,11 +141,11 @@ module.exports = {
             },
             {
               label: "Privacy and Policy",
-              href: "https://app.crossplatformkorea.com/privacyandpolicy",
+              href: "https://crossplatformkorea.com/privacyandpolicy",
             },
             {
               label: "Terms of Service",
-              href: "https://app.crossplatformkorea.com/termsofservice",
+              href: "https://crossplatformkorea.com/termsofservice",
             },
           ],
         },
