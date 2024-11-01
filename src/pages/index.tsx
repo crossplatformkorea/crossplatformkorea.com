@@ -165,11 +165,9 @@ function Home() {
               </div>
             </p>
             <br />
-            차후 일정: 6월 26일 수요일 오후 7시 30분 ~ 8시 30분, 네트워킹 8시
-            45분 ~
+            차후 일정: 11월 13일 수요일 오후 7시 00분 ~ 9시 20분 45분 ~
             <br />
-            장소: 서울시 강남구 테헤란로 501 브이플렉스 건물 1층에서 안내
-            드립니다. 밋업 링크는 조만간 공지드리겠습니다.
+            장소: 서울 마포구 월드컵북로 35 2층 (모니모니)
             <br />
             <br />
           </div>
@@ -225,12 +223,10 @@ function Home() {
                 This month sponsors
               </Translate>
             </p>
-            <a href="https://apps.apple.com/kr/app/%EB%B3%B4%EB%8B%A5-%EC%86%90%EC%8B%A4%EC%97%86%EB%8A%94-%EB%B3%B4%ED%97%98%EA%B4%80%EB%A6%AC/id1447862053">
-              <img width="200" src="img/sponsors/bodoc.png" />
+            <a href="https://www.monymony.co">
+              <img width="200" src="img/sponsors/monymony.png" />
             </a>
-            <p style={{ fontWeight: "bold" }}>
-              보닥 - 보험조회, 비교, 청구, 진단, 분석을 하나로
-            </p>
+            <p style={{ fontWeight: "bold" }}>모니모니</p>
           </div>
           <AdFitMobileBanner
             unit="DAN-madoZ3R52KRmyt95"
