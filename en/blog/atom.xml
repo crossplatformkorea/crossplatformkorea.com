@@ -2,21 +2,44 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://crossplatformkorea.com/en/blog</id>
     <title>Cross-Platform Korea Blog</title>
-    <updated>2024-07-12T00:00:00.000Z</updated>
+    <updated>2024-08-28T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://crossplatformkorea.com/en/blog"/>
     <subtitle>Cross-Platform Korea Blog</subtitle>
     <icon>https://crossplatformkorea.com/en/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+        <title type="html"><![CDATA[샌드버드 SDK의 타입 정의는 어떻게 빌드되고 있을까?]]></title>
         <id>https://crossplatformkorea.com/en/blog/2024-07-12-new-architecture-meetup</id>
         <link href="https://crossplatformkorea.com/en/blog/2024-07-12-new-architecture-meetup"/>
-        <updated>2024-07-12T00:00:00.000Z</updated>
+        <updated>2024-08-28T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[크로스플랫폼 코리아 8월 밋업 영상입니다.]]></summary>
+        <content type="html"><![CDATA[<p>크로스플랫폼 코리아 8월 밋업 영상입니다.
+이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/Tn63o4Q22n8?si=MKGLMtdj5B6MzTNU" title="[밋업] 센드버드 SDK의 타입 정의는 어떻게 빌드되고 있을까?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-07-19"></div></div>]]></content>
+        <author>
+            <name>bang9</name>
+            <uri>https://github.com/bang9</uri>
+        </author>
+        <category label="리액트네이티브" term="리액트네이티브"/>
+        <category label="React Native" term="React Native"/>
+        <category label="Sendbird" term="Sendbird"/>
+        <category label="Type" term="Type"/>
+        <category label="Typescript" term="Typescript"/>
+        <category label="모듈" term="모듈"/>
+        <category label="Youtube" term="Youtube"/>
+        <category label="유튜브" term="유튜브"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+        <id>https://crossplatformkorea.com/en/blog/2024-07-31-new-architecture-meetup</id>
+        <link href="https://crossplatformkorea.com/en/blog/2024-07-31-new-architecture-meetup"/>
+        <updated>2024-07-31T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[크로스플랫폼 코리아 6월 밋업 영상입니다.]]></summary>
         <content type="html"><![CDATA[<p>크로스플랫폼 코리아 6월 밋업 영상입니다.
 이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/rQGq6eZlhH4?si=QDPAXcGsz_nbeWSd" title="[밋업] React Native New Architecture 라이브러리 제작하기" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-12"></div></div>]]></content>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-31"></div></div>]]></content>
         <author>
             <name>mym0404</name>
             <uri>https://github.com/mym0404</uri>
@@ -431,26 +454,5 @@ First of all, since it was the first day, I, the organizer, continued my present
             <uri>https://github.com/hyochan</uri>
         </author>
         <category label="Meetup" term="Meetup"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[November Meetup Notice]]></title>
-        <id>https://crossplatformkorea.com/en/blog/meetup-20221114</id>
-        <link href="https://crossplatformkorea.com/en/blog/meetup-20221114"/>
-        <updated>2022-11-14T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Hello 👋]]></summary>
-        <content type="html"><![CDATA[<p>Hello 👋
-<a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">November 30 meetup application</a> is now applicable.</p>
-<p>As announced last time, this meetup will select a topic for each group and make a presentation. The group that provides the most highly rated content will receive a prize worth 500,000 won ($376).</p>
-<p>For the prize money, each leader can claim directly to our <a href="https://opencollective.com/dooboolab-community" target="_blank" rel="noopener noreferrer">community sponsored organization</a>. It is believed that each leader will reasonably spend the prize money with the members, but you can decide freely :)</p>
-<p>For details, please check the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">meetup page</a>.</p>
-<p>Then see you at the meetup 🙇🏻</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-11-14"></div></div>]]></content>
-        <author>
-            <name>hyochan</name>
-            <uri>https://github.com/hyochan</uri>
-        </author>
-        <category label="meetup" term="meetup"/>
-        <category label="announcement" term="announcement"/>
-        <category label="october" term="october"/>
     </entry>
 </feed>

@@ -4,20 +4,39 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Fri, 12 Jul 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 28 Aug 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ko</language>
         <item>
-            <title><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+            <title><![CDATA[샌드버드 SDK의 타입 정의는 어떻게 빌드되고 있을까?]]></title>
             <link>https://crossplatformkorea.com/blog/2024-07-12-new-architecture-meetup</link>
             <guid>https://crossplatformkorea.com/blog/2024-07-12-new-architecture-meetup</guid>
-            <pubDate>Fri, 12 Jul 2024 00:00:00 GMT</pubDate>
+            <pubDate>Wed, 28 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[크로스플랫폼 코리아 8월 밋업 영상입니다.]]></description>
+            <content:encoded><![CDATA[<p>크로스플랫폼 코리아 8월 밋업 영상입니다.
+이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/Tn63o4Q22n8?si=MKGLMtdj5B6MzTNU" title="[밋업] 센드버드 SDK의 타입 정의는 어떻게 빌드되고 있을까?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-07-19"></div></div>]]></content:encoded>
+            <category>리액트네이티브</category>
+            <category>React Native</category>
+            <category>Sendbird</category>
+            <category>Type</category>
+            <category>Typescript</category>
+            <category>모듈</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
+        <item>
+            <title><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+            <link>https://crossplatformkorea.com/blog/2024-07-31-new-architecture-meetup</link>
+            <guid>https://crossplatformkorea.com/blog/2024-07-31-new-architecture-meetup</guid>
+            <pubDate>Wed, 31 Jul 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[크로스플랫폼 코리아 6월 밋업 영상입니다.]]></description>
             <content:encoded><![CDATA[<p>크로스플랫폼 코리아 6월 밋업 영상입니다.
 이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/rQGq6eZlhH4?si=QDPAXcGsz_nbeWSd" title="[밋업] React Native New Architecture 라이브러리 제작하기" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-12"></div></div>]]></content:encoded>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-31"></div></div>]]></content:encoded>
             <category>리액트네이티브</category>
             <category>React Native</category>
             <category>New Architecture</category>
@@ -357,23 +376,6 @@
 <p>약속한 대로 발표를 진행해준 팀께는 50만 원 상당의 상금이 지급될 예정입니다. 다음 밋업인 1월 25일에 상금 수여가 있겠습니다 :)</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-11-30"></div></div>]]></content:encoded>
             <category>Meetup</category>
-        </item>
-        <item>
-            <title><![CDATA[11월 밋업 공지]]></title>
-            <link>https://crossplatformkorea.com/blog/meetup-20221114</link>
-            <guid>https://crossplatformkorea.com/blog/meetup-20221114</guid>
-            <pubDate>Mon, 14 Nov 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[안녕하세요 👋]]></description>
-            <content:encoded><![CDATA[<p>안녕하세요 👋
-<a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">11월 30일 밋업 신청</a>이 열렸습니다.</p>
-<p>이번 밋업은 저번에 공지드린대로 그룹 별로 주제를 선정해서 발표를 진행합니다. 가장 좋은 평가를 받은 콘텐츠를 제공해주신 조는 50만원 ($376) 상당의 경품이 지급됩니다.</p>
-<p>상금은 각 조장님이 저희 <a href="https://opencollective.com/dooboolab-community" target="_blank" rel="noopener noreferrer">커뮤니티 후원 단체</a>에 직접 청구를 해주시면 됩니다. 각 조장님들이 합리적으로 상금을 조원분들과 쓰실 것으로 사료됩니다만 자유롭게 결정하시면 됩니다 :)</p>
-<p>상세 내용은 <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">밋업 페이지</a>에서 확인해주세요.</p>
-<p>그럼 밋업에서 뵙겠습니다 🙇🏻</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-11-14"></div></div>]]></content:encoded>
-            <category>밋업</category>
-            <category>공지</category>
-            <category>11월</category>
         </item>
     </channel>
 </rss>

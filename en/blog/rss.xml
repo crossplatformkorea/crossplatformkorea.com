@@ -4,20 +4,39 @@
         <title>Cross-Platform Korea Blog</title>
         <link>https://crossplatformkorea.com/en/blog</link>
         <description>Cross-Platform Korea Blog</description>
-        <lastBuildDate>Fri, 12 Jul 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 28 Aug 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+            <title><![CDATA[샌드버드 SDK의 타입 정의는 어떻게 빌드되고 있을까?]]></title>
             <link>https://crossplatformkorea.com/en/blog/2024-07-12-new-architecture-meetup</link>
             <guid>https://crossplatformkorea.com/en/blog/2024-07-12-new-architecture-meetup</guid>
-            <pubDate>Fri, 12 Jul 2024 00:00:00 GMT</pubDate>
+            <pubDate>Wed, 28 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[크로스플랫폼 코리아 8월 밋업 영상입니다.]]></description>
+            <content:encoded><![CDATA[<p>크로스플랫폼 코리아 8월 밋업 영상입니다.
+이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
+<div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/Tn63o4Q22n8?si=MKGLMtdj5B6MzTNU" title="[밋업] 센드버드 SDK의 타입 정의는 어떻게 빌드되고 있을까?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2023-07-19"></div></div>]]></content:encoded>
+            <category>리액트네이티브</category>
+            <category>React Native</category>
+            <category>Sendbird</category>
+            <category>Type</category>
+            <category>Typescript</category>
+            <category>모듈</category>
+            <category>Youtube</category>
+            <category>유튜브</category>
+        </item>
+        <item>
+            <title><![CDATA[React Native New Architecture 라이브러리 제작]]></title>
+            <link>https://crossplatformkorea.com/en/blog/2024-07-31-new-architecture-meetup</link>
+            <guid>https://crossplatformkorea.com/en/blog/2024-07-31-new-architecture-meetup</guid>
+            <pubDate>Wed, 31 Jul 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[크로스플랫폼 코리아 6월 밋업 영상입니다.]]></description>
             <content:encoded><![CDATA[<p>크로스플랫폼 코리아 6월 밋업 영상입니다.
 이번 주제는 "React Native New Architecture 라이브러리 제작"입니다.</p>
 <div class="video-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/rQGq6eZlhH4?si=QDPAXcGsz_nbeWSd" title="[밋업] React Native New Architecture 라이브러리 제작하기" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe></div>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-12"></div></div>]]></content:encoded>
+<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2024-07-31"></div></div>]]></content:encoded>
             <category>리액트네이티브</category>
             <category>React Native</category>
             <category>New Architecture</category>
@@ -356,23 +375,6 @@ First of all, since it was the first day, I, the organizer, continued my present
 <p>As promised, a prize of 500,000 won will be given to the team that proceeded with the presentation. Prizes will be awarded at the next meetup on January 25th :)</p>
 <div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-11-30"></div></div>]]></content:encoded>
             <category>Meetup</category>
-        </item>
-        <item>
-            <title><![CDATA[November Meetup Notice]]></title>
-            <link>https://crossplatformkorea.com/en/blog/meetup-20221114</link>
-            <guid>https://crossplatformkorea.com/en/blog/meetup-20221114</guid>
-            <pubDate>Mon, 14 Nov 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[Hello 👋]]></description>
-            <content:encoded><![CDATA[<p>Hello 👋
-<a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">November 30 meetup application</a> is now applicable.</p>
-<p>As announced last time, this meetup will select a topic for each group and make a presentation. The group that provides the most highly rated content will receive a prize worth 500,000 won ($376).</p>
-<p>For the prize money, each leader can claim directly to our <a href="https://opencollective.com/dooboolab-community" target="_blank" rel="noopener noreferrer">community sponsored organization</a>. It is believed that each leader will reasonably spend the prize money with the members, but you can decide freely :)</p>
-<p>For details, please check the <a href="https://www.meetup.com/ko-KR/crossplatformkorea/events/289741685" target="_blank" rel="noopener noreferrer">meetup page</a>.</p>
-<p>Then see you at the meetup 🙇🏻</p>
-<div style="flex:1;margin-top:24px;margin-bottom:24px"><div class="adfit-middle-mobile-2022-11-14"></div></div>]]></content:encoded>
-            <category>meetup</category>
-            <category>announcement</category>
-            <category>october</category>
         </item>
     </channel>
 </rss>
