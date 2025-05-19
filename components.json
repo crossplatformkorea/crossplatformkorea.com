@@ -1,0 +1,135 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/index.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide",
+  "copilotInstructions": {
+    "cssDesign": {
+      "objective": "Provide guidelines and best practices for creating consistent, maintainable CSS designs using Tailwind CSS with a flex-first approach and utility functions for class organization.",
+      "fileScope": {
+        "appliesTo": ["**/*.tsx", "**/*.jsx", "**/*.css"]
+      },
+      "layoutGuidelines": {
+        "flexFirstApproach": {
+          "description": "Use flex layouts as the primary layout method for consistent, responsive designs.",
+          "example": {
+            "parentContainer": {
+              "layout": "column",
+              "code": "<div className={cn(\"flex flex-col\", \"h-screen relative overflow-hidden\")}>"
+            },
+            "header": {
+              "layout": "row",
+              "code": "<header className={cn(\"flex items-center justify-between\", \"h-[90px] flex-shrink-0 px-6 relative z-10\")}>"
+            },
+            "mainContent": {
+              "layout": "remaining space",
+              "code": "<main className={cn(\"flex flex-1 justify-center items-center\", \"relative z-10 p-6 md:p-12\")}>"
+            },
+            "footer": {
+              "code": "<footer className=\"flex h-6 w-full relative\">"
+            }
+          }
+        },
+        "componentStructure": {
+          "description": "Organize UI components with a clear nesting structure.",
+          "recommendations": [
+            "Use semantic HTML elements whenever possible.",
+            "Avoid unnecessary nesting of div elements."
+          ]
+        }
+      },
+      "classOrganization": {
+        "utilityFunction": {
+          "description": "Always import and use the `cn()` utility function from `@/lib/utils.ts`.",
+          "example": "import { cn } from \"@/lib/utils\";"
+        },
+        "classGrouping": {
+          "description": "Group related Tailwind classes with the `cn()` utility and use comments to identify each group.",
+          "example": "<button className={cn(\"flex justify-center items-center relative\", \"w-full py-3 rounded-lg\", \"bg-gradient-to-r from-primary to-primary/90\", \"text-primary-foreground font-medium\", \"shadow-lg shadow-primary/20\", \"hover:from-primary/90 hover:to-primary/80\", \"disabled:opacity-50 disabled:cursor-not-allowed\", \"transition-all\", className)} {...props} />"
+        },
+        "stateBasedClasses": {
+          "description": "Group state-based classes separately for better readability.",
+          "examples": [
+            "hover:",
+            "focus:",
+            "active:",
+            "disabled:",
+            "dark:",
+            "group-hover:",
+            "sm:, md:, lg:"
+          ]
+        },
+        "dynamicClassApplication": {
+          "description": "Use conditional classes with the `cn()` function and ternary operators.",
+          "example": "<div className={cn(\"flex flex-col w-full max-w-md relative\", \"transform transition-all duration-700\", isVisible ? \"translate-y-0 opacity-100\" : \"translate-y-8 opacity-0\")}>"
+        }
+      },
+      "visualEffectsGuidelines": {
+        "glassMorphism": {
+          "description": "Create glass morphism effects using opacity, blur, and backdrop-filter.",
+          "example": "<div className={cn(\"p-8 rounded-xl relative overflow-hidden\", \"bg-background/80 backdrop-blur-md\", \"border border-border/50\", \"shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)]\")}>"
+        },
+        "gradients": {
+          "description": "Use subtle gradients for backgrounds and buttons.",
+          "examples": [
+            "<div className=\"bg-gradient-to-b from-background to-background/95\"></div>",
+            "<button className=\"bg-gradient-to-r from-primary to-primary/90\"></button>"
+          ]
+        },
+        "animationEffects": {
+          "description": "Create overlay effects with absolute positioning.",
+          "example": "<button className=\"relative overflow-hidden group\"><span aria-hidden=\"true\" className={cn(\"absolute inset-0 w-full h-full -translate-x-full pointer-events-none\", \"bg-gradient-to-r from-transparent via-white/10 to-transparent\", \"group-hover:animate-shimmer\")} /><span className=\"relative z-10 px-2\">Click me</span></button>"
+        }
+      },
+      "responsiveDesignGuidelines": {
+        "mobileFirstApproach": {
+          "description": "Design for mobile first, then add responsive variants.",
+          "example": "<div className={cn(\"p-4 flex flex-col gap-2\", \"md:p-6 md:flex-row md:gap-4\", \"lg:p-8 lg:gap-6\")}>"
+        },
+        "scrollHandling": {
+          "description": "Control overflow and scrolling behavior appropriately.",
+          "examples": [
+            "<div className={cn(\"flex-1 flex flex-col overflow-y-auto max-h-[50vh]\")}>",
+            "<div className={cn(\"flex text-red-500 text-sm mt-1\", \"max-h-[6em] overflow-y-auto\", \"bg-red-50/10 rounded p-2\", \"border border-red-200/20\")}>"
+          ]
+        }
+      },
+      "bestPractices": {
+        "accessibility": {
+          "description": "Include appropriate ARIA attributes for decorative elements.",
+          "example": "<span aria-hidden=\"true\" className=\"absolute inset-0 opacity-20 pointer-events-none\"></span>"
+        },
+        "performance": {
+          "description": "Group related styles in the `cn()` function to reduce class string length.",
+          "recommendations": [
+            "Prefer Tailwind's built-in animations and transitions over custom CSS.",
+            "Use `relative z-10` sparingly and intentionally."
+          ]
+        },
+        "maintainability": {
+          "description": "Create reusable UI components with consistent styling patterns.",
+          "recommendations": [
+            "Document complex visual effects with comments.",
+            "Prefer Tailwind's utility classes over custom CSS when possible.",
+            "Use descriptive variable names for state that affects styling."
+          ]
+        }
+      }
+    }
+  }
+}

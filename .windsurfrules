@@ -1,0 +1,71 @@
+## Instructions for Convex Projects
+
+**Objective**: Provide consistent guidelines and best practices for Convex-based applications, including function syntax, schema design, authentication, pagination, i18n, and more. These instructions help the AI generate accurate TypeScript/JavaScript code in projects using Convex.
+
+**Applies to**: `**/*.ts`, `**/*.tsx`, `**/*.js`, `**/*.jsx`, `**/*.json`
+
+---
+
+### 🔧 Convex Function Rules
+- Always use the new Convex function syntax (`query`, `mutation`, `action`, etc.)
+- Use validators (`v.*`) for all `args` and `returns`.
+- Use `v.null()` if nothing is returned.
+- Organize public functions in `convex/`, private ones with `internal*`.
+- Use `ctx.runQuery`, `ctx.runMutation`, `ctx.runAction` with `api.*` or `internal.*` references.
+- Never reference functions directly; always use the generated `api.ts` or `internal.ts`.
+
+### 📦 Schema Guidelines
+- Use `defineSchema` and `defineTable` in `convex/schema.ts`.
+- Prefer explicit index names (e.g., `by_field1_and_field2`).
+- Avoid querying without indexes. Do not use `.filter()`; prefer `.withIndex()`.
+
+### 🔒 Authentication Rules
+- Use `getAuthUserId(ctx)` from `@convex-dev/auth/server`.
+- Never use `ctx.auth.getUserIdentity()` directly.
+- Return fallback results (e.g., `false`, empty array) if unauthenticated.
+
+### 📑 Pagination Rules
+- Use `paginationOptsValidator` and `.paginate()`.
+- Return `{ page, isDone, continueCursor }` from paginated queries.
+
+### 📂 Storage Rules
+- Use `ctx.storage.getUrl(fileId)`.
+- Avoid deprecated APIs like `getMetadata`; use system table `_storage` instead.
+
+### 🧠 i18n Rules
+- Store translation files in `src/locales/`.
+- Use nested key structure: `auth.signIn.title`, etc.
+- Access translations with `t("...")` or `useTranslation("namespace")`.
+- Use `Intl.NumberFormat` and `date-fns` for locale-aware formatting.
+- Support interpolation: `"Welcome, {{name}}!"`
+- Implement `i18n.changeLanguage()` for language switching.
+- Save user's language preference in Convex DB.
+
+### 🧪 TypeScript Rules
+- Use `Id<'table'>`, `Doc<'table'>`, etc., from `./_generated/dataModel`.
+- Avoid `any`, prefer strict typing.
+- Use `as const` for literal types.
+- Use `void` for fire-and-forget promises.
+- Always `.catch()` or handle promises appropriately.
+
+### 🕹️ Scheduling (Crons)
+- Use `crons.interval(...)` with `internal.*` references.
+- Define and export all crons from `convex/crons.ts`.
+
+### 💬 Chat App Backend Example
+- Use 3 tables: `users`, `channels`, `messages`.
+- AI responses scheduled with `ctx.scheduler.runAfter(...)`.
+- Use OpenAI’s GPT-4 to generate responses via internal action.
+- Load message context using `ctx.db.query(...).withIndex(...).order(...).take(10)`.
+
+---
+
+## 📌 Summary
+- Use the new Convex function syntax and validators.
+- Organize code with file-based routing and function references.
+- Authenticate via `getAuthUserId`.
+- Follow i18n and formatting standards.
+- Strictly type everything, especially with Convex’s `Id` and `Doc`.
+- Use best practices for queries, mutations, actions, scheduling, and file storage.
+
+**These rules must be followed by Copilot and Windsurf AI when generating or modifying code in this project.**

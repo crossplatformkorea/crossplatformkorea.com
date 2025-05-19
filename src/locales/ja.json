@@ -1,0 +1,150 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "appName": "クロスプラットフォーム・コリア",
+    "navVideo": "ビデオ",
+    "navFeatureRequest": "機能リクエスト",
+    "signIn": "サインイン",
+    "remove": "削除",
+    "delete": "削除",
+    "cancel": "キャンセル",
+    "authRequired": "すべての機能にアクセスするにはサインインしてください",
+    "close": "閉じる"
+  },
+  "signIn": {
+    "verifyEmailTitle": "メールを確認",
+    "verifyEmailMessage": "確認コードが記載されたメールをご確認ください。",
+    "alreadySignedInTitle": "すでにサインインしています",
+    "alreadySignedInMessage": "サインアウトするか、アプリの使用を続けることができます。",
+    "title": "サインイン",
+    "signInMessage": "メールアドレスを入力して確認コードを受け取ってください。安全なサインインのためにOTPコードをメールで送信します。",
+    "emailLabel": "メールアドレス",
+    "emailPlaceholder": "メールアドレスを入力",
+    "sendingCode": "コード送信中...",
+    "signInWithEmail": "メールでサインイン",
+    "verificationCodeLabel": "確認コード",
+    "verificationCodePlaceholder": "8桁のコードを入力",
+    "verifying": "確認中...",
+    "verifyCode": "コードを確認",
+    "back": "戻る",
+    "signOutPrompt": "サインアウトしますか？",
+    "signingOut": "サインアウト中...",
+    "signOut": "サインアウト",
+    "returnToHome": "ホームに戻る",
+    "missingKeyExample": "欠落キーの例"
+  },
+  "video": {
+    "createMasterpiece": "傑作を作成",
+    "selectModelText": "お好みのモデルを選択し、あなたのビジョンを形にしましょう",
+    "remainingVideos": "残りのビデオ",
+    "signInPrompt": "ビデオを生成するにはサインインしてください",
+    "generating": "生成中...",
+    "generateVideo": "ビデオを生成",
+    "generationSuccess": "ビデオが正常に生成されました！",
+    "limitReached": "ビデオ生成の制限に達しました",
+    "loadingVideos": "コミュニティビデオを読み込み中...",
+    "noVideos": "まだビデオがありません。生成を始めましょう！",
+    "noPublicVideos": "利用可能な公開ビデオはありません。より多くのコンテンツを見るにはサインインしてください。",
+    "noSearchResults": "検索に一致するビデオがありません。別のクエリを試してください。",
+    "searchPlaceholder": "プロンプトでビデオを検索...",
+    "search": "検索",
+    "clearSearch": "検索をクリア",
+    "createdAt": "作成日時",
+    "delete": "ビデオを削除",
+    "deleteSuccess": "ビデオが正常に削除されました",
+    "deleteError": "ビデオの削除に失敗しました",
+    "confirmDeleteTitle": "ビデオを削除",
+    "confirmDeleteDescription": "このビデオを削除しますか？この操作はユーザーの画面からは元に戻すことができません。",
+    "dragToResize": "ドラッグしてパネルのサイズを変更"
+  },
+  "featureRequest": {
+    "title": "機能リクエスト",
+    "description": "既存の機能リクエストに投票するか、新しい機能を提案してプラットフォームの改善にご協力ください。",
+    "requestButton": "機能をリクエスト",
+    "cancelButton": "キャンセル",
+    "formTitle": "機能リクエストを提出",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "どのような機能が欲しいですか？",
+    "descriptionLabel": "説明",
+    "descriptionPlaceholder": "希望する機能について詳しく説明してください...",
+    "emailLabel": "メール（任意）",
+    "emailPlaceholder": "メールアドレス（更新通知をお送りします）",
+    "emailDescription": "メールアドレスはこの機能に関する更新通知のみに使用されます。",
+    "submitButton": "リクエストを提出",
+    "submittingButton": "提出中...",
+    "successMessage": "機能リクエストが正常に提出されました！",
+    "noRequests": "まだ機能リクエストはありません。最初の提案者になりましょう！",
+    "loading": "機能リクエストを読み込み中...",
+    "loadingMore": "さらに読み込み中...",
+    "loadMore": "さらにリクエストを読み込む",
+    "votes": "投票",
+    "requestedOn": "リクエスト日",
+    "status": {
+      "requested": "リクエスト済み",
+      "planned": "計画中",
+      "inProgress": "進行中",
+      "completed": "完了"
+    },
+    "validation": {
+      "titleTooShort": "タイトルは3文字以上である必要があります",
+      "descriptionTooShort": "説明は10文字以上である必要があります",
+      "serverError": "サーバーエラー: {{message}}",
+      "failedToSubmit": "機能リクエストの提出に失敗しました"
+    }
+  },
+  "serviceStatus": {
+    "preparing": {
+      "title": "サービス準備中",
+      "message": "現在、この機能の公開に向けて準備中です！準備ができましたらメールでお知らせします。"
+    },
+    "underConstruction": {
+      "title": "サービスメンテナンス中",
+      "message": "この機能は現在メンテナンス中です。ご不便をおかけして申し訳ありません。できるだけ早く復旧するよう努めています。"
+    },
+    "subscriptionSuccess": "更新通知の購読が完了しました！"
+  },
+  "promptMenu": {
+    "veo2": {
+      "prompt": "プロンプト",
+      "promptPlaceholder": "作成したいビデオを説明してください",
+      "negativePrompt": "ネガティブプロンプト",
+      "negativePromptPlaceholder": "ビデオに含めたくない要素を説明してください",
+      "image": "画像（オプション）",
+      "personGeneration": "人物生成",
+      "aspectRatio": "アスペクト比",
+      "videoLength": "ビデオの長さ",
+      "seconds": "秒"
+    },
+    "runwayGen4Turbo": {
+      "prompt": "プロンプト",
+      "promptPlaceholder": "作成したいビデオを説明してください",
+      "characters": "文字数",
+      "image": "画像（必須）",
+      "seed": "シード（オプション）",
+      "seedPlaceholder": "シードを入力（オプション）",
+      "videoLength": "ビデオの長さ",
+      "resolution": "解像度"
+    },
+    "tooltips": {
+      "prompt": "ビデオ用のテキストプロンプト。画像パラメータがある場合はオプションです。",
+      "negativePrompt": "モデルが生成を避けるべき内容を記述するテキスト文字列です。",
+      "image": "ビデオの最初のフレームとして使用する画像。画像がある場合、プロンプトパラメータはオプションです。",
+      "personGeneration": "モデルが人物を含むビデオを生成できるかどうかを制御します。'dont_allow'は人物/顔を防止し、'allow_adult'は大人のみを許可します。",
+      "videoLength": "出力ビデオの長さ（秒）（5～8秒）。",
+      "aspectRatio": "生成されるビデオのアスペクト比を変更します。サポートされる値は「16:9」と「9:16」です。デフォルトは「16:9」です。",
+      "promptRunway": "ビデオ用のテキストプロンプト（最大1000文字）。出力に表示されるべき内容を詳細に記述する必要があります。",
+      "imageRunway": "ビデオの最初のフレームとして使用する画像。",
+      "seed": "オプションのシード値（0〜4294967295）。同じパラメータで同じシードを使用すると、類似した結果が生成されます。",
+      "videoLengthRunway": "出力ビデオの長さ（秒）（5秒または10秒）。",
+      "aspectRatioRunway": "出力ビデオの解像度。gen4_turboで利用可能なオプション: 1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
+    },
+    "options": {
+      "landscape": "16:9（横向き）",
+      "portrait": "9:16（縦向き）",
+      "dontAllowPeople": "人物/顔を許可しない",
+      "allowAdults": "大人のみ許可",
+      "fiveSeconds": "5秒",
+      "tenSeconds": "10秒"
+    }
+  }
+}
