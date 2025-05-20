@@ -1,43 +1,43 @@
-import { useCallback, useState, useEffect } from "react";
-import { useMutation, usePaginatedQuery } from "convex/react";
-import { useConvexAuth } from "convex/react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../../../convex/_generated/api";
-import { Id } from "../../../../convex/_generated/dataModel";
-import { t } from "../../../lib/i18n";
-import AppLoading from "../../AppLoading";
+import { useCallback, useState } from 'react';
+import { useMutation, usePaginatedQuery } from 'convex/react';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../../../convex/_generated/api';
+import { Id } from '../../../convex/_generated/dataModel';
+import AppLoading from '../AppLoading';
+import useAuthGuard from '@/hooks/useAuthGuard';
+import { t } from 'i18next';
 
-type StatusType = "requested" | "planned" | "in-progress" | "completed";
+type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
 type StatusBadgeProps = { status: StatusType };
 
 // Status badge component
 const StatusBadge = ({ status }: StatusBadgeProps) => {
   const getBadgeColor = () => {
     switch (status) {
-      case "requested":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300";
-      case "planned":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300";
-      case "in-progress":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
-      case "completed":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
+      case 'requested':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
+      case 'planned':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300';
+      case 'in-progress':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300';
+      case 'completed':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
     }
   };
 
   // Map status to i18n key
   const getStatusText = () => {
     switch (status) {
-      case "requested":
-        return t("featureRequest.status.requested");
-      case "planned":
-        return t("featureRequest.status.planned");
-      case "in-progress":
-        return t("featureRequest.status.inProgress");
-      case "completed":
-        return t("featureRequest.status.completed");
+      case 'requested':
+        return t('featureRequest.status.requested');
+      case 'planned':
+        return t('featureRequest.status.planned');
+      case 'in-progress':
+        return t('featureRequest.status.inProgress');
+      case 'completed':
+        return t('featureRequest.status.completed');
       default: {
         // Handle the default case with proper type safety
         const unknownStatus = String(status);
@@ -55,47 +55,38 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
   );
 };
 
-export default function FeatureRequest() {
+export default function FeatureRequests() {
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading: isAuthLoading } = useConvexAuth();
-
-  useEffect(() => {
-    if (!isAuthLoading && !isAuthenticated) {
-      void navigate("/sign-in");
-    }
-  }, [isAuthenticated, isAuthLoading, navigate]);
+  // Replace the direct auth check with useAuthGuard
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuthGuard();
 
   const {
     results: featureRequests,
     status,
     loadMore,
-  } = usePaginatedQuery(
-    api.featureRequests.getAll,
-    {},
-    { initialNumItems: 10 }
-  );
+  } = usePaginatedQuery(api.featureRequests.getAll, {}, { initialNumItems: 10 });
   const addFeatureRequest = useMutation(api.featureRequests.add);
   const voteForFeature = useMutation(api.featureRequests.vote);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
 
   // Format date from timestamp
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
   };
 
   const onSubmitFeatureRequest = useCallback(async () => {
     // Double-check authentication before proceeding
     if (!isAuthenticated) {
-      void navigate("/sign-in");
+      void navigate('/sign-in');
       return;
     }
 
@@ -104,14 +95,14 @@ export default function FeatureRequest() {
 
     try {
       if (title.trim().length < 3) {
-        throw new Error(t("featureRequest.validation.titleTooShort"));
+        throw new Error(t('featureRequest.validation.titleTooShort'));
       }
 
       if (description.trim().length < 10) {
-        throw new Error(t("featureRequest.validation.descriptionTooShort"));
+        throw new Error(t('featureRequest.validation.descriptionTooShort'));
       }
 
-      console.log("Submitting feature request:", { title, description });
+      console.log('Submitting feature request:', { title, description });
 
       try {
         const result = await addFeatureRequest({
@@ -119,33 +110,26 @@ export default function FeatureRequest() {
           description: description.trim(),
         });
 
-        console.log("Feature request submitted successfully:", result);
+        console.log('Feature request submitted successfully:', result);
 
         // Reset form
-        setTitle("");
-        setDescription("");
+        setTitle('');
+        setDescription('');
         setShowForm(false);
 
         // Show success toast or message
-        window.alert(t("featureRequest.successMessage"));
+        window.alert(t('featureRequest.successMessage'));
       } catch (mutationError) {
-        console.error("Mutation error:", mutationError);
+        console.error('Mutation error:', mutationError);
         throw new Error(
-          t("featureRequest.validation.serverError", {
-            message:
-              mutationError instanceof Error
-                ? mutationError.message
-                : "Unknown error",
-          })
+          t('featureRequest.validation.serverError', {
+            message: mutationError instanceof Error ? mutationError.message : 'Unknown error',
+          }),
         );
       }
     } catch (err) {
-      console.error("Error submitting feature request:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : t("featureRequest.validation.failedToSubmit")
-      );
+      console.error('Error submitting feature request:', err);
+      setError(err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit'));
     } finally {
       setIsSubmitting(false);
     }
@@ -156,26 +140,26 @@ export default function FeatureRequest() {
       e.preventDefault();
       void onSubmitFeatureRequest();
     },
-    [onSubmitFeatureRequest]
+    [onSubmitFeatureRequest],
   );
 
-  const handleVote = async (id: Id<"featureRequests">) => {
+  const handleVote = async (id: Id<'featureRequests'>) => {
     // Check if user is authenticated before voting
     if (!isAuthenticated) {
-      void navigate("/sign-in");
+      void navigate('/sign-in');
       return;
     }
 
     try {
       await voteForFeature({ id });
     } catch (err) {
-      console.error("Failed to vote:", err);
+      console.error('Failed to vote:', err);
     }
   };
 
   const handleRequestFeature = () => {
     if (!isAuthenticated) {
-      void navigate("/sign-in");
+      void navigate('/sign-in');
       return;
     }
     setShowForm(!showForm);
@@ -195,55 +179,41 @@ export default function FeatureRequest() {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-              {t("featureRequest.title")}
+              {t('featureRequest.title')}
             </h2>
-            <p className="text-muted-foreground mt-2">
-              {t("featureRequest.description")}
-            </p>
+            <p className="text-muted-foreground mt-2">{t('featureRequest.description')}</p>
           </div>
 
           <button
             onClick={handleRequestFeature}
             className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground dark:text-primary-foreground rounded-lg font-medium hover:from-primary/90 hover:to-primary/80 dark:hover:text-primary-foreground transition-all shadow-md shadow-primary/20"
           >
-            {showForm
-              ? t("featureRequest.cancelButton")
-              : t("featureRequest.requestButton")}
+            {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
           </button>
         </div>
 
         {showForm && (
           <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-xl p-6 shadow-lg mb-8">
-            <h3 className="text-xl font-semibold mb-4">
-              {t("featureRequest.formTitle")}
-            </h3>
+            <h3 className="text-xl font-semibold mb-4">{t('featureRequest.formTitle')}</h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium mb-1"
-                >
-                  {t("featureRequest.titleLabel")}{" "}
-                  <span className="text-red-500">*</span>
+                <label htmlFor="title" className="block text-sm font-medium mb-1">
+                  {t('featureRequest.titleLabel')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full px-4 py-3 border border-border/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background/50 backdrop-blur-sm"
-                  placeholder={t("featureRequest.titlePlaceholder")}
+                  placeholder={t('featureRequest.titlePlaceholder')}
                   required
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium mb-1"
-                >
-                  {t("featureRequest.descriptionLabel")}{" "}
-                  <span className="text-red-500">*</span>
+                <label htmlFor="description" className="block text-sm font-medium mb-1">
+                  {t('featureRequest.descriptionLabel')} <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="description"
@@ -251,7 +221,7 @@ export default function FeatureRequest() {
                   onChange={(e) => setDescription(e.target.value)}
                   rows={4}
                   className="w-full px-4 py-3 border border-border/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background/50 backdrop-blur-sm"
-                  placeholder={t("featureRequest.descriptionPlaceholder")}
+                  placeholder={t('featureRequest.descriptionPlaceholder')}
                   required
                 />
               </div>
@@ -265,14 +235,12 @@ export default function FeatureRequest() {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  disabled={
-                    isSubmitting || !title.trim() || !description.trim()
-                  }
+                  disabled={isSubmitting || !title.trim() || !description.trim()}
                   className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:from-primary/90 hover:to-primary/80 transition-all shadow-md shadow-primary/20"
                 >
                   {isSubmitting
-                    ? t("featureRequest.submittingButton")
-                    : t("featureRequest.submitButton")}
+                    ? t('featureRequest.submittingButton')
+                    : t('featureRequest.submitButton')}
                 </button>
               </div>
             </form>
@@ -281,22 +249,18 @@ export default function FeatureRequest() {
 
         {/* Feature request list */}
         <div className="space-y-4">
-          {status === "LoadingFirstPage" ? (
+          {status === 'LoadingFirstPage' ? (
             <div className="text-center p-12 bg-background/80 backdrop-blur-md border border-border/50 rounded-xl">
               <div className="flex flex-col items-center justify-center">
                 <div className="relative w-12 h-12 mb-4">
                   <div className="absolute top-0 left-0 w-full h-full rounded-full border-2 border-primary/30 border-t-primary animate-spin"></div>
                 </div>
-                <p className="text-muted-foreground">
-                  {t("featureRequest.loading")}
-                </p>
+                <p className="text-muted-foreground">{t('featureRequest.loading')}</p>
               </div>
             </div>
           ) : !featureRequests || featureRequests.length === 0 ? (
             <div className="text-center p-12 bg-background/80 backdrop-blur-md border border-border/50 rounded-xl">
-              <p className="text-muted-foreground">
-                {t("featureRequest.noRequests")}
-              </p>
+              <p className="text-muted-foreground">{t('featureRequest.noRequests')}</p>
             </div>
           ) : (
             <>
@@ -328,20 +292,16 @@ export default function FeatureRequest() {
                           />
                         </svg>
                       </button>
-                      <span className="font-bold text-lg mt-1">
-                        {request.votes}
-                      </span>
+                      <span className="font-bold text-lg mt-1">{request.votes}</span>
                       <span className="text-xs text-muted-foreground">
-                        {t("featureRequest.votes")}
+                        {t('featureRequest.votes')}
                       </span>
                     </div>
 
                     {/* Feature content */}
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-lg font-semibold">
-                          {request.title}
-                        </h3>
+                        <h3 className="text-lg font-semibold">{request.title}</h3>
                         <StatusBadge status={request.status as StatusType} />
                       </div>
 
@@ -350,8 +310,7 @@ export default function FeatureRequest() {
                       </p>
 
                       <div className="text-xs text-muted-foreground">
-                        {t("featureRequest.requestedOn")}{" "}
-                        {formatDate(request._creationTime)}
+                        {t('featureRequest.requestedOn')} {formatDate(request._creationTime)}
                       </div>
                     </div>
                   </div>
@@ -359,21 +318,21 @@ export default function FeatureRequest() {
               ))}
 
               {/* Load more button */}
-              {status === "CanLoadMore" && (
+              {status === 'CanLoadMore' && (
                 <div className="flex justify-center mt-6">
                   <button
                     onClick={() => loadMore(5)}
                     className="px-4 py-2 bg-background border border-border/50 rounded-lg text-muted-foreground hover:bg-primary/5 transition-colors"
                   >
-                    {t("featureRequest.loadMore")}
+                    {t('featureRequest.loadMore')}
                   </button>
                 </div>
               )}
 
-              {status === "LoadingMore" && (
+              {status === 'LoadingMore' && (
                 <div className="flex justify-center mt-6">
                   <div className="px-4 py-2 text-muted-foreground">
-                    {t("featureRequest.loadingMore")}
+                    {t('featureRequest.loadingMore')}
                   </div>
                 </div>
               )}

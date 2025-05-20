@@ -6,60 +6,60 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    
+
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
-    
+
     --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 100%;
-    
+
     --muted: 0 0% 95%;
     --muted-foreground: 0 0% 20%;
-    
+
     --accent: 0 0% 50%;
     --accent-foreground: 0 0% 100%;
-    
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    
+
     --border: 0 0% 80%;
     --input: 0 0% 80%;
     --ring: 0 0% 80%;
-    
+
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
-    
+
     --card: 0 0% 0%;
     --card-foreground: 210 40% 98%;
-    
+
     --popover: 0 0% 0%;
     --popover-foreground: 210 40% 98%;
-    
+
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
-    
+
     --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 100%;
-    
+
     --muted: 0 0% 20%;
     --muted-foreground: 0 0% 95%;
-    
+
     --accent: 0 0% 50%;
     --accent-foreground: 0 0% 100%;
-    
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    
+
     --border: 0 0% 80%;
     --input: 0 0% 80%;
     --ring: 0 0% 80%;
@@ -92,16 +92,68 @@ body {
 
 /* Elegant scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
   @apply bg-muted/30;
 }
 
+/* Hamburger menu animation */
+.hamburger-line {
+  @apply transition-all duration-300 ease-in-out transform;
+}
+
+.hamburger-top {
+  @apply translate-y-[-6px];
+}
+
+.hamburger-bottom {
+  @apply translate-y-[6px];
+}
+
+.hamburger-top.active {
+  @apply rotate-45 translate-y-0 origin-center;
+}
+
+.hamburger-middle.active {
+  @apply opacity-0;
+}
+
+.hamburger-bottom.active {
+  @apply -rotate-45 translate-y-0 origin-center;
+}
+
 ::-webkit-scrollbar-thumb {
   @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/40;
+}
+
+/* Even thinner scrollbar for specific elements */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/50 transition-colors;
+  /* Ensure the scrollbar doesn't go all the way to the edges */
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Hide scrollbar for cleaner UI but keep functionality */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 .logo-container {

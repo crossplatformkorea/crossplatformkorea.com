@@ -3,7 +3,6 @@ import { cn } from "../../../lib/utils";
 import SignOut from "./SignOut";
 import SigningIn from "./SigningIn";
 import { t } from "../../../lib/i18n";
-import { Header } from "../../Header";
 
 export default function SignIn() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -50,10 +49,7 @@ export default function SignIn() {
       {/* Movie ticket decoration - bottom left */}
       <div className="absolute bottom-10 left-10 w-40 h-20 opacity-20 pointer-events-none">
         {/* Placeholder for movie ticket image */}
-        <div className="w-full h-full rounded-lg border-2 border-primary/50 rotate-12 bg-primary/5"></div>
-      </div>
-
-      <Header />
+        <div className="w-full h-full rounded-lg border-2 border-primary/50 rotate-12 bg-primary/5"></div>      </div>
 
       <div
         className={cn(

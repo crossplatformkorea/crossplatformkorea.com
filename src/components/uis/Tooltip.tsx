@@ -23,9 +23,9 @@ export function Tooltip({ content, isOpen, onToggle, className }: TooltipProps) 
       >
         <Info size={14} />
       </button>
-      
+
       {isOpen && (
-        <div 
+        <div
           className={cn(
             "absolute z-10 p-3 rounded-md text-sm left-0 -top-12 shadow-lg border border-border animate-in fade-in",
             "bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100",

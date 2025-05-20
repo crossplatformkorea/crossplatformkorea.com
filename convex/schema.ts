@@ -9,14 +9,17 @@ export default defineSchema({
     userId: v.id("users"),
   }).index("by_userId", ["userId"]),
   posts: defineTable({
+    category: v.string(), // Instead of categoryId reference, use category key as string
     title: v.string(),
     content: v.string(),
-    userId: v.id("users"),
-    createdAt: v.number(),
-    deletedAt: v.optional(v.number()),
+    tags: v.array(v.string()),
+    updatedAt: v.string(),
+    startDate: v.optional(v.string()),
+    endDate: v.optional(v.string()),
+    authorId: v.optional(v.id("users")), // Add author reference
   })
-    .index("by_userId", ["userId"])
-    .index("by_createdAt", ["createdAt"]),
+    .index("by_category", ["category"])
+    .index("by_title", ["title"]), // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
   userProfiles: defineTable({
     userId: v.id("users"),
     email: v.string(),
@@ -42,4 +45,7 @@ export default defineSchema({
     status: serviceStatusUnion,
     updatedAt: v.number(),
   }).index("by_updatedAt", ["updatedAt"]),
+  tags: defineTable({
+    name: v.string(),
+  }).index("by_name", ["name"]),
 });

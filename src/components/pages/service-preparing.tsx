@@ -1,7 +1,7 @@
-import { t } from "../../../lib/i18n";
+import { t } from 'i18next';
 
 // Define the service status type directly matching the Convex schema
-type ServiceStatusType = "preparing" | "online" | "underConstruction";
+type ServiceStatusType = 'preparing' | 'online' | 'underConstruction';
 
 export interface ServicePreparingProps {
   status: ServiceStatusType;
@@ -11,28 +11,28 @@ export default function ServicePreparing({ status }: ServicePreparingProps) {
   // Determine which status strings to use based on the provided status
   const getStatusTitle = () => {
     switch (status) {
-      case "preparing":
-        return t("serviceStatus.preparing.title");
-      case "underConstruction":
-        return t("serviceStatus.underConstruction.title");
+      case 'preparing':
+        return t('serviceStatus.preparing.title');
+      case 'underConstruction':
+        return t('serviceStatus.underConstruction.title');
       default:
-        return "";
+        return '';
     }
   };
 
   const getDefaultMessage = () => {
     switch (status) {
-      case "preparing":
-        return t("serviceStatus.preparing.message");
-      case "underConstruction":
-        return t("serviceStatus.underConstruction.message");
+      case 'preparing':
+        return t('serviceStatus.preparing.message');
+      case 'underConstruction':
+        return t('serviceStatus.underConstruction.message');
       default:
-        return "";
+        return '';
     }
   };
 
   // If status is online, don't show anything
-  if (status === "online") {
+  if (status === 'online') {
     return null;
   }
 

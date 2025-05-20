@@ -1,70 +1,74 @@
 {
   "common": {
-    "navPost": "Posts",
     "loading": "Loading...",
     "appName": "Cross-Platform Korea",
     "navVideo": "Video",
-    "navFeatureRequest": "Feature Requests",
+    "navCommunity": "Community",
+    "navBlog": "Blog",
+    "all": "All",
     "signIn": "Sign In",
     "remove": "Remove",
     "delete": "Delete",
     "cancel": "Cancel",
-    "authRequired": "Sign in to access all features",
+    "authRequired": "Please sign in to use all features",
     "close": "Close"
   },
   "signIn": {
-    "verifyEmailTitle": "Verify Your Email",
-    "verifyEmailMessage": "Please check your email for the verification code.",
-    "alreadySignedInTitle": "You are already signed in",
+    "verifyEmailTitle": "Verify Email",
+    "verifyEmailMessage": "Please check your email for a verification code.",
+    "alreadySignedInTitle": "You're already signed in",
     "alreadySignedInMessage": "You can sign out or continue using the app.",
     "title": "Sign In",
-    "signInMessage": "Enter your email to receive a verification code. We'll send an OTP code to your email for secure sign-in.",
+    "signInMessage": "Enter your email and we'll send you a verification code. We'll send you an OTP code via email for secure login.",
     "emailLabel": "Email Address",
     "emailPlaceholder": "Enter your email",
-    "sendingCode": "Sending Code...",
-    "signInWithEmail": "Sign In with Email",
+    "sendingCode": "Sending code...",
+    "signInWithEmail": "Sign in with Email",
     "verificationCodeLabel": "Verification Code",
-    "verificationCodePlaceholder": "Enter the 8-digit code",
+    "verificationCodePlaceholder": "Enter 8-digit code",
     "verifying": "Verifying...",
     "verifyCode": "Verify Code",
     "back": "Back",
-    "signOutPrompt": "Do you want to sign out?",
-    "signingOut": "Signing Out...",
+    "signOutPrompt": "Are you sure you want to sign out?",
+    "signingOut": "Signing out...",
     "signOut": "Sign Out",
     "returnToHome": "Return to Home",
-    "missingKeyExample": "Example missing key"
-  },
-  "video": {
-    "createMasterpiece": "Create Your Masterpiece",
-    "selectModelText": "Select your preferred model and craft your vision",
-    "remainingVideos": "Remaining Videos",
-    "signInPrompt": "Sign in to generate videos",
-    "generating": "Generating...",
-    "generateVideo": "Generate Video",
-    "generationSuccess": "Video generated successfully!",
-    "limitReached": "Video Generation Limit Reached",
-    "loadingVideos": "Loading community videos...",
-    "noVideos": "No videos yet. Start generating!",
-    "noPublicVideos": "No public videos available. Sign in to see more content.",
-    "noSearchResults": "No videos match your search. Try a different query.",
-    "searchPlaceholder": "Search videos by prompt...",
-    "search": "Search",
-    "clearSearch": "Clear search",
-    "createdAt": "Created at",
-    "delete": "Delete video",
-    "deleteSuccess": "Video deleted successfully",
-    "deleteError": "Failed to delete video",
-    "confirmDeleteTitle": "Delete Video",
-    "confirmDeleteDescription": "Are you sure you want to delete this video? This action cannot be undone from your view.",
-    "dragToResize": "Drag to resize panel"
+    "missingKeyExample": "Missing Key Example"
   },
   "posts": {
     "title": "Posts",
-    "post1": "First Post",
-    "post2": "Second Post",
-    "cardTitle": "Post Detail",
-    "id": "ID",
-    "content": "Here is where the post content appears."
+    "id": "Post ID",
+    "content": "Post content",
+    "post1": "First post",
+    "post2": "Second post",
+    "backToList": "Back to Posts",
+    "sampleTitle": "Sample Post Title",
+    "loading": "Loading posts...",
+    "empty": "No posts found in this category",
+    "eventPeriod": "Event period: {{start}} - {{end}}",
+    "categories": "Categories",
+    "selectCategory": "Please select a category",
+    "invalidCategory": "Invalid category",
+    "allPosts": "All Posts",
+    "allPostsDescription": "Browse all posts from our community",
+    "createPost": "Create Post",
+    "noPosts": "No posts found",
+    "loadMore": "Load more posts"
+  },
+  "postCategories": {
+    "ALL": { "name": "All", "description": "All posts" },
+    "NEWS": { "name": "News", "description": "Latest news and releases" },
+    "QA": { "name": "Q&A", "description": "Ask and answer questions" },
+    "READING": { "name": "Reading", "description": "Articles, retrospectives, and insights" },
+    "INFO_SHARE": { "name": "Info Share", "description": "Tips, links, and useful tools" },
+    "FREE_BOARD": { "name": "Free Board", "description": "Casual discussions and community chat" }
+  },
+  "pages": {
+    "posts": "Posts",
+    "showcase": "Showcase",
+    "jobs": "Jobs",
+    "events": "Events",
+    "featureRequests": "Feature Requests"
   },
   "featureRequest": {
     "title": "Feature Requests",
@@ -99,60 +103,6 @@
       "descriptionTooShort": "Description must be at least 10 characters long",
       "serverError": "Server error: {{message}}",
       "failedToSubmit": "Failed to submit feature request"
-    }
-  },
-  "serviceStatus": {
-    "preparing": {
-      "title": "Service Preparation in Progress",
-      "message": "We're currently preparing this feature for launch! We'll notify you by email when it's ready."
-    },
-    "underConstruction": {
-      "title": "Service Under Construction",
-      "message": "This feature is currently under maintenance. We apologize for the inconvenience and are working to restore it as soon as possible."
-    }
-  },
-  "promptMenu": {
-    "veo2": {
-      "prompt": "Prompt",
-      "promptPlaceholder": "Describe the video you want to create",
-      "negativePrompt": "Negative Prompt",
-      "negativePromptPlaceholder": "Describe what you don't want in the video",
-      "image": "Image (Optional)",
-      "personGeneration": "Person Generation",
-      "aspectRatio": "Aspect Ratio",
-      "videoLength": "Video Length",
-      "seconds": "seconds"
-    },
-    "runwayGen4Turbo": {
-      "prompt": "Prompt",
-      "promptPlaceholder": "Describe the video you want to create",
-      "characters": "characters",
-      "image": "Image (Required)",
-      "seed": "Seed (Optional)",
-      "seedPlaceholder": "Enter seed (optional)",
-      "videoLength": "Video Length",
-      "resolution": "Resolution"
-    },
-    "tooltips": {
-      "prompt": "Text prompt for the video. Image parameter is optional when present.",
-      "negativePrompt": "Text string describing what you want to discourage the model from generating.",
-      "image": "Image to use as the first frame of the video. Prompt parameter is optional when present.",
-      "personGeneration": "Control whether the model can generate videos of people. 'dont_allow' prevents people/faces, 'allow_adult' allows adults but not children.",
-      "videoLength": "Length of output video in seconds (5-8 seconds).",
-      "aspectRatio": "Change the aspect ratio of generated video. Supported values are '16:9' and '9:16'. Default is '16:9'.",
-      "promptRunway": "Text prompt for the video (up to 1000 characters). Should describe in detail what should appear in the output.",
-      "imageRunway": "Image to use as the first frame of the video.",
-      "seed": "Optional seed value (0 to 4294967295). Same seed with identical parameters will produce similar results.",
-      "videoLengthRunway": "Length of output video in seconds (5 or 10 seconds).",
-      "aspectRatioRunway": "Resolution of the output video. Available options for gen4_turbo: 1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
-    },
-    "options": {
-      "landscape": "16:9 (Landscape)",
-      "portrait": "9:16 (Portrait)",
-      "dontAllowPeople": "Don't allow people/faces",
-      "allowAdults": "Allow adults only",
-      "fiveSeconds": "5 seconds",
-      "tenSeconds": "10 seconds"
     }
   }
 }

@@ -1,20 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
-import FeatureRequest from "./FeatureRequest";
+import FeatureRequests from "../feature-requests";
 import Posts from "./Posts";
-import PostCard from "./Posts/PostCard";
-import { Header } from "../../Header";
+import PostDetails from "./post-details";
 
 export default function Main() {
   return (
     <div className="h-screen flex flex-col overflow-hidden relative">
-      <Header />
-
       <Routes>
         <Route path="/" element={<Posts />} />
         <Route path="/posts" element={<Posts />} />
-        <Route path="/post/:postId" element={<PostCard />} />
-        <Route path="/feature-request" element={<FeatureRequest />} />
+        <Route path="/post/:postId" element={<PostDetails />} />
+        <Route path="/feature-request" element={<FeatureRequests />} />
       </Routes>
 
       <Toaster theme="system" />
