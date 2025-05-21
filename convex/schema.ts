@@ -61,9 +61,9 @@ export default defineSchema({
     storageId: v.id("_storage"),
     fileName: v.string(),
     contentType: v.string(),
-    ownerId: v.id("users"),
-    uploadedAt: v.number(),
+    userId: v.id("users"),
+    url: v.optional(v.string()), // Add URL field to store the direct access URL
   })
-    .index("by_owner", ["ownerId"])
+    .index("by_user", ["userId"])
     .index("by_storage_id", ["storageId"]),
 });
