@@ -68,6 +68,8 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
   // Mutations
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const saveFileMetadata = useMutation(api.files.saveFileMetadata);
+  const createPostMutation = useMutation(api.posts.mutation.createPost);
+
   // Add file deletion action
   const deleteFile = useAction(api.files.deleteFileByStorageId);
 
@@ -152,19 +154,21 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
 
   // Modified close handler to reset form data and support exit animation
   const handleClose = useCallback(() => {
-    // First clean up any uploaded files
-    void cleanupUploadedFiles();
+    // 게시 중이면 파일 정리 생략
+    if (!isSubmitting) {
+      void cleanupUploadedFiles();
+    }
 
-    // Then reset all form fields
+    // 폼 데이터 초기화
     resetFormData();
 
     setIsClosing(true);
-    // Wait for animation to complete before calling the actual onClose
+    // 애니메이션 완료 후 실제 onClose 호출
     setTimeout(() => {
       setIsClosing(false);
       onClose();
-    }, 300); // Match transition duration
-  }, [onClose, resetFormData, cleanupUploadedFiles]);
+    }, 300); // 전환 지속 시간과 일치
+  }, [onClose, resetFormData, cleanupUploadedFiles, isSubmitting]);
 
   // Close modal when Escape key is pressed
   useEffect(() => {
@@ -309,52 +313,7 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     return () => document.removeEventListener('keydown', handleEscapeKey);
   }, [isOpen, handleClose]); // Add handleClose to dependency array
 
-  // Add a helper function to extract image URLs from content
-  const extractUsedImageIds = useCallback((contentText: string): Id<'_storage'>[] => {
-    const usedIds: Id<'_storage'>[] = [];
-    const urlRegex = /<img[^>]+src="([^"]+)"[^>]*>/g;
-    const matches = [...contentText.matchAll(urlRegex)];
-
-    for (const match of matches) {
-      const url = match[1];
-      // Extract ID from URL pattern - typical Convex URL format
-      const storageIdMatch = url.match(/\/storage\/([^/?]+)/);
-      if (storageIdMatch && storageIdMatch[1]) {
-        usedIds.push(storageIdMatch[1] as Id<'_storage'>);
-      }
-    }
-
-    console.log('Used image IDs:', usedIds);
-
-    return usedIds;
-  }, []);
-
-  // Add cleanup function for unused images
-  const cleanupUnusedImages = useCallback(
-    async (contentText: string) => {
-      // Get IDs of images actually used in the content
-      const usedImageIds = extractUsedImageIds(contentText);
-
-      // Find uploaded images not used in content
-      const unusedImageIds = uploadedStorageIds.filter((id) => !usedImageIds.includes(id));
-
-      if (unusedImageIds.length > 0) {
-        console.log(`Cleaning up ${unusedImageIds.length} unused images before submission...`);
-
-        // Delete unused images
-        const deletePromises = unusedImageIds.map((id) => deleteFile({ storageId: id }));
-        await Promise.all(deletePromises);
-
-        // Update tracking array to only include used images
-        setUploadedStorageIds(usedImageIds);
-
-        console.log(`Successfully cleaned up unused images. ${usedImageIds.length} images kept.`);
-      }
-    },
-    [extractUsedImageIds, uploadedStorageIds, deleteFile],
-  );
-
-  // Modified handleSubmit to clean up unused images before submission
+  // 수정된 handleSubmit 함수 - postId와 연결하고 사용하지 않는 이미지는 삭제하도록 수정
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -377,25 +336,20 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     setError(null);
 
     try {
-      // First clean up any unused images
-      await cleanupUnusedImages(content);
+      // 모든 업로드된 이미지 ID를 보내서 서버에서 처리하도록 함
+      await createPostMutation({
+        title,
+        content,
+        category,
+        tags,
+        storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
+      });
 
-      // Add dark mode compatible input styling throughout the component
-      //   await createPost({
-      //     title,
-      //     content,
-      //     category,
-      //     tags,
-      //   });
-
-      // Any remaining images in uploadedStorageIds are now properly associated with the post
-      // so we don't need to delete them - just clear the tracking array
+      // 게시 성공 시 파일 추적 배열 초기화
       setUploadedStorageIds([]);
 
-      // Reset form and close modal on success
-      setTitle('');
-      setContent('');
-      setTags([]);
+      // 폼 초기화 및 모달 닫기
+      resetFormData();
       onClose();
     } catch (error) {
       console.error('Error creating post:', error);
