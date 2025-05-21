@@ -166,10 +166,7 @@ export default function FeatureRequests() {
   };
 
   // Show loading before redirect for smooth transition
-  if (isAuthLoading) {
-    return <AppLoading />;
-  }
-  if (!isAuthenticated) {
+  if (isAuthLoading || !isAuthenticated) {
     return <AppLoading />;
   }
 

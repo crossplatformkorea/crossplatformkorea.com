@@ -1,18 +1,18 @@
 import React, { memo, useEffect, useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from 'convex/react';
-import { formatDate } from '../../../../lib/utils';
-import { t } from '../../../../lib/i18n';
+import { formatDate } from '../../../../../lib/utils';
+import { t } from '../../../../../lib/i18n';
 import { PenLine } from 'lucide-react';
 import { useConvexAuth } from 'convex/react';
 
 import AppLoading from '@/components/AppLoading';
 import { useTranslation } from 'react-i18next';
-import { Id } from '../../../../../convex/_generated/dataModel';
+import { Id } from '../../../../../../convex/_generated/dataModel';
 import CategoriesBreadCrumbs from './CategoriesBreadCrumbs';
-import { api } from '../../../../../convex/_generated/api';
-import PostWrite from './PostWrite';
-import { cn } from '../../../../lib/utils';
+import { api } from '../../../../../../convex/_generated/api';
+import PostWrite from '../PostWrite';
+import { cn } from '../../../../../lib/utils';
 
 // Define the Post type
 type Post = {
@@ -36,7 +36,7 @@ const Posts = memo(function Posts() {
   const [hasMore, setHasMore] = useState(true);
   const [cursor, setCursor] = useState<string | null>(null);
   const { isAuthenticated } = useConvexAuth();
-  
+
   // State for the PostWrite modal
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
 
@@ -53,7 +53,7 @@ const Posts = memo(function Posts() {
   // Get the current category if a slug is provided
   const category = useMemo(() => {
     if (!categorySlug || !categoriesData) return null;
-    return categoriesData.find(cat => cat.slug === categorySlug);
+    return categoriesData.find((cat) => cat.slug === categorySlug);
   }, [categorySlug, categoriesData]);
 
   // Set up pagination options
@@ -155,9 +155,9 @@ const Posts = memo(function Posts() {
     <button
       onClick={() => setIsWriteModalOpen(true)}
       className={cn(
-        "flex items-center gap-2 px-4 py-2 rounded-md transition-colors",
-        "bg-primary text-primary-foreground hover:bg-primary/90",
-        !isAuthenticated && "opacity-70 cursor-not-allowed"
+        'flex items-center gap-2 px-4 py-2 rounded-md transition-colors',
+        'bg-primary text-primary-foreground hover:bg-primary/90',
+        !isAuthenticated && 'opacity-70 cursor-not-allowed',
       )}
       disabled={!isAuthenticated}
       title={!isAuthenticated ? translate('posts.loginToWrite') : undefined}
@@ -172,19 +172,19 @@ const Posts = memo(function Posts() {
     return (
       <div className="p-6">
         {/* Write modal */}
-        <PostWrite 
-          isOpen={isWriteModalOpen} 
-          onClose={() => setIsWriteModalOpen(false)} 
+        <PostWrite
+          isOpen={isWriteModalOpen}
+          onClose={() => setIsWriteModalOpen(false)}
           defaultCategory={category.key}
         />
-        
+
         {/* Header with breadcrumbs and write button */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div className="flex-1">
             {/* 브레드크럼 네비게이션 */}
             <CategoriesBreadCrumbs />
           </div>
-          
+
           {/* Write button */}
           {renderWriteButton()}
         </div>
@@ -221,18 +221,15 @@ const Posts = memo(function Posts() {
   return (
     <div className="p-6">
       {/* Write modal */}
-      <PostWrite 
-        isOpen={isWriteModalOpen} 
-        onClose={() => setIsWriteModalOpen(false)} 
-      />
-      
+      <PostWrite isOpen={isWriteModalOpen} onClose={() => setIsWriteModalOpen(false)} />
+
       {/* Header with breadcrumbs and write button */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div className="flex-1">
           {/* 브레드크럼 네비게이션 */}
           <CategoriesBreadCrumbs />
         </div>
-        
+
         {/* Write button */}
         {renderWriteButton()}
       </div>

@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import FeatureRequests from '../feature-requests';
-import Posts from './posts';
-import PostDetails from './post-details';
+import Posts from './Post/posts';
+import PostDetails from './Post/post-details';
 import ProfilePage from '../profile';
 
 export default function Main() {
