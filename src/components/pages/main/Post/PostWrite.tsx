@@ -275,11 +275,14 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
       <div
         ref={modalRef}
         className={cn(
-          'bg-background overflow-hidden flex flex-col w-full',
+          'bg-background overflow-hidden flex flex-col',
           'transform transition-all duration-300 ease-out',
           'shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)]',
           'dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)] dark:border dark:border-gray-700/80',
-          isFullscreen ? 'h-full rounded-none' : 'max-h-[85vh] rounded-t-xl',
+          // Increase width by changing max-w-5xl to max-w-7xl (1280px)
+          isFullscreen 
+            ? 'w-full h-full rounded-none' 
+            : 'w-[98%] max-w-7xl mx-auto max-h-[85vh] rounded-t-xl',
           // Animation states - improved transition
           hasAppeared ? 'translate-y-0' : 'translate-y-full',
           isClosing && 'translate-y-full',
