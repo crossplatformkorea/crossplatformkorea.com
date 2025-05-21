@@ -38,6 +38,24 @@ export const CATEGORIES: CategoryType[] = [
   },
 ];
 
+/**
+ * Error codes used throughout the application.
+ * These keys map directly to translation strings in the client locale files.
+ * Each key corresponds to entries in src/locales/{language}.json under the "errors" section.
+ *
+ * Example usage:
+ * 1. Return from Convex: { success: false, errorCode: ErrorCode.DISPLAY_NAME_TAKEN }
+ * 2. In React: setSaveError(t(result.errorCode))
+ */
+export enum ErrorCode {
+  // User profile errors
+  DISPLAY_NAME_REQUIRED = "errors.profile.displayNameRequired",
+  DISPLAY_NAME_TAKEN = "errors.profile.displayNameTaken",
+  PROFILE_NOT_FOUND = "errors.profile.notFound",
+  AUTH_REQUIRED = "errors.auth.required",
+  GENERAL_ERROR = "errors.general",
+}
+
 export function getCategoryBySlug(slug: string): CategoryType | undefined {
   return CATEGORIES.find(cat => cat.slug === slug);
 }

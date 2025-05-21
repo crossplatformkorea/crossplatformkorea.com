@@ -33,5 +33,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CROSSPLATFORMKOREA }}
-          projectId: crossplatformkorea
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CROSS_PLATFORM_KOREA_73395 }}
+          projectId: cross-platform-korea-73395

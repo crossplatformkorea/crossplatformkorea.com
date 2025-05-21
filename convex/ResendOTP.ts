@@ -42,7 +42,7 @@ const emailTemplates: Record<
 const fromEmail =
   process.env.ENVIRONMENT !== "production"
     ? "onboarding@resend.dev"
-    : "auth@crossplatformkorea.com";
+    : "crossplatformkorea@hyo.dev";
 
 export const ResendOtpEn = Email({
   id: "resend-otp-en",

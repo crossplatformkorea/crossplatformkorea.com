@@ -18,6 +18,7 @@ import type * as auth from "../auth.js";
 import type * as categories from "../categories.js";
 import type * as constants from "../constants.js";
 import type * as featureRequests from "../featureRequests.js";
+import type * as files from "../files.js";
 import type * as http from "../http.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
@@ -40,6 +41,7 @@ declare const fullApi: ApiFromModules<{
   categories: typeof categories;
   constants: typeof constants;
   featureRequests: typeof featureRequests;
+  files: typeof files;
   http: typeof http;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;

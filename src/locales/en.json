@@ -1,51 +1,118 @@
 {
   "common": {
-    "loading": "Loading...",
-    "appName": "Cross-Platform Korea",
-    "navVideo": "Video",
-    "navCommunity": "Community",
-    "navBlog": "Blog",
-    "all": "All",
+    "buttons": {
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "loading": "...",
+    "allPosts": "All Posts",
+    "allPostsDescription": "Browse all posts from our community",
+    "createPost": "Create Post",
+    "noPosts": "No posts found",
+    "loadMore": "Load more posts",
+    "appName": "Cross Platform Korea",
+    "navVideo": "Videos",
+    "sideFeatureRequests": "Feature Requests",
     "signIn": "Sign In",
     "remove": "Remove",
     "delete": "Delete",
-    "cancel": "Cancel",
-    "authRequired": "Please sign in to use all features",
-    "close": "Close"
+    "authRequired": "Please sign in to access all features",
+    "close": "Close",
+    "sidePosts": "Posts",
+    "navCommunity": "Community",
+    "navBlog": "Blog",
+    "all": "All"
+  },
+  "errors": {
+    "general": "An error occurred. Please try again.",
+    "profile": {
+      "displayNameRequired": "Display name is required",
+      "displayNameTaken": "This display name is already taken. Please choose another one.",
+      "notFound": "Profile not found"
+    },
+    "auth": {
+      "required": "Authentication required"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "buttons": {
+      "signOut": "Sign out"
+    },
+    "sections": {
+      "details": "Profile Details"
+    },
+    "fields": {
+      "displayName": {
+        "label": "Display Name"
+      },
+      "realName": {
+        "label": "Real Name"
+      },
+      "organization": {
+        "label": "Organization",
+        "placeholder": "Company / School / Organization"
+      },
+      "socialLinks": {
+        "label": "Social Media Links",
+        "placeholder": "Social Media URL {{num}}",
+        "addMore": "Add social media link ({{count}}/{{max}})"
+      },
+      "tags": {
+        "label": "Your Tags",
+        "placeholder": "Flutter, Frontend (Press Enter or comma to add)",
+        "help": "Press Enter or comma to add tags"
+      },
+      "lookingFor": {
+        "label": "Looking to Connect With",
+        "placeholder": "What kind of people would you like to connect with?"
+      },
+      "description": {
+        "label": "About Me",
+        "placeholder": "Write a brief introduction about yourself"
+      },
+      "expectations": {
+        "label": "Expectations",
+        "placeholder": "What do you expect from this community?"
+      }
+    },
+    "messages": {
+      "saveSuccess": "Profile saved successfully!"
+    }
   },
   "signIn": {
     "verifyEmailTitle": "Verify Email",
     "verifyEmailMessage": "Please check your email for a verification code.",
-    "alreadySignedInTitle": "You're already signed in",
+    "alreadySignedInTitle": "Already Signed In",
     "alreadySignedInMessage": "You can sign out or continue using the app.",
     "title": "Sign In",
-    "signInMessage": "Enter your email and we'll send you a verification code. We'll send you an OTP code via email for secure login.",
+    "signInMessage": "Enter your email and we'll send you a verification code. We'll send an OTP code via email for secure login.",
     "emailLabel": "Email Address",
-    "emailPlaceholder": "Enter your email",
-    "sendingCode": "Sending code...",
+    "emailPlaceholder": "Enter your email address",
+    "sendingCode": "Sending Code...",
     "signInWithEmail": "Sign in with Email",
     "verificationCodeLabel": "Verification Code",
-    "verificationCodePlaceholder": "Enter 8-digit code",
+    "verificationCodePlaceholder": "Enter the 8-digit code",
     "verifying": "Verifying...",
     "verifyCode": "Verify Code",
     "back": "Back",
     "signOutPrompt": "Are you sure you want to sign out?",
     "signingOut": "Signing out...",
     "signOut": "Sign Out",
-    "returnToHome": "Return to Home",
-    "missingKeyExample": "Missing Key Example"
+    "returnToHome": "Return to Home"
   },
   "posts": {
     "title": "Posts",
     "id": "Post ID",
-    "content": "Post content",
-    "post1": "First post",
-    "post2": "Second post",
-    "backToList": "Back to Posts",
+    "content": "Post Content",
+    "post1": "First Post",
+    "post2": "Second Post",
+    "backToList": "Back to List",
     "sampleTitle": "Sample Post Title",
     "loading": "Loading posts...",
-    "empty": "No posts found in this category",
-    "eventPeriod": "Event period: {{start}} - {{end}}",
+    "empty": "No posts in this category",
+    "eventPeriod": "Event Period: {{start}} - {{end}}",
     "categories": "Categories",
     "selectCategory": "Please select a category",
     "invalidCategory": "Invalid category",
@@ -53,7 +120,7 @@
     "allPostsDescription": "Browse all posts from our community",
     "createPost": "Create Post",
     "noPosts": "No posts found",
-    "loadMore": "Load more posts"
+    "loadMore": "Load more"
   },
   "postCategories": {
     "ALL": { "name": "All", "description": "All posts" },
@@ -103,6 +170,61 @@
       "descriptionTooShort": "Description must be at least 10 characters long",
       "serverError": "Server error: {{message}}",
       "failedToSubmit": "Failed to submit feature request"
+    }
+  },
+  "serviceStatus": {
+    "preparing": {
+      "title": "Service in Preparation",
+      "message": "We're currently preparing to launch this feature! We'll let you know via email when it's ready."
+    },
+    "underConstruction": {
+      "title": "Service Under Construction",
+      "message": "This feature is currently under maintenance. We apologize for the inconvenience. We're working to restore it as quickly as possible."
+    },
+    "subscriptionSuccess": "Subscription for updates completed!"
+  },
+  "promptMenu": {
+    "veo2": {
+      "prompt": "Prompt",
+      "promptPlaceholder": "Describe the video you want to generate",
+      "negativePrompt": "Negative Prompt",
+      "negativePromptPlaceholder": "Describe elements to exclude from the video",
+      "image": "Image (Optional)",
+      "personGeneration": "Person Generation",
+      "aspectRatio": "Aspect Ratio",
+      "videoLength": "Video Length",
+      "seconds": "seconds"
+    },
+    "runwayGen4Turbo": {
+      "prompt": "Prompt",
+      "promptPlaceholder": "Describe the video you want to generate",
+      "characters": "Characters",
+      "image": "Image (Required)",
+      "seed": "Seed (Optional)",
+      "seedPlaceholder": "Enter seed (optional)",
+      "videoLength": "Video Length",
+      "resolution": "Resolution"
+    },
+    "tooltips": {
+      "prompt": "Text prompt for the video. Optional when there is an image parameter.",
+      "negativePrompt": "A text string explaining what the model should avoid generating.",
+      "image": "An image to use as the first frame of the video. When there is an image, the prompt parameter is optional.",
+      "personGeneration": "Controls whether the model can generate videos with people. 'dont_allow' prevents people/faces, 'allow_adult' allows only adults.",
+      "videoLength": "Output video length in seconds (5-8 seconds).",
+      "aspectRatio": "Change the aspect ratio of the generated video. Supported values are '16:9' and '9:16'. Default is '16:9'.",
+      "promptRunway": "Text prompt for the video (maximum 1000 characters). Should describe what you want to appear in the output.",
+      "imageRunway": "An image to use as the first frame of the video.",
+      "seed": "Optional seed value (0 to 4294967295). Using the same seed with the same parameters results in similar outputs.",
+      "videoLengthRunway": "Output video length in seconds (5 or 10 seconds).",
+      "aspectRatioRunway": "Resolution of the output video. Available options in gen4_turbo: 1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
+    },
+    "options": {
+      "landscape": "16:9 (Landscape)",
+      "portrait": "9:16 (Portrait)",
+      "dontAllowPeople": "Don't allow people/faces",
+      "allowAdults": "Allow adults only",
+      "fiveSeconds": "5 seconds",
+      "tenSeconds": "10 seconds"
     }
   }
 }

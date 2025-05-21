@@ -24,13 +24,22 @@ export default defineSchema({
     userId: v.id("users"),
     email: v.string(),
     displayName: v.string(),
+    name: v.optional(v.string()), // 실명
+    organization: v.optional(v.string()), // 소속
     description: v.optional(v.string()),
     avatarUrlId: v.optional(v.id("_storage")),
     deletedAt: v.optional(v.string()),
+    // New fields
+    githubId: v.optional(v.string()),
+    socialLinks: v.optional(v.array(v.string())), // Array of URLs
+    tags: v.optional(v.array(v.string())), // Skills, interests, or status tags
+    lookingFor: v.optional(v.string()), // Who they want to connect with
+    expectations: v.optional(v.string()), // What they're expecting from the community
   })
     .index("by_email", ["email"])
     .index("by_user", ["userId"])
-    .index("by_display_name", ["displayName"]),
+    .index("by_display_name", ["displayName"])
+    .index("by_githubId", ["githubId"]),
   featureRequests: defineTable({
     title: v.string(),
     description: v.string(),
@@ -48,4 +57,13 @@ export default defineSchema({
   tags: defineTable({
     name: v.string(),
   }).index("by_name", ["name"]),
+  files: defineTable({
+    storageId: v.id("_storage"),
+    fileName: v.string(),
+    contentType: v.string(),
+    ownerId: v.id("users"),
+    uploadedAt: v.number(),
+  })
+    .index("by_owner", ["ownerId"])
+    .index("by_storage_id", ["storageId"]),
 });
