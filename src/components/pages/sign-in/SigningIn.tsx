@@ -5,12 +5,14 @@ import { cn } from "../../../lib/utils";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
+import { Github } from "lucide-react";
 
 export default function SigningIn() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGitHubLoading, setIsGitHubLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   const { signIn } = useAuthActions();
@@ -40,6 +42,29 @@ export default function SigningIn() {
       );
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGitHubSignIn = async () => {
+    setIsGitHubLoading(true);
+    setError(null);
+
+    try {
+      // Authenticate with GitHub
+      // This will redirect to GitHub for authentication
+      await signIn("github");
+      
+      // Note: We need to handle profile creation after OAuth callback
+      // This will be done in a separate function or hook that runs on successful auth
+      // For now, the OAuth flow will handle the redirect
+    } catch (error) {
+      console.error("Error signing in with GitHub:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to sign in with GitHub. Please try again."
+      );
+      setIsGitHubLoading(false);
     }
   };
 
@@ -167,6 +192,40 @@ export default function SigningIn() {
             </button>
           </div>
         </form>
+        
+        {/* Divider between email and GitHub */}
+        <div className="relative mt-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border/30"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-background text-muted-foreground">
+              Or
+            </span>
+          </div>
+        </div>
+
+        {/* GitHub login button */}
+        <div className="mt-6">
+          <button
+            type="button"
+            onClick={() => { void handleGitHubSignIn(); }}
+            disabled={isGitHubLoading}
+            className={cn(
+              // Base styles
+              "w-full py-3 px-4 rounded-lg font-medium transition-all flex items-center justify-center space-x-2",
+              "bg-gray-800 text-white hover:bg-gray-700",
+              "disabled:opacity-50 disabled:cursor-not-allowed"
+            )}
+          >
+            <Github size={20} />
+            <span>
+              {isGitHubLoading
+                ? "Signing in with GitHub..."
+                : "Sign in with GitHub"}
+            </span>
+          </button>
+        </div>
         
         {/* Helper text below the form */}
         <div className="mt-4 text-center bg-primary/5 backdrop-blur-sm border border-primary/10 rounded-lg px-5 py-4">

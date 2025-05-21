@@ -1,19 +1,85 @@
 {
   "common": {
-    "loading": "読み込み中...",
+    "buttons": {
+      "save": "保存",
+      "saving": "保存中...",
+      "cancel": "キャンセル"
+    },
+    "loading": "...",
     "appName": "クロスプラットフォームコリア",
     "navVideo": "ビデオ",
     "sideFeatureRequests": "機能リクエスト",
     "signIn": "ログイン",
     "remove": "削除",
     "delete": "削除",
-    "cancel": "キャンセル",
     "authRequired": "すべての機能を利用するにはログインしてください",
     "close": "閉じる",
     "sidePosts": "投稿",
     "navCommunity": "コミュニティ",
     "navBlog": "ブログ",
-    "all": "すべて"
+    "all": "すべて",
+    "allPosts": "すべての投稿",
+    "allPostsDescription": "コミュニティからのすべての投稿を閲覧する",
+    "createPost": "投稿作成",
+    "noPosts": "投稿が見つかりません",
+    "loadMore": "もっと見る"
+  },
+  "errors": {
+    "general": "エラーが発生しました。もう一度お試しください。",
+    "profile": {
+      "displayNameRequired": "表示名は必須です",
+      "displayNameTaken": "この表示名は既に使用されています。別の名前を選択してください。",
+      "notFound": "プロフィールが見つかりません"
+    },
+    "auth": {
+      "required": "認証が必要です"
+    }
+  },
+  "profile": {
+    "title": "プロフィール",
+    "buttons": {
+      "signOut": "ログアウト"
+    },
+    "sections": {
+      "details": "プロフィール詳細"
+    },
+    "fields": {
+      "displayName": {
+        "label": "表示名"
+      },
+      "realName": {
+        "label": "本名"
+      },
+      "organization": {
+        "label": "所属",
+        "placeholder": "会社 / 学校 / 団体"
+      },
+      "socialLinks": {
+        "label": "ソーシャルメディアリンク",
+        "placeholder": "ソーシャルメディアURL {{num}}",
+        "addMore": "ソーシャルメディアリンクを追加 ({{count}}/{{max}})"
+      },
+      "tags": {
+        "label": "タグ",
+        "placeholder": "Flutter, Frontend (Enterまたはコンマで追加)",
+        "help": "Enterまたはコンマでタグを追加"
+      },
+      "lookingFor": {
+        "label": "つながりたい人",
+        "placeholder": "どのような人とつながりたいですか？"
+      },
+      "description": {
+        "label": "自己紹介",
+        "placeholder": "簡単な自己紹介を書いてください"
+      },
+      "expectations": {
+        "label": "期待すること",
+        "placeholder": "コミュニティに何を期待していますか？"
+      }
+    },
+    "messages": {
+      "saveSuccess": "プロフィールが正常に保存されました！"
+    }
   },
   "signIn": {
     "verifyEmailTitle": "メール確認",
@@ -34,8 +100,7 @@
     "signOutPrompt": "ログアウトしますか？",
     "signingOut": "ログアウト中...",
     "signOut": "ログアウト",
-    "returnToHome": "ホームに戻る",
-    "missingKeyExample": "欠落キーの例"
+    "returnToHome": "ホームに戻る"
   },
   "posts": {
     "title": "投稿",
@@ -63,7 +128,7 @@
     "QA": { "name": "Q&A", "description": "質問と回答" },
     "READING": { "name": "読み物", "description": "記事、回顧、インサイト" },
     "INFO_SHARE": { "name": "情報共有", "description": "ヒント、リンク、有用なツール" },
-    "FREE_BOARD": { "name": "Free Board", "description": "Casual discussions and community chat" }
+    "FREE_BOARD": { "name": "フリーボード", "description": "カジュアルな議論とコミュニティチャット" }
   },
   "pages": {
     "posts": "投稿",

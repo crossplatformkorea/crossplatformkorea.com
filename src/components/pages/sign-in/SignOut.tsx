@@ -15,8 +15,15 @@ export default function SignOut() {
     setError(null);
     
     try {
+      // Call the signOut function from Convex Auth
       await signOut();
-      // No need to clear state as the component will be unmounted when auth state changes
+      
+      // Add a small delay to ensure auth state is updated
+      setTimeout(() => {
+        // Navigate to home page after successful logout
+        void navigate('/');
+      }, 500);
+      
     } catch (error) {
       console.error("Error signing out:", error);
       setError(
@@ -24,7 +31,6 @@ export default function SignOut() {
           ? error.message
           : "Failed to sign out. Please try again."
       );
-    } finally {
       setIsLoading(false);
     }
   };

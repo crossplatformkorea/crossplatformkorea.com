@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useConvexAuth } from "convex/react";
 import { cn } from "@/lib/utils";
 import { sidebarItems } from "@/constants/sidebar";
-import { LogIn } from "lucide-react";
+import { LogIn, User } from "lucide-react";
 
 interface SidebarProps {
     isOpen?: boolean;
@@ -81,16 +81,17 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
                         {showContent && <span className="ml-2 transition-opacity duration-150">{t("common.signIn")}</span>}
                     </Link>
                 ) : (
-                    <button
+                    <Link
+                        to="/profile"
                         className={cn(
                             "flex items-center py-2 px-3 rounded-md transition-colors w-full",
-                            "bg-gray-200 text-gray-800 hover:bg-gray-300",
-                            "dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                            "bg-primary/10 text-primary hover:bg-primary/20",
+                            "dark:bg-primary/30 dark:text-white dark:hover:bg-primary/40"
                         )}
                     >
-                        <LogIn size={18} className="rotate-180" />
-                        {showContent && <span className="ml-2 transition-opacity duration-150">{t("signIn.signOut")}</span>}
-                    </button>
+                        <User size={18} />
+                        {showContent && <span className="ml-2 transition-opacity duration-150">{t("common.profile", "Profile")}</span>}
+                    </Link>
                 )}
             </div>
         </aside>
