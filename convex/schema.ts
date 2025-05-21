@@ -57,4 +57,13 @@ export default defineSchema({
   tags: defineTable({
     name: v.string(),
   }).index("by_name", ["name"]),
+  files: defineTable({
+    storageId: v.id("_storage"),
+    fileName: v.string(),
+    contentType: v.string(),
+    ownerId: v.id("users"),
+    uploadedAt: v.number(),
+  })
+    .index("by_owner", ["ownerId"])
+    .index("by_storage_id", ["storageId"]),
 });

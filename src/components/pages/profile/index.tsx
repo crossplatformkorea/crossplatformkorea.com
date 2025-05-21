@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, KeyboardEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useConvexAuth } from 'convex/react';
-import { useQuery, useMutation } from 'convex/react';
+import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { cn } from '@/lib/utils';
@@ -45,6 +45,9 @@ export default function ProfilePage() {
   // State for profile image
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  // Track original avatar storage ID for deletion if needed
+  const [originalAvatarStorageId, setOriginalAvatarStorageId] = useState<string | null>(null);
+  const [isImageDeleted, setIsImageDeleted] = useState(false);
 
   // State for social links
   const [socialLinks, setSocialLinks] = useState<string[]>([]);
@@ -65,6 +68,11 @@ export default function ProfilePage() {
 
   // Create user profile if it doesn't exist
   const createOrUpdateUser = useMutation(api.users.createOrUpdateUser);
+  // Update file upload functions
+  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const saveFileMetadata = useMutation(api.files.saveFileMetadata);
+  const deleteFile = useAction(api.files.deleteFileByStorageId);
+  const updateProfile = useMutation(api.users.updateProfile);
 
   // State for saving profile
   const [isSaving, setIsSaving] = useState(false);
@@ -111,13 +119,19 @@ export default function ProfilePage() {
       filteredCurrentLinks.length !== filteredOriginalLinks.length ||
       filteredCurrentLinks.some((link, i) => filteredOriginalLinks[i] !== link);
 
-    return formChanged || tagsChanged || linksChanged || selectedImage !== null;
+    // Add check for image deletion
+    return formChanged || tagsChanged || linksChanged || selectedImage !== null || isImageDeleted;
   };
 
   // Set image preview when user has an avatar and initialize social links and tags
   useEffect(() => {
     if (userIdentity?.avatarUrl) {
       setImagePreview(userIdentity.avatarUrl);
+    }
+
+    // Store original avatar storage ID for potential deletion
+    if (userIdentity?.profile?.avatarUrlId) {
+      setOriginalAvatarStorageId(userIdentity.profile.avatarUrlId);
     }
 
     // Initialize social links from user profile
@@ -191,10 +205,11 @@ export default function ProfilePage() {
     }
   };
 
-  // Remove selected image
+  // Remove selected image - updated to handle both selected and existing images
   const removeSelectedImage = () => {
     setSelectedImage(null);
-    setImagePreview(userIdentity?.avatarUrl || null);
+    setImagePreview(null);
+    setIsImageDeleted(true);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -354,7 +369,7 @@ export default function ProfilePage() {
     }
   };
 
-  // Function to save profile data - updated version
+  // Function to save profile data - updated to avoid page refresh
   const saveProfileData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSaving(true);
@@ -378,7 +393,81 @@ export default function ProfilePage() {
         return link && link.trim() !== '' && link !== 'https://' && link !== 'http://';
       });
 
-      // Prepare data for submission
+      // Handle image upload if there is a selected image
+      let avatarUrlId = userIdentity?.profile?.avatarUrlId;
+
+      // If image was deleted, clear the avatarUrlId
+      if (isImageDeleted) {
+        avatarUrlId = undefined;
+
+        // Delete the original image from storage if it exists
+        if (originalAvatarStorageId) {
+          try {
+            await deleteFile({ storageId: originalAvatarStorageId as any });
+          } catch (error) {
+            console.error('Error deleting old avatar:', error);
+            // Continue with profile update even if deletion fails
+          }
+        }
+      }
+      // If there's a new image selected, upload it using the new method
+      else if (selectedImage) {
+        try {
+          // Step 1: Generate upload URL
+          const uploadUrl = await generateUploadUrl();
+
+          // Step 2: POST the file to the URL
+          const result = await fetch(uploadUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': selectedImage.type },
+            body: selectedImage,
+          });
+
+          const { storageId } = await result.json();
+
+          // Step 3: Save the file metadata
+          const fileResult = await saveFileMetadata({
+            storageId,
+            fileName: selectedImage.name,
+            contentType: selectedImage.type,
+          });
+
+          if (fileResult.success) {
+            avatarUrlId = fileResult.storageId;
+
+            // Delete the old avatar if it exists and is different
+            if (originalAvatarStorageId && originalAvatarStorageId !== fileResult.storageId) {
+              try {
+                await deleteFile({ storageId: originalAvatarStorageId as any });
+              } catch (error) {
+                console.error('Error deleting old avatar:', error);
+                // Continue with profile update even if deletion fails
+              }
+            }
+          } else {
+            throw new Error('Failed to save file metadata');
+          }
+        } catch (error) {
+          console.error('Error uploading image:', error);
+          setSaveError(t('errors.general'));
+          setIsSaving(false);
+          return;
+        }
+      }
+
+      // Update profile with new data including avatar ID
+      await updateProfile({
+        displayName,
+        description,
+        avatarUrlId: avatarUrlId as any,
+        githubId: userIdentity?.profile?.githubId,
+        socialLinks: filteredSocialLinks,
+        tags,
+        lookingFor,
+        expectations,
+      });
+
+      // Also update basic user info
       const userData = {
         email: userIdentity?.profile?.email || '',
         name: realName,
@@ -413,7 +502,6 @@ export default function ProfilePage() {
       setSaveSuccess(true);
 
       // Update original data to reflect the saved state
-      // This ensures hasProfileChanged() returns false after saving
       setOriginalData({
         displayName: formValues.displayName,
         description: formValues.description,
@@ -427,6 +515,17 @@ export default function ProfilePage() {
 
       // Reset selected image state after successful save
       setSelectedImage(null);
+      setIsImageDeleted(false);
+
+      // Update the original avatar storage ID for future reference
+      if (avatarUrlId) {
+        setOriginalAvatarStorageId(avatarUrlId);
+      } else {
+        setOriginalAvatarStorageId(null);
+      }
+
+      // Remove the page refresh - Convex will automatically update the UI with new data
+      // window.location.reload(); - REMOVED THIS LINE
     } catch (error) {
       console.error('Error saving profile:', error);
       setSaveError(t('errors.general'));
@@ -485,8 +584,21 @@ export default function ProfilePage() {
           {/* Profile Image and Display Name Card */}
           <div className="border border-border/50 rounded-lg p-5 mb-6 bg-card/30">
             <div className="flex flex-col md:flex-row items-center gap-6">
-              {/* Profile Image */}
-              <div className="relative group">
+              {/* Profile Image - added outer wrapper div with padding */}
+              <div className="relative group pt-2 pr-2 pb-2 pl-2">
+                {/* Delete button - made smaller and less obtrusive */}
+                {imagePreview && (
+                  <button
+                    type="button"
+                    onClick={removeSelectedImage}
+                    title={t('profile.buttons.removeImage')}
+                    className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-md transition-all duration-200 hover:scale-110 z-10 border border-white"
+                    aria-label={t('profile.buttons.removeImage')}
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+                
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-muted flex items-center justify-center relative">
                   {imagePreview ? (
                     <img src={imagePreview} alt="Profile" className="w-full h-full object-cover" />
@@ -501,17 +613,6 @@ export default function ProfilePage() {
                   >
                     <Camera className="w-6 h-6 text-white" />
                   </div>
-
-                  {/* Remove image button */}
-                  {imagePreview && selectedImage && (
-                    <button
-                      type="button"
-                      onClick={removeSelectedImage}
-                      className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-colors"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  )}
                 </div>
 
                 {/* Hidden file input */}
