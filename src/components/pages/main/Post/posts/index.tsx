@@ -141,7 +141,7 @@ const Posts = memo(function Posts() {
   // Show loading state while fetching posts
   if (result === undefined) {
     return (
-      <div className="flex justify-center">
+      <div className="flex flex-1 pb-12">
         <AppLoading />
       </div>
     );

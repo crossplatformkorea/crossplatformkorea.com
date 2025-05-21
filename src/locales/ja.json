@@ -23,6 +23,12 @@
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
+    "titleRequired": "タイトルは必須です",
+    "contentRequired": "コンテンツは必須です",
+    "postCreationFailed": "投稿の作成に失敗しました。もう一度お試しください。",
+    "imageUploadFailed": "画像のアップロードに失敗しました。もう一度お試しください。",
+    "onlyImagesAllowed": "画像ファイルのみアップロードできます。",
+    "fileTooLarge": "ファイルサイズが{{size}}の制限を超えています。",
     "profile": {
       "displayNameRequired": "表示名は必須です",
       "displayNameTaken": "この表示名は既に使用されています。別の名前を選択してください。",
@@ -229,6 +235,7 @@
     "writeNewPost": "新規投稿",
     "edit": "編集",
     "preview": "プレビュー",
+    "uploadingImages": "画像をアップロード中",
     "enterFullscreen": "全画面表示",
     "exitFullscreen": "全画面表示を終了",
     "titleLabel": "タイトル",

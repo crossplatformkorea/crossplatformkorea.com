@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   X,
   Image,
@@ -10,16 +10,19 @@ import {
   AlertCircle,
   Eye,
   Edit,
+  Loader2,
 } from 'lucide-react';
-import { useQuery } from 'convex/react';
+import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '../../../../../convex/_generated/api';
 import { useTranslation } from 'react-i18next';
 import { useConvexAuth } from 'convex/react';
 import { cn } from '../../../../lib/utils';
+import { Id } from '../../../../../convex/_generated/dataModel';
+import { MAX_FILE_SIZE, MAX_FILE_SIZE_READABLE } from '../../../../constants';
 
-// Import a markdown rendering library (you may need to install this)
-// For example: npm install react-markdown
+// Import additional plugins for ReactMarkdown to handle HTML content and line breaks
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 interface PostWriteProps {
   isOpen: boolean;
@@ -50,13 +53,23 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // State for image upload
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+
   // Animation states
   const [isClosing, setIsClosing] = useState(false);
   const [previousFullscreen, setPreviousFullscreen] = useState(false);
   const [hasAppeared, setHasAppeared] = useState(false);
 
+  // Add state to track uploaded files for cleanup
+  const [uploadedStorageIds, setUploadedStorageIds] = useState<Id<'_storage'>[]>([]);
+
   // Mutations
-  //   const createPost = useMutation(api.posts.createPost);
+  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const saveFileMetadata = useMutation(api.files.saveFileMetadata);
+  // Add file deletion action
+  const deleteFile = useAction(api.files.deleteFileByStorageId);
 
   // Get categories from API
   const categories = useQuery(api.categories.getCategories);
@@ -105,17 +118,66 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     }
   }, [defaultCategory]);
 
+  // Reset all form data function
+  const resetFormData = useCallback(() => {
+    setTitle('');
+    setContent('');
+    setCategory(defaultCategory || 'GENERAL');
+    setTags([]);
+    setTagInput('');
+    setError(null);
+    setIsPreviewMode(false);
+  }, [defaultCategory]);
+
+  // Add cleanupUploadedFiles function
+  const cleanupUploadedFiles = useCallback(async () => {
+    if (uploadedStorageIds.length > 0) {
+      try {
+        // Log the cleanup process
+        console.log(`Cleaning up ${uploadedStorageIds.length} uploaded images...`);
+
+        // Attempt to delete all uploaded files
+        const deletePromises = uploadedStorageIds.map((storageId) => deleteFile({ storageId }));
+
+        await Promise.all(deletePromises);
+        console.log(`Successfully cleaned up ${uploadedStorageIds.length} temporary images`);
+
+        // Reset the tracking array
+        setUploadedStorageIds([]);
+      } catch (error) {
+        console.error('Error cleaning up uploaded files:', error);
+      }
+    }
+  }, [deleteFile, uploadedStorageIds]);
+
+  // Modified close handler to reset form data and support exit animation
+  const handleClose = useCallback(() => {
+    // First clean up any uploaded files
+    void cleanupUploadedFiles();
+
+    // Then reset all form fields
+    resetFormData();
+
+    setIsClosing(true);
+    // Wait for animation to complete before calling the actual onClose
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 300); // Match transition duration
+  }, [onClose, resetFormData, cleanupUploadedFiles]);
+
   // Close modal when Escape key is pressed
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
-        onClose();
+        // Use handleClose instead of onClose to ensure proper cleanup
+        handleClose();
       }
     };
 
     document.addEventListener('keydown', handleEscapeKey);
     return () => document.removeEventListener('keydown', handleEscapeKey);
-  }, [isOpen, onClose]);
+  }, [handleClose, isOpen]); // Add handleClose to dependency array
 
   // Handle adding tags
   const handleAddTag = () => {
@@ -197,23 +259,103 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     }, 0);
   };
 
-  // Modified close handler to support exit animation
-  const handleClose = () => {
-    setIsClosing(true);
-    // Wait for animation to complete before calling the actual onClose
-    setTimeout(() => {
-      setIsClosing(false);
-      onClose();
-    }, 300); // Match transition duration
-  };
-
   // Toggle fullscreen mode with animation
   const toggleFullscreen = () => {
     setIsFullscreen((prev) => !prev);
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  // Add window unload event to clean up files on refresh/navigation
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (uploadedStorageIds.length > 0) {
+        // Note: This runs synchronously and can't guarantee file deletion
+        // This is best effort cleanup
+        uploadedStorageIds.forEach((storageId) => {
+          try {
+            void deleteFile({ storageId });
+          } catch {
+            // Can't do much in the unload event
+            console.error('Error cleaning up uploaded file on unload:', storageId);
+          }
+        });
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      // Clean up on component unmount
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [deleteFile, uploadedStorageIds]);
+
+  // Set initial category if provided
+  useEffect(() => {
+    if (defaultCategory) {
+      setCategory(defaultCategory);
+    }
+  }, [defaultCategory]);
+
+  // Close modal when Escape key is pressed
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        // Use handleClose instead of onClose to ensure proper cleanup
+        handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
+  }, [isOpen, handleClose]); // Add handleClose to dependency array
+
+  // Add a helper function to extract image URLs from content
+  const extractUsedImageIds = useCallback((contentText: string): Id<'_storage'>[] => {
+    const usedIds: Id<'_storage'>[] = [];
+    const urlRegex = /<img[^>]+src="([^"]+)"[^>]*>/g;
+    const matches = [...contentText.matchAll(urlRegex)];
+
+    for (const match of matches) {
+      const url = match[1];
+      // Extract ID from URL pattern - typical Convex URL format
+      const storageIdMatch = url.match(/\/storage\/([^/?]+)/);
+      if (storageIdMatch && storageIdMatch[1]) {
+        usedIds.push(storageIdMatch[1] as Id<'_storage'>);
+      }
+    }
+
+    console.log('Used image IDs:', usedIds);
+
+    return usedIds;
+  }, []);
+
+  // Add cleanup function for unused images
+  const cleanupUnusedImages = useCallback(
+    async (contentText: string) => {
+      // Get IDs of images actually used in the content
+      const usedImageIds = extractUsedImageIds(contentText);
+
+      // Find uploaded images not used in content
+      const unusedImageIds = uploadedStorageIds.filter((id) => !usedImageIds.includes(id));
+
+      if (unusedImageIds.length > 0) {
+        console.log(`Cleaning up ${unusedImageIds.length} unused images before submission...`);
+
+        // Delete unused images
+        const deletePromises = unusedImageIds.map((id) => deleteFile({ storageId: id }));
+        await Promise.all(deletePromises);
+
+        // Update tracking array to only include used images
+        setUploadedStorageIds(usedImageIds);
+
+        console.log(`Successfully cleaned up unused images. ${usedImageIds.length} images kept.`);
+      }
+    },
+    [extractUsedImageIds, uploadedStorageIds, deleteFile],
+  );
+
+  // Modified handleSubmit to clean up unused images before submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
@@ -235,6 +377,9 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     setError(null);
 
     try {
+      // First clean up any unused images
+      await cleanupUnusedImages(content);
+
       // Add dark mode compatible input styling throughout the component
       //   await createPost({
       //     title,
@@ -242,6 +387,10 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
       //     category,
       //     tags,
       //   });
+
+      // Any remaining images in uploadedStorageIds are now properly associated with the post
+      // so we don't need to delete them - just clear the tracking array
+      setUploadedStorageIds([]);
 
       // Reset form and close modal on success
       setTitle('');
@@ -254,6 +403,180 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Handle file upload
+  const uploadFile = async (file: File): Promise<string | null> => {
+    // Check if file is an image
+    if (!file.type.startsWith('image/')) {
+      setError(t('errors.onlyImagesAllowed'));
+      return null;
+    }
+
+    // Check file size using both constants from constants.ts
+    if (file.size > MAX_FILE_SIZE) {
+      setError(
+        t('errors.fileTooLarge', { size: MAX_FILE_SIZE_READABLE }) ||
+          `File size exceeds ${MAX_FILE_SIZE_READABLE} limit`,
+      );
+
+      return null;
+    }
+
+    const uniqueId = Date.now().toString();
+    setIsUploading(true);
+    setUploadProgress((prev) => ({ ...prev, [uniqueId]: 0 }));
+
+    try {
+      // Step 1: Generate a URL for uploading
+      const postUrl = await generateUploadUrl();
+
+      // Step 2: Upload the file directly using fetch
+      const controller = new AbortController();
+
+      // Upload file directly
+      const result = await fetch(postUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': file.type },
+        body: file,
+        signal: controller.signal,
+      });
+
+      if (!result.ok) {
+        throw new Error(`Upload failed with status ${result.status}`);
+      }
+
+      // Get the storageId from the response
+      const responseData = await result.json();
+      const storageId = responseData.storageId;
+
+      if (!storageId) {
+        throw new Error('No storageId returned from upload');
+      }
+
+      // Step 3: Save the uploaded file's metadata in Convex
+      const saveResult = await saveFileMetadata({
+        storageId: storageId as Id<'_storage'>,
+        fileName: file.name,
+        contentType: file.type,
+      });
+
+      // Track the uploaded file for potential cleanup
+      setUploadedStorageIds((prev) => [...prev, storageId as Id<'_storage'>]);
+
+      // Clean up progress tracking
+      setUploadProgress((prev) => {
+        const updated = { ...prev };
+        delete updated[uniqueId];
+        return updated;
+      });
+
+      if (Object.keys(uploadProgress).length === 0) {
+        setIsUploading(false);
+      }
+
+      // Return HTML img tag instead of markdown image syntax
+      return `<img src="${saveResult.url}" alt="${file.name}" width="300" />`;
+    } catch (err) {
+      console.error('Error uploading file:', err);
+      setError(t('errors.imageUploadFailed'));
+
+      if (Object.keys(uploadProgress).length === 0) {
+        setIsUploading(false);
+      }
+      return null;
+    }
+  };
+
+  // Handle paste event for images
+  const handlePaste = async (e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        // Prevent the default paste behavior for images
+        e.preventDefault();
+
+        const file = items[i].getAsFile();
+        if (!file) continue;
+
+        const markdownUrl = await uploadFile(file);
+        if (!markdownUrl) continue;
+
+        // Insert the markdown at cursor position
+        insertTextAtCursor(markdownUrl);
+        break;
+      }
+    }
+  };
+
+  // Handle drag and drop for images
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!e.dataTransfer.files.length) return;
+
+    const files = Array.from(e.dataTransfer.files).filter((file) => file.type.startsWith('image/'));
+
+    if (files.length === 0) {
+      setError(t('errors.onlyImagesAllowed'));
+      return;
+    }
+
+    // Upload each image and insert markdown
+    for (const file of files) {
+      const markdownUrl = await uploadFile(file);
+      if (markdownUrl) {
+        insertTextAtCursor(markdownUrl + '\n');
+      }
+    }
+  };
+
+  // Helper function to insert text at cursor position
+  const insertTextAtCursor = (text: string) => {
+    if (!contentRef.current) return;
+
+    const start = contentRef.current.selectionStart;
+    const end = contentRef.current.selectionEnd;
+
+    const newContent = content.substring(0, start) + text + content.substring(end);
+    setContent(newContent);
+
+    // Restore cursor position after the inserted text
+    setTimeout(() => {
+      if (contentRef.current) {
+        contentRef.current.focus();
+        const newPosition = start + text.length;
+        contentRef.current.selectionStart = newPosition;
+        contentRef.current.selectionEnd = newPosition;
+      }
+    }, 0);
+  };
+
+  // Enhanced function to prepare content for preview - add cache busting to images
+  const prepareContentForPreview = (rawContent: string) => {
+    // First handle the line breaks as before
+    let content = rawContent.replace(/\n{2,}/g, (match) => {
+      const breaks = Array(match.length).fill('<br />').join('');
+      return breaks;
+    });
+
+    // Add cache busting to image URLs to prevent showing deleted images
+    content = content.replace(/<img src="([^"]+)"([^>]*)>/g, (match, url, rest) => {
+      // Add cache busting parameter to URL
+      const cacheBuster = `?t=${Date.now()}`;
+      const newUrl = url.includes('?') ? `${url}&_=${cacheBuster}` : `${url}${cacheBuster}`;
+      return `<img src="${newUrl}"${rest}>`;
+    });
+
+    return content;
   };
 
   // Don't render anything if modal is closed and not in closing animation
@@ -279,11 +602,9 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
           'transform transition-all duration-300 ease-out',
           'shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)]',
           'dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)] dark:border dark:border-gray-700/80',
-          // Increase width by changing max-w-5xl to max-w-7xl (1280px)
-          isFullscreen 
-            ? 'w-full h-full rounded-none' 
+          isFullscreen
+            ? 'w-full h-full rounded-none'
             : 'w-[98%] max-w-7xl mx-auto max-h-[85vh] rounded-t-xl',
-          // Animation states - improved transition
           hasAppeared ? 'translate-y-0' : 'translate-y-full',
           isClosing && 'translate-y-full',
         )}
@@ -487,23 +808,23 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
           </div>
         </div>
 
-        {/* Split view editor section - removing gap below input */}
+        {/* Split view editor section */}
         <div
           className={cn(
             'flex flex-1 overflow-hidden',
-            isFullscreen ? 'h-[calc(100vh-180px)]' : '', // Increase height in fullscreen mode
+            isFullscreen ? 'h-[calc(100vh-180px)]' : 'h-[calc(100%-180px)]',
           )}
         >
           {/* Editor side */}
           <div
             className={cn(
               'flex flex-col flex-1 overflow-hidden',
-              'md:block', // Always show on desktop
-              isPreviewMode ? 'hidden' : 'block', // Toggle on mobile
+              'md:block',
+              isPreviewMode ? 'hidden' : 'block',
             )}
           >
-            {/* Formatting toolbar - removing bottom margin */}
-            <div className="flex items-center gap-1 border-t-0 border-b border-x p-1 bg-muted/50 dark:bg-gray-800/50 mb-0">
+            {/* Formatting toolbar */}
+            <div className="flex items-center gap-1 border-t-0 border-b border-x p-1 bg-muted/50 dark:bg-gray-800/50 mb-0 flex-shrink-0">
               <button
                 type="button"
                 onClick={() => handleFormatting('bold')}
@@ -554,19 +875,34 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
               </button>
             </div>
 
-            {/* Content textarea - ensuring it fills the space completely */}
+            {/* Upload progress indicator */}
+            {isUploading && (
+              <div className="px-3 py-1 bg-primary/10 border-b border-x border-border flex items-center gap-2 flex-shrink-0">
+                <Loader2 size={16} className="animate-spin" />
+                <span className="text-sm">{t('postWrite.uploadingImages')}...</span>
+              </div>
+            )}
+
+            {/* Content textarea with drag drop support */}
             <textarea
               ref={contentRef}
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              onPaste={(e) => {
+                void handlePaste(e);
+              }}
+              onDragOver={handleDragOver}
+              onDrop={(e) => {
+                void handleDrop(e);
+              }}
               placeholder={t('postWrite.contentPlaceholder')}
               className={cn(
                 'flex-1 w-full px-3 py-2 border border-t-0 border-border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none',
                 'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
-                'block', // Ensure proper display
-                isFullscreen ? 'h-full' : 'min-h-[350px]', // Increase default height and fill space in fullscreen
+                'block h-full min-h-0',
+                isFullscreen ? 'h-full' : 'min-h-[350px]',
               )}
-              style={{ marginTop: 0, marginBottom: 0 }} // Explicitly remove vertical margins
+              style={{ marginTop: 0, marginBottom: 0 }}
             />
           </div>
 
@@ -582,7 +918,15 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
             <div className="prose dark:prose-invert max-w-none">
               <h2 className="mb-4">{title || t('postWrite.previewTitle')}</h2>
               {content ? (
-                <ReactMarkdown>{content}</ReactMarkdown>
+                <ReactMarkdown
+                  rehypePlugins={[rehypeRaw]}
+                  components={{
+                    // Handle paragraphs with preserved whitespace
+                    p: (props) => <p style={{ whiteSpace: 'pre-wrap' }} {...props} />,
+                  }}
+                >
+                  {prepareContentForPreview(content)}
+                </ReactMarkdown>
               ) : (
                 <p className="text-muted-foreground italic">{t('postWrite.previewPlaceholder')}</p>
               )}
@@ -590,11 +934,20 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
           </div>
         </div>
 
-        {/* Error message */}
+        {/* Error message with dismiss button */}
         {error && (
-          <div className="flex items-center gap-2 text-red-500 p-2 bg-red-50 dark:bg-red-900/20 mx-4 my-2 rounded-md">
-            <AlertCircle size={16} />
-            <span>{error}</span>
+          <div className="flex items-center justify-between gap-2 text-red-500 p-2 bg-red-50 dark:bg-red-900/20 mx-4 my-2 rounded-md">
+            <div className="flex items-center gap-2">
+              <AlertCircle size={16} />
+              <span>{error}</span>
+            </div>
+            <button
+              onClick={() => setError(null)}
+              className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 p-1 rounded-full transition-colors"
+              aria-label={t('common.dismiss')}
+            >
+              <X size={16} />
+            </button>
           </div>
         )}
 
@@ -609,7 +962,9 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
           </button>
           <button
             type="button"
-            onClick={handleSubmit}
+            onClick={(e) => {
+              void handleSubmit(e);
+            }}
             disabled={isSubmitting}
             className={cn(
               'px-4 py-2 rounded-md transition-colors',
@@ -617,29 +972,10 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
               isSubmitting && 'opacity-70 cursor-not-allowed',
             )}
           >
-            {isSubmitting ? t('common.submitting') : t('postWrite.publishPost')}
+            {isSubmitting ? t('common.buttons.submitting') : t('postWrite.publishPost')}
           </button>
         </div>
       </div>
     </div>
   );
-}
-
-// Add a wrapper component that handles the slide-up animation properly
-export function AnimatedPostWrite(props: PostWriteProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // When the modal opens, first render it off-screen, then animate up
-    if (props.isOpen && !mounted) {
-      // Use requestAnimationFrame to ensure the initial off-screen render happens
-      requestAnimationFrame(() => {
-        setMounted(true);
-      });
-    } else if (!props.isOpen) {
-      setMounted(false);
-    }
-  }, [mounted, props.isOpen]);
-
-  return <PostWrite {...props} />;
 }

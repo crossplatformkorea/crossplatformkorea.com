@@ -23,6 +23,12 @@
   },
   "errors": {
     "general": "오류가 발생했습니다. 다시 시도해주세요.",
+    "titleRequired": "제목은 필수 입력 항목입니다.",
+    "contentRequired": "내용은 필수 입력 항목입니다.",
+    "postCreationFailed": "게시글 작성에 실패했습니다. 다시 시도해주세요.",
+    "imageUploadFailed": "이미지 업로드에 실패했습니다. 다시 시도해주세요.",
+    "onlyImagesAllowed": "이미지 파일만 업로드할 수 있습니다.",
+    "fileTooLarge": "파일 크기가 {{size}} 제한을 초과했습니다.",
     "profile": {
       "displayNameRequired": "닉네임은 필수 입력 항목입니다.",
       "displayNameTaken": "이미 사용 중인 닉네임입니다. 다른 이름을 선택해주세요.",
@@ -229,6 +235,7 @@
     "writeNewPost": "새 글 작성",
     "edit": "편집",
     "preview": "미리보기",
+    "uploadingImages": "이미지 업로드 중",
     "enterFullscreen": "전체화면으로 보기",
     "exitFullscreen": "전체화면 나가기",
     "titleLabel": "제목",

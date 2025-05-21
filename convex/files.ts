@@ -29,9 +29,10 @@ export const saveFileMetadata = mutation({
   returns: v.object({
     success: v.boolean(),
     fileId: v.id("files"),
-    storageId: v.id("_storage")
+    storageId: v.id("_storage"),
+    url: v.string()
   }),
-  handler: async (ctx, args): Promise<{ success: boolean, fileId: Id<"files">, storageId: Id<"_storage"> }> => {
+  handler: async (ctx, args): Promise<{ success: boolean, fileId: Id<"files">, storageId: Id<"_storage">, url: string }> => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       throw new Error("Authentication required");
@@ -46,7 +47,51 @@ export const saveFileMetadata = mutation({
       uploadedAt: Date.now(),
     });
     
-    return { success: true, fileId, storageId: args.storageId };
+    // Get the URL for the file
+    const url = await ctx.storage.getUrl(args.storageId);
+    if (!url) {
+      throw new Error("Failed to generate URL for uploaded file");
+    }
+    
+    return { success: true, fileId, storageId: args.storageId, url };
+  },
+});
+
+// Get a file URL by ID - Make public for direct access
+export const getFileUrl = query({
+  args: {
+    fileId: v.id("files"),
+  },
+  returns: v.union(
+    v.object({
+      url: v.string(),
+      fileName: v.string(),
+      contentType: v.string(),
+    }),
+    v.null()
+  ),
+  handler: async (ctx, args) => {
+    const file = await ctx.db.get(args.fileId);
+    if (!file) {
+      return null;
+    }
+    
+    try {
+      // Get secure URL from storage with the content type
+      const url = await ctx.storage.getUrl(file.storageId);
+      if (!url) {
+        return null;
+      }
+      
+      return {
+        url,
+        fileName: file.fileName,
+        contentType: file.contentType,
+      };
+    } catch (error) {
+      console.error("Error getting file URL:", error);
+      return null;
+    }
   },
 });
 
@@ -67,71 +112,6 @@ export const storeFileMetadata = internalMutation({
       ownerId: args.ownerId,
       uploadedAt: Date.now(),
     });
-  },
-});
-
-// Get a file URL by ID
-export const getFileUrl = query({
-  args: {
-    fileId: v.id("files"),
-  },
-  returns: v.union(
-    v.object({
-      url: v.string(),
-      fileName: v.string(),
-      contentType: v.string(),
-    }),
-    v.null()
-  ),
-  handler: async (ctx, args): Promise<{ url: string, fileName: string, contentType: string } | null> => {
-    const file = await ctx.db.get(args.fileId);
-    if (!file) {
-      return null;
-    }
-    
-    try {
-      // Get secure URL from storage
-      const url = await ctx.storage.getUrl(file.storageId);
-      // Check if URL is null (file might not exist in storage)
-      if (url === null) {
-        return null;
-      }
-      
-      return {
-        url,
-        fileName: file.fileName,
-        contentType: file.contentType,
-      };
-    } catch (error) {
-      console.error("Error getting file URL:", error);
-      return null;
-    }
-  },
-});
-
-// Get a file URL directly by storage ID
-export const getFileUrlByStorageId = query({
-  args: {
-    storageId: v.id("_storage"),
-  },
-  returns: v.union(
-    v.object({ url: v.string() }),
-    v.null()
-  ),
-  handler: async (ctx, args): Promise<{ url: string } | null> => {
-    try {
-      // Get secure URL from storage
-      const url = await ctx.storage.getUrl(args.storageId);
-      // Check if URL is null
-      if (url === null) {
-        return null;
-      }
-      
-      return { url };
-    } catch (error) {
-      console.error("Error getting file URL:", error);
-      return null;
-    }
   },
 });
 

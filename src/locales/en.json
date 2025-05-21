@@ -23,6 +23,12 @@
   },
   "errors": {
     "general": "An error occurred. Please try again.",
+    "titleRequired": "Title is required",
+    "contentRequired": "Content is required",
+    "postCreationFailed": "Failed to create post. Please try again.",
+    "imageUploadFailed": "Failed to upload image. Please try again.",
+    "onlyImagesAllowed": "Only image files are allowed.",
+    "fileTooLarge": "File size exceeds {{size}} limit.",
     "profile": {
       "displayNameRequired": "Display name is required",
       "displayNameTaken": "This display name is already taken. Please choose another one.",
@@ -229,6 +235,7 @@
     "writeNewPost": "Write New Post",
     "edit": "Edit",
     "preview": "Preview",
+    "uploadingImages": "Uploading images",
     "enterFullscreen": "Enter fullscreen",
     "exitFullscreen": "Exit fullscreen",
     "titleLabel": "Title",
