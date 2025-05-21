@@ -6,19 +6,7 @@ import { api } from '../../../../convex/_generated/api';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { cn } from '@/lib/utils';
 // Import translation utility for error messages
-import {
-  User,
-  LogOut,
-  Settings,
-  Camera,
-  X,
-  Plus,
-  Trash2,
-  Globe,
-  Link as LinkIcon,
-  LucideLinkedin,
-  ArrowLeft,
-} from 'lucide-react';
+import { User, LogOut, Globe, Link as LinkIcon, LucideLinkedin, ArrowLeft } from 'lucide-react';
 // 브랜드 아이콘 가져오기
 import {
   SiGithub,
@@ -32,6 +20,8 @@ import {
   SiBlogger,
 } from '@icons-pack/react-simple-icons';
 import { t } from 'i18next';
+import ProfileDisplay from './ProfileDisplay';
+import ProfileDetails from './ProfileDetails';
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -554,7 +544,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-y-scroll">
       <div className="container mx-auto py-10">
         <div className="max-w-4xl mx-auto">
           {/* Header with Sign Out button */}
@@ -582,255 +572,38 @@ export default function ProfilePage() {
           </div>
 
           {/* Profile Image and Display Name Card */}
-          <div className="border border-border/50 rounded-lg p-5 mb-6 bg-card/30">
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              {/* Profile Image - added outer wrapper div with padding */}
-              <div className="relative group pt-2 pr-2 pb-2 pl-2">
-                {/* Delete button - made smaller and less obtrusive */}
-                {imagePreview && (
-                  <button
-                    type="button"
-                    onClick={removeSelectedImage}
-                    title={t('profile.buttons.removeImage')}
-                    className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-md transition-all duration-200 hover:scale-110 z-10 border border-white"
-                    aria-label={t('profile.buttons.removeImage')}
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                )}
-                
-                <div className="w-24 h-24 rounded-full overflow-hidden bg-muted flex items-center justify-center relative">
-                  {imagePreview ? (
-                    <img src={imagePreview} alt="Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <User className="w-12 h-12 text-muted-foreground" />
-                  )}
-
-                  {/* Overlay for image upload */}
-                  <div
-                    className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                    onClick={triggerFileInput}
-                  >
-                    <Camera className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-
-                {/* Hidden file input */}
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleImageSelect}
-                  accept="image/*"
-                  className="hidden"
-                />
-              </div>
-
-              {/* Profile Fields - Improved layout */}
-              <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                {/* Display Name */}
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                    {t('profile.fields.displayName.label')}
-                  </label>
-                  <input
-                    type="text"
-                    name="displayName"
-                    value={formValues.displayName}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
-                  />
-                </div>
-
-                {/* 실명 (Real Name) */}
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                    {t('profile.fields.realName.label')}
-                  </label>
-                  <input
-                    type="text"
-                    name="realName"
-                    value={formValues.realName}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
-                  />
-                </div>
-
-                {/* 소속 (Organization) - Takes full width on larger screens */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                    {t('profile.fields.organization.label')}
-                  </label>
-                  <input
-                    type="text"
-                    name="organization"
-                    value={formValues.organization}
-                    onChange={handleInputChange}
-                    placeholder={t('profile.fields.organization.placeholder')}
-                    className="w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProfileDisplay
+            imagePreview={imagePreview}
+            removeSelectedImage={removeSelectedImage}
+            triggerFileInput={triggerFileInput}
+            fileInputRef={fileInputRef}
+            handleImageSelect={handleImageSelect}
+            formValues={formValues}
+            handleInputChange={handleInputChange}
+            t={t}
+          />
 
           {/* Profile Details Card */}
-          <div className="border border-border/50 rounded-lg p-5 bg-card/30">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <Settings className="w-5 h-5" />
-              {t('profile.sections.details')}
-            </h2>
-
-            <form id="profileForm" onSubmit={handleSaveProfile} className="space-y-4">
-              {/* Social Media Links */}
-              <div>
-                <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                  {t('profile.fields.socialLinks.label')}
-                </label>
-                <div className="space-y-2">
-                  {socialLinks.map((link, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <div className="relative flex-1">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                          {getSocialIcon(link)}
-                        </div>
-                        <div className="flex items-center w-full bg-background border border-border/50 rounded-md focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/50">
-                          <span className="pl-10 pr-0 py-2 text-muted-foreground">https://</span>
-                          <input
-                            type="text"
-                            placeholder={t('profile.fields.socialLinks.placeholder', {
-                              num: index + 1,
-                            })}
-                            value={link.replace(/^https?:\/\//i, '')}
-                            onChange={(e) => updateSocialLink(index, e.target.value)}
-                            className="flex-1 pl-0 pr-3 py-2 bg-transparent border-none outline-none"
-                          />
-                        </div>
-                      </div>
-                      {socialLinks.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => removeSocialLink(index)}
-                          className="p-2 text-red-500 hover:text-red-600 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                  {socialLinks.length < 10 && (
-                    <button
-                      type="button"
-                      onClick={addSocialLink}
-                      className="mt-2 flex items-center text-sm text-primary hover:text-primary/80 transition-colors"
-                    >
-                      <Plus className="w-4 h-4 mr-1" />
-                      {t('profile.fields.socialLinks.addMore', {
-                        count: socialLinks.length,
-                        max: 10,
-                      })}
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                  {t('profile.fields.tags.label')}
-                </label>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {tags.map((tag, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center bg-primary/10 text-primary px-2 py-1 rounded-md text-sm"
-                    >
-                      <span>{tag}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeTag(tag)}
-                        className="ml-1 text-primary hover:text-primary/80"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyDown={handleTagKeyDown}
-                    onBlur={() => {
-                      if (tagInput.trim()) {
-                        addTag(tagInput);
-                      }
-                    }}
-                    placeholder={t('profile.fields.tags.placeholder')}
-                    className="w-full px-3 py-2 bg-background border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
-                  />
-                  {tagInput.trim() && (
-                    <button
-                      type="button"
-                      onClick={() => addTag(tagInput)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary/80"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-                <input type="hidden" name="tags" value={tags.join(',')} />
-                <p className="text-xs text-muted-foreground mt-1">
-                  {t('profile.fields.tags.help')}
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                  {t('profile.fields.lookingFor.label')}
-                </label>
-                <input
-                  type="text"
-                  name="lookingFor"
-                  placeholder={t('profile.fields.lookingFor.placeholder')}
-                  value={formValues.lookingFor}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 bg-background border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                  {t('profile.fields.description.label')}
-                </label>
-                <textarea
-                  name="description"
-                  placeholder={t('profile.fields.description.placeholder')}
-                  value={formValues.description}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 bg-background border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1 text-muted-foreground">
-                  {t('profile.fields.expectations.label')}
-                </label>
-                <textarea
-                  name="expectations"
-                  placeholder={t('profile.fields.expectations.placeholder')}
-                  value={formValues.expectations}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 bg-background border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none resize-none"
-                />
-              </div>
-            </form>
-          </div>
+          <ProfileDetails
+            formValues={formValues}
+            handleInputChange={handleInputChange}
+            socialLinks={socialLinks}
+            updateSocialLink={updateSocialLink}
+            removeSocialLink={removeSocialLink}
+            addSocialLink={addSocialLink}
+            tags={tags}
+            tagInput={tagInput}
+            setTagInput={setTagInput}
+            handleTagKeyDown={handleTagKeyDown}
+            addTag={addTag}
+            removeTag={removeTag}
+            getSocialIcon={getSocialIcon}
+            handleSaveProfile={handleSaveProfile}
+            t={t}
+          />
 
           {/* Action row with messages on left and buttons on right */}
-          <div className="flex justify-between items-center mt-6">
+          <div className="flex justify-between items-center mt-6 mb-16">
             {/* Success and error messages */}
             <div className="flex-1">
               {saveSuccess && (

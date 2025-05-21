@@ -55,7 +55,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
 
         {/* Main content area */}
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1">{children}</main>
       </div>
     </div>
   );
