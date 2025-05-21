@@ -3,16 +3,13 @@
     "buttons": {
       "save": "Save",
       "saving": "Saving...",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "submitting": "Submitting..."
     },
+    "cancel": "Cancel",
     "loading": "...",
-    "allPosts": "All Posts",
-    "allPostsDescription": "Browse all posts from our community",
-    "createPost": "Create Post",
-    "noPosts": "No posts found",
     "loadMore": "Load more posts",
     "appName": "Cross Platform Korea",
-    "navVideo": "Videos",
     "sideFeatureRequests": "Feature Requests",
     "signIn": "Sign In",
     "remove": "Remove",
@@ -120,7 +117,8 @@
     "allPostsDescription": "Browse all posts from our community",
     "createPost": "Create Post",
     "noPosts": "No posts found",
-    "loadMore": "Load more"
+    "loadMore": "Load more",
+    "write": "Write Post"
   },
   "postCategories": {
     "ALL": { "name": "All", "description": "All posts" },
@@ -225,6 +223,31 @@
       "allowAdults": "Allow adults only",
       "fiveSeconds": "5 seconds",
       "tenSeconds": "10 seconds"
+    }
+  },
+  "postWrite": {
+    "writeNewPost": "Write New Post",
+    "edit": "Edit",
+    "preview": "Preview",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter post title",
+    "categoryLabel": "Category",
+    "tagsLabel": "Tags",
+    "tagsPlaceholder": "Add tags (Press Enter or comma to add)",
+    "addTag": "Add Tag",
+    "contentPlaceholder": "Write your post content here...",
+    "previewTitle": "Post Preview",
+    "previewPlaceholder": "Content preview will appear here",
+    "publishPost": "Publish Post",
+    "formatting": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "link": "Insert Link",
+      "image": "Insert Image",
+      "list": "Bullet List",
+      "orderedList": "Numbered List"
     }
   }
 }

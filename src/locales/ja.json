@@ -3,11 +3,12 @@
     "buttons": {
       "save": "保存",
       "saving": "保存中...",
-      "cancel": "キャンセル"
+      "cancel": "キャンセル",
+      "submitting": "送信中..."
     },
+    "cancel": "キャンセル",
     "loading": "...",
-    "appName": "クロスプラットフォームコリア",
-    "navVideo": "ビデオ",
+    "appName": "クロスプラットフォーム コリア",
     "sideFeatureRequests": "機能リクエスト",
     "signIn": "ログイン",
     "remove": "削除",
@@ -18,10 +19,6 @@
     "navCommunity": "コミュニティ",
     "navBlog": "ブログ",
     "all": "すべて",
-    "allPosts": "すべての投稿",
-    "allPostsDescription": "コミュニティからのすべての投稿を閲覧する",
-    "createPost": "投稿作成",
-    "noPosts": "投稿が見つかりません",
     "loadMore": "もっと見る"
   },
   "errors": {
@@ -120,7 +117,8 @@
     "allPostsDescription": "コミュニティからのすべての投稿を閲覧する",
     "createPost": "投稿作成",
     "noPosts": "投稿が見つかりません",
-    "loadMore": "もっと見る"
+    "loadMore": "もっと見る",
+    "write": "投稿を書く"
   },
   "postCategories": {
     "ALL": { "name": "すべて", "description": "すべての投稿" },
@@ -225,6 +223,31 @@
       "allowAdults": "大人のみ許可",
       "fiveSeconds": "5秒",
       "tenSeconds": "10秒"
+    }
+  },
+  "postWrite": {
+    "writeNewPost": "新規投稿",
+    "edit": "編集",
+    "preview": "プレビュー",
+    "enterFullscreen": "全画面表示",
+    "exitFullscreen": "全画面表示を終了",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "タイトルを入力してください",
+    "categoryLabel": "カテゴリー",
+    "tagsLabel": "タグ",
+    "tagsPlaceholder": "タグを追加 (Enterまたはカンマで追加)",
+    "addTag": "タグを追加",
+    "contentPlaceholder": "投稿内容を入力してください...",
+    "previewTitle": "プレビュー",
+    "previewPlaceholder": "ここに内容のプレビューが表示されます",
+    "publishPost": "投稿する",
+    "formatting": {
+      "bold": "太字",
+      "italic": "斜体",
+      "link": "リンクを挿入",
+      "image": "画像を挿入",
+      "list": "箇条書き",
+      "orderedList": "番号付きリスト"
     }
   }
 }
