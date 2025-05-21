@@ -1,6 +1,6 @@
 ---
 description: Guidelines and best practices for building Convex projects, including database schema design, queries, mutations, and real-world examples
-globs: **/*.ts,**/*.tsx,**/*.js,**/*.jsx
+globs: **/convex/**/*.ts,**/convex/**/*.js,**/convex/**/*.tsx,**/convex/**/*.jsx
 ---
 
 # Convex guidelines
@@ -214,6 +214,34 @@ globs: **/*.ts,**/*.tsx,**/*.js,**/*.jsx
 - When using the `Record` type, make sure to always define your records as `const record: Record<KeyType, ValueType> = {...};`
 - Always add `@types/node` to your `package.json` when using any Node.js built-in modules.
 
+## Authentication Guidelines
+- Always use `getAuthUserId(ctx)` to check if a user is authenticated and get their ID:
+
+  ```typescript
+  import { getAuthUserId } from "@convex-dev/auth/server";
+
+  export const myAuthenticatedFunction = query({
+    args: {},
+    returns: v.boolean(),
+    handler: async (ctx, args) => {
+      // Get the user ID or null if not authenticated
+      const userId = await getAuthUserId(ctx);
+
+      if (!userId) {
+        // Handle unauthenticated case
+        return false;
+      }
+
+      // User is authenticated, proceed with the function
+      return true;
+    },
+  });
+  ```
+
+- Never use `ctx.auth.getUserIdentity()` to get userId - this makes debugging difficult and is error-prone.
+- Return appropriate error messages or empty results when a user is not authenticated.
+- For mutations and actions that require authentication, verify the user is authenticated before performing operations.
+
 ## Full text search guidelines
 - A query for "10 messages in channel '#general' that best match the query 'hello hi' in their body" would look like:
 
@@ -282,7 +310,7 @@ const messages = await ctx.db
                             export default crons;
                             ```
 - You can register Convex functions within `crons.ts` just like any other file.
-- If a cron calls an internal function, always import the `internal` object from '_generated/api`, even if the internal function is registered in the same file.
+- If a cron calls an internal function, always import the `internal` object from '_generated/api', even if the internal function is registered in the same file.
 
 
 ## File storage guidelines
@@ -643,6 +671,35 @@ export const writeAgentResponse = internalMutation({
     return null;
   },
 });
+```
+
+#### convex/schema.ts
+```typescript
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  channels: defineTable({
+    name: v.string(),
+  }),
+
+  users: defineTable({
+    name: v.string(),
+  }),
+
+  messages: defineTable({
+    channelId: v.id("channels"),
+    authorId: v.optional(v.id("users")),
+    content: v.string(),
+  }).index("by_channel", ["channelId"]),
+});
+```
+
+#### src/App.tsx
+```typescript
+export default function App() {
+  return <div>Hello World</div>;
+}
 ```
 
 #### convex/schema.ts
