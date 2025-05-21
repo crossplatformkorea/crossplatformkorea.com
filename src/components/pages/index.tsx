@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Main from './main';
 import SignIn from './sign-in';
-import ProfilePage from './profile';
 import { AppLayout } from './layout';
 
 // This component only handles routing
@@ -10,7 +9,6 @@ export default function AppRoutes() {
     <AppLayout>
       <Routes>
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/*" element={<Main />} />
       </Routes>
     </AppLayout>
