@@ -25,7 +25,6 @@ import type * as files_query from "../files/query.js";
 import type * as http from "../http.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
-import type * as serviceStatus from "../serviceStatus.js";
 import type * as users_mutation from "../users/mutation.js";
 import type * as users_query from "../users/query.js";
 
@@ -50,7 +49,6 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;
-  serviceStatus: typeof serviceStatus;
   "users/mutation": typeof users_mutation;
   "users/query": typeof users_query;
 }>;
