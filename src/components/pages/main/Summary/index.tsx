@@ -195,12 +195,14 @@ export default function SummaryPage() {
             </div>
 
             {recentPosts?.length === 0 ? (
-              <motion.p
-                className="text-muted-foreground text-center py-10 bg-card/50 rounded-xl border border-border"
+              <motion.div 
+                className="text-center py-12 rounded-xl bg-muted/10 backdrop-blur-[1px]"
                 variants={item}
               >
-                {t('posts.noPosts')}
-              </motion.p>
+                <p className="text-muted-foreground px-4">
+                  {t('posts.noPosts')}
+                </p>
+              </motion.div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recentPosts?.map((post, index) => (
