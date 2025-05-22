@@ -16,8 +16,8 @@
 - Example for a query function:
 
   ```typescript
-  import { query } from "./_generated/server";
-  import { v } from "convex/values";
+  import { query } from './_generated/server';
+  import { v } from 'convex/values';
 
   export const f = query({
     args: {},
@@ -34,13 +34,13 @@
 - Example:
 
   ```typescript
-  import { httpRouter } from "convex/server";
-  import { httpAction } from "./_generated/server";
+  import { httpRouter } from 'convex/server';
+  import { httpAction } from './_generated/server';
 
   const http = httpRouter();
   http.route({
-    path: "/echo",
-    method: "POST",
+    path: '/echo',
+    method: 'POST',
     handler: httpAction(async (ctx, req) => {
       const body = await req.bytes();
       return new Response(body, { status: 200 });
@@ -57,8 +57,8 @@
   - Array validator:
 
     ```typescript
-    import { mutation } from "./_generated/server";
-    import { v } from "convex/values";
+    import { mutation } from './_generated/server';
+    import { v } from 'convex/values';
 
     export default mutation({
       args: { simpleArray: v.array(v.union(v.string(), v.number())) },
@@ -71,15 +71,15 @@
   - Discriminated union schema:
 
     ```typescript
-    import { defineSchema, defineTable } from "convex/server";
-    import { v } from "convex/values";
+    import { defineSchema, defineTable } from 'convex/server';
+    import { v } from 'convex/values';
 
     export default defineSchema({
       results: defineTable(
         v.union(
-          v.object({ kind: v.literal("error"), errorMessage: v.string() }),
-          v.object({ kind: v.literal("success"), value: v.number() })
-        )
+          v.object({ kind: v.literal('error'), errorMessage: v.string() }),
+          v.object({ kind: v.literal('success'), value: v.number() }),
+        ),
       ),
     });
     ```
@@ -87,14 +87,14 @@
   - Use `v.null()` for null returns:
 
     ```typescript
-    import { query } from "./_generated/server";
-    import { v } from "convex/values";
+    import { query } from './_generated/server';
+    import { v } from 'convex/values';
 
     export const exampleQuery = query({
       args: {},
       returns: v.null(),
       handler: async (ctx, args) => {
-        console.log("This query returns a null value");
+        console.log('This query returns a null value');
         return null;
       },
     });
@@ -133,14 +133,14 @@
   export const f = query({
     args: { name: v.string() },
     returns: v.string(),
-    handler: async (ctx, args) => "Hello " + args.name,
+    handler: async (ctx, args) => 'Hello ' + args.name,
   });
 
   export const g = query({
     args: {},
     returns: v.null(),
     handler: async (ctx, args) => {
-      const result: string = await ctx.runQuery(api.example.f, { name: "Bob" });
+      const result: string = await ctx.runQuery(api.example.f, { name: 'Bob' });
       return null;
     },
   });
@@ -165,17 +165,17 @@
 - Use pagination for queries returning incremental results:
 
   ```typescript
-  import { v } from "convex/values";
-  import { query } from "./_generated/server";
-  import { paginationOptsValidator } from "convex/server";
+  import { v } from 'convex/values';
+  import { query } from './_generated/server';
+  import { paginationOptsValidator } from 'convex/server';
 
   export const listWithExtraArg = query({
     args: { paginationOpts: paginationOptsValidator, author: v.string() },
     handler: async (ctx, args) => {
       return await ctx.db
-        .query("messages")
-        .filter((q) => q.eq(q.field("author"), args.author))
-        .order("desc")
+        .query('messages')
+        .filter((q) => q.eq(q.field('author'), args.author))
+        .order('desc')
         .paginate(args.paginationOpts);
     },
   });
@@ -213,14 +213,14 @@
 - Define `Record` types with proper key/value types:
 
   ```typescript
-  import { query } from "./_generated/server";
-  import { Doc, Id } from "./_generated/dataModel";
+  import { query } from './_generated/server';
+  import { Doc, Id } from './_generated/dataModel';
 
   export const exampleQuery = query({
-    args: { userIds: v.array(v.id("users")) },
-    returns: v.record(v.id("users"), v.string()),
+    args: { userIds: v.array(v.id('users')) },
+    returns: v.record(v.id('users'), v.string()),
     handler: async (ctx, args) => {
-      const idToUsername: Record<Id<"users">, string> = {};
+      const idToUsername: Record<Id<'users'>, string> = {};
       for (const userId of args.userIds) {
         const user = await ctx.db.get(userId);
         if (user) idToUsername[user._id] = user.username;
@@ -264,14 +264,14 @@
   - Use `.catch()` to handle potential errors:
     ```typescript
     myPromiseFunction().catch((error) => {
-      console.error("Operation failed:", error);
+      console.error('Operation failed:', error);
     });
     ```
   - Use `.then()` with both success and error handlers:
     ```typescript
     myPromiseFunction().then(
-      (result) => console.log("Success:", result),
-      (error) => console.error("Error:", error)
+      (result) => console.log('Success:', result),
+      (error) => console.error('Error:', error),
     );
     ```
 
@@ -300,7 +300,7 @@
 - Always use `getAuthUserId(ctx)` to check if a user is authenticated and get their ID:
 
   ```typescript
-  import { getAuthUserId } from "@convex-dev/auth/server";
+  import { getAuthUserId } from '@convex-dev/auth/server';
 
   export const myAuthenticatedFunction = query({
     args: {},
@@ -332,7 +332,7 @@
     handler: async (ctx, args) => {
       const userId = await getAuthUserId(ctx);
       if (!userId) {
-        throw new Error("Authentication required");
+        throw new Error('Authentication required');
       }
 
       // Continue with authenticated operation
@@ -347,10 +347,8 @@
 - Example query for full-text search (e.g., 10 messages in channel `#general` matching `"hello hi"`):
   ```typescript
   const messages = await ctx.db
-    .query("messages")
-    .withSearchIndex("search_body", (q) =>
-      q.search("body", "hello hi").eq("channel", "#general")
-    )
+    .query('messages')
+    .withSearchIndex('search_body', (q) => q.search('body', 'hello hi').eq('channel', '#general'))
     .take(10);
   ```
 
@@ -361,7 +359,7 @@
 - Avoid `filter` in queries; use `withIndex` with a defined schema index instead.
 - Do not use `.delete()` on queries; collect results and use `ctx.db.delete(row._id)`:
   ```typescript
-  const rows = await ctx.db.query("table").collect();
+  const rows = await ctx.db.query('table').collect();
   for (const row of rows) await ctx.db.delete(row._id);
   ```
 - Use `.unique()` to retrieve a single document (throws if multiple documents match).
@@ -385,14 +383,14 @@
 - Example action:
 
   ```typescript
-  import { action } from "./_generated/server";
-  import { v } from "convex/values";
+  import { action } from './_generated/server';
+  import { v } from 'convex/values';
 
   export const exampleAction = action({
     args: {},
     returns: v.null(),
     handler: async (ctx, args) => {
-      console.log("This action does not return anything");
+      console.log('This action does not return anything');
       return null;
     },
   });
@@ -407,25 +405,20 @@
 - Define and export crons in a `crons.ts` file:
 
   ```typescript
-  import { cronJobs } from "convex/server";
-  import { internal } from "./_generated/api";
-  import { internalAction } from "./_generated/server";
+  import { cronJobs } from 'convex/server';
+  import { internal } from './_generated/api';
+  import { internalAction } from './_generated/server';
 
   const empty = internalAction({
     args: {},
     returns: v.null(),
     handler: async (ctx, args) => {
-      console.log("empty");
+      console.log('empty');
     },
   });
 
   const crons = cronJobs();
-  crons.interval(
-    "delete inactive users",
-    { hours: 2 },
-    internal.crons.empty,
-    {}
-  );
+  crons.interval('delete inactive users', { hours: 2 }, internal.crons.empty, {});
   export default crons;
   ```
 
@@ -439,11 +432,11 @@
 - Do not use deprecated `ctx.storage.getMetadata`; query the `_storage` system table instead:
 
   ```typescript
-  import { query } from "./_generated/server";
-  import { Id } from "./_generated/dataModel";
+  import { query } from './_generated/server';
+  import { Id } from './_generated/dataModel';
 
   type FileMetadata = {
-    _id: Id<"_storage">;
+    _id: Id<'_storage'>;
     _creationTime: number;
     contentType?: string;
     sha256: string;
@@ -451,12 +444,10 @@
   };
 
   export const exampleQuery = query({
-    args: { fileId: v.id("_storage") },
+    args: { fileId: v.id('_storage') },
     returns: v.null(),
     handler: async (ctx, args) => {
-      const metadata: FileMetadata | null = await ctx.db.system.get(
-        args.fileId
-      );
+      const metadata: FileMetadata | null = await ctx.db.system.get(args.fileId);
       console.log(metadata);
       return null;
     },
@@ -530,17 +521,17 @@
 #### **`convex/schema.ts`**
 
 ```typescript
-import { defineSchema, defineTable } from "convex/server";
-import { v } from "convex/values";
+import { defineSchema, defineTable } from 'convex/server';
+import { v } from 'convex/values';
 
 export default defineSchema({
   channels: defineTable({ name: v.string() }),
   users: defineTable({ name: v.string() }),
   messages: defineTable({
-    channelId: v.id("channels"),
-    authorId: v.optional(v.id("users")),
+    channelId: v.id('channels'),
+    authorId: v.optional(v.id('users')),
     content: v.string(),
-  }).index("by_channel", ["channelId"]),
+  }).index('by_channel', ['channelId']),
 });
 ```
 
@@ -553,46 +544,46 @@ import {
   internalQuery,
   internalMutation,
   internalAction,
-} from "./_generated/server";
-import { v } from "convex/values";
-import OpenAI from "openai";
-import { internal } from "./_generated/api";
+} from './_generated/server';
+import { v } from 'convex/values';
+import OpenAI from 'openai';
+import { internal } from './_generated/api';
 
 // Create a user
 export const createUser = mutation({
   args: { name: v.string() },
-  returns: v.id("users"),
+  returns: v.id('users'),
   handler: async (ctx, args) => {
-    return await ctx.db.insert("users", { name: args.name });
+    return await ctx.db.insert('users', { name: args.name });
   },
 });
 
 // Create a channel
 export const createChannel = mutation({
   args: { name: v.string() },
-  returns: v.id("channels"),
+  returns: v.id('channels'),
   handler: async (ctx, args) => {
-    return await ctx.db.insert("channels", { name: args.name });
+    return await ctx.db.insert('channels', { name: args.name });
   },
 });
 
 // List recent messages
 export const listMessages = query({
-  args: { channelId: v.id("channels") },
+  args: { channelId: v.id('channels') },
   returns: v.array(
     v.object({
-      _id: v.id("messages"),
+      _id: v.id('messages'),
       _creationTime: v.number(),
-      channelId: v.id("channels"),
-      authorId: v.optional(v.id("users")),
+      channelId: v.id('channels'),
+      authorId: v.optional(v.id('users')),
       content: v.string(),
-    })
+    }),
   ),
   handler: async (ctx, args) => {
     return await ctx.db
-      .query("messages")
-      .withIndex("by_channel", (q) => q.eq("channelId", args.channelId))
-      .order("desc")
+      .query('messages')
+      .withIndex('by_channel', (q) => q.eq('channelId', args.channelId))
+      .order('desc')
       .take(10);
   },
 });
@@ -600,17 +591,17 @@ export const listMessages = query({
 // Send a message and schedule AI response
 export const sendMessage = mutation({
   args: {
-    channelId: v.id("channels"),
-    authorId: v.id("users"),
+    channelId: v.id('channels'),
+    authorId: v.id('users'),
     content: v.string(),
   },
   returns: v.null(),
   handler: async (ctx, args) => {
     const channel = await ctx.db.get(args.channelId);
-    if (!channel) throw new Error("Channel not found");
+    if (!channel) throw new Error('Channel not found');
     const user = await ctx.db.get(args.authorId);
-    if (!user) throw new Error("User not found");
-    await ctx.db.insert("messages", {
+    if (!user) throw new Error('User not found');
+    await ctx.db.insert('messages', {
       channelId: args.channelId,
       authorId: args.authorId,
       content: args.content,
@@ -626,18 +617,18 @@ const openai = new OpenAI();
 
 // Generate AI response
 export const generateResponse = internalAction({
-  args: { channelId: v.id("channels") },
+  args: { channelId: v.id('channels') },
   returns: v.null(),
   handler: async (ctx, args) => {
     const context = await ctx.runQuery(internal.index.loadContext, {
       channelId: args.channelId,
     });
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: 'gpt-4o',
       messages: context,
     });
     const content = response.choices[0].message.content;
-    if (!content) throw new Error("No content in response");
+    if (!content) throw new Error('No content in response');
     await ctx.runMutation(internal.index.writeAgentResponse, {
       channelId: args.channelId,
       content,
@@ -648,32 +639,32 @@ export const generateResponse = internalAction({
 
 // Load conversation context
 export const loadContext = internalQuery({
-  args: { channelId: v.id("channels") },
+  args: { channelId: v.id('channels') },
   returns: v.array(
     v.object({
-      role: v.union(v.literal("user"), v.literal("assistant")),
+      role: v.union(v.literal('user'), v.literal('assistant')),
       content: v.string(),
-    })
+    }),
   ),
   handler: async (ctx, args) => {
     const channel = await ctx.db.get(args.channelId);
-    if (!channel) throw new Error("Channel not found");
+    if (!channel) throw new Error('Channel not found');
     const messages = await ctx.db
-      .query("messages")
-      .withIndex("by_channel", (q) => q.eq("channelId", args.channelId))
-      .order("desc")
+      .query('messages')
+      .withIndex('by_channel', (q) => q.eq('channelId', args.channelId))
+      .order('desc')
       .take(10);
     const result = [];
     for (const message of messages) {
       if (message.authorId) {
         const user = await ctx.db.get(message.authorId);
-        if (!user) throw new Error("User not found");
+        if (!user) throw new Error('User not found');
         result.push({
-          role: "user" as const,
+          role: 'user' as const,
           content: `${user.name}: ${message.content}`,
         });
       } else {
-        result.push({ role: "assistant" as const, content: message.content });
+        result.push({ role: 'assistant' as const, content: message.content });
       }
     }
     return result;
@@ -682,14 +673,363 @@ export const loadContext = internalQuery({
 
 // Write AI response
 export const writeAgentResponse = internalMutation({
-  args: { channelId: v.id("channels"), content: v.string() },
+  args: { channelId: v.id('channels'), content: v.string() },
   returns: v.null(),
   handler: async (ctx, args) => {
-    await ctx.db.insert("messages", {
+    await ctx.db.insert('messages', {
       channelId: args.channelId,
       content: args.content,
     });
     return null;
   },
 });
+```
+
+**Copilot Instructions for React Projects**
+
+**Objective**: Provide guidelines and best practices for building React applications, focusing on internationalization (i18n) implementation and other React-specific patterns.
+
+**File Scope**:
+
+- Applies to files matching the patterns: `**/*.ts`, `**/*.tsx`, `**/*.jsx`
+
+---
+
+### **Internationalization (i18n) with i18next**
+
+#### **File Structure**
+
+- Store translation files in the `src/locales/` directory with language-specific JSON files (e.g., `en.json`, `ko.json`, `ja.json`).
+- Organize translations in a hierarchical structure using nested objects for logical grouping by feature or component.
+
+  ```json
+  {
+    "common": {
+      "buttons": {
+        "submit": "Submit",
+        "cancel": "Cancel"
+      }
+    },
+    "auth": {
+      "signIn": {
+        "title": "Sign In",
+        "emailLabel": "Email Address"
+      }
+    }
+  }
+  ```
+
+#### **Configuration**
+
+- Use the `i18n.ts` utility file for configuration and initialization:
+
+  ```typescript
+  // src/lib/i18n.ts
+  import i18n from 'i18next';
+  import { initReactI18next } from 'react-i18next';
+
+  // Import language resources
+  import en from '../locales/en.json';
+  import ko from '../locales/ko.json';
+  import ja from '../locales/ja.json';
+
+  // Initialize i18next
+  i18n.use(initReactI18next).init({
+    resources: {
+      en: { translation: en },
+      ko: { translation: ko },
+      ja: { translation: ja },
+    },
+    lng: 'en', // Default language
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false, // React already safes from XSS
+    },
+  });
+
+  // Utility function to get current locale
+  export const getLocale = (): string => {
+    return i18n.language || 'en';
+  };
+
+  // Export the translation function
+  export const t = i18n.t.bind(i18n);
+
+  export default i18n;
+  ```
+
+---
+
+### **Translation Guidelines**
+
+#### **Using Translations**
+
+- Import the `t` function from `lib/i18n.ts` to access translations:
+
+  ```tsx
+  import { t } from '../lib/i18n';
+
+  function MyComponent() {
+    return (
+      <div>
+        <h1>{t('auth.signIn.title')}</h1>
+        <label>{t('auth.signIn.emailLabel')}</label>
+      </div>
+    );
+  }
+  ```
+
+- For dynamic values, use interpolation with the `{{variable}}` syntax:
+
+  ```tsx
+  // In translation file:
+  // "welcome": "Welcome, {{name}}!"
+
+  <p>{t('welcome', { name: username })}</p>
+  ```
+
+#### **Pluralization**
+
+- Use i18next pluralization features for count-based text:
+
+  ```json
+  // In translation file:
+  {
+    "items": {
+      "one": "{{count}} item",
+      "other": "{{count}} items"
+    }
+  }
+  ```
+
+  ```tsx
+  <p>{t('items', { count: itemCount })}</p>
+  ```
+
+#### **Language Switching**
+
+- Implement language switching with the `i18n.changeLanguage` function:
+
+  ```tsx
+  import i18n from '../lib/i18n';
+
+  function LanguageSwitcher() {
+    const changeLanguage = (lng: string) => {
+      i18n.changeLanguage(lng);
+    };
+
+    return (
+      <div>
+        <button onClick={() => changeLanguage('en')}>English</button>
+        <button onClick={() => changeLanguage('ko')}>한국어</button>
+        <button onClick={() => changeLanguage('ja')}>日本語</button>
+      </div>
+    );
+  }
+  ```
+
+---
+
+### **Best Practices**
+
+#### **Key Structure**
+
+- Use dot notation for hierarchical keys (e.g., `component.subcomponent.element.property`).
+- Group related translations under common prefixes (e.g., all sign-in related texts under `signIn.*`).
+- Keep consistent naming conventions for keys across language files.
+
+#### **Fallback Handling**
+
+- Always provide complete translations in the fallback language (typically English).
+- Use namespaces for modular loading of translations when dealing with large applications.
+
+#### **Development Workflow**
+
+- Add new keys to all language files simultaneously to avoid missing translations.
+- Comment complex or context-dependent translations in the default language file.
+- Use the same key structure across all language files.
+
+#### **Performance Considerations**
+
+- Use translation key references (`t('key')`) instead of direct string access.
+- For components with many translations, consider using the `useTranslation` hook from react-i18next to avoid unnecessary re-renders.
+- For large applications, use namespaces to load translations on demand:
+
+  ```tsx
+  import { useTranslation } from 'react-i18next';
+
+  function MyComponent() {
+    const { t } = useTranslation('namespace');
+    return <h1>{t('key')}</h1>;
+  }
+  ```
+
+#### **Format Handling**
+
+- For dates, numbers, and currencies, use specialized formatting:
+
+  ```tsx
+  // Date formatting
+  import { format } from 'date-fns';
+  import { ko, ja, enUS } from 'date-fns/locale';
+
+  const locales = { en: enUS, ko, ja };
+  const currentLocale = locales[i18n.language] || enUS;
+
+  // Format date according to current locale
+  const formattedDate = format(new Date(), 'PPP', { locale: currentLocale });
+  ```
+
+  ```tsx
+  // Number and currency formatting
+  const formatter = new Intl.NumberFormat(i18n.language, {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  const formattedPrice = formatter.format(price);
+  ```
+
+---
+
+### **Integration with Convex**
+
+- Use the locale in Convex function calls when language-specific operations are needed:
+
+  ```tsx
+  import { useConvexAuth } from 'convex/react';
+  import { useAuthActions } from '@convex-dev/auth/react';
+  import { getLocale } from '../lib/i18n';
+
+  function SignIn() {
+    const { signIn } = useAuthActions();
+
+    // Use the appropriate provider ID based on current locale
+    const locale = getLocale();
+    const providerId = `resend-otp-${locale}`;
+
+    const handleSignIn = async (email) => {
+      await signIn(providerId, { email });
+    };
+
+    // Component JSX
+  }
+  ```
+
+- Store user language preferences in the Convex database for persistence:
+
+  ```typescript
+  // Convex function to update user language preference
+  export const updateLanguagePreference = mutation({
+    args: {
+      userId: v.id('users'),
+      language: v.string(),
+    },
+    returns: v.null(),
+    handler: async (ctx, args) => {
+      await ctx.db.patch(args.userId, {
+        languagePreference: args.language,
+      });
+      return null;
+    },
+  });
+  ```
+
+---
+
+### **Example: Complete i18n Implementation**
+
+**Task**: Create a sign-in form with internationalization support for English, Korean, and Japanese.
+
+**Requirements**:
+
+- Translation files for all supported languages.
+- Language switching capability.
+- Properly structured translation keys.
+- Effective use of the translation utility.
+
+**Implementation**:
+
+```tsx
+// src/components/pages/SignIn.tsx
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useConvexAuth } from 'convex/react';
+import { useAuthActions } from '@convex-dev/auth/react';
+import { t, getLocale } from '../../lib/i18n';
+import { cn } from '../../lib/utils';
+
+export default function SignIn() {
+  const { isAuthenticated } = useConvexAuth();
+  const { signIn } = useAuthActions();
+  const [email, setEmail] = useState('');
+  const [isCodeSent, setIsCodeSent] = useState(false);
+
+  // Use locale-specific provider
+  const locale = getLocale();
+  const providerId = `resend-otp-${locale}`;
+
+  const handleSendCode = async (e) => {
+    e.preventDefault();
+    try {
+      await signIn(providerId, { email });
+      setIsCodeSent(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className={cn('flex flex-col h-screen')}>
+      <div className="flex-1 flex justify-center items-center">
+        <div className="w-full max-w-md p-8 rounded-xl bg-background/80 backdrop-blur-md border border-border/50 shadow-2xl">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground text-center">
+            {t('signIn.title')}
+          </h2>
+
+          {!isCodeSent ? (
+            <form onSubmit={handleSendCode} className="mt-8 space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
+                  {t('signIn.emailLabel')}
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t('signIn.emailPlaceholder')}
+                  className={cn(
+                    'w-full px-4 py-3 rounded-md',
+                    'bg-background/50 backdrop-blur-sm',
+                    'border border-border/50 outline-none',
+                    'focus-visible:ring-2 focus-visible:ring-primary/50',
+                    'focus-visible:border-primary/50 transition-all',
+                  )}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={cn(
+                  'w-full py-3 rounded-lg font-medium',
+                  'bg-gradient-to-r from-primary to-primary/90',
+                  'text-primary-foreground shadow-lg',
+                  'hover:from-primary/90 hover:to-primary/80',
+                  'transition-all',
+                )}
+              >
+                {t('signIn.signInWithEmail')}
+              </button>
+            </form>
+          ) : (
+            <p className="mt-4 text-center text-sm text-muted-foreground">
+              {t('signIn.verifyEmailMessage')}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 ```

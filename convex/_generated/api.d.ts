@@ -20,11 +20,13 @@ import type * as constants from "../constants.js";
 import type * as featureRequests from "../featureRequests.js";
 import type * as files from "../files.js";
 import type * as http from "../http.js";
+import type * as posts_likes from "../posts/likes.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
 import type * as posts from "../posts.js";
 import type * as serviceStatus from "../serviceStatus.js";
 import type * as tags_mutation from "../tags/mutation.js";
+import type * as users_stats from "../users/stats.js";
 import type * as users from "../users.js";
 
 /**
@@ -43,11 +45,13 @@ declare const fullApi: ApiFromModules<{
   featureRequests: typeof featureRequests;
   files: typeof files;
   http: typeof http;
+  "posts/likes": typeof posts_likes;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;
   posts: typeof posts;
   serviceStatus: typeof serviceStatus;
   "tags/mutation": typeof tags_mutation;
+  "users/stats": typeof users_stats;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

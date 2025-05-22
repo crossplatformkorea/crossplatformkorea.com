@@ -123,7 +123,11 @@ export const getRecentPosts = query({
   returns: v.array(postObjectValidator),
   handler: async (ctx, args) => {
     // Use the by_title index to get posts sorted by _creationTime
-    const posts = await ctx.db.query('posts').withIndex('by_title').order('desc').take(args.limit);
+    const posts = await ctx.db
+      .query('posts')
+      .withIndex('by_creation_time')
+      .order('desc')
+      .take(args.limit);
 
     return posts.map(transformPostDoc);
   },

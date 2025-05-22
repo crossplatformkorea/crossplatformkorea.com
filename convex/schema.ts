@@ -17,9 +17,13 @@ export default defineSchema({
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
     authorId: v.optional(v.id('users')), // Add author reference
+    // 좋아요 관련 필드 추가
+    likeCount: v.optional(v.number()),
+    likedBy: v.optional(v.array(v.id('users'))),
   })
     .index('by_category', ['category'])
-    .index('by_title', ['title']), // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
+    .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
+    .index('by_author', ['authorId']), // 작성자로 검색하기 위한 인덱스 추가
   userProfiles: defineTable({
     userId: v.id('users'),
     email: v.string(),
@@ -67,4 +71,14 @@ export default defineSchema({
   })
     .index('by_user', ['userId'])
     .index('by_storage_id', ['storageId']),
+  // 댓글 테이블 추가
+  comments: defineTable({
+    postId: v.id('posts'),
+    authorId: v.id('users'),
+    content: v.string(),
+    createdAt: v.string(),
+    updatedAt: v.optional(v.string()),
+  })
+    .index('by_post', ['postId'])
+    .index('by_author', ['authorId']),
 });

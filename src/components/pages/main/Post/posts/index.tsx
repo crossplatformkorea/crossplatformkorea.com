@@ -29,7 +29,7 @@ type Post = {
   authorId?: Id<'users'>;
 };
 
-const Posts = memo(function Posts() {
+const Posts = memo(function PostsPage() {
   const { t: translate } = useTranslation();
   const [searchParams] = useSearchParams();
   const categorySlug = searchParams.get('category');

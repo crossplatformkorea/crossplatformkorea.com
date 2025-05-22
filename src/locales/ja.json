@@ -19,7 +19,9 @@
     "navCommunity": "コミュニティ",
     "navBlog": "ブログ",
     "all": "すべて",
-    "loadMore": "もっと見る"
+    "loadMore": "もっと見る",
+    "viewAll": "すべて見る",
+    "loginToAccess": "サインインして始める"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -82,6 +84,12 @@
     },
     "messages": {
       "saveSuccess": "プロフィールが正常に保存されました！"
+    },
+    "viewEdit": "プロフィール編集",
+    "stats": {
+      "posts": "投稿",
+      "likes": "もらったいいね",
+      "comments": "もらったコメント"
     }
   },
   "signIn": {
@@ -103,7 +111,9 @@
     "signOutPrompt": "ログアウトしますか？",
     "signingOut": "ログアウト中...",
     "signOut": "ログアウト",
-    "returnToHome": "ホームに戻る"
+    "returnToHome": "ホームに戻る",
+    "loginToAccess": "サインインして始める",
+    "signIn": "サインイン"
   },
   "posts": {
     "title": "投稿",
@@ -124,7 +134,9 @@
     "createPost": "投稿作成",
     "noPosts": "投稿が見つかりません",
     "loadMore": "もっと見る",
-    "write": "投稿を書く"
+    "write": "投稿を書く",
+    "recentPosts": "最近の投稿",
+    "viewMore": "もっと見る"
   },
   "postCategories": {
     "ALL": { "name": "すべて", "description": "すべての投稿" },
@@ -256,5 +268,13 @@
       "list": "箇条書き",
       "orderedList": "番号付きリスト"
     }
+  },
+  "summary": {
+    "welcome": "クロスプラットフォーム・コリアへようこそ",
+    "welcomeMessage": "コミュニティに参加して他の開発者と繋がりましょう"
+  },
+  "auth": {
+    "loginDescription": "サインインするとプロフィールの管理、投稿の作成、いいねやコメントができます。",
+    "signIn": "サインイン"
   }
 }

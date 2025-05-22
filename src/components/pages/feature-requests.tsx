@@ -55,7 +55,7 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
   );
 };
 
-export default function FeatureRequests() {
+export default function FeatureRequestsPage() {
   const navigate = useNavigate();
   // Replace the direct auth check with useAuthGuard
   const { isAuthenticated, isLoading: isAuthLoading } = useAuthGuard();

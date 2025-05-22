@@ -5,7 +5,7 @@ import { t } from '../../../../lib/i18n';
 import useAuthGuard from '../../../../hooks/useAuthGuard';
 import { PlusCircle } from 'lucide-react';
 
-export default function PostDetails() {
+export default function PostDetailsPage() {
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthGuard({ requireAuth: false });

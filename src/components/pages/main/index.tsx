@@ -1,20 +1,23 @@
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import FeatureRequests from '../feature-requests';
-import Posts from './Post/posts';
-import PostDetails from './Post/post-details';
+import FeatureRequestsPage from '../feature-requests';
+import PostsPage from './Post/posts';
+import PostDetailsPage from './Post/post-details';
 import ProfilePage from '../profile';
+import SummaryPage from './Summary';
 
 export default function Main() {
   return (
     <div className="h-screen flex flex-col overflow-hidden relative">
-      <Routes>
-        <Route path="/" element={<Posts />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/post/:postId" element={<PostDetails />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/feature-request" element={<FeatureRequests />} />
-      </Routes>
+      <div className="min-h-screen bg-background overflow-y-scroll container pb-16">
+        <Routes>
+          <Route path="/" element={<SummaryPage />} />
+          <Route path="/posts" element={<PostsPage />} />
+          <Route path="/post/:postId" element={<PostDetailsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/feature-request" element={<FeatureRequestsPage />} />
+        </Routes>
+      </div>
 
       <Toaster theme="system" />
     </div>

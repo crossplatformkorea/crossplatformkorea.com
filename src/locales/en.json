@@ -19,7 +19,9 @@
     "sidePosts": "Posts",
     "navCommunity": "Community",
     "navBlog": "Blog",
-    "all": "All"
+    "all": "All",
+    "viewAll": "View All",
+    "loginToAccess": "Sign in to get started"
   },
   "errors": {
     "general": "An error occurred. Please try again.",
@@ -82,6 +84,12 @@
     },
     "messages": {
       "saveSuccess": "Profile saved successfully!"
+    },
+    "viewEdit": "Edit Profile",
+    "stats": {
+      "posts": "Posts",
+      "likes": "Likes Received",
+      "comments": "Comments Received"
     }
   },
   "signIn": {
@@ -124,7 +132,9 @@
     "createPost": "Create Post",
     "noPosts": "No posts found",
     "loadMore": "Load more",
-    "write": "Write Post"
+    "write": "Write Post",
+    "recentPosts": "Recent Posts",
+    "viewMore": "View More"
   },
   "postCategories": {
     "ALL": { "name": "All", "description": "All posts" },
@@ -256,5 +266,13 @@
       "list": "Bullet List",
       "orderedList": "Numbered List"
     }
+  },
+  "summary": {
+    "welcome": "Welcome to Cross-Platform Korea",
+    "welcomeMessage": "Join our community and connect with other developers"
+  },
+  "auth": {
+    "loginDescription": "Sign in to manage your profile, write posts, and interact with likes and comments.",
+    "signIn": "Sign In"
   }
 }
