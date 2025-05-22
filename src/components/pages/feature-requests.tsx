@@ -55,7 +55,7 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
   );
 };
 
-export default function FeatureRequests() {
+export default function FeatureRequestsPage() {
   const navigate = useNavigate();
   // Replace the direct auth check with useAuthGuard
   const { isAuthenticated, isLoading: isAuthLoading } = useAuthGuard();
@@ -64,9 +64,9 @@ export default function FeatureRequests() {
     results: featureRequests,
     status,
     loadMore,
-  } = usePaginatedQuery(api.featureRequests.getAll, {}, { initialNumItems: 10 });
-  const addFeatureRequest = useMutation(api.featureRequests.add);
-  const voteForFeature = useMutation(api.featureRequests.vote);
+  } = usePaginatedQuery(api.featureRequests.query.getAll, {}, { initialNumItems: 10 });
+  const addFeatureRequest = useMutation(api.featureRequests.mutation.add);
+  const voteForFeature = useMutation(api.featureRequests.mutation.vote);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -166,10 +166,7 @@ export default function FeatureRequests() {
   };
 
   // Show loading before redirect for smooth transition
-  if (isAuthLoading) {
-    return <AppLoading />;
-  }
-  if (!isAuthenticated) {
+  if (isAuthLoading || !isAuthenticated) {
     return <AppLoading />;
   }
 

@@ -15,17 +15,18 @@ import type {
 } from "convex/server";
 import type * as ResendOTP from "../ResendOTP.js";
 import type * as auth from "../auth.js";
-import type * as categories from "../categories.js";
+import type * as categories_query from "../categories/query.js";
 import type * as constants from "../constants.js";
-import type * as featureRequests from "../featureRequests.js";
-import type * as files from "../files.js";
+import type * as featureRequests_mutation from "../featureRequests/mutation.js";
+import type * as featureRequests_query from "../featureRequests/query.js";
+import type * as files_action from "../files/action.js";
+import type * as files_mutation from "../files/mutation.js";
+import type * as files_query from "../files/query.js";
 import type * as http from "../http.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
-import type * as posts from "../posts.js";
-import type * as serviceStatus from "../serviceStatus.js";
-import type * as tags_mutation from "../tags/mutation.js";
-import type * as users from "../users.js";
+import type * as users_mutation from "../users/mutation.js";
+import type * as users_query from "../users/query.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -38,17 +39,18 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   ResendOTP: typeof ResendOTP;
   auth: typeof auth;
-  categories: typeof categories;
+  "categories/query": typeof categories_query;
   constants: typeof constants;
-  featureRequests: typeof featureRequests;
-  files: typeof files;
+  "featureRequests/mutation": typeof featureRequests_mutation;
+  "featureRequests/query": typeof featureRequests_query;
+  "files/action": typeof files_action;
+  "files/mutation": typeof files_mutation;
+  "files/query": typeof files_query;
   http: typeof http;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;
-  posts: typeof posts;
-  serviceStatus: typeof serviceStatus;
-  "tags/mutation": typeof tags_mutation;
-  users: typeof users;
+  "users/mutation": typeof users_mutation;
+  "users/query": typeof users_query;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

@@ -1,6 +1,6 @@
-import { query } from "./_generated/server";
+import { query } from "../_generated/server";
 import { v } from "convex/values";
-import { CATEGORIES, getCategoryByKey, getCategoryBySlug } from "./constants";
+import { CATEGORIES, getCategoryByKey, getCategoryBySlug } from "../constants";
 
 export const getCategories = query({
   handler: async () => {

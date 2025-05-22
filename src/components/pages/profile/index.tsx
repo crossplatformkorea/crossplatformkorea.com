@@ -22,6 +22,7 @@ import {
 import { t } from 'i18next';
 import ProfileDisplay from './ProfileDisplay';
 import ProfileDetails from './ProfileDetails';
+import ProfileStats from './ProfileStats';
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -54,15 +55,15 @@ export default function ProfilePage() {
   }, [isAuthenticated, isLoading, navigate]);
 
   // Get current user data
-  const userIdentity = useQuery(api.users.currentUser);
+  const userIdentity = useQuery(api.users.query.currentUser);
 
   // Create user profile if it doesn't exist
-  const createOrUpdateUser = useMutation(api.users.createOrUpdateUser);
+  const createOrUpdateUser = useMutation(api.users.mutation.createOrUpdateUser);
   // Update file upload functions
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const saveFileMetadata = useMutation(api.files.saveFileMetadata);
   const deleteFile = useAction(api.files.deleteFileByStorageId);
-  const updateProfile = useMutation(api.users.updateProfile);
+  const updateProfile = useMutation(api.users.mutation.updateProfile);
 
   // State for saving profile
   const [isSaving, setIsSaving] = useState(false);
@@ -120,8 +121,8 @@ export default function ProfilePage() {
     }
 
     // Store original avatar storage ID for potential deletion
-    if (userIdentity?.profile?.avatarUrlId) {
-      setOriginalAvatarStorageId(userIdentity.profile.avatarUrlId);
+    if (userIdentity?.profile?.avatarUrl) {
+      setOriginalAvatarStorageId(userIdentity.profile.avatarUrl);
     }
 
     // Initialize social links from user profile
@@ -359,7 +360,7 @@ export default function ProfilePage() {
     }
   };
 
-  // Function to save profile data - updated to avoid page refresh
+  // Function to save profile data - updated to use avatarUrl instead of avatarUrlId
   const saveProfileData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSaving(true);
@@ -384,11 +385,11 @@ export default function ProfilePage() {
       });
 
       // Handle image upload if there is a selected image
-      let avatarUrlId = userIdentity?.profile?.avatarUrlId;
+      let avatarUrl = userIdentity?.profile?.avatarUrl;
 
-      // If image was deleted, clear the avatarUrlId
+      // If image was deleted, clear the avatarUrl
       if (isImageDeleted) {
-        avatarUrlId = undefined;
+        avatarUrl = undefined;
 
         // Delete the original image from storage if it exists
         if (originalAvatarStorageId) {
@@ -423,10 +424,11 @@ export default function ProfilePage() {
           });
 
           if (fileResult.success) {
-            avatarUrlId = fileResult.storageId;
+            // Use the URL directly instead of the storage ID
+            avatarUrl = fileResult.url;
 
             // Delete the old avatar if it exists and is different
-            if (originalAvatarStorageId && originalAvatarStorageId !== fileResult.storageId) {
+            if (originalAvatarStorageId) {
               try {
                 await deleteFile({ storageId: originalAvatarStorageId as any });
               } catch (error) {
@@ -445,11 +447,11 @@ export default function ProfilePage() {
         }
       }
 
-      // Update profile with new data including avatar ID
+      // Update profile with new data including avatar URL
       await updateProfile({
         displayName,
         description,
-        avatarUrlId: avatarUrlId as any,
+        avatarUrl, // Use URL directly instead of storageId
         githubId: userIdentity?.profile?.githubId,
         socialLinks: filteredSocialLinks,
         tags,
@@ -508,8 +510,8 @@ export default function ProfilePage() {
       setIsImageDeleted(false);
 
       // Update the original avatar storage ID for future reference
-      if (avatarUrlId) {
-        setOriginalAvatarStorageId(avatarUrlId);
+      if (avatarUrl) {
+        setOriginalAvatarStorageId(avatarUrl);
       } else {
         setOriginalAvatarStorageId(null);
       }
@@ -544,103 +546,106 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-y-scroll">
-      <div className="container mx-auto py-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Header with Sign Out button */}
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold flex items-center">
-              <User className="w-6 h-6 mr-2 text-primary" />
-              {t('profile.title')}
-            </h1>
+    <div className="pt-6 mx-auto">
+      <div className="max-w-4xl mx-auto">
+        {/* Header with Sign Out button */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold flex items-center">
+            <User className="w-6 h-6 mr-2 text-primary" />
+            {t('profile.title')}
+          </h1>
 
-            <button
-              type="button"
-              onClick={() => {
-                void handleSignOut();
-              }}
-              disabled={isSigningOut}
-              className={cn(
-                'px-3 py-1.5 rounded-md transition-colors flex items-center',
-                'bg-red-500/10 text-red-500 hover:bg-red-500/20',
-                'disabled:opacity-50 disabled:cursor-not-allowed',
-              )}
-            >
-              <LogOut size={16} className="mr-1" />
-              {isSigningOut ? t('common.loading') : t('profile.buttons.signOut')}
-            </button>
+          <button
+            type="button"
+            onClick={() => {
+              void handleSignOut();
+            }}
+            disabled={isSigningOut}
+            className={cn(
+              'px-3 py-1.5 rounded-md transition-colors flex items-center',
+              'bg-red-500/10 text-red-500 hover:bg-red-500/20',
+              'disabled:opacity-50 disabled:cursor-not-allowed',
+            )}
+          >
+            <LogOut size={16} className="mr-1" />
+            {isSigningOut ? t('common.loading') : t('profile.buttons.signOut')}
+          </button>
+        </div>
+
+        {/* Profile Image and Display Name Card */}
+        <ProfileDisplay
+          imagePreview={imagePreview}
+          removeSelectedImage={removeSelectedImage}
+          triggerFileInput={triggerFileInput}
+          fileInputRef={fileInputRef}
+          handleImageSelect={handleImageSelect}
+          formValues={formValues}
+          handleInputChange={handleInputChange}
+          t={t}
+        />
+
+        {/* 사용자 통계 정보 추가 */}
+        {userIdentity && userIdentity._id && (
+          <ProfileStats userId={userIdentity._id} className="mt-6" />
+        )}
+
+        {/* Profile Details Card */}
+        <ProfileDetails
+          formValues={formValues}
+          handleInputChange={handleInputChange}
+          socialLinks={socialLinks}
+          updateSocialLink={updateSocialLink}
+          removeSocialLink={removeSocialLink}
+          addSocialLink={addSocialLink}
+          tags={tags}
+          tagInput={tagInput}
+          setTagInput={setTagInput}
+          handleTagKeyDown={handleTagKeyDown}
+          addTag={addTag}
+          removeTag={removeTag}
+          getSocialIcon={getSocialIcon}
+          handleSaveProfile={handleSaveProfile}
+          t={t}
+        />
+
+        {/* Action row with messages on left and buttons on right */}
+        <div className="flex justify-between items-center mt-6 mb-16">
+          {/* Success and error messages */}
+          <div className="flex-1">
+            {saveSuccess && (
+              <p className="text-green-500 text-sm">{t('profile.messages.saveSuccess')}</p>
+            )}
+
+            {saveError && <p className="text-red-500 text-sm">{saveError}</p>}
           </div>
 
-          {/* Profile Image and Display Name Card */}
-          <ProfileDisplay
-            imagePreview={imagePreview}
-            removeSelectedImage={removeSelectedImage}
-            triggerFileInput={triggerFileInput}
-            fileInputRef={fileInputRef}
-            handleImageSelect={handleImageSelect}
-            formValues={formValues}
-            handleInputChange={handleInputChange}
-            t={t}
-          />
-
-          {/* Profile Details Card */}
-          <ProfileDetails
-            formValues={formValues}
-            handleInputChange={handleInputChange}
-            socialLinks={socialLinks}
-            updateSocialLink={updateSocialLink}
-            removeSocialLink={removeSocialLink}
-            addSocialLink={addSocialLink}
-            tags={tags}
-            tagInput={tagInput}
-            setTagInput={setTagInput}
-            handleTagKeyDown={handleTagKeyDown}
-            addTag={addTag}
-            removeTag={removeTag}
-            getSocialIcon={getSocialIcon}
-            handleSaveProfile={handleSaveProfile}
-            t={t}
-          />
-
-          {/* Action row with messages on left and buttons on right */}
-          <div className="flex justify-between items-center mt-6 mb-16">
-            {/* Success and error messages */}
-            <div className="flex-1">
-              {saveSuccess && (
-                <p className="text-green-500 text-sm">{t('profile.messages.saveSuccess')}</p>
+          {/* Action buttons */}
+          <div className="flex space-x-3">
+            <button
+              type="button"
+              onClick={() => void navigate(-1)}
+              className={cn(
+                'px-5 py-2.5 rounded-md border border-border/50 bg-background',
+                'text-muted-foreground hover:bg-muted/30 transition-colors flex items-center',
               )}
+            >
+              <ArrowLeft size={16} className="mr-1.5" />
+              {t('common.buttons.cancel')}
+            </button>
 
-              {saveError && <p className="text-red-500 text-sm">{saveError}</p>}
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex space-x-3">
-              <button
-                type="button"
-                onClick={() => void navigate(-1)}
-                className={cn(
-                  'px-5 py-2.5 rounded-md border border-border/50 bg-background',
-                  'text-muted-foreground hover:bg-muted/30 transition-colors flex items-center',
-                )}
-              >
-                <ArrowLeft size={16} className="mr-1.5" />
-                {t('common.buttons.cancel')}
-              </button>
-
-              <button
-                type="submit"
-                form="profileForm"
-                disabled={isSaving || !hasProfileChanged()}
-                className={cn(
-                  'px-5 py-2.5 rounded-md',
-                  'bg-primary text-primary-foreground hover:bg-primary/90 transition-colors',
-                  'flex items-center',
-                  (isSaving || !hasProfileChanged()) && 'opacity-70 cursor-not-allowed',
-                )}
-              >
-                {isSaving ? t('common.buttons.saving') : t('common.buttons.save')}
-              </button>
-            </div>
+            <button
+              type="submit"
+              form="profileForm"
+              disabled={isSaving || !hasProfileChanged()}
+              className={cn(
+                'px-5 py-2.5 rounded-md',
+                'bg-primary text-primary-foreground hover:bg-primary/90 transition-colors',
+                'flex items-center',
+                (isSaving || !hasProfileChanged()) && 'opacity-70 cursor-not-allowed',
+              )}
+            >
+              {isSaving ? t('common.buttons.saving') : t('common.buttons.save')}
+            </button>
           </div>
         </div>
       </div>

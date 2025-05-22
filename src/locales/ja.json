@@ -3,11 +3,12 @@
     "buttons": {
       "save": "保存",
       "saving": "保存中...",
-      "cancel": "キャンセル"
+      "cancel": "キャンセル",
+      "submitting": "送信中..."
     },
-    "loading": "...",
-    "appName": "クロスプラットフォームコリア",
-    "navVideo": "ビデオ",
+    "cancel": "キャンセル",
+    "loading": "ローディング中...",
+    "appName": "クロスプラットフォーム コリア",
     "sideFeatureRequests": "機能リクエスト",
     "signIn": "ログイン",
     "remove": "削除",
@@ -18,14 +19,19 @@
     "navCommunity": "コミュニティ",
     "navBlog": "ブログ",
     "all": "すべて",
-    "allPosts": "すべての投稿",
-    "allPostsDescription": "コミュニティからのすべての投稿を閲覧する",
-    "createPost": "投稿作成",
-    "noPosts": "投稿が見つかりません",
-    "loadMore": "もっと見る"
+    "loadMore": "もっと見る",
+    "viewAll": "すべて見る",
+    "loginToAccess": "サインインして始める",
+    "back": "戻る"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
+    "titleRequired": "タイトルは必須です",
+    "contentRequired": "コンテンツは必須です",
+    "postCreationFailed": "投稿の作成に失敗しました。もう一度お試しください。",
+    "imageUploadFailed": "画像のアップロードに失敗しました。もう一度お試しください。",
+    "onlyImagesAllowed": "画像ファイルのみアップロードできます。",
+    "fileTooLarge": "ファイルサイズが{{size}}の制限を超えています。",
     "profile": {
       "displayNameRequired": "表示名は必須です",
       "displayNameTaken": "この表示名は既に使用されています。別の名前を選択してください。",
@@ -79,6 +85,12 @@
     },
     "messages": {
       "saveSuccess": "プロフィールが正常に保存されました！"
+    },
+    "viewEdit": "プロフィール編集",
+    "stats": {
+      "posts": "投稿",
+      "likes": "もらったいいね",
+      "comments": "もらったコメント"
     }
   },
   "signIn": {
@@ -100,7 +112,9 @@
     "signOutPrompt": "ログアウトしますか？",
     "signingOut": "ログアウト中...",
     "signOut": "ログアウト",
-    "returnToHome": "ホームに戻る"
+    "returnToHome": "ホームに戻る",
+    "loginToAccess": "サインインして始める",
+    "signIn": "サインイン"
   },
   "posts": {
     "title": "投稿",
@@ -120,7 +134,10 @@
     "allPostsDescription": "コミュニティからのすべての投稿を閲覧する",
     "createPost": "投稿作成",
     "noPosts": "投稿が見つかりません",
-    "loadMore": "もっと見る"
+    "loadMore": "もっと見る",
+    "write": "投稿を書く",
+    "recentPosts": "最近の投稿",
+    "viewMore": "もっと見る"
   },
   "postCategories": {
     "ALL": { "name": "すべて", "description": "すべての投稿" },
@@ -172,59 +189,51 @@
       "failedToSubmit": "機能リクエストの提出に失敗しました"
     }
   },
-  "serviceStatus": {
-    "preparing": {
-      "title": "サービス準備中",
-      "message": "現在、この機能の提供準備を進めています！準備が整いましたらメールでお知らせします。"
-    },
-    "underConstruction": {
-      "title": "サービス工事中",
-      "message": "この機能は現在メンテナンス中です。ご不便をおかけして申し訳ありません。できるだけ早く復旧するよう努めています。"
-    },
-    "subscriptionSuccess": "更新通知の購読が完了しました！"
-  },
-  "promptMenu": {
-    "veo2": {
-      "prompt": "プロンプト",
-      "promptPlaceholder": "生成したいビデオを説明してください",
-      "negativePrompt": "ネガティブプロンプト",
-      "negativePromptPlaceholder": "ビデオから除外したい要素を説明してください",
-      "image": "画像（任意）",
-      "personGeneration": "人物生成",
-      "aspectRatio": "アスペクト比",
-      "videoLength": "ビデオの長さ",
-      "seconds": "秒"
-    },
-    "runwayGen4Turbo": {
-      "prompt": "プロンプト",
-      "promptPlaceholder": "生成したいビデオを説明してください",
-      "characters": "文字数",
-      "image": "画像（必須）",
-      "seed": "シード（任意）",
-      "seedPlaceholder": "シードを入力（任意）",
-      "videoLength": "ビデオの長さ",
-      "resolution": "解像度"
-    },
-    "tooltips": {
-      "prompt": "ビデオのテキストプロンプト。画像パラメータがある場合はオプションです。",
-      "negativePrompt": "モデルが生成を避けるべきものを説明するテキスト文字列です。",
-      "image": "ビデオの最初のフレームとして使用する画像。画像がある場合、プロンプトパラメータはオプションです。",
-      "personGeneration": "モデルが人を含むビデオを生成できるかどうかを制御します。'dont_allow'は人/顔を防ぎ、'allow_adult'は大人のみを許可します。",
-      "videoLength": "出力ビデオの長さ（秒）（5〜8秒）。",
-      "aspectRatio": "生成されるビデオのアスペクト比を変更します。サポートされる値は「16:9」と「9:16」です。デフォルトは「16:9」です。",
-      "promptRunway": "ビデオのテキストプロンプト（最大1000文字）。出力に表示したいものを詳細に説明する必要があります。",
-      "imageRunway": "ビデオの最初のフレームとして使用する画像。",
-      "seed": "オプションのシード値（0〜4294967295）。同じパラメータで同じシードを使用すると、類似した結果が生成されます。",
-      "videoLengthRunway": "出力ビデオの長さ（秒）（5秒または10秒）。",
-      "aspectRatioRunway": "出力ビデオの解像度。gen4_turboで利用可能なオプション: 1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
-    },
-    "options": {
-      "landscape": "16:9（横向き）",
-      "portrait": "9:16（縦向き）",
-      "dontAllowPeople": "人物/顔を許可しない",
-      "allowAdults": "大人のみ許可",
-      "fiveSeconds": "5秒",
-      "tenSeconds": "10秒"
+  "postWrite": {
+    "writeNewPost": "新規投稿",
+    "edit": "編集",
+    "preview": "プレビュー",
+    "uploadingImages": "画像をアップロード中",
+    "enterFullscreen": "全画面表示",
+    "exitFullscreen": "全画面表示を終了",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "タイトルを入力してください",
+    "categoryLabel": "カテゴリー",
+    "tagsLabel": "タグ",
+    "tagsPlaceholder": "タグを追加 (Enterまたはカンマで追加)",
+    "addTag": "タグを追加",
+    "contentPlaceholder": "投稿内容を入力してください...",
+    "previewTitle": "プレビュー",
+    "previewPlaceholder": "ここに内容のプレビューが表示されます",
+    "publishPost": "投稿する",
+    "formatting": {
+      "bold": "太字",
+      "italic": "斜体",
+      "link": "リンクを挿入",
+      "image": "画像を挿入",
+      "list": "箇条書き",
+      "orderedList": "番号付きリスト"
     }
+  },
+  "summary": {
+    "welcome": "クロスプラットフォーム・コリアへようこそ",
+    "welcomeMessage": "コミュニティに参加して他の開発者と繋がりましょう"
+  },
+  "auth": {
+    "loginDescription": "サインインするとプロフィールの管理、投稿の作成、いいねやコメントができます。",
+    "signIn": "サインイン"
+  },
+  "user": {
+    "posts": "投稿",
+    "about": "プロフィール",
+    "postsBy": "{{name}}さんの投稿",
+    "userNotFound": "ユーザーが見つかりません",
+    "userNotFoundMessage": "お探しのユーザープロフィールは存在しないか、削除されています。",
+    "noPosts": "このユーザーはまだ投稿していません。",
+    "noAdditionalInfo": "追加情報はありません。",
+    "aboutMe": "自己紹介",
+    "lookingFor": "探しているもの",
+    "expectations": "期待すること",
+    "anonymousUser": "匿名ユーザー"
   }
 }

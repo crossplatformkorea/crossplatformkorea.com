@@ -1,5 +1,5 @@
-import React from "react";
-import { t } from "../lib/i18n";
+import React from 'react';
+import { t } from '../lib/i18n';
 
 interface AppLoadingProps {
   message?: string;
@@ -12,8 +12,8 @@ interface AppLoadingProps {
  * @param fullScreen Whether to display the loader as a full-screen component
  */
 export default function AppLoading({ message, fullScreen = false }: AppLoadingProps) {
-  const loadingMessage = message || t("common.loading");
-  
+  const loadingMessage = message || t('common.loading');
+
   const content = (
     <div className="flex flex-col items-center justify-center">
       {/* Film reel animation */}
@@ -26,10 +26,8 @@ export default function AppLoading({ message, fullScreen = false }: AppLoadingPr
           </div>
         </div>
       </div>
-      
-      <p className="text-muted-foreground text-sm animate-pulse">
-        {loadingMessage}
-      </p>
+
+      <p className="text-muted-foreground text-sm animate-pulse">{loadingMessage}</p>
     </div>
   );
 
@@ -41,9 +39,5 @@ export default function AppLoading({ message, fullScreen = false }: AppLoadingPr
     );
   }
 
-  return (
-    <div className="flex-1 overflow-auto p-8 flex items-center justify-center">
-      {content}
-    </div>
-  );
+  return <div className="flex-1 overflow-auto p-8 flex items-center justify-center">{content}</div>;
 }

@@ -3,16 +3,13 @@
     "buttons": {
       "save": "Save",
       "saving": "Saving...",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "submitting": "Submitting..."
     },
-    "loading": "...",
-    "allPosts": "All Posts",
-    "allPostsDescription": "Browse all posts from our community",
-    "createPost": "Create Post",
-    "noPosts": "No posts found",
+    "cancel": "Cancel",
+    "loading": "Loading...",
     "loadMore": "Load more posts",
     "appName": "Cross Platform Korea",
-    "navVideo": "Videos",
     "sideFeatureRequests": "Feature Requests",
     "signIn": "Sign In",
     "remove": "Remove",
@@ -22,10 +19,19 @@
     "sidePosts": "Posts",
     "navCommunity": "Community",
     "navBlog": "Blog",
-    "all": "All"
+    "all": "All",
+    "viewAll": "View All",
+    "loginToAccess": "Sign in to get started",
+    "back": "Back"
   },
   "errors": {
     "general": "An error occurred. Please try again.",
+    "titleRequired": "Title is required",
+    "contentRequired": "Content is required",
+    "postCreationFailed": "Failed to create post. Please try again.",
+    "imageUploadFailed": "Failed to upload image. Please try again.",
+    "onlyImagesAllowed": "Only image files are allowed.",
+    "fileTooLarge": "File size exceeds {{size}} limit.",
     "profile": {
       "displayNameRequired": "Display name is required",
       "displayNameTaken": "This display name is already taken. Please choose another one.",
@@ -79,6 +85,12 @@
     },
     "messages": {
       "saveSuccess": "Profile saved successfully!"
+    },
+    "viewEdit": "Edit Profile",
+    "stats": {
+      "posts": "Posts",
+      "likes": "Likes Received",
+      "comments": "Comments Received"
     }
   },
   "signIn": {
@@ -120,7 +132,10 @@
     "allPostsDescription": "Browse all posts from our community",
     "createPost": "Create Post",
     "noPosts": "No posts found",
-    "loadMore": "Load more"
+    "loadMore": "Load more",
+    "write": "Write Post",
+    "recentPosts": "Recent Posts",
+    "viewMore": "View More"
   },
   "postCategories": {
     "ALL": { "name": "All", "description": "All posts" },
@@ -172,59 +187,51 @@
       "failedToSubmit": "Failed to submit feature request"
     }
   },
-  "serviceStatus": {
-    "preparing": {
-      "title": "Service in Preparation",
-      "message": "We're currently preparing to launch this feature! We'll let you know via email when it's ready."
-    },
-    "underConstruction": {
-      "title": "Service Under Construction",
-      "message": "This feature is currently under maintenance. We apologize for the inconvenience. We're working to restore it as quickly as possible."
-    },
-    "subscriptionSuccess": "Subscription for updates completed!"
-  },
-  "promptMenu": {
-    "veo2": {
-      "prompt": "Prompt",
-      "promptPlaceholder": "Describe the video you want to generate",
-      "negativePrompt": "Negative Prompt",
-      "negativePromptPlaceholder": "Describe elements to exclude from the video",
-      "image": "Image (Optional)",
-      "personGeneration": "Person Generation",
-      "aspectRatio": "Aspect Ratio",
-      "videoLength": "Video Length",
-      "seconds": "seconds"
-    },
-    "runwayGen4Turbo": {
-      "prompt": "Prompt",
-      "promptPlaceholder": "Describe the video you want to generate",
-      "characters": "Characters",
-      "image": "Image (Required)",
-      "seed": "Seed (Optional)",
-      "seedPlaceholder": "Enter seed (optional)",
-      "videoLength": "Video Length",
-      "resolution": "Resolution"
-    },
-    "tooltips": {
-      "prompt": "Text prompt for the video. Optional when there is an image parameter.",
-      "negativePrompt": "A text string explaining what the model should avoid generating.",
-      "image": "An image to use as the first frame of the video. When there is an image, the prompt parameter is optional.",
-      "personGeneration": "Controls whether the model can generate videos with people. 'dont_allow' prevents people/faces, 'allow_adult' allows only adults.",
-      "videoLength": "Output video length in seconds (5-8 seconds).",
-      "aspectRatio": "Change the aspect ratio of the generated video. Supported values are '16:9' and '9:16'. Default is '16:9'.",
-      "promptRunway": "Text prompt for the video (maximum 1000 characters). Should describe what you want to appear in the output.",
-      "imageRunway": "An image to use as the first frame of the video.",
-      "seed": "Optional seed value (0 to 4294967295). Using the same seed with the same parameters results in similar outputs.",
-      "videoLengthRunway": "Output video length in seconds (5 or 10 seconds).",
-      "aspectRatioRunway": "Resolution of the output video. Available options in gen4_turbo: 1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
-    },
-    "options": {
-      "landscape": "16:9 (Landscape)",
-      "portrait": "9:16 (Portrait)",
-      "dontAllowPeople": "Don't allow people/faces",
-      "allowAdults": "Allow adults only",
-      "fiveSeconds": "5 seconds",
-      "tenSeconds": "10 seconds"
+  "postWrite": {
+    "writeNewPost": "Write New Post",
+    "edit": "Edit",
+    "preview": "Preview",
+    "uploadingImages": "Uploading images",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter post title",
+    "categoryLabel": "Category",
+    "tagsLabel": "Tags",
+    "tagsPlaceholder": "Add tags (Press Enter or comma to add)",
+    "addTag": "Add Tag",
+    "contentPlaceholder": "Write your post content here...",
+    "previewTitle": "Post Preview",
+    "previewPlaceholder": "Content preview will appear here",
+    "publishPost": "Publish Post",
+    "formatting": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "link": "Insert Link",
+      "image": "Insert Image",
+      "list": "Bullet List",
+      "orderedList": "Numbered List"
     }
+  },
+  "summary": {
+    "welcome": "Welcome to Cross-Platform Korea",
+    "welcomeMessage": "Join our community and connect with other developers"
+  },
+  "auth": {
+    "loginDescription": "Sign in to manage your profile, write posts, and interact with likes and comments.",
+    "signIn": "Sign In"
+  },
+  "user": {
+    "posts": "Posts",
+    "about": "About",
+    "postsBy": "Posts by {{name}}",
+    "userNotFound": "User not found",
+    "userNotFoundMessage": "The user profile you're looking for doesn't exist or has been removed.",
+    "noPosts": "This user hasn't created any posts yet.",
+    "noAdditionalInfo": "No additional information provided.",
+    "aboutMe": "About me",
+    "lookingFor": "Looking for",
+    "expectations": "Expectations",
+    "anonymousUser": "Anonymous User"
   }
 }
