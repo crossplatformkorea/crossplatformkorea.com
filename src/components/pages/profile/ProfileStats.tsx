@@ -3,52 +3,106 @@ import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { Id } from '../../../../convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Heart, MessageSquare } from 'lucide-react';
+import { FileText, Heart, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface ProfileStatsProps {
   userId: Id<'users'>;
   className?: string;
+  compact?: boolean;
 }
 
-export default function ProfileStats({ userId, className }: ProfileStatsProps) {
+export default function ProfileStats({ userId, className, compact = false }: ProfileStatsProps) {
   const { t } = useTranslation();
   const userStats = useQuery(api.users.query.getUserStats, { userId });
 
   if (!userStats) {
-    return <div className="h-24 animate-pulse bg-muted/50 rounded-lg"></div>;
+    return (
+      <div className={cn('animate-pulse bg-muted/50 rounded-lg', compact ? 'h-12' : 'h-16')}></div>
+    );
   }
 
   const { postCount, likeCount, commentCount } = userStats;
 
+  // Prepare stats data for rendering
+  const stats = [
+    {
+      title: t('profile.stats.posts'),
+      value: postCount,
+      icon: <FileText className={compact ? 'w-4 h-4' : 'w-5 h-5'} />,
+      color: 'text-blue-500 dark:text-blue-400',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+    },
+    {
+      title: t('profile.stats.likes'),
+      value: likeCount,
+      icon: <Heart className={compact ? 'w-4 h-4' : 'w-5 h-5'} />,
+      color: 'text-rose-500 dark:text-rose-400',
+      bgColor: 'bg-rose-50 dark:bg-rose-900/20',
+    },
+    {
+      title: t('profile.stats.comments'),
+      value: commentCount,
+      icon: <MessageSquare className={compact ? 'w-4 h-4' : 'w-5 h-5'} />,
+      color: 'text-green-500 dark:text-green-400',
+      bgColor: 'bg-green-50 dark:bg-green-900/20',
+    },
+  ];
+
+  // Compact version for user profile page
+  if (compact) {
+    return (
+      <motion.div
+        className={cn(
+          'flex items-center justify-start gap-3 text-sm text-muted-foreground',
+          className,
+        )}
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {stats.map((stat, index) => (
+          <React.Fragment key={stat.title}>
+            <div className="flex items-center gap-1" title={stat.title}>
+              <span className={cn('flex items-center justify-center', stat.color)}>
+                {stat.icon}
+              </span>
+              <span className="font-medium">{stat.value}</span>
+              <span>{stat.title}</span>
+            </div>
+
+            {index < stats.length - 1 && <span className="text-border/40">|</span>}
+          </React.Fragment>
+        ))}
+      </motion.div>
+    );
+  }
+
+  // Full version with more modern, minimalist UI like Summary component
   return (
-    <div className={cn('grid grid-cols-3 gap-4 mb-6', className)}>
-      {/* 작성한 포스트 수 */}
-      <div className="bg-card border border-border/40 rounded-xl p-4 text-center hover:border-border/70 transition-colors">
-        <div className="mb-2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-500 dark:bg-blue-900/20">
-          <Pencil className="w-5 h-5" />
-        </div>
-        <div className="text-2xl font-bold">{postCount}</div>
-        <div className="text-sm text-muted-foreground mt-1">{t('profile.stats.posts')}</div>
-      </div>
-
-      {/* 받은 좋아요 수 */}
-      <div className="bg-card border border-border/40 rounded-xl p-4 text-center hover:border-border/70 transition-colors">
-        <div className="mb-2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-red-50 text-red-500 dark:bg-red-900/20">
-          <Heart className="w-5 h-5" />
-        </div>
-        <div className="text-2xl font-bold">{likeCount}</div>
-        <div className="text-sm text-muted-foreground mt-1">{t('profile.stats.likes')}</div>
-      </div>
-
-      {/* 받은 댓글 수 */}
-      <div className="bg-card border border-border/40 rounded-xl p-4 text-center hover:border-border/70 transition-colors">
-        <div className="mb-2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-green-50 text-green-500 dark:bg-green-900/20">
-          <MessageSquare className="w-5 h-5" />
-        </div>
-        <div className="text-2xl font-bold">{commentCount}</div>
-        <div className="text-sm text-muted-foreground mt-1">{t('profile.stats.comments')}</div>
-      </div>
-    </div>
+    <motion.div
+      className={cn('mb-6 flex flex-wrap justify-center sm:justify-between gap-4', className)}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, staggerChildren: 0.1 }}
+    >
+      {stats.map((stat) => (
+        <motion.div
+          key={stat.title}
+          className="flex-1 flex items-center gap-3 p-4 bg-card/40 backdrop-blur-[1px] border border-border/30 rounded-xl hover:border-border/50 transition-colors"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+        >
+          <div className={cn('p-3 rounded-full', stat.bgColor)}>
+            <span className={stat.color}>{stat.icon}</span>
+          </div>
+          <div>
+            <div className="text-2xl font-bold">{stat.value}</div>
+            <div className="text-xs text-muted-foreground">{stat.title}</div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }

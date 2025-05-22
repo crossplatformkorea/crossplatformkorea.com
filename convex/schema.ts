@@ -1,7 +1,6 @@
 import { defineSchema, defineTable } from 'convex/server';
 import { authTables } from '@convex-dev/auth/server';
 import { v } from 'convex/values';
-import { serviceStatusUnion } from './serviceStatus';
 
 export default defineSchema({
   ...authTables,
@@ -53,10 +52,6 @@ export default defineSchema({
     voterIds: v.array(v.string()),
     deletedAt: v.optional(v.number()), // Add deletedAt field for soft deletion
   }).index('by_votes', ['votes']),
-  app: defineTable({
-    status: serviceStatusUnion,
-    updatedAt: v.number(),
-  }).index('by_updatedAt', ['updatedAt']),
   files: defineTable({
     storageId: v.id('_storage'),
     fileName: v.string(),

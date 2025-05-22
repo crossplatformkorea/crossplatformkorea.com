@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -18,6 +18,7 @@ interface PostListItemProps {
 
 export default function PostListItem({ post, isEventsCategory = false }: PostListItemProps) {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   // Always call hooks at the top level, use "skip" for conditional queries
   const commentCountQuery = useQuery(api.posts.query.getCommentCount, { postId: post._id });
@@ -29,7 +30,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
     api.users.query.getProfile,
     post.authorId ? { userId: post.authorId } : 'skip',
   );
-  
+
   // Add mutation for toggling likes
   const toggleLike = useMutation(api.posts.mutation.toggleLike);
 
@@ -44,6 +45,9 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const handleAuthorClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation to post detail
     e.stopPropagation(); // Stop event propagation
+    if (post.authorId) {
+      void navigate(`/user/${post.authorId}`);
+    }
   };
 
   // Use query results or fallback values
@@ -98,26 +102,27 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
       </div>
 
       {/* Footer with stats and metadata */}
-      <div className="border-t border-border/20 px-4 py-2.5 bg-muted/20 flex items-center justify-between text-sm">
+      <div className="border-t border-border/20 px-4 py-3 bg-muted/20 flex items-center justify-between">
         {/* Left side - author and date */}
         <div className="flex items-center text-muted-foreground">
           {post.authorId && author && (
-            <Link 
-              to={`/user/${post.authorId}`} 
+            <button
               onClick={handleAuthorClick}
-              className="flex items-center hover:text-foreground transition-colors"
+              className="flex items-center hover:text-foreground transition-colors bg-transparent border-0 py-1 px-2 -ml-2 rounded-md hover:bg-muted/70 cursor-pointer group"
             >
               {author.avatarUrl ? (
                 <img
                   src={author.avatarUrl}
                   alt={author.displayName || 'User'}
-                  className="w-5 h-5 rounded-full mr-2 object-cover"
+                  className="w-6 h-6 rounded-full mr-2 object-cover group-hover:ring-2 group-hover:ring-primary/30 transition-all"
                 />
               ) : (
-                <User size={16} className="mr-2 text-muted-foreground/70" />
+                <User size={18} className="mr-2 text-muted-foreground/70" />
               )}
-              <span className="font-medium text-foreground/80">{author.displayName || ''}</span>
-            </Link>
+              <span className="font-medium text-foreground/80 group-hover:text-foreground transition-colors">
+                {author.displayName || ''}
+              </span>
+            </button>
           )}
           <span className="mx-1.5">•</span>
           <time dateTime={new Date(post._creationTime).toISOString()} className="text-xs">
@@ -129,26 +134,26 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
         </div>
 
         {/* Right side - engagement metrics */}
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <div className="flex items-center" title={t('posts.views')}>
-            <Eye size={14} className="mr-1 opacity-70" />
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center py-1 px-1.5" title={t('posts.views')}>
+            <Eye size={15} className="mr-1.5 opacity-70" />
             <span>{viewCount}</span>
           </div>
 
-          <button 
+          <button
             onClick={handleLikeClick}
-            className={`flex items-center ${hasLiked ? 'text-rose-500' : ''} hover:text-rose-500 transition-colors`} 
+            className={`flex items-center py-1 px-2 rounded-md ${
+              hasLiked ? 'text-rose-500 bg-rose-500/10' : ''
+            } hover:bg-rose-500/10 hover:text-rose-500 transition-colors`}
             title={t('posts.likes')}
+            aria-pressed={hasLiked}
           >
-            <Heart 
-              size={14} 
-              className={`mr-1 ${hasLiked ? 'fill-rose-500' : 'opacity-70'}`} 
-            />
+            <Heart size={16} className={`mr-1.5 ${hasLiked ? 'fill-rose-500' : 'opacity-70'}`} />
             <span>{likeCount}</span>
           </button>
 
-          <div className="flex items-center text-primary/80" title={t('posts.comments')}>
-            <MessageSquare size={14} className="mr-1" />
+          <div className="flex items-center py-1 px-1.5 text-primary/80" title={t('posts.comments')}>
+            <MessageSquare size={15} className="mr-1.5" />
             <span>{commentCount}</span>
           </div>
         </div>

@@ -64,9 +64,9 @@ export default function FeatureRequestsPage() {
     results: featureRequests,
     status,
     loadMore,
-  } = usePaginatedQuery(api.featureRequests.getAll, {}, { initialNumItems: 10 });
-  const addFeatureRequest = useMutation(api.featureRequests.add);
-  const voteForFeature = useMutation(api.featureRequests.vote);
+  } = usePaginatedQuery(api.featureRequests.query.getAll, {}, { initialNumItems: 10 });
+  const addFeatureRequest = useMutation(api.featureRequests.mutation.add);
+  const voteForFeature = useMutation(api.featureRequests.mutation.vote);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

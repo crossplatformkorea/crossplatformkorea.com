@@ -48,9 +48,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* Main content with sidebar */}
       <div className="flex flex-1 overflow-hidden">
         {/* Collapsible sidebar */}
-        <div
-          className={`transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-0'} overflow-hidden`}
-        >
+        <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-0'} `}>
           <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} />
         </div>
 

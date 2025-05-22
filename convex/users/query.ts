@@ -1,6 +1,6 @@
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { query } from '../_generated/server';
-import { v } from 'convex/values'; // Add missing import for validators
+import { v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
 
 // Replace getUser with currentUser
@@ -24,7 +24,7 @@ export const currentUser = query({
           userId: v.id('users'),
           email: v.string(),
           displayName: v.string(),
-          name: v.optional(v.string()), // Fixed extra parenthesis
+          name: v.optional(v.string()),
           organization: v.optional(v.string()),
           description: v.optional(v.string()),
           avatarUrl: v.optional(v.string()),
@@ -82,6 +82,8 @@ export const getProfile = query({
       userId: v.id('users'),
       email: v.string(),
       displayName: v.string(),
+      name: v.optional(v.string()),
+      organization: v.optional(v.string()),
       description: v.optional(v.string()),
       avatarUrl: v.optional(v.string()),
       deletedAt: v.optional(v.string()),
@@ -94,6 +96,7 @@ export const getProfile = query({
     v.null(),
   ),
   handler: async (ctx, args) => {
+    // Query userProfiles by userId
     const profile = await ctx.db
       .query('userProfiles')
       .withIndex('by_user', (q) => q.eq('userId', args.userId))
@@ -125,10 +128,7 @@ export const getUserStats = query({
       .collect();
 
     // 받은 좋아요 총합 계산
-    const totalLikes = posts.reduce(
-      (sum, post) => sum + (post.likeCount || 0),
-      0,
-    );
+    const totalLikes = posts.reduce((sum, post) => sum + (post.likeCount || 0), 0);
 
     // 받은 댓글 수 계산
     let commentCount = 0;

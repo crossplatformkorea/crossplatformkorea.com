@@ -180,3 +180,21 @@ export const getTags = query({
     return Array.from(tagsSet).sort();
   },
 });
+
+// Get posts by author
+export const getPostsByAuthor = query({
+  args: { 
+    authorId: v.id('users'),
+    limit: v.number(), 
+  },
+  returns: v.array(postObjectValidator),
+  handler: async (ctx, args) => {
+    const posts = await ctx.db
+      .query('posts')
+      .withIndex('by_author', (q) => q.eq('authorId', args.authorId))
+      .order('desc')
+      .take(args.limit);
+    
+    return posts;
+  },
+});

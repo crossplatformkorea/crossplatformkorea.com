@@ -21,7 +21,8 @@
     "all": "すべて",
     "loadMore": "もっと見る",
     "viewAll": "すべて見る",
-    "loginToAccess": "サインインして始める"
+    "loginToAccess": "サインインして始める",
+    "back": "戻る"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -276,5 +277,18 @@
   "auth": {
     "loginDescription": "サインインするとプロフィールの管理、投稿の作成、いいねやコメントができます。",
     "signIn": "サインイン"
+  },
+  "user": {
+    "posts": "投稿",
+    "about": "プロフィール",
+    "postsBy": "{{name}}さんの投稿",
+    "userNotFound": "ユーザーが見つかりません",
+    "userNotFoundMessage": "お探しのユーザープロフィールは存在しないか、削除されています。",
+    "noPosts": "このユーザーはまだ投稿していません。",
+    "noAdditionalInfo": "追加情報はありません。",
+    "aboutMe": "自己紹介",
+    "lookingFor": "探しているもの",
+    "expectations": "期待すること",
+    "anonymousUser": "匿名ユーザー"
   }
 }

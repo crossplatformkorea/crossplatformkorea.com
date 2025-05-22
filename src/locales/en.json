@@ -21,7 +21,8 @@
     "navBlog": "Blog",
     "all": "All",
     "viewAll": "View All",
-    "loginToAccess": "Sign in to get started"
+    "loginToAccess": "Sign in to get started",
+    "back": "Back"
   },
   "errors": {
     "general": "An error occurred. Please try again.",
@@ -274,5 +275,18 @@
   "auth": {
     "loginDescription": "Sign in to manage your profile, write posts, and interact with likes and comments.",
     "signIn": "Sign In"
+  },
+  "user": {
+    "posts": "Posts",
+    "about": "About",
+    "postsBy": "Posts by {{name}}",
+    "userNotFound": "User not found",
+    "userNotFoundMessage": "The user profile you're looking for doesn't exist or has been removed.",
+    "noPosts": "This user hasn't created any posts yet.",
+    "noAdditionalInfo": "No additional information provided.",
+    "aboutMe": "About me",
+    "lookingFor": "Looking for",
+    "expectations": "Expectations",
+    "anonymousUser": "Anonymous User"
   }
 }
