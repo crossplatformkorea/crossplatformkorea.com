@@ -19,7 +19,7 @@ interface PostListItemProps {
   post: Post;
 }
 
-export default function PostListItem({ post }: PostListItemProps) {
+export default function SummaryPostItem({ post }: PostListItemProps) {
   const { i18n, t } = useTranslation(); // 확인: t가 이미 추가되어 있어야 함
 
   // Strip HTML from content for preview

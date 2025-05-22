@@ -5,7 +5,7 @@ import { api } from '../../../../../convex/_generated/api';
 import { useConvexAuth } from 'convex/react';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, MessageSquare, User, Sparkles, LogIn } from 'lucide-react';
-import PostListItem from './PostListItem';
+import SummaryPostItem from './SummaryPostItem';
 import UserStats from './UserStats';
 import { motion } from 'framer-motion';
 
@@ -207,7 +207,7 @@ export default function SummaryPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recentPosts?.map((post, index) => (
                   <motion.div key={post._id} variants={item} custom={index}>
-                    <PostListItem post={post} />
+                    <SummaryPostItem post={post} />
                   </motion.div>
                 ))}
               </div>
