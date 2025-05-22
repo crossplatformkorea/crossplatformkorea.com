@@ -189,61 +189,6 @@
       "failedToSubmit": "機能リクエストの提出に失敗しました"
     }
   },
-  "serviceStatus": {
-    "preparing": {
-      "title": "サービス準備中",
-      "message": "現在、この機能の提供準備を進めています！準備が整いましたらメールでお知らせします。"
-    },
-    "underConstruction": {
-      "title": "サービス工事中",
-      "message": "この機能は現在メンテナンス中です。ご不便をおかけして申し訳ありません。できるだけ早く復旧するよう努めています。"
-    },
-    "subscriptionSuccess": "更新通知の購読が完了しました！"
-  },
-  "promptMenu": {
-    "veo2": {
-      "prompt": "プロンプト",
-      "promptPlaceholder": "生成したいビデオを説明してください",
-      "negativePrompt": "ネガティブプロンプト",
-      "negativePromptPlaceholder": "ビデオから除外したい要素を説明してください",
-      "image": "画像（任意）",
-      "personGeneration": "人物生成",
-      "aspectRatio": "アスペクト比",
-      "videoLength": "ビデオの長さ",
-      "seconds": "秒"
-    },
-    "runwayGen4Turbo": {
-      "prompt": "プロンプト",
-      "promptPlaceholder": "生成したいビデオを説明してください",
-      "characters": "文字数",
-      "image": "画像（必須）",
-      "seed": "シード（任意）",
-      "seedPlaceholder": "シードを入力（任意）",
-      "videoLength": "ビデオの長さ",
-      "resolution": "解像度"
-    },
-    "tooltips": {
-      "prompt": "ビデオのテキストプロンプト。画像パラメータがある場合はオプションです。",
-      "negativePrompt": "モデルが生成を避けるべきものを説明するテキスト文字列です。",
-      "image": "ビデオの最初のフレームとして使用する画像。画像がある場合、プロンプトパラメータはオプションです。",
-      "personGeneration": "モデルが人を含むビデオを生成できるかどうかを制御します。'dont_allow'は人/顔を防ぎ、'allow_adult'は大人のみを許可します。",
-      "videoLength": "出力ビデオの長さ（秒）（5〜8秒）。",
-      "aspectRatio": "生成されるビデオのアスペクト比を変更します。サポートされる値は「16:9」と「9:16」です。デフォルトは「16:9」です。",
-      "promptRunway": "ビデオのテキストプロンプト（最大1000文字）。出力に表示したいものを詳細に説明する必要があります。",
-      "imageRunway": "ビデオの最初のフレームとして使用する画像。",
-      "seed": "オプションのシード値（0〜4294967295）。同じパラメータで同じシードを使用すると、類似した結果が生成されます。",
-      "videoLengthRunway": "出力ビデオの長さ（秒）（5秒または10秒）。",
-      "aspectRatioRunway": "出力ビデオの解像度。gen4_turboで利用可能なオプション: 1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672"
-    },
-    "options": {
-      "landscape": "16:9（横向き）",
-      "portrait": "9:16（縦向き）",
-      "dontAllowPeople": "人物/顔を許可しない",
-      "allowAdults": "大人のみ許可",
-      "fiveSeconds": "5秒",
-      "tenSeconds": "10秒"
-    }
-  },
   "postWrite": {
     "writeNewPost": "新規投稿",
     "edit": "編集",
