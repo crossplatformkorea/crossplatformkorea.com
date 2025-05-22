@@ -25,7 +25,6 @@ import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
 import type * as posts from "../posts.js";
 import type * as serviceStatus from "../serviceStatus.js";
-import type * as tags_mutation from "../tags/mutation.js";
 import type * as users_stats from "../users/stats.js";
 import type * as users from "../users.js";
 
@@ -50,7 +49,6 @@ declare const fullApi: ApiFromModules<{
   "posts/query": typeof posts_query;
   posts: typeof posts;
   serviceStatus: typeof serviceStatus;
-  "tags/mutation": typeof tags_mutation;
   "users/stats": typeof users_stats;
   users: typeof users;
 }>;

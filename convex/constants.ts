@@ -38,6 +38,9 @@ export const CATEGORIES: CategoryType[] = [
   },
 ];
 
+// Add default category constant to standardize usage
+export const DEFAULT_CATEGORY = CATEGORIES[4].key;
+
 /**
  * Error codes used throughout the application.
  * These keys map directly to translation strings in the client locale files.
@@ -62,4 +65,11 @@ export function getCategoryBySlug(slug: string): CategoryType | undefined {
 
 export function getCategoryByKey(key: string): CategoryType | undefined {
   return CATEGORIES.find(cat => cat.key === key);
+}
+
+// Helper to get category key from slug or return default
+export function getCategoryKeyFromSlug(slug: string | null): string {
+  if (!slug) return DEFAULT_CATEGORY;
+  const category = getCategoryBySlug(slug);
+  return category ? category.key : DEFAULT_CATEGORY;
 }

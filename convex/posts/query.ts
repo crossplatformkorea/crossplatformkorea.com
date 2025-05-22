@@ -60,16 +60,15 @@ export const getPostsByCategory = query({
   },
   returns: paginationResultValidator,
   handler: async (ctx, args) => {
-    const { category, paginationOpts = { numItems: 20, cursor: null } } = args;
+    const category = args.category;
+    const paginationOpts = args.paginationOpts || { numItems: 10, cursor: null };
 
     let postsQuery;
 
+    // If "ALL" is requested, include all categories
     if (category.toLowerCase() === 'all') {
-      // Use the by_title index for queries that need to be ordered by creation time
-      // _creationTime is automatically added as an ordering field
       postsQuery = ctx.db.query('posts').withIndex('by_creation_time').order('desc');
     } else {
-      // Use the category index for filtered queries
       postsQuery = ctx.db
         .query('posts')
         .withIndex('by_category')
@@ -135,7 +134,6 @@ export const getRecentPosts = query({
 
 // Get all tags (for filtering)
 export const getTags = query({
-  args: {},
   returns: v.array(v.string()),
   handler: async (ctx) => {
     const posts = await ctx.db.query('posts').collect();

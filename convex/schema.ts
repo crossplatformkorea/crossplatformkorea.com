@@ -58,9 +58,6 @@ export default defineSchema({
     status: serviceStatusUnion,
     updatedAt: v.number(),
   }).index('by_updatedAt', ['updatedAt']),
-  tags: defineTable({
-    name: v.string(),
-  }).index('by_name', ['name']),
   files: defineTable({
     storageId: v.id('_storage'),
     fileName: v.string(),

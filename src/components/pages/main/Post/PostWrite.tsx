@@ -19,6 +19,7 @@ import { useConvexAuth } from 'convex/react';
 import { cn } from '../../../../lib/utils';
 import { Id } from '../../../../../convex/_generated/dataModel';
 import { MAX_FILE_SIZE, MAX_FILE_SIZE_READABLE } from '../../../../constants';
+import { DEFAULT_CATEGORY } from '../../../../../convex/constants';
 
 // Import additional plugins for ReactMarkdown to handle HTML content and line breaks
 import ReactMarkdown from 'react-markdown';
@@ -42,7 +43,7 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
   // State for form values
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState(defaultCategory || 'GENERAL');
+  const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY); // Use DEFAULT_CATEGORY as fallback
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
 

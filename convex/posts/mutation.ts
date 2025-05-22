@@ -2,6 +2,7 @@ import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
+import { DEFAULT_CATEGORY } from '../constants';
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -23,9 +24,12 @@ export const createPost = mutation({
 
     const now = new Date().toISOString();
 
+    // Ensure a valid category is used
+    const category = args.category || DEFAULT_CATEGORY;
+
     // Create the post
     const postId = await ctx.db.insert('posts', {
-      category: args.category,
+      category, // Use validated category
       title: args.title,
       content: args.content,
       tags: args.tags,
@@ -152,6 +156,7 @@ export const deletePost = mutation({
   returns: v.boolean(),
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
+
     if (!userId) {
       throw new Error('Authentication required');
     }

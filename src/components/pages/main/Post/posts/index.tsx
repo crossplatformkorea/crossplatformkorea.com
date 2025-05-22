@@ -13,6 +13,7 @@ import CategoriesBreadCrumbs from './CategoriesBreadCrumbs';
 import { api } from '../../../../../../convex/_generated/api';
 import PostWrite from '../PostWrite';
 import { cn } from '../../../../../lib/utils';
+import { DEFAULT_CATEGORY } from '../../../../../../convex/constants';
 
 // Define the Post type
 type Post = {
@@ -55,6 +56,12 @@ const Posts = memo(function PostsPage() {
     if (!categorySlug || !categoriesData) return null;
     return categoriesData.find((cat) => cat.slug === categorySlug);
   }, [categorySlug, categoriesData]);
+
+  // Get the current category key for use in the PostWrite modal
+  const currentCategoryKey = useMemo(() => {
+    if (category) return category.key;
+    return DEFAULT_CATEGORY; // Default to FREE_BOARD if no category is selected
+  }, [category]);
 
   // Set up pagination options
   const paginationOpts = {
@@ -171,11 +178,11 @@ const Posts = memo(function PostsPage() {
   if (category) {
     return (
       <div className="p-6">
-        {/* Write modal */}
+        {/* Write modal - Always pass the currentCategoryKey */}
         <PostWrite
           isOpen={isWriteModalOpen}
           onClose={() => setIsWriteModalOpen(false)}
-          defaultCategory={category.key}
+          defaultCategory={currentCategoryKey}
         />
 
         {/* Header with breadcrumbs and write button */}
@@ -220,8 +227,12 @@ const Posts = memo(function PostsPage() {
   // Default view when no category is selected
   return (
     <div className="p-6">
-      {/* Write modal */}
-      <PostWrite isOpen={isWriteModalOpen} onClose={() => setIsWriteModalOpen(false)} />
+      {/* Write modal - Always pass the currentCategoryKey */}
+      <PostWrite
+        isOpen={isWriteModalOpen}
+        onClose={() => setIsWriteModalOpen(false)}
+        defaultCategory={currentCategoryKey}
+      />
 
       {/* Header with breadcrumbs and write button */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">

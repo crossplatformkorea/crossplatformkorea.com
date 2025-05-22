@@ -58,16 +58,3 @@ export const getCategoryBySlug = query({
   },
 });
 
-// Get all tags
-export const getTags = query({
-  args: {},
-  returns: v.array(
-    v.object({
-      _id: v.id('tags'),
-      name: v.string(),
-    }),
-  ),
-  handler: async (ctx) => {
-    return await ctx.db.query('tags').collect();
-  },
-});
