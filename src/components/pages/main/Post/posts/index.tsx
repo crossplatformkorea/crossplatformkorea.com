@@ -24,7 +24,6 @@ type Post = {
   content: string;
   tags: string[];
   updatedAt: string;
-  createdAt: string;
   startDate?: string;
   endDate?: string;
   authorId?: Id<'users'>;
@@ -49,7 +48,7 @@ const Posts = memo(function PostsPage() {
   }, [categorySlug]);
 
   // Fetch all categories from Convex
-  const categoriesData = useQuery(api.categories.getCategories);
+  const categoriesData = useQuery(api.categories.query.getCategories);
 
   // Get the current category if a slug is provided
   const category = useMemo(() => {
@@ -71,7 +70,7 @@ const Posts = memo(function PostsPage() {
 
   // Query for posts with pagination
   const result = useQuery(api.posts.query.getPostsByCategory, {
-    category: category ? category.key : 'ALL',
+    category: category ? category.key : 'all',
     paginationOpts,
   });
 
@@ -102,11 +101,7 @@ const Posts = memo(function PostsPage() {
     return (
       <div className="space-y-4">
         {posts.map((post) => (
-          <PostListItem 
-            key={post._id}
-            post={post} 
-            isEventsCategory={isEventsCategory} 
-          />
+          <PostListItem key={post._id} post={post} isEventsCategory={isEventsCategory} />
         ))}
       </div>
     );

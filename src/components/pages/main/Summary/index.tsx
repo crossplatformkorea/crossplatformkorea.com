@@ -15,7 +15,7 @@ export default function SummaryPage() {
   const [mounted, setMounted] = useState(false);
 
   // Get user profile
-  const userIdentity = useQuery(api.users.currentUser);
+  const userIdentity = useQuery(api.users.query.currentUser);
   const recentPosts = useQuery(api.posts.query.getRecentPosts, { limit: 6 });
 
   // Animate components after mount
@@ -195,13 +195,11 @@ export default function SummaryPage() {
             </div>
 
             {recentPosts?.length === 0 ? (
-              <motion.div 
+              <motion.div
                 className="text-center py-12 rounded-xl bg-muted/10 backdrop-blur-[1px]"
                 variants={item}
               >
-                <p className="text-muted-foreground px-4">
-                  {t('posts.noPosts')}
-                </p>
+                <p className="text-muted-foreground px-4">{t('posts.noPosts')}</p>
               </motion.div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -11,7 +11,7 @@ export default function CategoriesBreadCrumbs() {
   const currentCategory = searchParams.get('category');
 
   // Fetch categories from Convex
-  const categories = useQuery(api.categories.getCategories);
+  const categories = useQuery(api.categories.query.getCategories);
 
   // Function to handle category click - 메모이제이션 적용
   const handleCategoryClick = useCallback(

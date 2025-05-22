@@ -55,15 +55,15 @@ export default function ProfilePage() {
   }, [isAuthenticated, isLoading, navigate]);
 
   // Get current user data
-  const userIdentity = useQuery(api.users.currentUser);
+  const userIdentity = useQuery(api.users.query.currentUser);
 
   // Create user profile if it doesn't exist
-  const createOrUpdateUser = useMutation(api.users.createOrUpdateUser);
+  const createOrUpdateUser = useMutation(api.users.mutation.createOrUpdateUser);
   // Update file upload functions
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const saveFileMetadata = useMutation(api.files.saveFileMetadata);
   const deleteFile = useAction(api.files.deleteFileByStorageId);
-  const updateProfile = useMutation(api.users.updateProfile);
+  const updateProfile = useMutation(api.users.mutation.updateProfile);
 
   // State for saving profile
   const [isSaving, setIsSaving] = useState(false);
@@ -121,8 +121,8 @@ export default function ProfilePage() {
     }
 
     // Store original avatar storage ID for potential deletion
-    if (userIdentity?.profile?.avatarUrlId) {
-      setOriginalAvatarStorageId(userIdentity.profile.avatarUrlId);
+    if (userIdentity?.profile?.avatarUrl) {
+      setOriginalAvatarStorageId(userIdentity.profile.avatarUrl);
     }
 
     // Initialize social links from user profile
@@ -360,7 +360,7 @@ export default function ProfilePage() {
     }
   };
 
-  // Function to save profile data - updated to avoid page refresh
+  // Function to save profile data - updated to use avatarUrl instead of avatarUrlId
   const saveProfileData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSaving(true);
@@ -385,11 +385,11 @@ export default function ProfilePage() {
       });
 
       // Handle image upload if there is a selected image
-      let avatarUrlId = userIdentity?.profile?.avatarUrlId;
+      let avatarUrl = userIdentity?.profile?.avatarUrl;
 
-      // If image was deleted, clear the avatarUrlId
+      // If image was deleted, clear the avatarUrl
       if (isImageDeleted) {
-        avatarUrlId = undefined;
+        avatarUrl = undefined;
 
         // Delete the original image from storage if it exists
         if (originalAvatarStorageId) {
@@ -424,10 +424,11 @@ export default function ProfilePage() {
           });
 
           if (fileResult.success) {
-            avatarUrlId = fileResult.storageId;
+            // Use the URL directly instead of the storage ID
+            avatarUrl = fileResult.url;
 
             // Delete the old avatar if it exists and is different
-            if (originalAvatarStorageId && originalAvatarStorageId !== fileResult.storageId) {
+            if (originalAvatarStorageId) {
               try {
                 await deleteFile({ storageId: originalAvatarStorageId as any });
               } catch (error) {
@@ -446,11 +447,11 @@ export default function ProfilePage() {
         }
       }
 
-      // Update profile with new data including avatar ID
+      // Update profile with new data including avatar URL
       await updateProfile({
         displayName,
         description,
-        avatarUrlId: avatarUrlId as any,
+        avatarUrl, // Use URL directly instead of storageId
         githubId: userIdentity?.profile?.githubId,
         socialLinks: filteredSocialLinks,
         tags,
@@ -509,8 +510,8 @@ export default function ProfilePage() {
       setIsImageDeleted(false);
 
       // Update the original avatar storage ID for future reference
-      if (avatarUrlId) {
-        setOriginalAvatarStorageId(avatarUrlId);
+      if (avatarUrl) {
+        setOriginalAvatarStorageId(avatarUrl);
       } else {
         setOriginalAvatarStorageId(null);
       }

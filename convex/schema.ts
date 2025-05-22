@@ -31,9 +31,8 @@ export default defineSchema({
     name: v.optional(v.string()), // 실명
     organization: v.optional(v.string()), // 소속
     description: v.optional(v.string()),
-    avatarUrlId: v.optional(v.id('_storage')),
+    avatarUrl: v.optional(v.string()), // Direct URL instead of storage ID
     deletedAt: v.optional(v.string()),
-    // New fields
     githubId: v.optional(v.string()),
     socialLinks: v.optional(v.array(v.string())), // Array of URLs
     tags: v.optional(v.array(v.string())), // Skills, interests, or status tags
@@ -73,7 +72,6 @@ export default defineSchema({
     postId: v.id('posts'),
     authorId: v.id('users'),
     content: v.string(),
-    createdAt: v.string(),
     updatedAt: v.optional(v.string()),
   })
     .index('by_post', ['postId'])

@@ -13,7 +13,6 @@ import {
   Loader2,
 } from 'lucide-react';
 import { useQuery, useMutation, useAction } from 'convex/react';
-import { api } from '../../../../../convex/_generated/api';
 import { useTranslation } from 'react-i18next';
 import { useConvexAuth } from 'convex/react';
 import { cn } from '../../../../lib/utils';
@@ -24,6 +23,7 @@ import { DEFAULT_CATEGORY } from '../../../../../convex/constants';
 // Import additional plugins for ReactMarkdown to handle HTML content and line breaks
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { api } from '../../../../../convex/_generated/api';
 
 interface PostWriteProps {
   isOpen: boolean;
@@ -67,15 +67,15 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
   const [uploadedStorageIds, setUploadedStorageIds] = useState<Id<'_storage'>[]>([]);
 
   // Mutations
-  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
-  const saveFileMetadata = useMutation(api.files.saveFileMetadata);
+  const generateUploadUrl = useMutation(api.files.mutation.generateUploadUrl);
+  const saveFileMetadata = useMutation(api.files.mutation.saveFileMetadata);
   const createPostMutation = useMutation(api.posts.mutation.createPost);
 
   // Add file deletion action
-  const deleteFile = useAction(api.files.deleteFileByStorageId);
+  const deleteFile = useAction(api.files.action.deleteFileByStorageId);
 
   // Get categories from API
-  const categories = useQuery(api.categories.getCategories);
+  const categories = useQuery(api.categories.query.getCategories);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 

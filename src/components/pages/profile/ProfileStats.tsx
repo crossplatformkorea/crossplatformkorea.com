@@ -13,7 +13,7 @@ interface ProfileStatsProps {
 
 export default function ProfileStats({ userId, className }: ProfileStatsProps) {
   const { t } = useTranslation();
-  const userStats = useQuery(api.users.stats.getUserStats, { userId });
+  const userStats = useQuery(api.users.query.getUserStats, { userId });
 
   if (!userStats) {
     return <div className="h-24 animate-pulse bg-muted/50 rounded-lg"></div>;

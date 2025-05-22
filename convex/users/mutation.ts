@@ -1,92 +1,9 @@
 import { getAuthUserId } from '@convex-dev/auth/server';
-import { mutation, query } from './_generated/server';
+import { mutation } from '../_generated/server';
 import { v } from 'convex/values';
-import { Doc, Id } from './_generated/dataModel';
+import { Doc, Id } from '../_generated/dataModel';
 import { v4 as uuidv4 } from 'uuid';
-import { ErrorCode } from './constants';
-
-// Replace getUser with currentUser
-export const currentUser = query({
-  args: {},
-  returns: v.union(
-    v.object({
-      _id: v.id('users'),
-      _creationTime: v.number(),
-      // Fields from various OAuth providers
-      name: v.optional(v.string()),
-      email: v.optional(v.string()),
-      emailVerificationTime: v.optional(v.number()),
-      // GitHub specific fields
-      image: v.optional(v.string()),
-      // User profile from our database
-      profile: v.optional(
-        v.object({
-          _id: v.id('userProfiles'),
-          _creationTime: v.number(),
-          userId: v.id('users'),
-          email: v.string(),
-          displayName: v.string(),
-          name: v.optional(v.string()), // Add field for realName/name in profile
-          organization: v.optional(v.string()), // Add organization field
-          description: v.optional(v.string()),
-          avatarUrlId: v.optional(v.id('_storage')),
-          deletedAt: v.optional(v.string()),
-          // New fields
-          githubId: v.optional(v.string()),
-          socialLinks: v.optional(v.array(v.string())),
-          tags: v.optional(v.array(v.string())),
-          lookingFor: v.optional(v.string()),
-          expectations: v.optional(v.string()),
-        }),
-      ),
-      // Convenience fields
-      displayName: v.optional(v.string()),
-      avatarUrl: v.optional(v.string()),
-    }),
-    v.null(),
-  ),
-  handler: async (ctx) => {
-    try {
-      const userId = await getAuthUserId(ctx);
-      // Return null if not authenticated
-      if (!userId) return null;
-
-      const user = await ctx.db.get(userId as Id<'users'>);
-      // Return null if user not found
-      if (!user) return null;
-
-      // Get the user profile
-      const profile = await ctx.db
-        .query('userProfiles')
-        .withIndex('by_user', (q) => q.eq('userId', userId as Id<'users'>))
-        .first();
-
-      // Note: If the profile doesn't exist, it will be created when the user visits the profile page
-      // via the createOrUpdateUser mutation which is called from the client
-
-      // Get avatar URL if available
-      let avatarUrl: string | null = null;
-      if (profile?.avatarUrlId) {
-        try {
-          avatarUrl = await ctx.storage.getUrl(profile.avatarUrlId);
-        } catch (error) {
-          console.error('Failed to fetch avatar URL:', error);
-        }
-      }
-
-      // Return user with profile and convenient access fields
-      return {
-        ...user,
-        profile: profile || undefined,
-        displayName: profile?.displayName,
-        avatarUrl: avatarUrl || undefined,
-      };
-    } catch (error) {
-      console.error('Failed to fetch current user:', error);
-      return null;
-    }
-  },
-});
+import { ErrorCode } from '../constants';
 
 // Create or update a user profile after authentication
 export const createOrUpdateUser = mutation({
@@ -278,45 +195,11 @@ export const createOrUpdateUser = mutation({
   },
 });
 
-// Get user profile by user ID
-export const getProfile = query({
-  args: { userId: v.id('users') },
-  returns: v.union(
-    v.object({
-      _id: v.id('userProfiles'),
-      _creationTime: v.number(),
-      userId: v.id('users'),
-      email: v.string(),
-      displayName: v.string(),
-      description: v.optional(v.string()),
-      avatarUrlId: v.optional(v.id('_storage')),
-      deletedAt: v.optional(v.string()),
-      // New fields
-      githubId: v.optional(v.string()),
-      socialLinks: v.optional(v.array(v.string())),
-      tags: v.optional(v.array(v.string())),
-      lookingFor: v.optional(v.string()),
-      expectations: v.optional(v.string()),
-    }),
-    v.null(),
-  ),
-  handler: async (ctx, args) => {
-    const profile = await ctx.db
-      .query('userProfiles')
-      .withIndex('by_user', (q) => q.eq('userId', args.userId))
-      .first();
-
-    return profile;
-  },
-});
-
-// Update user profile
 export const updateProfile = mutation({
   args: {
     displayName: v.optional(v.string()),
     description: v.optional(v.string()),
-    avatarUrlId: v.optional(v.id('_storage')),
-    // New fields
+    avatarUrl: v.optional(v.string()),
     githubId: v.optional(v.string()),
     socialLinks: v.optional(v.array(v.string())),
     tags: v.optional(v.array(v.string())),
@@ -345,7 +228,7 @@ export const updateProfile = mutation({
     // Basic fields
     if (args.displayName !== undefined) updateFields.displayName = args.displayName;
     if (args.description !== undefined) updateFields.description = args.description;
-    if (args.avatarUrlId !== undefined) updateFields.avatarUrlId = args.avatarUrlId;
+    if (args.avatarUrl !== undefined) updateFields.avatarUrl = args.avatarUrl;
 
     // New fields
     if (args.githubId !== undefined) updateFields.githubId = args.githubId;

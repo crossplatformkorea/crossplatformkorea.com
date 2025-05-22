@@ -173,3 +173,144 @@ export const deletePost = mutation({
     return true;
   },
 });
+
+// Add like to a post - From likes.ts
+export const likePost = mutation({
+  args: { postId: v.id('posts') },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 포스트 확인
+    const post = await ctx.db.get(args.postId);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    // 좋아요 목록
+    const likedBy = post.likedBy || [];
+    const likeCount = post.likeCount || 0;
+
+    // 이미 좋아요를 눌렀는지 확인
+    if (likedBy.some((id) => id === userId)) {
+      return false; // 이미 좋아요를 누른 상태
+    }
+
+    // 좋아요 추가
+    await ctx.db.patch(args.postId, {
+      likedBy: [...likedBy, userId as Id<'users'>],
+      likeCount: likeCount + 1,
+    });
+
+    return true;
+  },
+});
+
+// Remove like from a post - From likes.ts
+export const unlikePost = mutation({
+  args: { postId: v.id('posts') },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 포스트 확인
+    const post = await ctx.db.get(args.postId);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    // 좋아요 목록
+    const likedBy = post.likedBy || [];
+    const likeCount = Math.max(0, (post.likeCount || 0) - 1);
+
+    // 좋아요를 누른 적이 있는지 확인
+    if (!likedBy.some((id) => id === userId)) {
+      return false; // 좋아요를 누른 적이 없음
+    }
+
+    // 좋아요 취소
+    await ctx.db.patch(args.postId, {
+      likedBy: likedBy.filter((id) => id !== userId),
+      likeCount: likeCount,
+    });
+
+    return true;
+  },
+});
+
+// Toggle like on a post (combines likePost and unlikePost)
+export const toggleLike = mutation({
+  args: { postId: v.id('posts') },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // Get the post
+    const post = await ctx.db.get(args.postId);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    // Check if user has already liked the post
+    const likedBy = post.likedBy || [];
+    const hasLiked = likedBy.some((id) => id === userId);
+
+    if (hasLiked) {
+      // User already liked the post, so unlike it
+      const likeCount = Math.max(0, (post.likeCount || 0) - 1);
+      await ctx.db.patch(args.postId, {
+        likedBy: likedBy.filter((id) => id !== userId),
+        likeCount: likeCount,
+      });
+      return false; // Returning false to indicate the post is now unliked
+    } else {
+      // User hasn't liked the post, so like it
+      const likeCount = (post.likeCount || 0) + 1;
+      await ctx.db.patch(args.postId, {
+        likedBy: [...likedBy, userId as Id<'users'>],
+        likeCount: likeCount,
+      });
+      return true; // Returning true to indicate the post is now liked
+    }
+  },
+});
+
+// Add comment to a post
+export const addComment = mutation({
+  args: {
+    postId: v.id('posts'),
+    content: v.string(),
+  },
+  returns: v.id('comments'),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // Verify post exists
+    const post = await ctx.db.get(args.postId);
+
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    // Create comment
+    const commentId = await ctx.db.insert('comments', {
+      postId: args.postId,
+      authorId: userId as Id<'users'>,
+      content: args.content,
+    });
+
+    return commentId;
+  },
+});
