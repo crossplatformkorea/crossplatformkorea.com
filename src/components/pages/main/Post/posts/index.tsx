@@ -3,9 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { t } from '../../../../../lib/i18n';
 import { PenLine } from 'lucide-react';
-import { useConvexAuth } from 'convex/react';
 
 import AppLoading from '@/components/AppLoading';
+import { useAuthStore } from '@/stores/authStore';
 import { useTranslation } from 'react-i18next';
 import { Id } from '../../../../../../convex/_generated/dataModel';
 import CategoriesBreadCrumbs from './CategoriesBreadCrumbs';
@@ -35,7 +35,7 @@ const Posts = memo(function PostsPage() {
   const categorySlug = searchParams.get('category');
   const [hasMore, setHasMore] = useState(true);
   const [cursor, setCursor] = useState<string | null>(null);
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated } = useAuthStore();
 
   // State for the PostWrite modal
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
@@ -99,7 +99,7 @@ const Posts = memo(function PostsPage() {
     }
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-5">
         {posts.map((post) => (
           <PostListItem key={post._id} post={post} isEventsCategory={isEventsCategory} />
         ))}

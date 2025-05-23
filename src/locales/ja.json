@@ -39,7 +39,8 @@
       "notFound": "プロフィールが見つかりません"
     },
     "auth": {
-      "required": "認証が必要です"
+      "required": "認証が必要です",
+      "loginRequired": "ログインが必要です"
     },
     "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。"
   },

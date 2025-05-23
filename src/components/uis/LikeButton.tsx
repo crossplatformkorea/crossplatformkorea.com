@@ -4,8 +4,8 @@ import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
 import { Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useConvexAuth } from 'convex/react';
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '@/stores/authStore';
 
 interface LikeButtonProps {
   postId: Id<'posts'>;
@@ -21,38 +21,35 @@ export default function LikeButton({
   className,
 }: LikeButtonProps) {
   const { t } = useTranslation();
-  const { isAuthenticated } = useConvexAuth();
-  
-  // 좋아요 상태 및 개수 조회
-  const hasLiked = useQuery(api.posts.likes.hasLiked, { postId });
-  const likeCount = useQuery(api.posts.likes.getLikeCount, { postId });
-  
-  // 좋아요 추가/취소 액션
-  const likePost = useMutation(api.posts.likes.likePost);
-  const unlikePost = useMutation(api.posts.likes.unlikePost);
-  
+  const { isAuthenticated, requireAuth } = useAuthStore();
+
+  // 좋아요 상태 조회
+  const hasLiked = useQuery(api.posts.query.hasLiked, { postId });
+  // 게시물 가져오기
+  const post = useQuery(api.posts.query.getById, { id: postId });
+  const likeCount = post?.likeCount || 0;
+
+  // 좋아요 토글 액션
+  const toggleLike = useMutation(api.posts.mutation.toggleLike);
+
   // 좋아요 토글 핸들러
   const handleToggleLike = async () => {
     if (!isAuthenticated) {
-      // 로그인 필요 안내
-      alert(t('errors.authRequired'));
+      // zustand 스토어를 사용한 로그인 필요 토스트 표시
+      requireAuth();
       return;
     }
-    
-    if (hasLiked) {
-      await unlikePost({ postId });
-    } else {
-      await likePost({ postId });
-    }
+
+    await toggleLike({ postId });
   };
-  
+
   // 사이즈에 따른 스타일 설정
   const sizeStyles = {
     sm: 'p-1.5 text-sm',
     md: 'px-3 py-2 text-base',
     lg: 'px-4 py-2.5 text-lg',
   };
-  
+
   const iconSize = {
     sm: 14,
     md: 18,
@@ -68,7 +65,7 @@ export default function LikeButton({
           ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40'
           : 'bg-muted hover:bg-muted/80 text-muted-foreground',
         sizeStyles[size],
-        className
+        className,
       )}
       aria-label={hasLiked ? t('posts.unlike') : t('posts.like')}
       title={hasLiked ? t('posts.unlike') : t('posts.like')}
@@ -78,7 +75,7 @@ export default function LikeButton({
         className={cn(
           'transition-transform',
           hasLiked ? 'fill-red-500 text-red-500' : 'fill-transparent',
-          hasLiked && 'scale-110'
+          hasLiked && 'scale-110',
         )}
       />
       {showCount && <span>{likeCount ?? 0}</span>}

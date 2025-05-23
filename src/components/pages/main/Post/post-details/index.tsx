@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery, useConvexAuth, useMutation } from 'convex/react';
+import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -12,9 +12,10 @@ import CategoryBadge from '@/components/uis/CategoryBadge';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import PostWrite from '../../Post/PostWrite';
 import Comments from './Comments';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function PostDetailsPage() {
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated, requireAuth } = useAuthStore();
   const { postId } = useParams();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -41,10 +42,7 @@ export default function PostDetailsPage() {
   }, [postId, navigate]);
 
   // Only query when postId exists and is a valid ID format
-  const post = useQuery(
-    api.posts.query.getPostById,
-    postId ? { postId: postId as Id<'posts'> } : 'skip',
-  );
+  const post = useQuery(api.posts.query.getById, postId ? { id: postId as Id<'posts'> } : 'skip');
 
   // Increment view count once when the post is loaded
   useEffect(() => {
@@ -85,6 +83,11 @@ export default function PostDetailsPage() {
   // Add handleLikeClick function
   const handleLikeClick = () => {
     if (post) {
+      if (!isAuthenticated) {
+        // zustand 스토어를 사용한 로그인 필요 토스트 표시
+        requireAuth();
+        return;
+      }
       void toggleLike({ postId: post._id });
     }
   };
@@ -218,7 +221,7 @@ export default function PostDetailsPage() {
           dangerouslySetInnerHTML={{ __html: post.content || '' }}
         />
       </div>
-      
+
       {/* 댓글 컴포넌트 추가 - border 제거 */}
       <div className="bg-background dark:bg-gray-800/20 px-8 py-8 mt-2 rounded-lg shadow-sm">
         {post && <Comments postId={post._id} />}

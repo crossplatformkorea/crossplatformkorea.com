@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, KeyboardEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useConvexAuth } from 'convex/react';
+// import { useConvexAuth } from 'convex/react';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { useAuthActions } from '@convex-dev/auth/react';
@@ -23,9 +23,11 @@ import { t } from 'i18next';
 import ProfileDisplay from './ProfileDisplay';
 import ProfileDetails from './ProfileDetails';
 import ProfileStats from './ProfileStats';
+import { useAuthStore } from '@/stores/authStore'; // Added
 
 export default function ProfilePage() {
-  const { isAuthenticated, isLoading } = useConvexAuth();
+  // const { isAuthenticated, isLoading } = useConvexAuth();
+  const { isAuthenticated, isLoading, requireAuth } = useAuthStore(); // Added
   const navigate = useNavigate();
   const { signOut } = useAuthActions();
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -50,12 +52,11 @@ export default function ProfilePage() {
   // Redirect to sign-in if not authenticated
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      void navigate('/sign-in');
+      requireAuth();
     }
-  }, [isAuthenticated, isLoading, navigate]);
+  }, [isAuthenticated, isLoading, navigate, requireAuth]);
 
-  // Get current user data
-  const userIdentity = useQuery(api.users.query.currentUser);
+  const currentUser = useQuery(api.users.query.currentUser);
 
   // Create user profile if it doesn't exist
   const createOrUpdateUser = useMutation(api.users.mutation.createOrUpdateUser);
@@ -116,52 +117,52 @@ export default function ProfilePage() {
 
   // Set image preview when user has an avatar and initialize social links and tags
   useEffect(() => {
-    if (userIdentity?.avatarUrl) {
-      setImagePreview(userIdentity.avatarUrl);
+    if (currentUser?.avatarUrl) {
+      setImagePreview(currentUser.avatarUrl);
     }
 
     // Store original avatar storage ID for potential deletion
-    if (userIdentity?.profile?.avatarUrl) {
-      setOriginalAvatarStorageId(userIdentity.profile.avatarUrl);
+    if (currentUser?.profile?.avatarUrl) {
+      setOriginalAvatarStorageId(currentUser.profile.avatarUrl);
     }
 
     // Initialize social links from user profile
-    if (userIdentity?.profile?.socialLinks && userIdentity.profile.socialLinks.length > 0) {
-      setSocialLinks(userIdentity.profile.socialLinks);
+    if (currentUser?.profile?.socialLinks && currentUser.profile.socialLinks.length > 0) {
+      setSocialLinks(currentUser.profile.socialLinks);
     } else {
       // Start with one empty link if none exist
       setSocialLinks(['']);
     }
 
     // Initialize tags from user profile
-    if (userIdentity?.profile?.tags && userIdentity.profile.tags.length > 0) {
-      setTags(userIdentity.profile.tags);
+    if (currentUser?.profile?.tags && currentUser.profile.tags.length > 0) {
+      setTags(currentUser.profile.tags);
     }
 
     // Save original data for change detection
-    if (userIdentity?.profile) {
+    if (currentUser?.profile) {
       setOriginalData({
-        displayName: userIdentity.profile.displayName || '',
-        description: userIdentity.profile.description || '',
-        lookingFor: userIdentity.profile.lookingFor || '',
-        expectations: userIdentity.profile.expectations || '',
-        realName: userIdentity.profile.name || '',
-        organization: userIdentity.profile.organization || '',
-        socialLinks: userIdentity.profile.socialLinks || [''],
-        tags: userIdentity.profile.tags || [],
+        displayName: currentUser.profile.displayName || '',
+        description: currentUser.profile.description || '',
+        lookingFor: currentUser.profile.lookingFor || '',
+        expectations: currentUser.profile.expectations || '',
+        realName: currentUser.profile.name || '',
+        organization: currentUser.profile.organization || '',
+        socialLinks: currentUser.profile.socialLinks || [''],
+        tags: currentUser.profile.tags || [],
       });
     }
-  }, [userIdentity?.avatarUrl, userIdentity?.profile]);
+  }, [currentUser?.avatarUrl, currentUser?.profile]);
 
   // Check if user is authenticated but doesn't have a profile
   useEffect(() => {
     const createProfileIfNeeded = async () => {
-      if (isAuthenticated && userIdentity && !userIdentity.profile && userIdentity.email) {
+      if (isAuthenticated && currentUser && !currentUser.profile && currentUser.email) {
         try {
           // Create a profile using the email from the authenticated user
           await createOrUpdateUser({
-            email: userIdentity.email,
-            name: userIdentity.name || userIdentity.email.split('@')[0],
+            email: currentUser.email,
+            name: currentUser.name || currentUser.email.split('@')[0],
           });
           // Refresh the page to load the new profile
           window.location.reload();
@@ -172,7 +173,7 @@ export default function ProfilePage() {
     };
 
     void createProfileIfNeeded();
-  }, [isAuthenticated, userIdentity, createOrUpdateUser]);
+  }, [isAuthenticated, currentUser, createOrUpdateUser]);
 
   // Handle image selection
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -277,17 +278,17 @@ export default function ProfilePage() {
 
   // Update form state when user data is loaded
   useEffect(() => {
-    if (userIdentity?.profile) {
+    if (currentUser?.profile) {
       setFormValues({
-        displayName: userIdentity.profile.displayName || '',
-        description: userIdentity.profile.description || '',
-        lookingFor: userIdentity.profile.lookingFor || '',
-        expectations: userIdentity.profile.expectations || '',
-        realName: userIdentity.profile.name || '',
-        organization: userIdentity.profile.organization || '',
+        displayName: currentUser.profile.displayName || '',
+        description: currentUser.profile.description || '',
+        lookingFor: currentUser.profile.lookingFor || '',
+        expectations: currentUser.profile.expectations || '',
+        realName: currentUser.profile.name || '',
+        organization: currentUser.profile.organization || '',
       });
     }
-  }, [userIdentity?.profile]);
+  }, [currentUser?.profile]);
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -385,7 +386,7 @@ export default function ProfilePage() {
       });
 
       // Handle image upload if there is a selected image
-      let avatarUrl = userIdentity?.profile?.avatarUrl;
+      let avatarUrl = currentUser?.profile?.avatarUrl;
 
       // If image was deleted, clear the avatarUrl
       if (isImageDeleted) {
@@ -452,7 +453,7 @@ export default function ProfilePage() {
         displayName,
         description,
         avatarUrl, // Use URL directly instead of storageId
-        githubId: userIdentity?.profile?.githubId,
+        githubId: currentUser?.profile?.githubId,
         socialLinks: filteredSocialLinks,
         tags,
         lookingFor,
@@ -461,7 +462,7 @@ export default function ProfilePage() {
 
       // Also update basic user info
       const userData = {
-        email: userIdentity?.profile?.email || '',
+        email: currentUser?.profile?.email || '',
         name: realName,
         realName,
         displayName,
@@ -585,8 +586,8 @@ export default function ProfilePage() {
         />
 
         {/* 사용자 통계 정보 추가 */}
-        {userIdentity && userIdentity._id && (
-          <ProfileStats userId={userIdentity._id} className="mt-6" />
+        {currentUser && currentUser._id && (
+          <ProfileStats userId={currentUser._id} className="mt-6" />
         )}
 
         {/* Profile Details Card */}

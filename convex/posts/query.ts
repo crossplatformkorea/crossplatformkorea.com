@@ -97,11 +97,11 @@ export const getCategoryBySlug = query({
 });
 
 // Get a single post by ID
-export const getPostById = query({
-  args: { postId: v.id('posts') },
+export const getById = query({
+  args: { id: v.id('posts') },
   returns: v.union(postObjectValidator, v.null()),
   handler: async (ctx, args) => {
-    const post = await ctx.db.get(args.postId);
+    const post = await ctx.db.get(args.id);
     if (!post) return null;
 
     return post;

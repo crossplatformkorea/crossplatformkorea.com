@@ -1,10 +1,8 @@
 import { useCallback, useState } from 'react';
 import { useMutation, usePaginatedQuery } from 'convex/react';
-import { useNavigate } from 'react-router-dom';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
-import AppLoading from '../AppLoading';
-import useAuthGuard from '@/hooks/useAuthGuard';
+import { useAuthStore } from '@/stores/authStore';
 import { t } from 'i18next';
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
@@ -56,9 +54,7 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
 };
 
 export default function FeatureRequestsPage() {
-  const navigate = useNavigate();
-  // Replace the direct auth check with useAuthGuard
-  const { isAuthenticated, isLoading: isAuthLoading } = useAuthGuard();
+  const { isAuthenticated, requireAuth } = useAuthStore();
 
   const {
     results: featureRequests,
@@ -86,7 +82,7 @@ export default function FeatureRequestsPage() {
   const onSubmitFeatureRequest = useCallback(async () => {
     // Double-check authentication before proceeding
     if (!isAuthenticated) {
-      void navigate('/sign-in');
+      requireAuth();
       return;
     }
 
@@ -133,7 +129,7 @@ export default function FeatureRequestsPage() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [title, description, addFeatureRequest, isAuthenticated, navigate]);
+  }, [title, description, addFeatureRequest, isAuthenticated, requireAuth]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -146,7 +142,7 @@ export default function FeatureRequestsPage() {
   const handleVote = async (id: Id<'featureRequests'>) => {
     // Check if user is authenticated before voting
     if (!isAuthenticated) {
-      void navigate('/sign-in');
+      requireAuth();
       return;
     }
 
@@ -159,16 +155,11 @@ export default function FeatureRequestsPage() {
 
   const handleRequestFeature = () => {
     if (!isAuthenticated) {
-      void navigate('/sign-in');
+      requireAuth();
       return;
     }
     setShowForm(!showForm);
   };
-
-  // Show loading before redirect for smooth transition
-  if (isAuthLoading || !isAuthenticated) {
-    return <AppLoading />;
-  }
 
   return (
     <div>

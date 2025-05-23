@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../../convex/_generated/api';
-import { useConvexAuth } from 'convex/react';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, MessageSquare, User, Sparkles, LogIn } from 'lucide-react';
 import SummaryPostItem from './SummaryPostItem';
 import UserStats from './UserStats';
 import { motion } from 'framer-motion';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function SummaryPage() {
   const { t } = useTranslation();
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated } = useAuthStore();
   const recentPosts = useQuery(api.posts.query.getRecentPosts, { limit: 6 });
   const userIdentity = useQuery(api.users.query.currentUser);
   

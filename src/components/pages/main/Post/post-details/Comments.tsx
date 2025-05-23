@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useQuery, useMutation, useConvexAuth } from 'convex/react';
+import { useQuery, useMutation } from 'convex/react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../../../../../convex/_generated/api';
 import { Id } from '../../../../../../convex/_generated/dataModel';
@@ -8,6 +8,7 @@ import { ko, ja, enUS } from 'date-fns/locale';
 import { User, Send, MessageSquare, Trash2, Loader2 } from 'lucide-react';
 import { cn } from '../../../../../lib/utils';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
+import { useAuthStore } from '@/stores/authStore';
 
 interface CommentsProps {
   postId: Id<'posts'>;
@@ -15,7 +16,7 @@ interface CommentsProps {
 
 export default function Comments({ postId }: CommentsProps) {
   const { t, i18n } = useTranslation();
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated, requireAuth } = useAuthStore();
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState<Id<'comments'> | null>(null);
@@ -48,7 +49,12 @@ export default function Comments({ postId }: CommentsProps) {
   const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isAuthenticated || !comment.trim()) return;
+    if (!isAuthenticated) {
+      requireAuth();
+      return;
+    }
+    
+    if (!comment.trim()) return;
 
     setIsSubmitting(true);
 

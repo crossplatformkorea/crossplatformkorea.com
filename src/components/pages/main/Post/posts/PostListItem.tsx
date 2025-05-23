@@ -7,6 +7,7 @@ import { MessageSquare, Heart, Eye, User } from 'lucide-react';
 import { Doc } from '../../../../../../convex/_generated/dataModel';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
+import { useAuthStore } from '@/stores/authStore';
 import CategoryBadge from '../../../../uis/CategoryBadge';
 
 // Import Post type from Convex data model
@@ -20,6 +21,7 @@ interface PostListItemProps {
 export default function PostListItem({ post, isEventsCategory = false }: PostListItemProps) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { isAuthenticated, requireAuth } = useAuthStore();
 
   // 개별 통계 쿼리 제거하고 hasLiked만 유지
   const hasLiked = useQuery(api.posts.query.hasLiked, { postId: post._id });
@@ -37,6 +39,14 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const handleLikeClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation to post detail
     e.stopPropagation(); // Stop event propagation
+    
+    // 로그인 상태 확인
+    if (!isAuthenticated) {
+      // zustand 스토어를 사용한 로그인 필요 토스트 표시
+      requireAuth();
+      return;
+    }
+    
     void toggleLike({ postId: post._id });
   };
 

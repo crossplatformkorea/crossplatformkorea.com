@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useConvexAuth } from 'convex/react';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { cn } from '@/lib/utils';
 import { sidebarItems } from '@/constants/sidebar';
 import { LogIn, User, ChevronRight } from 'lucide-react';
 import { t } from 'i18next';
+import { useAuthStore } from '@/stores/authStore';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -15,7 +15,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen = false, isTransitioning = false }: SidebarProps) {
   const location = useLocation();
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated } = useAuthStore();
   const [showContent, setShowContent] = useState(isOpen);
 
   // Get current user data with avatar and display name

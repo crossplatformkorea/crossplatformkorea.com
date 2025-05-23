@@ -39,7 +39,8 @@
       "notFound": "Profile not found"
     },
     "auth": {
-      "required": "Authentication required"
+      "required": "Authentication required",
+      "loginRequired": "Please sign in to continue"
     },
     "postUpdateFailed": "Failed to update post. Please try again."
   },

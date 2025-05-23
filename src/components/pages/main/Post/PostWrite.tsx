@@ -14,11 +14,11 @@ import {
 } from 'lucide-react';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { useTranslation } from 'react-i18next';
-import { useConvexAuth } from 'convex/react';
 import { cn } from '../../../../lib/utils';
 import { Id } from '../../../../../convex/_generated/dataModel';
 import { MAX_FILE_SIZE, MAX_FILE_SIZE_READABLE } from '../../../../constants';
 import { DEFAULT_CATEGORY } from '../../../../../convex/constants';
+import { useAuthStore } from '@/stores/authStore';
 
 // Import additional plugins for ReactMarkdown to handle HTML content and line breaks
 import ReactMarkdown from 'react-markdown';
@@ -48,7 +48,7 @@ export default function PostWrite({
   defaultTags = [],
 }: PostWriteProps) {
   const { t } = useTranslation();
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated, requireAuth } = useAuthStore(); // Correctly destructure requireAuth
 
   // Refs for focus management
   const modalRef = useRef<HTMLDivElement>(null);
@@ -344,7 +344,7 @@ export default function PostWrite({
     e.preventDefault();
 
     if (!isAuthenticated) {
-      setError(t('errors.authRequired'));
+      requireAuth();
       return;
     }
 

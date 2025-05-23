@@ -23,7 +23,7 @@ export default function Main() {
         </div>
       </div>
 
-      <Toaster theme="system" />
+      <Toaster theme="system" position="bottom-right" richColors closeButton />
     </div>
   );
 }

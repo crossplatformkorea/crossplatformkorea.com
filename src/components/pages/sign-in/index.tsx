@@ -1,11 +1,11 @@
-import { useConvexAuth } from "convex/react";
 import { cn } from "../../../lib/utils";
 import SignOut from "./SignOut";
 import SigningIn from "./SigningIn";
 import { t } from "../../../lib/i18n";
+import { useAuthStore } from "@/stores/authStore";
 
 export default function SignIn() {
-  const { isAuthenticated, isLoading } = useConvexAuth();
+  const { isAuthenticated, isLoading } = useAuthStore();
 
   // Loading animation component
   const LoadingAnimation = () => (
