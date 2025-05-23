@@ -4,6 +4,7 @@ import AppLoading from '../../AppLoading';
 import Sidebar from './Sidebar';
 import { Header } from './Header';
 import { t } from 'i18next';
+import { cn } from '@/lib/utils';
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -41,19 +42,50 @@ export function AppLayout({ children }: AppLayoutProps) {
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-screen">
       {/* Header at the top level with sidebar toggle */}
       <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Main content with sidebar */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Collapsible sidebar */}
-        <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-0'} `}>
-          <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} />
+        {/* Desktop Sidebar: Pushes content, hidden on mobile */}
+        <div className="hidden md:block">
+          <div
+            className={cn(
+              'transition-all duration-300 overflow-hidden h-full',
+              isSidebarOpen ? 'w-64' : 'w-0',
+            )}
+          >
+            {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} />}
+          </div>
+        </div>
+
+        {/* Mobile Sidebar: Overlays content, shown only on mobile */}
+        <div className="md:hidden">
+          {/* Backdrop for mobile */}
+          {isSidebarOpen && (
+            <div
+              className="fixed inset-0 z-30 bg-black/50"
+              onClick={toggleSidebar}
+              aria-hidden="true"
+            />
+          )}
+          {/* Sidebar container for mobile */}
+          <div
+            className={cn(
+              'fixed inset-y-0 left-0 z-40 w-64 transition-transform duration-300 ease-in-out',
+              // The Sidebar component itself provides its background color
+              isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
+            )}
+            role="dialog"
+            aria-modal="true"
+          >
+            <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} />
+          </div>
         </div>
 
         {/* Main content area */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 overflow-y-scroll">{children}</main>
       </div>
     </div>
   );

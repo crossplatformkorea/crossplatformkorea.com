@@ -52,20 +52,20 @@ export default function ProfileDetails({
       </h2>
 
       <form id="profileForm" onSubmit={handleSaveProfile} className="space-y-4">
-        {/* Social Media Links */}
+        {/* Social Media Links - Updated for better mobile responsiveness */}
         <div>
           <label className="block text-sm font-medium mb-1 text-muted-foreground">
             {t('profile.fields.socialLinks.label')}
           </label>
           <div className="space-y-2">
             {socialLinks.map((link, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <div className="relative flex-1">
+              <div key={index} className="flex flex-wrap items-center gap-2 w-full">
+                <div className="relative flex-1 min-w-0 w-full sm:w-auto">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                     {getSocialIcon(link)}
                   </div>
                   <div className="flex items-center w-full bg-background border border-border/50 rounded-md focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/50">
-                    <span className="pl-10 pr-0 py-2 text-muted-foreground">https://</span>
+                    <span className="pl-10 pr-0 py-2 text-muted-foreground text-sm whitespace-nowrap">https://</span>
                     <input
                       type="text"
                       placeholder={t('profile.fields.socialLinks.placeholder', {
@@ -73,7 +73,7 @@ export default function ProfileDetails({
                       })}
                       value={link.replace(/^https?:\/\//i, '')}
                       onChange={(e) => updateSocialLink(index, e.target.value)}
-                      className="flex-1 pl-0 pr-3 py-2 bg-transparent border-none outline-none"
+                      className="flex-1 min-w-0 pl-0 pr-3 py-2 bg-transparent border-none outline-none"
                     />
                   </div>
                 </div>
