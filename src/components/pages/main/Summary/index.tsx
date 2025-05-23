@@ -12,16 +12,31 @@ import { motion } from 'framer-motion';
 export default function SummaryPage() {
   const { t } = useTranslation();
   const { isAuthenticated } = useConvexAuth();
-  const [mounted, setMounted] = useState(false);
-
-  // Get user profile
-  const userIdentity = useQuery(api.users.query.currentUser);
   const recentPosts = useQuery(api.posts.query.getRecentPosts, { limit: 6 });
-
-  // Animate components after mount
+  const userIdentity = useQuery(api.users.query.currentUser);
+  
+  // State for animation and first login tracking
+  const [mounted, setMounted] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
+  
+  // Check if first login using localStorage
   useEffect(() => {
     setMounted(true);
-  }, []);
+    
+    if (isAuthenticated && userIdentity) {
+      // Check if user has seen welcome message
+      const userId = userIdentity._id;
+      const welcomeShownKey = `welcome_shown_${userId}`;
+      const hasSeenWelcome = localStorage.getItem(welcomeShownKey);
+      
+      if (!hasSeenWelcome) {
+        // Show welcome message for first time
+        setShowWelcome(true);
+        // Mark welcome as shown
+        localStorage.setItem(welcomeShownKey, 'true');
+      }
+    }
+  }, [isAuthenticated, userIdentity]);
 
   // Animation variants for staggered children
   const container = {
@@ -48,19 +63,22 @@ export default function SummaryPage() {
       </div>
 
       <div className="container mx-auto max-w-6xl relative">
-        <motion.div
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary/90 to-secondary/90 mt-4 mb-2">
-            {t('summary.welcome')}
-          </h1>
-          <p className="text-muted-foreground/80 max-w-2xl mx-auto">
-            {t('summary.welcomeMessage')}
-          </p>
-        </motion.div>
+        {/* 환영 메시지 - 첫 로그인 시에만 표시 */}
+        {showWelcome && (
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary/90 to-secondary/90 mt-4 mb-2">
+              {t('summary.welcome')}
+            </h1>
+            <p className="text-muted-foreground/80 max-w-2xl mx-auto">
+              {t('summary.welcomeMessage')}
+            </p>
+          </motion.div>
+        )}
 
         {/* 로그인 상태에 따라 다른 컨텐츠 표시 */}
         {isAuthenticated && userIdentity ? (
