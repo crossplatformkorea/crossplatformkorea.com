@@ -22,7 +22,8 @@
     "all": "전체",
     "viewAll": "전체 보기",
     "loginToAccess": "로그인하여 시작하기",
-    "back": "뒤로"
+    "back": "뒤로",
+    "loginToWrite": "로그인 후 작성이 가능합니다"
   },
   "errors": {
     "general": "오류가 발생했습니다. 다시 시도해주세요.",

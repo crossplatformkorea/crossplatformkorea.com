@@ -22,7 +22,8 @@
     "loadMore": "もっと見る",
     "viewAll": "すべて見る",
     "loginToAccess": "サインインして始める",
-    "back": "戻る"
+    "back": "戻る",
+    "loginToWrite": "ログインして書き込んでください"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",

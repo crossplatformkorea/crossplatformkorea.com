@@ -22,7 +22,8 @@
     "all": "All",
     "viewAll": "View All",
     "loginToAccess": "Sign in to get started",
-    "back": "Back"
+    "back": "Back",
+    "loginToWrite": "Please login to write"
   },
   "errors": {
     "general": "An error occurred. Please try again.",

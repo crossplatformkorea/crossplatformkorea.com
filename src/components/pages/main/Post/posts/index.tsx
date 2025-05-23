@@ -129,7 +129,7 @@ const Posts = memo(function PostsPage() {
         !isAuthenticated && 'opacity-70 cursor-not-allowed',
       )}
       disabled={!isAuthenticated}
-      title={!isAuthenticated ? translate('posts.loginToWrite') : undefined}
+      title={!isAuthenticated ? translate('common.loginToWrite') : undefined}
     >
       <PenLine size={18} />
       {translate('posts.write')}
@@ -188,7 +188,7 @@ const Posts = memo(function PostsPage() {
 
   // Default view when no category is selected
   return (
-    <div className="p-6">
+    <div>
       {/* Write modal - Always pass the currentCategoryKey */}
       <PostWrite
         isOpen={isWriteModalOpen}
