@@ -1,31 +1,32 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, ChangeEvent } from 'react';
 import { useMutation, usePaginatedQuery } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
-import { useAuthStore } from '@/stores/authStore';
 import { t } from 'i18next';
+import useAuthGuard from '@/hooks/useAuthGuard';
+import { Button } from '@/components/uis/Button';
+import { Textarea } from '@/components/uis/Textarea';
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
 type StatusBadgeProps = { status: StatusType };
 
-// Status badge component
+// Enhanced Status badge component
 const StatusBadge = ({ status }: StatusBadgeProps) => {
-  const getBadgeColor = () => {
+  const getBadgeStyle = () => {
     switch (status) {
       case 'requested':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
+        return 'bg-blue-100 text-blue-700 dark:bg-blue-700 dark:text-blue-100 border-blue-300 dark:border-blue-600';
       case 'planned':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300';
+        return 'bg-purple-100 text-purple-700 dark:bg-purple-700 dark:text-purple-100 border-purple-300 dark:border-purple-600';
       case 'in-progress':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300';
+        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-700 dark:text-yellow-100 border-yellow-300 dark:border-yellow-600';
       case 'completed':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+        return 'bg-green-100 text-green-700 dark:bg-green-700 dark:text-green-100 border-green-300 dark:border-green-600';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+        return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600';
     }
   };
 
-  // Map status to i18n key
   const getStatusText = () => {
     switch (status) {
       case 'requested':
@@ -37,7 +38,6 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
       case 'completed':
         return t('featureRequest.status.completed');
       default: {
-        // Handle the default case with proper type safety
         const unknownStatus = String(status);
         return unknownStatus.charAt(0).toUpperCase() + unknownStatus.slice(1);
       }
@@ -46,15 +46,36 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getBadgeColor()}`}
+      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide border ${getBadgeStyle()}`}
     >
       {getStatusText()}
     </span>
   );
 };
 
+// Icon for upvote
+const UpvoteIcon = ({ voted }: { voted?: boolean }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className={`h-5 w-5 ${voted ? 'text-primary fill-primary/20' : 'text-gray-500 dark:text-gray-400 group-hover:text-primary'}`}
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 3.293l-6.354 6.353.708.708L10 4.707l5.646 5.647.708-.708L10 3.293z"
+      clipRule="evenodd"
+    />
+    <path
+      fillRule="evenodd"
+      d="M10 5a.75.75 0 01.75.75v10.5a.75.75 0 01-1.5 0V5.75A.75.75 0 0110 5z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
 export default function FeatureRequestsPage() {
-  const { isAuthenticated, requireAuth } = useAuthStore();
+  useAuthGuard(); // Ensures user is authenticated for this page
 
   const {
     results: featureRequests,
@@ -70,9 +91,8 @@ export default function FeatureRequestsPage() {
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  // Format date from timestamp
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleDateString('en-US', {
+    return new Date(timestamp).toLocaleDateString(t('common.localeDate') || 'en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -80,56 +100,34 @@ export default function FeatureRequestsPage() {
   };
 
   const onSubmitFeatureRequest = useCallback(async () => {
-    // Double-check authentication before proceeding
-    if (!isAuthenticated) {
-      requireAuth();
-      return;
-    }
-
     setIsSubmitting(true);
     setError(null);
-
     try {
       if (title.trim().length < 3) {
         throw new Error(t('featureRequest.validation.titleTooShort'));
       }
-
       if (description.trim().length < 10) {
         throw new Error(t('featureRequest.validation.descriptionTooShort'));
       }
-
-      console.log('Submitting feature request:', { title, description });
-
-      try {
-        const result = await addFeatureRequest({
-          title: title.trim(),
-          description: description.trim(),
-        });
-
-        console.log('Feature request submitted successfully:', result);
-
-        // Reset form
-        setTitle('');
-        setDescription('');
-        setShowForm(false);
-
-        // Show success toast or message
-        window.alert(t('featureRequest.successMessage'));
-      } catch (mutationError) {
-        console.error('Mutation error:', mutationError);
-        throw new Error(
-          t('featureRequest.validation.serverError', {
-            message: mutationError instanceof Error ? mutationError.message : 'Unknown error',
-          }),
-        );
-      }
+      const _result = await addFeatureRequest({
+        title: title.trim(),
+        description: description.trim(),
+      });
+      setTitle('');
+      setDescription('');
+      setShowForm(false);
+      // Consider using a toast notification library like sonner for success messages
+      window.alert(t('featureRequest.successMessage'));
     } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit');
+      setError(errorMessage);
       console.error('Error submitting feature request:', err);
-      setError(err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit'));
+      // Consider using a toast for errors too
     } finally {
       setIsSubmitting(false);
     }
-  }, [title, description, addFeatureRequest, isAuthenticated, requireAuth]);
+  }, [title, description, addFeatureRequest]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -140,192 +138,234 @@ export default function FeatureRequestsPage() {
   );
 
   const handleVote = async (id: Id<'featureRequests'>) => {
-    // Check if user is authenticated before voting
-    if (!isAuthenticated) {
-      requireAuth();
-      return;
-    }
-
     try {
       await voteForFeature({ id });
+      // Optionally, provide feedback to the user (e.g., optimistic update or toast)
     } catch (err) {
       console.error('Failed to vote:', err);
+      // Optionally show an error toast
     }
   };
 
-  const handleRequestFeature = () => {
-    if (!isAuthenticated) {
-      requireAuth();
-      return;
-    }
+  const handleRequestFeatureToggle = () => {
     setShowForm(!showForm);
+    if (!showForm) {
+      // Reset error when opening form
+      setError(null);
+    }
   };
+
+  // Icon for the request feature button
+  const PlusIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+      <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+    </svg>
+  );
+
+  const CancelIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+    </svg>
+  );
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+        <div className="mb-4 sm:mb-0">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
             {t('featureRequest.title')}
-          </h2>
-          <p className="text-muted-foreground mt-2">{t('featureRequest.description')}</p>
+          </h1>
+          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+            {t('featureRequest.description')}
+          </p>
         </div>
-
-        <button
-          onClick={handleRequestFeature}
-          className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground dark:text-primary-foreground rounded-lg font-medium hover:from-primary/90 hover:to-primary/80 dark:hover:text-primary-foreground transition-all shadow-md shadow-primary/20"
+        <Button
+          onClick={handleRequestFeatureToggle}
+          size="lg"
+          variant={showForm ? "outline" : "default"} // Change variant based on form visibility
+          className="shrink-0 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center"
         >
+          {showForm ? <CancelIcon /> : <PlusIcon />}
           {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
-        </button>
-      </div>
+        </Button>
+      </header>
 
-      {showForm && (
-        <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-xl p-6 shadow-lg mb-8">
-          <h3 className="text-xl font-semibold mb-4">{t('featureRequest.formTitle')}</h3>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Wrapper div for transition */}
+      <div
+        className={`
+          overflow-hidden
+          transition-all duration-300 ease-in-out
+          ${showForm
+            ? 'max-h-[1000px] opacity-100 mb-12' // Adjust max-h if your form can be taller
+            : 'max-h-0 opacity-0 mb-0' // Collapses the div and its margin when hidden
+          }
+        `}
+      >
+        <section className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+            {t('featureRequest.formTitle')}
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 {t('featureRequest.titleLabel')} <span className="text-red-500">*</span>
               </label>
               <input
                 id="title"
+                type="text"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 border border-border/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background/50 backdrop-blur-sm"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                 placeholder={t('featureRequest.titlePlaceholder')}
                 required
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-white sm:text-sm"
               />
             </div>
-
             <div>
-              <label htmlFor="description" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 {t('featureRequest.descriptionLabel')} <span className="text-red-500">*</span>
               </label>
-              <textarea
+              <Textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                rows={4}
-                className="w-full px-4 py-3 border border-border/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background/50 backdrop-blur-sm"
+                rows={5}
                 placeholder={t('featureRequest.descriptionPlaceholder')}
                 required
+                className="sm:text-sm" // Assuming Textarea component accepts className
               />
             </div>
-
             {error && (
-              <div className="text-red-500 text-sm p-2 bg-red-100/30 border border-red-200 rounded-md">
-                {error}
+              <div className="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
+                <div className="flex">
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-red-700 dark:text-red-300">{error}</p>
+                  </div>
+                </div>
               </div>
             )}
-
-            <div className="flex justify-end">
-              <button
+            <div className="flex justify-end pt-2">
+              <Button
                 type="submit"
                 disabled={isSubmitting || !title.trim() || !description.trim()}
-                className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:from-primary/90 hover:to-primary/80 transition-all shadow-md shadow-primary/20"
+                size="lg"
               >
                 {isSubmitting
                   ? t('featureRequest.submittingButton')
                   : t('featureRequest.submitButton')}
-              </button>
+              </Button>
             </div>
           </form>
-        </div>
-      )}
+        </section>
+      </div>
 
-      {/* Feature request list */}
-      <div className="space-y-4">
-        {status === 'LoadingFirstPage' ? (
-          <div className="text-center p-12 bg-background/80 backdrop-blur-md border border-border/50 rounded-xl">
-            <div className="flex flex-col items-center justify-center">
-              <div className="relative w-12 h-12 mb-4">
-                <div className="absolute top-0 left-0 w-full h-full rounded-full border-2 border-primary/30 border-t-primary animate-spin"></div>
-              </div>
-              <p className="text-muted-foreground">{t('featureRequest.loading')}</p>
-            </div>
+      <main>
+        {status === 'LoadingFirstPage' && (
+          <div className="text-center py-16">
+            <div className="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-xl text-gray-600 dark:text-gray-400">
+              {t('featureRequest.loading')}
+            </p>
           </div>
-        ) : !featureRequests || featureRequests.length === 0 ? (
-          <div className="text-center p-12 bg-background/80 backdrop-blur-md border border-border/50 rounded-xl">
-            <p className="text-muted-foreground">{t('featureRequest.noRequests')}</p>
+        )}
+
+        {!featureRequests || (featureRequests.length === 0 && status !== 'LoadingFirstPage') ? (
+          <div className="text-center py-16 bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-200 dark:border-gray-700 p-8">
+            <svg
+              className="mx-auto h-12 w-12 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                vectorEffect="non-scaling-stroke"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+              />
+            </svg>
+            <h3 className="mt-2 text-xl font-medium text-gray-900 dark:text-white">
+              {t('featureRequest.noRequestsTitle')}
+            </h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              {t('featureRequest.noRequests')}
+            </p>
+            {!showForm && (
+              <div className="mt-6">
+                <Button onClick={handleRequestFeatureToggle} variant="outline">
+                  {t('featureRequest.beTheFirst')}
+                </Button>
+              </div>
+            )}
           </div>
         ) : (
-          <>
+          <div className="space-y-6">
             {featureRequests.map((request) => (
-              <div
+              <article
                 key={request._id}
-                className="p-6 bg-background/80 backdrop-blur-md border border-border/50 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300 ease-in-out"
               >
-                <div className="flex gap-4">
-                  {/* Vote button */}
-                  <div className="flex flex-col items-center">
+                <div className="p-5 sm:p-6 flex gap-4 sm:gap-6">
+                  <div className="flex flex-col items-center pt-1 shrink-0">
                     <button
                       onClick={() => void handleVote(request._id)}
-                      className="p-2 bg-background border border-border/50 rounded-md hover:bg-primary/5 transition-colors"
-                      aria-label="Vote for this feature"
+                      className="group p-2.5 rounded-md border border-gray-300 dark:border-gray-600 hover:border-primary dark:hover:border-primary bg-gray-50 dark:bg-gray-700/50 hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-150 flex flex-col items-center w-[60px]"
+                      aria-label={t('featureRequest.voteAriaLabel')}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 15l7-7 7 7"
-                        />
-                      </svg>
+                      <UpvoteIcon />
+                      <span className="mt-1 text-sm font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">
+                        {request.votes}
+                      </span>
                     </button>
-                    <span className="font-bold text-lg mt-1">{request.votes}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {t('featureRequest.votes')}
-                    </span>
                   </div>
 
-                  {/* Feature content */}
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-semibold">{request.title}</h3>
-                      <StatusBadge status={request.status as StatusType} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-start mb-2">
+                      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer">
+                        {request.title}
+                      </h2>
+                      <div className="mt-2 sm:mt-0 sm:ml-4 shrink-0">
+                        <StatusBadge status={request.status as StatusType} />
+                      </div>
                     </div>
-
-                    <p className="text-muted-foreground whitespace-pre-line mb-4">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3 mb-3">
                       {request.description}
                     </p>
-
-                    <div className="text-xs text-muted-foreground">
-                      {t('featureRequest.requestedOn')} {formatDate(request._creationTime)}
+                    <div className="text-xs text-gray-500 dark:text-gray-500">
+                      {t('featureRequest.requestedOn')}{' '}
+                      <time dateTime={new Date(request._creationTime).toISOString()}>
+                        {formatDate(request._creationTime)}
+                      </time>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
 
-            {/* Load more button */}
             {status === 'CanLoadMore' && (
-              <div className="flex justify-center mt-6">
-                <button
-                  onClick={() => loadMore(5)}
-                  className="px-4 py-2 bg-background border border-border/50 rounded-lg text-muted-foreground hover:bg-primary/5 transition-colors"
-                >
+              <div className="flex justify-center pt-6">
+                <Button onClick={() => loadMore(5)} variant="outline" size="lg">
                   {t('featureRequest.loadMore')}
-                </button>
+                </Button>
               </div>
             )}
-
             {status === 'LoadingMore' && (
-              <div className="flex justify-center mt-6">
-                <div className="px-4 py-2 text-muted-foreground">
-                  {t('featureRequest.loadingMore')}
+              <div className="flex justify-center pt-6">
+                <div className="px-6 py-3 text-gray-600 dark:text-gray-400 text-lg">
+                  {t('featureRequest.loadingMore')}...
                 </div>
               </div>
             )}
-          </>
+          </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

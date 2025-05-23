@@ -173,6 +173,8 @@
     "submittingButton": "제출 중...",
     "successMessage": "기능 요청이 성공적으로 제출되었습니다!",
     "noRequests": "아직 기능 요청이 없습니다. 첫 번째로 제안해보세요!",
+    "noRequestsTitle": "아직 기능 요청이 없습니다",
+    "beTheFirst": "가장 먼저 기능을 제안해보세요!",
     "loading": "기능 요청 불러오는 중...",
     "loadingMore": "더 불러오는 중...",
     "loadMore": "더 많은 요청 불러오기",
@@ -185,10 +187,10 @@
       "completed": "완료됨"
     },
     "validation": {
-      "titleTooShort": "제목은 최소 3자 이상이어야 합니다",
-      "descriptionTooShort": "설명은 최소 10자 이상이어야 합니다",
+      "titleTooShort": "제목은 3자 이상이어야 합니다.",
+      "descriptionTooShort": "설명은 10자 이상이어야 합니다.",
       "serverError": "서버 오류: {{message}}",
-      "failedToSubmit": "기능 요청 제출에 실패했습니다"
+      "failedToSubmit": "기능 요청을 제출하지 못했습니다."
     }
   },
   "postWrite": {

@@ -39,14 +39,14 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const handleLikeClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation to post detail
     e.stopPropagation(); // Stop event propagation
-    
+
     // 로그인 상태 확인
     if (!isAuthenticated) {
       // zustand 스토어를 사용한 로그인 필요 토스트 표시
       requireAuth();
       return;
     }
-    
+
     void toggleLike({ postId: post._id });
   };
 

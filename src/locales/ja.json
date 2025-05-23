@@ -175,6 +175,8 @@
     "submittingButton": "提出中...",
     "successMessage": "機能リクエストが正常に提出されました！",
     "noRequests": "まだ機能リクエストがありません。最初に提案してください！",
+    "noRequestsTitle": "機能リクエストはまだありません",
+    "beTheFirst": "最初に機能を提案してください！",
     "loading": "機能リクエストを読み込み中...",
     "loadingMore": "さらに読み込み中...",
     "loadMore": "さらにリクエストを読み込む",
@@ -187,10 +189,10 @@
       "completed": "完了"
     },
     "validation": {
-      "titleTooShort": "タイトルは3文字以上である必要があります",
-      "descriptionTooShort": "説明は10文字以上である必要があります",
+      "titleTooShort": "タイトルは3文字以上である必要があります。",
+      "descriptionTooShort": "説明は10文字以上である必要があります。",
       "serverError": "サーバーエラー: {{message}}",
-      "failedToSubmit": "機能リクエストの提出に失敗しました"
+      "failedToSubmit": "機能リクエストの送信に失敗しました。"
     }
   },
   "postWrite": {
