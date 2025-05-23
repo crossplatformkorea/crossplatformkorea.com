@@ -23,7 +23,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
 
   // 개별 통계 쿼리 제거하고 hasLiked만 유지
   const hasLiked = useQuery(api.posts.query.hasLiked, { postId: post._id });
-  
+
   // Use getProfile instead of getUser to fetch author information
   const authorQuery = useQuery(
     api.users.query.getProfile,
@@ -80,13 +80,15 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
             {post.tags.slice(0, 3).map((tag, index) => (
               <span
                 key={index}
-                className="px-2 py-0.5 bg-primary/10 dark:bg-gray-700/60 text-primary dark:text-primary-foreground/90 text-xs rounded-full border-[0.5px] dark:border-gray-600/50"
+                className="px-2 py-0.5 bg-primary/10 dark:bg-primary/20 text-primary dark:text-white text-xs rounded-full border-[0.5px] border-primary/20 dark:border-primary/30"
               >
                 {tag}
               </span>
             ))}
             {post.tags.length > 3 && (
-              <span className="text-xs text-muted-foreground px-1">+{post.tags.length - 3}</span>
+              <span className="text-xs text-muted-foreground dark:text-gray-300 px-1">
+                +{post.tags.length - 3}
+              </span>
             )}
           </div>
         )}

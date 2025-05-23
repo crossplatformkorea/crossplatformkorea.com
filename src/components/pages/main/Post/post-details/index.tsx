@@ -213,7 +213,8 @@ export default function PostDetailsPage() {
       {/* Post content with footer containing social actions */}
       <div className="bg-white dark:bg-gray-800/30 px-8 py-10 relative overflow-hidden border-b border-border/30">
         <div
-          className="prose prose-lg max-w-none"
+          className="prose prose-lg max-w-none whitespace-pre-wrap"
+          style={{ wordBreak: 'break-word' }}
           dangerouslySetInnerHTML={{ __html: post.content || '' }}
         />
       </div>

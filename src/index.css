@@ -166,3 +166,24 @@ body {
   height: 40px;
   width: auto;
 }
+
+/* Prose 스타일 커스터마이징 - 포스트 콘텐츠 띄어쓰기 문제 해결 */
+.prose {
+  white-space: pre-wrap;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose br + br {
+  display: block;
+  content: "";
+  margin-top: 1em;
+}
+
+/* 단락 사이 간격 추가 */
+.prose p + p {
+  margin-top: 1em;
+}
