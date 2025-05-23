@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'convex/react';
-import { api } from '../../../../../convex/_generated/api';
+import { api } from '../../../../convex/_generated/api';
 import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AppLoading from '@/components/AppLoading';
-import { Id } from '../../../../../convex/_generated/dataModel';
-import { cn } from '../../../../lib/utils';
+import { Id } from '../../../../convex/_generated/dataModel';
+import { cn } from '../../../lib/utils';
 import {
   SiGithub,
   SiX,
@@ -18,7 +18,7 @@ import {
   SiGmail,
   SiBlogger,
 } from '@icons-pack/react-simple-icons';
-import PostListItem from '../Post/posts/PostListItem';
+import PostListItem from '../community/Post/posts/PostListItem';
 
 export default function UserProfilePage() {
   const { userId } = useParams<{ userId: string }>();
