@@ -56,7 +56,7 @@ export function AppLayout({ children }: AppLayoutProps) {
               isSidebarOpen ? 'w-64' : 'w-0',
             )}
           >
-            {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} />}
+            {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} onClose={toggleSidebar} />}
           </div>
         </div>
 
@@ -80,7 +80,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             role="dialog"
             aria-modal="true"
           >
-            <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} />
+            <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} onClose={toggleSidebar} />
           </div>
         </div>
 
