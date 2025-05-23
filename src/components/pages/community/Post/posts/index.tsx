@@ -4,7 +4,8 @@ import { useQuery } from 'convex/react';
 import { t } from '../../../../../lib/i18n';
 import { PenLine } from 'lucide-react';
 
-import AppLoading from '@/components/AppLoading';
+// AppLoading 대신 PostsSkeleton 임포트
+import PostsSkeleton from './PostsSkeleton';
 import { useAuthStore } from '@/stores/authStore';
 import { useTranslation } from 'react-i18next';
 import { Id } from '../../../../../../convex/_generated/dataModel';
@@ -109,11 +110,7 @@ const Posts = memo(function PostsPage() {
 
   // Show loading state while fetching posts
   if (result === undefined) {
-    return (
-      <div className="flex flex-1 pb-12">
-        <AppLoading />
-      </div>
-    );
+    return <PostsSkeleton />; // AppLoading 대신 PostsSkeleton 사용
   }
 
   // Extract posts from the paginated result
