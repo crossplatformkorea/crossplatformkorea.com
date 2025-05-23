@@ -185,8 +185,15 @@ export default function SummaryPage() {
                 <Link
                   to="/sign-in"
                   className={cn(
-                    "px-4 py-1.5 bg-primary text-primary-foreground text-sm rounded-md transition-all flex items-center gap-1.5 font-medium",
-                    "hover:bg-primary/90"
+                    "px-4 py-1.5 text-sm rounded-md transition-all flex items-center gap-1.5 font-medium",
+                    // 라이트모드 스타일
+                    "bg-gradient-to-r from-primary/70 to-primary/80",
+                    "text-primary-foreground",
+                    "hover:from-primary/80 hover:to-primary/90",
+                    // 다크모드 스타일 - 더 밝게 조정
+                    "dark:from-primary/85 dark:to-primary/95",
+                    "dark:text-primary-foreground",
+                    "dark:hover:from-primary/90 dark:hover:to-primary/100"
                   )}
                 >
                   {t('common.signIn')}
