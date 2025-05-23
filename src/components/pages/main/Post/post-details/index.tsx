@@ -11,6 +11,7 @@ import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import PostWrite from '../../Post/PostWrite';
+import Comments from './Comments';
 
 export default function PostDetailsPage() {
   const { isAuthenticated } = useConvexAuth();
@@ -215,6 +216,11 @@ export default function PostDetailsPage() {
           className="prose prose-lg max-w-none"
           dangerouslySetInnerHTML={{ __html: post.content || '' }}
         />
+      </div>
+      
+      {/* 댓글 컴포넌트 추가 - border 제거 */}
+      <div className="bg-background dark:bg-gray-800/20 px-8 py-8 mt-2 rounded-lg shadow-sm">
+        {post && <Comments postId={post._id} />}
       </div>
 
       {/* 수정 모달 */}

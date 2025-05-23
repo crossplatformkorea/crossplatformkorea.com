@@ -106,6 +106,47 @@ export const getProfile = query({
   },
 });
 
+// 여러 사용자 프로필을 한번에 조회
+export const getProfilesByUserIds = query({
+  args: { userIds: v.array(v.id('users')) },
+  returns: v.record(
+    v.string(),
+    v.object({
+      _id: v.id('userProfiles'),
+      _creationTime: v.number(),
+      userId: v.id('users'),
+      displayName: v.string(),
+      email: v.string(),
+      name: v.optional(v.string()),
+      organization: v.optional(v.string()),
+      description: v.optional(v.string()),
+      avatarUrl: v.optional(v.string()),
+      deletedAt: v.optional(v.string()),
+      githubId: v.optional(v.string()),
+      socialLinks: v.optional(v.array(v.string())),
+      tags: v.optional(v.array(v.string())),
+      lookingFor: v.optional(v.string()),
+      expectations: v.optional(v.string()),
+    }),
+  ),
+  handler: async (ctx, args) => {
+    const result: Record<string, any> = {};
+
+    for (const userId of args.userIds) {
+      const profile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', userId))
+        .first();
+
+      if (profile) {
+        result[userId.toString()] = profile;
+      }
+    }
+
+    return result;
+  },
+});
+
 // 사용자 통계 조회 - moved from stats.ts
 export const getUserStats = query({
   args: { userId: v.optional(v.id('users')) },

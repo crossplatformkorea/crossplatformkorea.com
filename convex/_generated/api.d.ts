@@ -16,6 +16,8 @@ import type {
 import type * as ResendOTP from "../ResendOTP.js";
 import type * as auth from "../auth.js";
 import type * as categories_query from "../categories/query.js";
+import type * as comments_mutation from "../comments/mutation.js";
+import type * as comments_query from "../comments/query.js";
 import type * as constants from "../constants.js";
 import type * as featureRequests_mutation from "../featureRequests/mutation.js";
 import type * as featureRequests_query from "../featureRequests/query.js";
@@ -40,6 +42,8 @@ declare const fullApi: ApiFromModules<{
   ResendOTP: typeof ResendOTP;
   auth: typeof auth;
   "categories/query": typeof categories_query;
+  "comments/mutation": typeof comments_mutation;
+  "comments/query": typeof comments_query;
   constants: typeof constants;
   "featureRequests/mutation": typeof featureRequests_mutation;
   "featureRequests/query": typeof featureRequests_query;

@@ -228,6 +228,15 @@
     "loginDescription": "サインインするとプロフィールの管理、投稿の作成、いいねやコメントができます。",
     "signIn": "サインイン"
   },
+  "comments": {
+    "title": "コメント",
+    "writePlaceholder": "コメントを書く...",
+    "submit": "投稿",
+    "loginRequired": "コメントを投稿するにはログインしてください",
+    "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
+    "deleteCommentTitle": "コメント削除",
+    "deleteCommentMessage": "このコメントを削除してもよろしいですか？この操作は元に戻せません。"
+  },
   "user": {
     "posts": "投稿",
     "about": "プロフィール",

@@ -226,6 +226,15 @@
     "loginDescription": "Sign in to manage your profile, write posts, and interact with likes and comments.",
     "signIn": "Sign In"
   },
+  "comments": {
+    "title": "Comments",
+    "writePlaceholder": "Write a comment...",
+    "submit": "Submit",
+    "loginRequired": "Please sign in to post comments",
+    "noComments": "No comments yet. Be the first to comment!",
+    "deleteCommentTitle": "Delete Comment",
+    "deleteCommentMessage": "Are you sure you want to delete this comment? This action cannot be undone."
+  },
   "user": {
     "posts": "Posts",
     "about": "About",
