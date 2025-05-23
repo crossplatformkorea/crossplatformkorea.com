@@ -21,11 +21,9 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
-  // Always call hooks at the top level, use "skip" for conditional queries
-  const commentCountQuery = useQuery(api.posts.query.getCommentCount, { postId: post._id });
-  const viewCountQuery = useQuery(api.posts.query.getViewCount, { postId: post._id });
-  const likeCountQuery = useQuery(api.posts.query.getLikeCount, { postId: post._id });
+  // 개별 통계 쿼리 제거하고 hasLiked만 유지
   const hasLiked = useQuery(api.posts.query.hasLiked, { postId: post._id });
+  
   // Use getProfile instead of getUser to fetch author information
   const authorQuery = useQuery(
     api.users.query.getProfile,
@@ -51,10 +49,10 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
     }
   };
 
-  // Use query results or fallback values
-  const commentCount = commentCountQuery || 0;
-  const viewCount = viewCountQuery || 0;
-  const likeCount = post.likeCount !== undefined ? post.likeCount : likeCountQuery || 0;
+  // 포스트 통계 데이터 - post 객체에서 직접 가져옴
+  const commentCount = post.commentCount || 0;
+  const viewCount = post.viewCount || 0;
+  const likeCount = post.likeCount || 0;
   const author = authorQuery || null;
 
   // Process content for preview (strip HTML tags, limit length)
@@ -153,7 +151,6 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
             <span className="text-xs">{likeCount}</span>
           </button>
 
-          {/* 댓글 카운트 색상 수정 */}
           <div
             className="flex items-center py-1 px-1 text-primary/80 dark:text-gray-200"
             title={t('posts.comments')}

@@ -16,13 +16,15 @@ export default defineSchema({
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
     authorId: v.optional(v.id('users')), // Add author reference
-    // 좋아요 관련 필드 추가
+    // 통계 필드 모음
     likeCount: v.optional(v.number()),
     likedBy: v.optional(v.array(v.id('users'))),
+    viewCount: v.optional(v.number()),
+    commentCount: v.optional(v.number()), // 댓글 수 필드 추가
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
-    .index('by_author', ['authorId']), // 작성자로 검색하기 위한 인덱스 추가
+    .index('by_author', ['authorId']),
   userProfiles: defineTable({
     userId: v.id('users'),
     email: v.string(),

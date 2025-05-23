@@ -6,7 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Id } from '../../../../../../convex/_generated/dataModel';
-import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2 } from 'lucide-react';
+import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-react';
 import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
 
@@ -17,12 +17,16 @@ export default function PostDetailsPage() {
   const navigate = useNavigate();
   const user = useQuery(api.users.query.currentUser);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [viewIncremented, setViewIncremented] = useState(false);
 
   // Delete post mutation
   const deletePost = useMutation(api.posts.mutation.deletePost);
 
   // Add toggleLike mutation
   const toggleLike = useMutation(api.posts.mutation.toggleLike);
+
+  // Add incrementViewCount mutation
+  const incrementViewCount = useMutation(api.posts.mutation.incrementViewCount);
 
   // If no postId is provided, navigate back
   useEffect(() => {
@@ -37,21 +41,22 @@ export default function PostDetailsPage() {
     postId ? { postId: postId as Id<'posts'> } : 'skip',
   );
 
+  // Increment view count once when the post is loaded
+  useEffect(() => {
+    if (post && postId && !viewIncremented) {
+      void incrementViewCount({ postId: postId as Id<'posts'> });
+      setViewIncremented(true);
+    }
+  }, [post, postId, incrementViewCount, viewIncremented]);
+
   // Get author info when post and authorId exist
   const author = useQuery(
     api.users.query.getProfile,
     post && post.authorId ? { userId: post.authorId } : 'skip',
   );
 
-  // Get comment and like stats
-  const commentCountQuery = useQuery(
-    api.posts.query.getCommentCount,
-    post ? { postId: post._id } : 'skip',
-  );
-  const likeCountQuery = useQuery(
-    api.posts.query.getLikeCount,
-    post ? { postId: post._id } : 'skip',
-  );
+  // 개별 통계 쿼리 제거하고 post 객체에서 직접 가져오도록 변경
+  // 단, hasLiked는 현재 사용자의 상태이므로 쿼리 유지
   const hasLiked = useQuery(api.posts.query.hasLiked, post ? { postId: post._id } : 'skip');
 
   const handleGoBack = () => {
@@ -90,6 +95,11 @@ export default function PostDetailsPage() {
       </div>
     );
   }
+
+  // 포스트 통계 데이터 - post 객체에서 직접 가져옴
+  const commentCount = post.commentCount || 0;
+  const viewCount = post.viewCount || 0;
+  const likeCount = post.likeCount || 0;
 
   const isAuthor = isAuthenticated && user && post.authorId === user._id;
 
@@ -157,13 +167,9 @@ export default function PostDetailsPage() {
               formattedDate={formattedDate}
             />
 
+            {/* Stats row - all aligned in one container */}
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center" title={t('posts.comments')}>
-                <MessageSquare size={15} className="mr-1.5" />
-                <span>{commentCountQuery || 0}</span>
-              </div>
-
-              {/* Make the like icon clickable */}
+              {/* Like button */}
               <button
                 onClick={handleLikeClick}
                 className={`flex items-center gap-1.5 py-1 px-2 rounded-md bg-transparent border-0 ${
@@ -173,8 +179,26 @@ export default function PostDetailsPage() {
                 aria-pressed={hasLiked}
               >
                 <Heart size={15} className={`${hasLiked ? 'fill-rose-500' : ''}`} />
-                <span>{likeCountQuery || 0}</span>
+                <span>{likeCount}</span>
               </button>
+
+              {/* Comment count */}
+              <div
+                className="flex items-center"
+                title={t('posts.comments', { defaultValue: 'Comments' })}
+              >
+                <MessageSquare size={15} className="mr-1.5" />
+                <span>{commentCount}</span>
+              </div>
+
+              {/* View count */}
+              <div
+                className="flex items-center"
+                title={t('posts.views', { defaultValue: 'Views' })}
+              >
+                <Eye size={15} className="mr-1.5 opacity-70" />
+                <span>{viewCount}</span>
+              </div>
             </div>
           </div>
         </div>

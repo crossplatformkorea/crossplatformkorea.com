@@ -139,7 +139,7 @@ const Posts = memo(function PostsPage() {
   // If we have a category, display category-specific header
   if (category) {
     return (
-      <div className="p-6">
+      <div>
         {/* Write modal - Always pass the currentCategoryKey */}
         <PostWrite
           isOpen={isWriteModalOpen}

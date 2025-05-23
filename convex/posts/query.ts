@@ -18,50 +18,11 @@ const postObjectValidator = v.object({
   authorId: v.optional(v.id('users')),
   likeCount: v.optional(v.number()),
   likedBy: v.optional(v.array(v.id('users'))),
+  viewCount: v.optional(v.number()),
+  commentCount: v.optional(v.number()), // 댓글 수 validator 추가
 });
 
-// Post view count query
-export const getViewCount = query({
-  args: { postId: v.id('posts') },
-  returns: v.number(),
-  handler: async (ctx, args) => {
-    // This is a placeholder. In a real implementation, you would query a view_counts table
-    // or use analytic services to track actual view counts
-
-    // For now, return a random number between 5-100 for demonstration
-    return Math.floor(Math.random() * 95) + 5;
-  },
-});
-
-// Comment count query
-export const getCommentCount = query({
-  args: { postId: v.id('posts') },
-  returns: v.number(),
-  handler: async (ctx, args) => {
-    // Query the comments table for this post
-    const comments = await ctx.db
-      .query('comments')
-      .withIndex('by_post', (q) => q.eq('postId', args.postId))
-      .collect();
-
-    return comments.length;
-  },
-});
-
-// Get post's like count - From likes.ts
-export const getLikeCount = query({
-  args: { postId: v.id('posts') },
-  returns: v.number(),
-  handler: async (ctx, args) => {
-    const post = await ctx.db.get(args.postId);
-    if (!post) {
-      return 0;
-    }
-    return post.likeCount || 0;
-  },
-});
-
-// Check if user has liked a post - From likes.ts
+// Check if user has liked a post
 export const hasLiked = query({
   args: { postId: v.id('posts') },
   returns: v.boolean(),
@@ -183,9 +144,9 @@ export const getTags = query({
 
 // Get posts by author
 export const getPostsByAuthor = query({
-  args: { 
+  args: {
     authorId: v.id('users'),
-    limit: v.number(), 
+    limit: v.number(),
   },
   returns: v.array(postObjectValidator),
   handler: async (ctx, args) => {
@@ -194,7 +155,7 @@ export const getPostsByAuthor = query({
       .withIndex('by_author', (q) => q.eq('authorId', args.authorId))
       .order('desc')
       .take(args.limit);
-    
+
     return posts;
   },
 });

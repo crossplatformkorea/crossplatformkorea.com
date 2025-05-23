@@ -299,7 +299,6 @@ export const addComment = mutation({
 
     // Verify post exists
     const post = await ctx.db.get(args.postId);
-
     if (!post) {
       throw new Error('Post not found');
     }
@@ -311,6 +310,74 @@ export const addComment = mutation({
       content: args.content,
     });
 
+    // Increment comment count on the post
+    const currentCommentCount = post.commentCount || 0;
+    await ctx.db.patch(args.postId, {
+      commentCount: currentCommentCount + 1,
+    });
+
     return commentId;
+  },
+});
+
+// Increment post view count
+export const incrementViewCount = mutation({
+  args: {
+    postId: v.id('posts'),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    // Check if post exists
+    const post = await ctx.db.get(args.postId);
+    if (!post) {
+      return false;
+    }
+
+    // Update the view count (initialize to 1 if it doesn't exist)
+    const currentViewCount = post.viewCount || 0;
+    await ctx.db.patch(args.postId, {
+      viewCount: currentViewCount + 1,
+    });
+
+    return true;
+  },
+});
+
+// Delete a comment - new mutation to also decrement the comment count
+export const deleteComment = mutation({
+  args: {
+    commentId: v.id('comments'),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // Get the comment
+    const comment = await ctx.db.get(args.commentId);
+    if (!comment) {
+      throw new Error('Comment not found');
+    }
+
+    // Check if user is the author of the comment
+    if (comment.authorId !== userId) {
+      throw new Error('Not authorized to delete this comment');
+    }
+
+    // Get the associated post
+    const post = await ctx.db.get(comment.postId);
+    if (post) {
+      // Decrement comment count on the post (ensure it doesn't go below 0)
+      const currentCommentCount = Math.max(0, (post.commentCount || 1) - 1);
+      await ctx.db.patch(post._id, {
+        commentCount: currentCommentCount,
+      });
+    }
+
+    // Delete the comment
+    await ctx.db.delete(args.commentId);
+    return true;
   },
 });
