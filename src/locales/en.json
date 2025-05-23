@@ -141,21 +141,6 @@
     "deleteConfirmTitle": "Delete Post?",
     "deleteConfirmMessage": "This action cannot be undone. Are you sure you want to delete this post?"
   },
-  "postCategories": {
-    "ALL": { "name": "All", "description": "All posts" },
-    "NEWS": { "name": "News", "description": "Latest news and releases" },
-    "QA": { "name": "Q&A", "description": "Ask and answer questions" },
-    "READING": { "name": "Reading", "description": "Articles, retrospectives, and insights" },
-    "INFO_SHARE": { "name": "Info Share", "description": "Tips, links, and useful tools" },
-    "FREE_BOARD": { "name": "Free Board", "description": "Casual discussions and community chat" }
-  },
-  "pages": {
-    "posts": "Posts",
-    "showcase": "Showcase",
-    "jobs": "Jobs",
-    "events": "Events",
-    "featureRequests": "Feature Requests"
-  },
   "featureRequest": {
     "title": "Feature Requests",
     "description": "Vote on existing feature requests or suggest new ones to help us improve the platform.",
@@ -250,5 +235,39 @@
     "lookingFor": "Looking for",
     "expectations": "Expectations",
     "anonymousUser": "Anonymous User"
+  },
+  "postCategories": {
+    "ALL": { "name": "All", "description": "All posts" },
+    "NEWS": {
+      "name": "News",
+      "description": "Latest updates and announcements from the cross-platform development community."
+    },
+    "QA": {
+      "name": "Q&A",
+      "description": "Ask questions and get answers about cross-platform development challenges."
+    },
+    "READING": {
+      "name": "Reading",
+      "description": "Interesting articles, tutorials, and resources for learning."
+    },
+    "INFO_SHARE": {
+      "name": "Info Share",
+      "description": "Share useful information, tips, and resources with the community."
+    },
+    "FREE_BOARD": {
+      "name": "Free Board",
+      "description": "General discussions about any cross-platform development topics."
+    },
+    "JOB_POSTING": {
+      "name": "Job Posting",
+      "description": "Find job opportunities or post open positions in cross-platform development."
+    }
+  },
+  "pages": {
+    "posts": "Posts",
+    "showcase": "Showcase",
+    "jobs": "Jobs",
+    "events": "Events",
+    "featureRequests": "Feature Requests"
   }
 }
