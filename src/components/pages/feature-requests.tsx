@@ -196,7 +196,7 @@ export default function FeatureRequestsPage() {
   );
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div>
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-8 mb-10">
         <div className="mb-6 sm:mb-0 w-full sm:w-auto sm:max-w-[70%] pr-4">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">

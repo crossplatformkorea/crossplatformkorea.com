@@ -56,7 +56,13 @@ export function AppLayout({ children }: AppLayoutProps) {
               isSidebarOpen ? 'w-64' : 'w-0',
             )}
           >
-            {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} onClose={toggleSidebar} />}
+            {isSidebarOpen && (
+              <Sidebar
+                isOpen={isSidebarOpen}
+                isTransitioning={isTransitioning}
+                onClose={toggleSidebar}
+              />
+            )}
           </div>
         </div>
 
@@ -80,12 +86,16 @@ export function AppLayout({ children }: AppLayoutProps) {
             role="dialog"
             aria-modal="true"
           >
-            <Sidebar isOpen={isSidebarOpen} isTransitioning={isTransitioning} onClose={toggleSidebar} />
+            <Sidebar
+              isOpen={isSidebarOpen}
+              isTransitioning={isTransitioning}
+              onClose={toggleSidebar}
+            />
           </div>
         </div>
 
         {/* Main content area */}
-        <main className="flex-1 overflow-y-scroll">{children}</main>
+        <main className="flex flex-col flex-1 w-full">{children}</main>
       </div>
     </div>
   );

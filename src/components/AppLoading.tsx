@@ -1,5 +1,6 @@
 import React from 'react';
 import { t } from '../lib/i18n';
+import { cn } from '@/lib/utils';
 
 interface AppLoadingProps {
   message?: string;
@@ -50,5 +51,14 @@ export default function AppLoading({ message, fullScreen = false }: AppLoadingPr
     );
   }
 
-  return <div className="flex-1 overflow-auto p-8 flex items-center justify-center">{content}</div>;
+  return (
+    <div
+      className={cn(
+        'flex-1 overflow-auto p-8 overflow-y-scroll',
+        'flex items-center justify-center',
+      )}
+    >
+      {content}
+    </div>
+  );
 }
