@@ -50,13 +50,9 @@ export default function SigningIn() {
     setError(null);
 
     try {
-      // Authenticate with GitHub
-      // This will redirect to GitHub for authentication
+      // GitHub로 인증 (리다이렉트 기반)
       await signIn('github');
-
-      // Note: We need to handle profile creation after OAuth callback
-      // This will be done in a separate function or hook that runs on successful auth
-      // For now, the OAuth flow will handle the redirect
+      // 프로필 생성은 이제 AuthStateListener에서 자동 처리됨
     } catch (error) {
       console.error('Error signing in with GitHub:', error);
       setError(

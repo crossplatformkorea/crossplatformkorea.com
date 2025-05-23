@@ -242,3 +242,73 @@ export const updateProfile = mutation({
     return profile._id;
   },
 });
+
+/**
+ * 사용자 프로필이 없으면 자동으로 생성하는 함수
+ * 사용자가 로그인한 후 프로필이 없을 때 자동 호출됨
+ */
+export const ensureUserProfile = mutation({
+  args: {},
+  returns: v.union(
+    v.object({
+      profileId: v.id('userProfiles'),
+      success: v.boolean(),
+    }),
+    v.null(),
+  ),
+  handler: async (ctx) => {
+    // 인증된 사용자 ID 가져오기
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      return null; // 인증되지 않은 경우 아무것도 하지 않음
+    }
+
+    // 사용자 정보 가져오기
+    const user = await ctx.db.get(userId as Id<'users'>);
+    if (!user) {
+      return null; // 사용자가 없으면 아무것도 하지 않음
+    }
+
+    // 기존 프로필 확인
+    const existingProfile = await ctx.db
+      .query('userProfiles')
+      .withIndex('by_user', (q) => q.eq('userId', userId as Id<'users'>))
+      .first();
+
+    if (existingProfile) {
+      return {
+        profileId: existingProfile._id,
+        success: true,
+      };
+    }
+
+    // 기본 사용자 정보 추출
+    const email = user.email || `user_${Math.random().toString(36).substring(2, 9)}@example.com`;
+
+    // OAuth 정보에서 추가 데이터 가져오기
+    const authInfo = await ctx.auth.getUserIdentity();
+    const tokenIdentifier = authInfo?.tokenIdentifier;
+    const githubId = tokenIdentifier?.split('|')[1] || undefined;
+
+    // GitHub OAuth에서 제공하는 정보 활용
+    const nickname = user.name || githubId || null;
+
+    // 고유한 displayName 생성
+    const displayName = nickname || `User_${Math.random().toString(36).substring(2, 7)}`;
+
+    // 프로필 생성
+    const profileId = await ctx.db.insert('userProfiles', {
+      userId: userId as Id<'users'>,
+      email: email,
+      displayName: displayName,
+      // 추가 필드
+      avatarUrl: user.image,
+      githubId,
+    });
+
+    return {
+      profileId,
+      success: true,
+    };
+  },
+});

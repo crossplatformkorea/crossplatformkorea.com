@@ -16,6 +16,8 @@ export const currentUser = query({
       emailVerificationTime: v.optional(v.number()),
       // GitHub specific fields
       image: v.optional(v.string()),
+      // 명시적 tokenIdentifier 필드 추가 - 오류 해결
+      tokenIdentifier: v.optional(v.string()),
       // User profile from our database
       profile: v.optional(
         v.object({
@@ -57,13 +59,22 @@ export const currentUser = query({
         .query('userProfiles')
         .withIndex('by_user', (q) => q.eq('userId', userId as Id<'users'>))
         .first();
+        
+      // 인증 정보에서 tokenIdentifier 가져오기
+      let tokenIdentifier: string | undefined;
+      try {
+        const authInfo = await ctx.auth.getUserIdentity();
+        tokenIdentifier = authInfo?.tokenIdentifier;
+      } catch (error) {
+        console.error('Failed to get auth identity:', error);
+      }
 
-      // No need to fetch storage URL - just use the stored URL directly
       return {
         ...user,
+        tokenIdentifier,
         profile: profile || undefined,
         displayName: profile?.displayName,
-        avatarUrl: profile?.avatarUrl || undefined,
+        avatarUrl: profile?.avatarUrl || user.image || undefined,
       };
     } catch (error) {
       console.error('Failed to fetch current user:', error);
