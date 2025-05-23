@@ -50,12 +50,12 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
     },
   ];
 
-  // Compact version for user profile page
+  // Compact version for user profile page - improved for mobile view
   if (compact) {
     return (
       <motion.div
         className={cn(
-          'flex items-center justify-start gap-3 text-sm text-muted-foreground',
+          'flex flex-wrap items-center justify-start gap-x-4 gap-y-2 text-sm text-muted-foreground',
           className
         )}
         initial={{ opacity: 0, y: 5 }}
@@ -63,20 +63,28 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
         transition={{ duration: 0.3 }}
       >
         {stats.map((stat, index) => (
-          <React.Fragment key={stat.title}>
-            <div className="flex items-center gap-1" title={stat.title}>
+          <div 
+            key={stat.title} 
+            className="flex items-center"
+          >
+            {/* Stat item with improved mobile layout */}
+            <div className="flex items-center gap-1.5" title={stat.title}>
               <span className={cn(
                 'flex items-center justify-center',
                 stat.color
               )}>
                 {stat.icon}
               </span>
-              <span className="font-medium">{stat.value}</span>
-              <span>{stat.title}</span>
+              <span className="font-medium whitespace-nowrap">{stat.value}</span>
+              {/* Title with proper spacing */}
+              <span className="ml-1 whitespace-nowrap">{stat.title}</span>
             </div>
 
-            {index < stats.length - 1 && <span className="text-border/40">|</span>}
-          </React.Fragment>
+            {/* Only show divider if it's not the last item and not at the end of a row */}
+            {index < stats.length - 1 && (
+              <span className="mx-2 text-border/40 hidden sm:inline-block">|</span>
+            )}
+          </div>
         ))}
       </motion.div>
     );
@@ -97,7 +105,7 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
         <motion.div
           key={stat.title}
           className={cn(
-            "flex-1 flex items-center gap-3 p-4 bg-card/40 backdrop-blur-[1px] border border-border/30 rounded-xl",
+            "flex-1 min-w-[120px] flex items-center gap-3 p-4 bg-card/40 backdrop-blur-[1px] border border-border/30 rounded-xl",
             "hover:border-border/50 transition-colors"
           )}
           whileHover={{ scale: 1.02 }}
@@ -110,7 +118,7 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
             <span className={stat.color}>{stat.icon}</span>
           </div>
           <div>
-            <div className="text-2xl font-bold">{stat.value}</div>
+            <div className="text-xl sm:text-2xl font-bold">{stat.value}</div>
             <div className="text-xs text-muted-foreground">{stat.title}</div>
           </div>
         </motion.div>

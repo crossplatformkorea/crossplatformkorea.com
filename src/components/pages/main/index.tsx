@@ -9,8 +9,8 @@ import UserProfilePage from './UserProfile';
 
 export default function Main() {
   return (
-    <div className="h-screen flex flex-col overflow-hidden relative">
-      <div className="bg-background overflow-y-scroll w-full px-16 pt-10 pb-24">
+    <div className="flex flex-col">
+      <div className="bg-background overflow-y-scroll w-full px-4 sm:px-8 md:px-16 pt-6 sm:pt-10 pb-16 sm:pb-24">
         <div className="max-w-4xl mx-auto">
           <Routes>
             <Route path="/" element={<SummaryPage />} />

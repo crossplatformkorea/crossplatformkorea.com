@@ -116,7 +116,7 @@ export default function PostDetailsPage() {
   });
 
   return (
-    <div className="max-w-5xl mx-auto pb-16">
+    <div className="max-w-5xl mx-auto">
       {/* Back button */}
       <button
         onClick={handleGoBack}

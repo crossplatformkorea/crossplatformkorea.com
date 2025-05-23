@@ -49,7 +49,7 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
     <span
       className={cn(
         'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide border',
-        getBadgeStyle()
+        getBadgeStyle(),
       )}
     >
       {getStatusText()}
@@ -63,7 +63,9 @@ const UpvoteIcon = ({ voted }: { voted?: boolean }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={cn(
       'h-5 w-5',
-      voted ? 'text-primary fill-primary/20' : 'text-gray-500 dark:text-gray-400 group-hover:text-primary'
+      voted
+        ? 'text-primary fill-primary/20'
+        : 'text-gray-500 dark:text-gray-400 group-hover:text-primary',
     )}
     viewBox="0 0 20 20"
     fill="currentColor"
@@ -164,37 +166,57 @@ export default function FeatureRequestsPage() {
 
   // Icon for the request feature button
   const PlusIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-      <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 mr-2"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+        clipRule="evenodd"
+      />
     </svg>
   );
 
   const CancelIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 mr-2"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+        clipRule="evenodd"
+      />
     </svg>
   );
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
-        <div className="mb-4 sm:mb-0">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-8 mb-10">
+        <div className="mb-6 sm:mb-0 w-full sm:w-auto sm:max-w-[70%] pr-4">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
             {t('featureRequest.title')}
           </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400 max-w-full break-words leading-relaxed">
             {t('featureRequest.description')}
           </p>
         </div>
-        <Button
-          onClick={handleRequestFeatureToggle}
-          size="lg"
-          variant={showForm ? "outline" : "default"} // Change variant based on form visibility
-          className="shrink-0 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center"
-        >
-          {showForm ? <CancelIcon /> : <PlusIcon />}
-          {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
-        </Button>
+        <div className="sm:ml-auto">
+          <Button
+            onClick={handleRequestFeatureToggle}
+            size="lg"
+            variant={showForm ? 'outline' : 'default'}
+            className="shrink-0 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center whitespace-nowrap"
+          >
+            {showForm ? <CancelIcon /> : <PlusIcon />}
+            {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
+          </Button>
+        </div>
       </header>
 
       {/* Wrapper div for transition */}
@@ -203,7 +225,7 @@ export default function FeatureRequestsPage() {
           'overflow-hidden transition-all duration-300 ease-in-out',
           showForm
             ? 'max-h-[1000px] opacity-100 mb-12' // Adjust max-h if your form can be taller
-            : 'max-h-0 opacity-0 mb-0' // Collapses the div and its margin when hidden
+            : 'max-h-0 opacity-0 mb-0', // Collapses the div and its margin when hidden
         )}
       >
         <section className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
@@ -226,9 +248,9 @@ export default function FeatureRequestsPage() {
                 placeholder={t('featureRequest.titlePlaceholder')}
                 required
                 className={cn(
-                  "w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm sm:text-sm",
-                  "dark:border-gray-600 dark:bg-gray-700 dark:text-white",
-                  "focus:ring-primary focus:border-primary"
+                  'w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm sm:text-sm',
+                  'dark:border-gray-600 dark:bg-gray-700 dark:text-white',
+                  'focus:ring-primary focus:border-primary',
                 )}
               />
             </div>
@@ -320,8 +342,8 @@ export default function FeatureRequestsPage() {
               <article
                 key={request._id}
                 className={cn(
-                  "bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700",
-                  "hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                  'bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700',
+                  'hover:shadow-xl transition-shadow duration-300 ease-in-out',
                 )}
               >
                 <div className="p-5 sm:p-6 flex gap-4 sm:gap-6">
@@ -329,11 +351,11 @@ export default function FeatureRequestsPage() {
                     <button
                       onClick={() => void handleVote(request._id)}
                       className={cn(
-                        "group p-2.5 rounded-md border border-gray-300 dark:border-gray-600",
-                        "hover:border-primary dark:hover:border-primary",
-                        "bg-gray-50 dark:bg-gray-700/50",
-                        "hover:bg-primary/5 dark:hover:bg-primary/10",
-                        "transition-colors duration-150 flex flex-col items-center w-[60px]"
+                        'group p-2.5 rounded-md border border-gray-300 dark:border-gray-600',
+                        'hover:border-primary dark:hover:border-primary',
+                        'bg-gray-50 dark:bg-gray-700/50',
+                        'hover:bg-primary/5 dark:hover:bg-primary/10',
+                        'transition-colors duration-150 flex flex-col items-center w-[60px]',
                       )}
                       aria-label={t('featureRequest.voteAriaLabel')}
                     >
@@ -346,10 +368,12 @@ export default function FeatureRequestsPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-col sm:flex-row justify-between sm:items-start mb-2">
-                      <h2 className={cn(
-                        "text-lg sm:text-xl font-semibold text-gray-900 dark:text-white cursor-pointer transition-colors",
-                        "hover:text-primary dark:hover:text-primary"
-                      )}>
+                      <h2
+                        className={cn(
+                          'text-lg sm:text-xl font-semibold text-gray-900 dark:text-white cursor-pointer transition-colors',
+                          'hover:text-primary dark:hover:text-primary',
+                        )}
+                      >
                         {request.title}
                       </h2>
                       <div className="mt-2 sm:mt-0 sm:ml-4 shrink-0">

@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { cn } from "../lib/utils";
+import { useEffect, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export function ThemeToggle({ className }: { className?: string }) {
   const [isDark, setIsDark] = useState<boolean>(false);
-  
+
   // Initialize on mount
   useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark') || 
-                       (localStorage.theme === 'dark') ||
-                       (!('theme' in localStorage) && 
-                        window.matchMedia('(prefers-color-scheme: dark)').matches);
-    
+    const isDarkMode =
+      document.documentElement.classList.contains('dark') ||
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
     setIsDark(isDarkMode);
-    
+
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
   }, []);
-  
+
   const toggleDarkMode = () => {
     if (isDark) {
       document.documentElement.classList.remove('dark');
@@ -35,9 +35,10 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       onClick={toggleDarkMode}
       className={cn(
-        "rounded-full p-2 transition-colors",
-        "hover:bg-accent",
-        className
+        'rounded-full p-2 transition-colors',
+        'hidden sm:block',
+        'hover:bg-accent',
+        className,
       )}
       aria-label="Toggle theme"
     >
@@ -54,14 +55,14 @@ export function ThemeToggle({ className }: { className?: string }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           className={cn(
-            "h-5 w-5 transition-opacity duration-300",
-            isDark ? "opacity-100" : "opacity-0"
+            'h-5 w-5 transition-opacity duration-300',
+            isDark ? 'opacity-100' : 'opacity-0',
           )}
-          style={{ position: "absolute", top: 0, left: 0 }}
+          style={{ position: 'absolute', top: 0, left: 0 }}
         >
           <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
         </svg>
-        
+
         {/* Sun icon for light mode */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -74,10 +75,10 @@ export function ThemeToggle({ className }: { className?: string }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           className={cn(
-            "h-5 w-5 transition-opacity duration-300",
-            !isDark ? "opacity-100" : "opacity-0"
+            'h-5 w-5 transition-opacity duration-300',
+            !isDark ? 'opacity-100' : 'opacity-0',
           )}
-          style={{ position: "absolute", top: 0, left: 0 }}
+          style={{ position: 'absolute', top: 0, left: 0 }}
         >
           <circle cx="12" cy="12" r="4" />
           <path d="M12 2v2" />

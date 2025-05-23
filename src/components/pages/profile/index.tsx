@@ -24,6 +24,7 @@ import ProfileDisplay from './ProfileDisplay';
 import ProfileDetails from './ProfileDetails';
 import ProfileStats from './ProfileStats';
 import { useAuthStore } from '@/stores/authStore'; // Added
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function ProfilePage() {
   // const { isAuthenticated, isLoading } = useConvexAuth();
@@ -554,6 +555,8 @@ export default function ProfilePage() {
           <h1 className="text-2xl font-bold flex items-center">
             <User className="w-6 h-6 mr-2 text-primary" />
             {t('profile.title')}
+            {/* Override the default hidden behavior to show on mobile */}
+            <ThemeToggle className="block sm:hidden ml-2" />
           </h1>
 
           <button
@@ -610,9 +613,9 @@ export default function ProfilePage() {
         />
 
         {/* Action row with messages on left and buttons on right */}
-        <div className="flex justify-between items-center mt-6 mb-16">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-6 mb-16">
           {/* Success and error messages */}
-          <div className="flex-1">
+          <div className="flex-1 mb-4 sm:mb-0">
             {saveSuccess && (
               <p className="text-green-500 text-sm">{t('profile.messages.saveSuccess')}</p>
             )}
@@ -621,7 +624,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Action buttons */}
-          <div className="flex space-x-3">
+          <div className="flex space-x-3 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => void navigate(-1)}

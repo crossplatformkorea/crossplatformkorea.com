@@ -4,16 +4,17 @@ import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { cn } from '@/lib/utils';
 import { sidebarItems } from '@/constants/sidebar';
-import { LogIn, User, ChevronRight } from 'lucide-react';
+import { LogIn, User, ChevronRight, X } from 'lucide-react';
 import { t } from 'i18next';
 import { useAuthStore } from '@/stores/authStore';
 
 interface SidebarProps {
   isOpen?: boolean;
   isTransitioning?: boolean;
+  onClose?: () => void;
 }
 
-export default function Sidebar({ isOpen = false, isTransitioning = false }: SidebarProps) {
+export default function Sidebar({ isOpen = false, isTransitioning = false, onClose }: SidebarProps) {
   const location = useLocation();
   const { isAuthenticated } = useAuthStore();
   const [showContent, setShowContent] = useState(isOpen);
@@ -42,10 +43,28 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
   return (
     <aside
       className={cn(
-        'border-r h-full flex flex-col transition-all duration-300',
-        'bg-gray-50 dark:bg-zinc-900 dark:border-zinc-800'
+        'border-r h-full flex flex-col transition-all duration-300 relative',
+        'bg-gray-50 dark:bg-zinc-900 dark:border-zinc-800',
+        'md:pt-0 pt-14' // Add padding top for mobile devices to prevent overlap
       )}
     >
+      {/* Close button for mobile - only visible on mobile */}
+      {onClose && (
+        <div className="absolute top-0 left-0 right-0 h-14 md:hidden flex items-center justify-end px-4 border-b border-gray-200 dark:border-zinc-800 bg-gray-50/95 dark:bg-zinc-900/95 backdrop-blur-sm z-10">
+          <button
+            onClick={onClose}
+            className={cn(
+              'p-2 rounded-full bg-gray-200 dark:bg-zinc-800',
+              'hover:bg-gray-300 dark:hover:bg-zinc-700 transition-colors',
+              'flex items-center justify-center'
+            )}
+            aria-label={t('common.close')}
+          >
+            <X size={18} />
+          </button>
+        </div>
+      )}
+
       {/* Main navigation links */}
       <nav className="flex-1 py-4">
         <ul className="space-y-1">
