@@ -48,51 +48,52 @@ export function Header({
     <header
       className={cn(
         // Base layout
-        'h-16 flex-shrink-0 flex items-center justify-between px-4 relative z-10',
+        'h-16 flex-shrink-0 flex items-center justify-between px-2 sm:px-4 relative z-10',
         // Visual styling
         'border-b border-border/30',
-        'bg-gradient-to-r from-background via-background to-background backdrop-blur-sm'
+        'bg-gradient-to-r from-background via-background to-background backdrop-blur-sm',
       )}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1 sm:gap-3">
         {' '}
+        {/* 모바일에서 간격 줄임 */}
         {/* Hamburger menu button */}{' '}
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-md hover:bg-muted/80 transition-colors mr-1 flex flex-col justify-center items-center w-10 h-10"
+          className="p-1.5 sm:p-2 rounded-md hover:bg-muted/80 transition-colors mr-0.5 sm:mr-1 flex flex-col justify-center items-center w-9 sm:w-10 h-9 sm:h-10"
           aria-label={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
         >
           <div className="relative h-5 w-5 flex flex-col justify-center items-center">
             <span
               className={cn(
-                "absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-top",
-                isSidebarOpen ? 'active' : ''
+                'absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-top',
+                isSidebarOpen ? 'active' : '',
               )}
             ></span>
             <span
               className={cn(
-                "absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-middle",
-                isSidebarOpen ? 'active' : ''
+                'absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-middle',
+                isSidebarOpen ? 'active' : '',
               )}
             ></span>
             <span
               className={cn(
-                "absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-bottom",
-                isSidebarOpen ? 'active' : ''
+                'absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-bottom',
+                isSidebarOpen ? 'active' : '',
               )}
             ></span>
           </div>
         </button>
         {/* Logo and title */}
         <div
-          className="flex cursor-pointer items-center gap-3"
+          className="flex cursor-pointer items-center gap-1.5 sm:gap-3"
           onClick={() => {
             void navigate('/');
           }}
         >
-          <img src="/assets/logo.png" alt={t('common.appName')} className="h-8 w-auto" />
-          <div>
-            <h1 className="text-base md:text-lg lg:text-xl font-bold tracking-tight">
+          <img src="/assets/logo.png" alt={t('common.appName')} className="h-7 sm:h-8 w-auto" />
+          <div className="overflow-hidden">
+            <h1 className="text-sm md:text-base lg:text-xl font-bold tracking-tight truncate max-w-[120px] sm:max-w-none">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
                 {t('common.appName')}
               </span>
@@ -100,7 +101,7 @@ export function Header({
           </div>
         </div>
       </div>{' '}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1 sm:gap-3">
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex items-center gap-4 mr-2">
           {' '}
@@ -111,9 +112,9 @@ export function Header({
               handleNavigation('/');
             }}
             className={cn(
-              "font-medium text-sm px-3 py-2 rounded-md transition-colors",
-              "bg-primary/10 text-primary",
-              "dark:bg-primary/10 dark:text-white"
+              'font-medium text-sm px-3 py-2 rounded-md transition-colors',
+              'bg-primary/10 text-primary',
+              'dark:bg-primary/10 dark:text-white',
             )}
           >
             {t('common.navCommunity')}
@@ -123,15 +124,15 @@ export function Header({
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "font-medium text-sm px-3 py-2 rounded-md transition-colors",
-              "hover:bg-muted dark:hover:bg-muted"
+              'font-medium text-sm px-3 py-2 rounded-md transition-colors',
+              'hover:bg-muted dark:hover:bg-muted',
             )}
           >
             {t('common.navBlog')}
           </a>
         </nav>{' '}
         {/* Auth & Language Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 sm:gap-3">
           {/* Theme Toggle */}
           <ThemeToggle />
 
@@ -140,8 +141,8 @@ export function Header({
             <button
               onClick={() => setLangMenuOpen(!langMenuOpen)}
               className={cn(
-                "flex items-center text-sm font-medium px-2 py-1 rounded-md transition-colors",
-                "hover:bg-muted dark:hover:bg-muted"
+                'flex items-center text-sm font-medium px-2 py-1 rounded-md transition-colors',
+                'hover:bg-muted dark:hover:bg-muted',
               )}
             >
               {currentLocale === 'en' ? 'English' : currentLocale === 'ko' ? '한국어' : '日本語'}
@@ -155,11 +156,13 @@ export function Header({
               </svg>
             </button>
             {langMenuOpen && (
-              <div className={cn(
-                "absolute right-0 mt-2 w-32 rounded-md shadow-lg z-10",
-                "bg-background dark:bg-secondary",
-                "backdrop-blur-md border border-border/50"
-              )}>
+              <div
+                className={cn(
+                  'absolute right-0 mt-2 w-32 rounded-md shadow-lg z-10',
+                  'bg-background dark:bg-secondary',
+                  'backdrop-blur-md border border-border/50',
+                )}
+              >
                 {['en', 'ko', 'ja'].map((code) => (
                   <div
                     key={code}
@@ -171,8 +174,8 @@ export function Header({
                       window.location.reload();
                     }}
                     className={cn(
-                      "px-4 py-2 text-sm cursor-pointer",
-                      "hover:bg-muted dark:hover:bg-muted"
+                      'px-4 py-2 text-sm cursor-pointer',
+                      'hover:bg-muted dark:hover:bg-muted',
                     )}
                   >
                     {code === 'en' ? 'English' : code === 'ko' ? '한국어' : '日本語'}
@@ -187,11 +190,14 @@ export function Header({
             href="https://www.youtube.com/@crossplatformkorea"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-md hover:bg-muted dark:hover:bg-muted transition-colors"
+            className={cn(
+              'p-1.5 sm:p-2 rounded-md transition-colors',
+              'hover:bg-muted dark:hover:bg-muted',
+            )}
             aria-label="YouTube Channel"
           >
             <svg
-              className="w-5 h-5 text-foreground dark:text-foreground"
+              className={cn('w-4 h-4 sm:w-5 sm:h-5 text-foreground', 'dark:text-foreground')}
               viewBox="0 0 24 24"
               fill="currentColor"
             >
@@ -204,10 +210,10 @@ export function Header({
             href="https://github.com/crossplatformkorea"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-md hover:bg-muted dark:hover:bg-muted transition-colors"
+            className="p-1.5 sm:p-2 rounded-md hover:bg-muted dark:hover:bg-muted transition-colors"
           >
             <svg
-              className="w-5 h-5 text-foreground dark:text-foreground"
+              className="w-4 h-4 sm:w-5 sm:h-5 text-foreground dark:text-foreground"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -220,6 +226,7 @@ export function Header({
           </a>
         </div>
       </div>
+
       {/* Apply the styles using standard CSS classes instead of jsx prop */}
       <style
         dangerouslySetInnerHTML={{
