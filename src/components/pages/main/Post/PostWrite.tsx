@@ -29,9 +29,24 @@ interface PostWriteProps {
   isOpen: boolean;
   onClose: () => void;
   defaultCategory?: string;
+  // 추가된 props: 수정 모드 관련
+  isEditMode?: boolean;
+  postId?: Id<'posts'>;
+  defaultTitle?: string;
+  defaultContent?: string;
+  defaultTags?: string[];
 }
 
-export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWriteProps) {
+export default function PostWrite({ 
+  isOpen, 
+  onClose, 
+  defaultCategory,
+  isEditMode = false,
+  postId,
+  defaultTitle = '',
+  defaultContent = '',
+  defaultTags = [],
+}: PostWriteProps) {
   const { t } = useTranslation();
   const { isAuthenticated } = useConvexAuth();
 
@@ -40,11 +55,11 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
-  // State for form values
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY); // Use DEFAULT_CATEGORY as fallback
-  const [tags, setTags] = useState<string[]>([]);
+  // State for form values - 초기값 활용
+  const [title, setTitle] = useState(defaultTitle);
+  const [content, setContent] = useState(defaultContent);
+  const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY);
+  const [tags, setTags] = useState<string[]>(defaultTags);
   const [tagInput, setTagInput] = useState('');
 
   // State for view mode (especially for mobile)
@@ -70,6 +85,8 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
   const generateUploadUrl = useMutation(api.files.mutation.generateUploadUrl);
   const saveFileMetadata = useMutation(api.files.mutation.saveFileMetadata);
   const createPostMutation = useMutation(api.posts.mutation.createPost);
+  // Get existing post mutation for edit mode
+  const updatePostMutation = useMutation(api.posts.mutation.updatePost);
 
   // Add file deletion action
   const deleteFile = useAction(api.files.action.deleteFileByStorageId);
@@ -114,23 +131,31 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     }
   }, [isFullscreen, previousFullscreen]);
 
-  // Set initial category if provided
+  // Set initial values if editing an existing post
   useEffect(() => {
-    if (defaultCategory) {
-      setCategory(defaultCategory);
+    if (isOpen && isEditMode) {
+      setTitle(defaultTitle);
+      setContent(defaultContent);
+      setTags(defaultTags || []);
+      if (defaultCategory) {
+        setCategory(defaultCategory);
+      }
     }
-  }, [defaultCategory]);
+  }, [isOpen, isEditMode, defaultTitle, defaultContent, defaultTags, defaultCategory]);
 
   // Reset all form data function
   const resetFormData = useCallback(() => {
-    setTitle('');
-    setContent('');
-    setCategory(defaultCategory || 'GENERAL');
-    setTags([]);
+    // 수정 모드가 아닐 때만 초기화
+    if (!isEditMode) {
+      setTitle('');
+      setContent('');
+      setCategory(defaultCategory || 'GENERAL');
+      setTags([]);
+    }
     setTagInput('');
     setError(null);
     setIsPreviewMode(false);
-  }, [defaultCategory]);
+  }, [defaultCategory, isEditMode]);
 
   // Add cleanupUploadedFiles function
   const cleanupUploadedFiles = useCallback(async () => {
@@ -314,7 +339,7 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     return () => document.removeEventListener('keydown', handleEscapeKey);
   }, [isOpen, handleClose]); // Add handleClose to dependency array
 
-  // 수정된 handleSubmit 함수 - postId와 연결하고 사용하지 않는 이미지는 삭제하도록 수정
+  // 수정된 handleSubmit 함수 - 수정 모드에 따라 다르게 동작
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -337,14 +362,25 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
     setError(null);
 
     try {
-      // 모든 업로드된 이미지 ID를 보내서 서버에서 처리하도록 함
-      await createPostMutation({
-        title,
-        content,
-        category,
-        tags,
-        storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
-      });
+      if (isEditMode && postId) {
+        // 수정 모드: updatePost 호출
+        await updatePostMutation({
+          postId,
+          title,
+          content,
+          category,
+          tags,
+        });
+      } else {
+        // 생성 모드: createPost 호출
+        await createPostMutation({
+          title,
+          content,
+          category,
+          tags,
+          storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
+        });
+      }
 
       // 게시 성공 시 파일 추적 배열 초기화
       setUploadedStorageIds([]);
@@ -353,8 +389,8 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
       resetFormData();
       onClose();
     } catch (error) {
-      console.error('Error creating post:', error);
-      setError(t('errors.postCreationFailed'));
+      console.error(isEditMode ? 'Error updating post:' : 'Error creating post:', error);
+      setError(isEditMode ? t('errors.postUpdateFailed') : t('errors.postCreationFailed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -568,7 +604,9 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
       >
         {/* Modal header */}
         <div className="flex items-center justify-between p-4 border-b dark:border-gray-700/70">
-          <h2 className="text-xl font-semibold">{t('postWrite.writeNewPost')}</h2>
+          <h2 className="text-xl font-semibold">
+            {isEditMode ? t('postWrite.editPost') : t('postWrite.writeNewPost')}
+          </h2>
 
           <div className="flex items-center gap-2">
             {/* View toggle for mobile */}
@@ -910,7 +948,7 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
         <div className="flex justify-end gap-2 p-4 border-t dark:border-gray-700/70">
           <button
             type="button"
-            onClick={handleClose} // Updated to use handleClose
+            onClick={handleClose}
             className="px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors dark:hover:bg-gray-700 dark:border-gray-700"
           >
             {t('common.cancel')}
@@ -927,7 +965,11 @@ export default function PostWrite({ isOpen, onClose, defaultCategory }: PostWrit
               isSubmitting && 'opacity-70 cursor-not-allowed',
             )}
           >
-            {isSubmitting ? t('common.buttons.submitting') : t('postWrite.publishPost')}
+            {isSubmitting 
+              ? t('common.buttons.submitting') 
+              : isEditMode 
+                ? t('postWrite.updatePost') 
+                : t('postWrite.publishPost')}
           </button>
         </div>
       </div>

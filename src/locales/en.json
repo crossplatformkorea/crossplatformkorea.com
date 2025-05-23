@@ -40,7 +40,8 @@
     },
     "auth": {
       "required": "Authentication required"
-    }
+    },
+    "postUpdateFailed": "Failed to update post. Please try again."
   },
   "profile": {
     "title": "Profile",
@@ -206,6 +207,8 @@
     "previewTitle": "Post Preview",
     "previewPlaceholder": "Content preview will appear here",
     "publishPost": "Publish Post",
+    "editPost": "Edit Post",
+    "updatePost": "Update Post",
     "formatting": {
       "bold": "Bold",
       "italic": "Italic",

@@ -40,7 +40,8 @@
     },
     "auth": {
       "required": "認証が必要です"
-    }
+    },
+    "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。"
   },
   "profile": {
     "title": "プロフィール",
@@ -208,6 +209,8 @@
     "previewTitle": "プレビュー",
     "previewPlaceholder": "ここに内容のプレビューが表示されます",
     "publishPost": "投稿する",
+    "editPost": "投稿を編集",
+    "updatePost": "更新する",
     "formatting": {
       "bold": "太字",
       "italic": "斜体",

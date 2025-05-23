@@ -10,6 +10,7 @@ import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-rea
 import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
+import PostWrite from '../../Post/PostWrite';
 
 export default function PostDetailsPage() {
   const { isAuthenticated } = useConvexAuth();
@@ -19,6 +20,8 @@ export default function PostDetailsPage() {
   const user = useQuery(api.users.query.currentUser);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [viewIncremented, setViewIncremented] = useState(false);
+  // 수정 모달 관련 상태 추가
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Delete post mutation
   const deletePost = useMutation(api.posts.mutation.deletePost);
@@ -66,7 +69,8 @@ export default function PostDetailsPage() {
 
   const handleEdit = () => {
     if (post) {
-      void navigate(`/post/edit/${post._id}`);
+      // 편집 버튼을 클릭하면 모달 열기
+      setIsEditModalOpen(true);
     }
   };
 
@@ -213,14 +217,28 @@ export default function PostDetailsPage() {
         />
       </div>
 
-      {/* 기존 모달을 ConfirmDeleteModal 컴포넌트로 대체 */}
+      {/* 수정 모달 */}
+      {post && (
+        <PostWrite
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          isEditMode={true}
+          postId={post._id}
+          defaultTitle={post.title}
+          defaultContent={post.content}
+          defaultCategory={post.category}
+          defaultTags={post.tags}
+        />
+      )}
+
+      {/* 삭제 확인 모달 */}
       <ConfirmDeleteModal
         isOpen={showConfirmDelete}
         onClose={() => setShowConfirmDelete(false)}
         onConfirm={() => void handleDelete()}
         title={t('posts.deleteConfirmTitle')}
         message={t('posts.deleteConfirmMessage')}
-        targetName={post.title}
+        targetName={post?.title}
       />
     </div>
   );

@@ -40,7 +40,8 @@
     },
     "auth": {
       "required": "인증이 필요합니다"
-    }
+    },
+    "postUpdateFailed": "게시글 수정에 실패했습니다. 다시 시도해주세요."
   },
   "profile": {
     "title": "프로필",
@@ -206,6 +207,8 @@
     "previewTitle": "미리보기",
     "previewPlaceholder": "여기에 내용 미리보기가 표시됩니다",
     "publishPost": "게시하기",
+    "editPost": "게시글 수정",
+    "updatePost": "수정 완료",
     "formatting": {
       "bold": "굵게",
       "italic": "기울임",
