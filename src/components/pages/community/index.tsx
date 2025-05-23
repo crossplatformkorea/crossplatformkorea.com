@@ -3,7 +3,6 @@ import { Toaster } from 'sonner';
 import FeatureRequestsPage from '../feature-requests';
 import PostsPage from './Post/posts';
 import PostDetailsPage from './Post/post-details';
-import ProfilePage from '../profile';
 import SummaryPage from './Summary';
 import UserProfilePage from './UserProfile';
 
@@ -16,7 +15,6 @@ export default function Main() {
             <Route path="/" element={<SummaryPage />} />
             <Route path="/posts" element={<PostsPage />} />
             <Route path="/post/:postId" element={<PostDetailsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/user/:userId" element={<UserProfilePage />} />
             <Route path="/feature-request" element={<FeatureRequestsPage />} />
           </Routes>
