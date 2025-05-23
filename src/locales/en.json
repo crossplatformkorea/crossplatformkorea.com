@@ -135,7 +135,9 @@
     "noPosts": "No posts found",
     "write": "Write Post",
     "recentPosts": "Recent Posts",
-    "viewMore": "View More"
+    "viewMore": "View More",
+    "deleteConfirmTitle": "Delete Post?",
+    "deleteConfirmMessage": "This action cannot be undone. Are you sure you want to delete this post?"
   },
   "postCategories": {
     "ALL": { "name": "All", "description": "All posts" },

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useConvexAuth } from 'convex/react';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { cn } from '@/lib/utils';
 import { sidebarItems } from '@/constants/sidebar';
 import { LogIn, User, ChevronRight } from 'lucide-react';
+import { t } from 'i18next';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -14,7 +14,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen = false, isTransitioning = false }: SidebarProps) {
-  const { t } = useTranslation();
   const location = useLocation();
   const { isAuthenticated } = useConvexAuth();
   const [showContent, setShowContent] = useState(isOpen);

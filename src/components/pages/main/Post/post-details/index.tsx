@@ -9,6 +9,7 @@ import { Id } from '../../../../../../convex/_generated/dataModel';
 import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-react';
 import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
+import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 
 export default function PostDetailsPage() {
   const { isAuthenticated } = useConvexAuth();
@@ -212,36 +213,15 @@ export default function PostDetailsPage() {
         />
       </div>
 
-      {/* Delete confirmation modal */}
-      {showConfirmDelete && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-background p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h3 className="text-lg font-semibold mb-2">
-              {t('posts.deleteConfirmTitle', { defaultValue: 'Delete Post?' })}
-            </h3>
-            <p className="text-muted-foreground mb-4">
-              {t('posts.deleteConfirmMessage', {
-                defaultValue:
-                  'This action cannot be undone. Are you sure you want to delete this post?',
-              })}
-            </p>
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setShowConfirmDelete(false)}
-                className="px-4 py-2 text-sm font-medium bg-muted hover:bg-muted/80 rounded-md"
-              >
-                {t('common.cancel', { defaultValue: 'Cancel' })}
-              </button>
-              <button
-                onClick={() => void handleDelete()}
-                className="px-4 py-2 text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 rounded-md"
-              >
-                {t('common.delete', { defaultValue: 'Delete' })}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 기존 모달을 ConfirmDeleteModal 컴포넌트로 대체 */}
+      <ConfirmDeleteModal
+        isOpen={showConfirmDelete}
+        onClose={() => setShowConfirmDelete(false)}
+        onConfirm={() => void handleDelete()}
+        title={t('posts.deleteConfirmTitle')}
+        message={t('posts.deleteConfirmMessage')}
+        targetName={post.title}
+      />
     </div>
   );
 }

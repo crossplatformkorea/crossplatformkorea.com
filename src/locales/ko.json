@@ -135,7 +135,9 @@
     "noPosts": "게시물이 없습니다",
     "write": "글쓰기",
     "recentPosts": "최근 게시물",
-    "viewMore": "더보기"
+    "viewMore": "더보기",
+    "deleteConfirmTitle": "게시물 삭제?",
+    "deleteConfirmMessage": "이 작업은 되돌릴 수 없습니다. 정말로 이 게시물을 삭제하시겠습니까?"
   },
   "postCategories": {
     "ALL": { "name": "전체", "description": "모든 게시글" },

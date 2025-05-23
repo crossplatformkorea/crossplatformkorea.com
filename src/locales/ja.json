@@ -137,7 +137,9 @@
     "noPosts": "投稿が見つかりません",
     "write": "投稿を書く",
     "recentPosts": "最近の投稿",
-    "viewMore": "もっと見る"
+    "viewMore": "もっと見る",
+    "deleteConfirmTitle": "投稿を削除しますか？",
+    "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？"
   },
   "postCategories": {
     "ALL": { "name": "すべて", "description": "すべての投稿" },
