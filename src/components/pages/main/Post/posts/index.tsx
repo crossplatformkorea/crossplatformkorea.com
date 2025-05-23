@@ -179,7 +179,7 @@ const Posts = memo(function PostsPage() {
             onClick={loadMore}
             className="mt-4 w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md text-center transition-colors"
           >
-            {translate('posts.loadMore')}
+            {translate('common.loadMore')}
           </button>
         )}
       </div>
@@ -220,7 +220,7 @@ const Posts = memo(function PostsPage() {
           onClick={loadMore}
           className="mt-4 w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md text-center transition-colors"
         >
-          {translate('posts.loadMore')}
+          {translate('common.loadMore')}
         </button>
       )}
     </div>

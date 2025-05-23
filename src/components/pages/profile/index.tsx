@@ -60,9 +60,9 @@ export default function ProfilePage() {
   // Create user profile if it doesn't exist
   const createOrUpdateUser = useMutation(api.users.mutation.createOrUpdateUser);
   // Update file upload functions
-  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
-  const saveFileMetadata = useMutation(api.files.saveFileMetadata);
-  const deleteFile = useAction(api.files.deleteFileByStorageId);
+  const generateUploadUrl = useMutation(api.files.mutation.generateUploadUrl);
+  const saveFileMetadata = useMutation(api.files.mutation.saveFileMetadata);
+  const deleteFile = useAction(api.files.action.deleteFileByStorageId);
   const updateProfile = useMutation(api.users.mutation.updateProfile);
 
   // State for saving profile
@@ -546,7 +546,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="pt-6 mx-auto">
+    <div>
       <div className="max-w-4xl mx-auto">
         {/* Header with Sign Out button */}
         <div className="flex justify-between items-center mb-6">

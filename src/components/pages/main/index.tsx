@@ -11,7 +11,7 @@ export default function Main() {
   return (
     <div className="h-screen flex flex-col overflow-hidden relative">
       <div className="bg-background overflow-y-scroll w-full px-16 pt-10 pb-24">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <Routes>
             <Route path="/" element={<SummaryPage />} />
             <Route path="/posts" element={<PostsPage />} />
