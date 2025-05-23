@@ -13,7 +13,10 @@ export function Tooltip({ content, isOpen, onToggle, className }: TooltipProps) 
   return (
     <>
       <button
-        className="ml-2 text-muted-foreground hover:text-foreground transition-colors"
+        className={cn(
+          "ml-2 text-muted-foreground",
+          "hover:text-foreground transition-colors"
+        )}
         onClick={(e) => {
           e.stopPropagation();
           onToggle();
@@ -28,7 +31,8 @@ export function Tooltip({ content, isOpen, onToggle, className }: TooltipProps) 
         <div
           className={cn(
             "absolute z-10 p-3 rounded-md text-sm left-0 -top-12 shadow-lg border border-border animate-in fade-in",
-            "bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100",
+            "bg-white text-gray-800",
+            "dark:bg-gray-800 dark:text-gray-100",
             className
           )}
         >

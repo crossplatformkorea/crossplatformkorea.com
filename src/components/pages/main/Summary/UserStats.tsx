@@ -19,7 +19,10 @@ export default function UserStats({ userId, className }: UserStatsProps) {
   if (!userStats) {
     // 로딩 상태 표시 - 간소화된 로더
     return (
-      <div className={cn('mb-4 flex items-center justify-center h-10', className)}>
+      <div className={cn(
+        'mb-4 flex items-center justify-center h-10',
+        className
+      )}>
         <div className="animate-pulse h-6 w-32 bg-card/60 rounded" />
       </div>
     );
@@ -51,7 +54,10 @@ export default function UserStats({ userId, className }: UserStatsProps) {
 
   return (
     <motion.div
-      className={cn('mb-5 flex flex-wrap gap-2 justify-center items-center', className)}
+      className={cn(
+        'mb-5 flex flex-wrap gap-2 justify-center items-center',
+        className
+      )}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -59,7 +65,10 @@ export default function UserStats({ userId, className }: UserStatsProps) {
       {stats.map((stat, index) => (
         <React.Fragment key={stat.title}>
           <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-card/40 rounded-lg">
-            <span className={cn('flex items-center justify-center', stat.color)}>{stat.icon}</span>
+            <span className={cn(
+              'flex items-center justify-center',
+              stat.color
+            )}>{stat.icon}</span>
             <span className="font-semibold text-lg">{stat.value}</span>
             <span className="text-xs text-muted-foreground">{stat.title}</span>
           </div>

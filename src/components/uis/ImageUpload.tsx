@@ -25,15 +25,19 @@ export function ImageUpload({
   };
 
   return (
-    <div className={cn("border border-input rounded-md p-4 bg-background/60", className)}>
+    <div className={cn(
+      "border border-input rounded-md p-4 bg-background/60",
+      className
+    )}>
       <input
         type="file"
         accept={accept}
         onChange={handleImageChange}
         className={cn(
-          "block w-full text-sm text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md",
-          "file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary",
-          "hover:file:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          "block w-full text-sm text-foreground",
+          "file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary",
+          "hover:file:bg-primary/20",
+          "disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         )}
         disabled={disabled}
       />

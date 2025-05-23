@@ -65,7 +65,7 @@ export default function LikeButton({
           ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40'
           : 'bg-muted hover:bg-muted/80 text-muted-foreground',
         sizeStyles[size],
-        className,
+        className
       )}
       aria-label={hasLiked ? t('posts.unlike') : t('posts.like')}
       title={hasLiked ? t('posts.unlike') : t('posts.like')}
@@ -75,10 +75,10 @@ export default function LikeButton({
         className={cn(
           'transition-transform',
           hasLiked ? 'fill-red-500 text-red-500' : 'fill-transparent',
-          hasLiked && 'scale-110',
+          hasLiked && 'scale-110'
         )}
       />
-      {showCount && <span>{likeCount ?? 0}</span>}
+      {showCount && <span className="font-medium">{likeCount ?? 0}</span>}
     </button>
   );
 }

@@ -56,11 +56,11 @@ export default function ConfirmDeleteModal({
     >
       <div
         className={cn(
-          "p-6 rounded-lg max-w-md w-full",
-          "bg-background dark:bg-gray-800",
-          "shadow-xl dark:shadow-black/30",
-          "border border-border/30 dark:border-gray-700",
-          "backdrop-blur-sm"
+          'p-6 rounded-lg max-w-md w-full',
+          'bg-background dark:bg-gray-800',
+          'shadow-xl dark:shadow-black/30',
+          'border border-border/30 dark:border-gray-700',
+          'backdrop-blur-sm',
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -72,10 +72,9 @@ export default function ConfirmDeleteModal({
           <button
             onClick={onClose}
             className={cn(
-              'px-4 py-2 text-sm font-medium',
+              'px-4 py-2 text-sm font-medium rounded-md transition-colors',
               'bg-muted dark:bg-gray-700',
               'hover:bg-muted/80 dark:hover:bg-gray-600',
-              'rounded-md transition-colors'
             )}
           >
             {modalCancelText}
@@ -83,10 +82,9 @@ export default function ConfirmDeleteModal({
           <button
             onClick={onConfirm}
             className={cn(
-              'px-4 py-2 text-sm font-medium',
+              'px-4 py-2 text-sm font-medium rounded-md transition-colors',
               'bg-rose-500 text-white',
               'hover:bg-rose-600 dark:hover:bg-rose-600',
-              'rounded-md transition-colors'
             )}
           >
             {modalConfirmText}

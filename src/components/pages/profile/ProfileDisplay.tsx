@@ -1,6 +1,7 @@
 import React, { RefObject, ChangeEvent } from 'react';
 import { User, X, Camera } from 'lucide-react';
 import { TFunction } from 'i18next';
+import { cn } from '@/lib/utils';
 
 interface ProfileDisplayProps {
   imagePreview: string | null;
@@ -38,7 +39,10 @@ export default function ProfileDisplay({
               type="button"
               onClick={removeSelectedImage}
               title={t('profile.buttons.removeImage')}
-              className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-md transition-all duration-200 hover:scale-110 z-10 border border-white"
+              className={cn(
+                "absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 shadow-md transition-all duration-200 z-10 border border-white",
+                "hover:bg-red-600 hover:scale-110"
+              )}
               aria-label={t('profile.buttons.removeImage')}
             >
               <X className="w-3 h-3" />
@@ -54,7 +58,10 @@ export default function ProfileDisplay({
 
             {/* Overlay for image upload */}
             <div
-              className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+              className={cn(
+                "absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 cursor-pointer",
+                "group-hover:opacity-100 transition-opacity"
+              )}
               onClick={triggerFileInput}
             >
               <Camera className="w-6 h-6 text-white" />
@@ -84,7 +91,10 @@ export default function ProfileDisplay({
               value={formValues.displayName}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
+              className={cn(
+                "w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none",
+                "focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+              )}
             />
           </div>
 
@@ -98,7 +108,10 @@ export default function ProfileDisplay({
               name="realName"
               value={formValues.realName}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
+              className={cn(
+                "w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none",
+                "focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+              )}
             />
           </div>
 
@@ -113,7 +126,10 @@ export default function ProfileDisplay({
               value={formValues.organization}
               onChange={handleInputChange}
               placeholder={t('profile.fields.organization.placeholder')}
-              className="w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
+              className={cn(
+                "w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none",
+                "focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+              )}
             />
           </div>
         </div>

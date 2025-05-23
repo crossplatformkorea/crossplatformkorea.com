@@ -5,6 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Clock, MessageCircle, Tag } from 'lucide-react';
 import CategoryBadge from '@/components/uis/CategoryBadge';
+import { cn } from '@/lib/utils';
 
 interface Post {
   _id: string;
@@ -28,8 +29,15 @@ export default function SummaryPostItem({ post }: PostListItemProps) {
   return (
     <Link to={`/post/${post._id}`} className="group relative block h-full">
       {/* 훨씬 더 연한 호버 효과 */}
-      <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-70 blur-[1px] transition-all duration-300 group-hover:duration-200" />
-      <div className="relative h-full flex flex-col overflow-hidden rounded-xl border border-border/40 bg-card shadow-sm hover:shadow-md hover:border-border/60 transition-all duration-300 hover:bg-primary/[0.02] dark:hover:bg-accent/30">
+      <div className={cn(
+        "absolute -inset-px rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 blur-[1px] transition-all duration-300",
+        "group-hover:opacity-70 group-hover:duration-200"
+      )} />
+      <div className={cn(
+        "relative h-full flex flex-col overflow-hidden rounded-xl border border-border/40 bg-card shadow-sm",
+        "hover:shadow-md hover:border-border/60 transition-all duration-300 hover:bg-primary/[0.02]",
+        "dark:hover:bg-accent/30"
+      )}>
         {/* Category badge */}
         <div className="mb-3 px-5 pt-5 flex items-center justify-between">
           <CategoryBadge category={post.category} />
@@ -43,7 +51,10 @@ export default function SummaryPostItem({ post }: PostListItemProps) {
         </div>
 
         <div className="px-5 flex-grow">
-          <h3 className="font-medium text-lg mb-2 line-clamp-2 text-foreground/90 group-hover:text-primary/90 transition-colors">
+          <h3 className={cn(
+            "font-medium text-lg mb-2 line-clamp-2 text-foreground/90 transition-colors",
+            "group-hover:text-primary/90"
+          )}>
             {post.title}
           </h3>
 

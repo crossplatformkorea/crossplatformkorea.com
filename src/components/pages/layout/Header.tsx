@@ -51,7 +51,7 @@ export function Header({
         'h-16 flex-shrink-0 flex items-center justify-between px-4 relative z-10',
         // Visual styling
         'border-b border-border/30',
-        'bg-gradient-to-r from-background via-background to-background backdrop-blur-sm',
+        'bg-gradient-to-r from-background via-background to-background backdrop-blur-sm'
       )}
     >
       <div className="flex items-center gap-3">
@@ -64,13 +64,22 @@ export function Header({
         >
           <div className="relative h-5 w-5 flex flex-col justify-center items-center">
             <span
-              className={`absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-top ${isSidebarOpen ? 'active' : ''}`}
+              className={cn(
+                "absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-top",
+                isSidebarOpen ? 'active' : ''
+              )}
             ></span>
             <span
-              className={`absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-middle ${isSidebarOpen ? 'active' : ''}`}
+              className={cn(
+                "absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-middle",
+                isSidebarOpen ? 'active' : ''
+              )}
             ></span>
             <span
-              className={`absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-bottom ${isSidebarOpen ? 'active' : ''}`}
+              className={cn(
+                "absolute w-5 h-0.5 bg-foreground hamburger-line hamburger-bottom",
+                isSidebarOpen ? 'active' : ''
+              )}
             ></span>
           </div>
         </button>
@@ -101,7 +110,11 @@ export function Header({
               e.preventDefault();
               handleNavigation('/');
             }}
-            className="font-medium text-sm px-3 py-2 rounded-md bg-primary/10 text-primary dark:bg-primary/10 dark:text-white transition-colors"
+            className={cn(
+              "font-medium text-sm px-3 py-2 rounded-md transition-colors",
+              "bg-primary/10 text-primary",
+              "dark:bg-primary/10 dark:text-white"
+            )}
           >
             {t('common.navCommunity')}
           </a>
@@ -109,7 +122,10 @@ export function Header({
             href="https://blog.crossplatformkorea.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-sm px-3 py-2 rounded-md hover:bg-muted dark:hover:bg-muted transition-colors"
+            className={cn(
+              "font-medium text-sm px-3 py-2 rounded-md transition-colors",
+              "hover:bg-muted dark:hover:bg-muted"
+            )}
           >
             {t('common.navBlog')}
           </a>
@@ -123,7 +139,10 @@ export function Header({
           <div className="relative hidden sm:block">
             <button
               onClick={() => setLangMenuOpen(!langMenuOpen)}
-              className="flex items-center text-sm font-medium px-2 py-1 rounded-md hover:bg-muted dark:hover:bg-muted transition-colors"
+              className={cn(
+                "flex items-center text-sm font-medium px-2 py-1 rounded-md transition-colors",
+                "hover:bg-muted dark:hover:bg-muted"
+              )}
             >
               {currentLocale === 'en' ? 'English' : currentLocale === 'ko' ? '한국어' : '日本語'}
               <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,7 +155,11 @@ export function Header({
               </svg>
             </button>
             {langMenuOpen && (
-              <div className="absolute right-0 mt-2 w-32 bg-background dark:bg-secondary backdrop-blur-md border border-border/50 rounded-md shadow-lg z-10">
+              <div className={cn(
+                "absolute right-0 mt-2 w-32 rounded-md shadow-lg z-10",
+                "bg-background dark:bg-secondary",
+                "backdrop-blur-md border border-border/50"
+              )}>
                 {['en', 'ko', 'ja'].map((code) => (
                   <div
                     key={code}
@@ -147,7 +170,10 @@ export function Header({
                       // reload to apply translations globally
                       window.location.reload();
                     }}
-                    className="px-4 py-2 text-sm hover:bg-muted dark:hover:bg-muted cursor-pointer"
+                    className={cn(
+                      "px-4 py-2 text-sm cursor-pointer",
+                      "hover:bg-muted dark:hover:bg-muted"
+                    )}
                   >
                     {code === 'en' ? 'English' : code === 'ko' ? '한국어' : '日本語'}
                   </div>

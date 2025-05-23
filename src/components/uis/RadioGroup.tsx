@@ -24,9 +24,17 @@ export function RadioGroup({
   disabled = false,
 }: RadioGroupProps) {
   return (
-    <div className={cn("grid grid-cols-2 gap-4 p-3 border border-input rounded-md bg-background/60", className)}>
+    <div
+      className={cn(
+        "grid grid-cols-2 gap-4 p-3 border border-input rounded-md bg-background/60",
+        className
+      )}
+    >
       {options.map((option) => (
-        <label key={option.value} className="flex items-center space-x-2 cursor-pointer">
+        <label
+          key={option.value}
+          className="flex items-center space-x-2 cursor-pointer"
+        >
           <input
             type="radio"
             name={name}

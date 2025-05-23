@@ -134,7 +134,6 @@ export default function SigningIn() {
                 autoComplete="email"
                 required
                 className={cn(
-                  // Base styles
                   'w-full px-3 py-3 rounded-md transition-all',
                   'bg-background/50 backdrop-blur-sm',
                   'border border-border/50',
@@ -142,7 +141,7 @@ export default function SigningIn() {
                   // Focus styles
                   'focus-visible:ring-2 focus-visible:ring-primary/50',
                   'focus-visible:ring-offset-0',
-                  'focus-visible:border-primary/50',
+                  'focus-visible:border-primary/50'
                 )}
                 placeholder={t('signIn.emailPlaceholder')}
               />
@@ -155,7 +154,7 @@ export default function SigningIn() {
                   'flex text-red-500 text-sm mt-1',
                   'max-h-[6em] overflow-y-auto',
                   'bg-red-50/10 rounded p-2',
-                  'border border-red-200/20',
+                  'border border-red-200/20'
                 )}
               >
                 <pre className="whitespace-pre-wrap break-words w-full font-sans">{error}</pre>
@@ -172,9 +171,10 @@ export default function SigningIn() {
                 'w-full py-3 rounded-lg font-medium transition-all',
                 'bg-gradient-to-r from-primary to-primary/90',
                 'text-primary-foreground shadow-lg shadow-primary/20',
-                // State styles
+                // Hover styles
                 'hover:from-primary/90 hover:to-primary/80',
-                'disabled:opacity-50 disabled:cursor-not-allowed',
+                // Disabled styles
+                'disabled:opacity-50 disabled:cursor-not-allowed'
               )}
             >
               {isLoading ? t('signIn.sendingCode') : t('signIn.signInWithEmail')}

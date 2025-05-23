@@ -8,6 +8,7 @@ import SummaryPostItem from './SummaryPostItem';
 import UserStats from './UserStats';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '@/stores/authStore';
+import { cn } from '@/lib/utils';
 
 export default function SummaryPage() {
   const { t } = useTranslation();
@@ -55,7 +56,11 @@ export default function SummaryPage() {
   };
 
   return (
-    <div className="min-h-full bg-gradient-to-br from-background to-background/95 dark:from-background/90 dark:to-background/70 py-8 px-4">
+    <div className={cn(
+      "min-h-full py-8 px-4",
+      "bg-gradient-to-br from-background to-background/95",
+      "dark:from-background/90 dark:to-background/70"
+    )}>
       {/* Decorative elements - 더 연하게 조정 */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute w-[500px] h-[500px] top-0 left-0 bg-primary/3 dark:bg-primary/5 rounded-full blur-3xl" />
@@ -71,7 +76,10 @@ export default function SummaryPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary/90 to-secondary/90 mt-4 mb-2">
+            <h1 className={cn(
+              "text-4xl font-bold mt-4 mb-2",
+              "bg-clip-text text-transparent bg-gradient-to-r from-primary/90 to-secondary/90"
+            )}>
               {t('summary.welcome')}
             </h1>
             <p className="text-muted-foreground/80 max-w-2xl mx-auto">
@@ -98,7 +106,11 @@ export default function SummaryPage() {
                   <div className="flex items-center gap-5 flex-wrap">
                     {/* 프로필 이미지 - 더 부드러운 효과 */}
                     <div className="relative group">
-                      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/60 to-secondary/60 rounded-full opacity-60 group-hover:opacity-80 blur-[2px] transition-opacity duration-500" />
+                      <div className={cn(
+                        "absolute -inset-0.5 rounded-full opacity-60 blur-[2px] transition-opacity duration-500",
+                        "bg-gradient-to-r from-primary/60 to-secondary/60",
+                        "group-hover:opacity-80"
+                      )} />
                       <div className="relative h-24 w-24 rounded-full overflow-hidden bg-muted/50 border border-background/30">
                         {userIdentity.avatarUrl ? (
                           <img
@@ -136,7 +148,10 @@ export default function SummaryPage() {
 
                     <Link
                       to="/profile"
-                      className="px-5 py-2.5 bg-primary/80 hover:bg-primary/90 text-primary-foreground rounded-md transition-all duration-300 flex items-center gap-1 shrink-0"
+                      className={cn(
+                        "px-5 py-2.5 text-primary-foreground rounded-md transition-all duration-300 flex items-center gap-1 shrink-0",
+                        "bg-primary/80 hover:bg-primary/90"
+                      )}
                     >
                       {t('profile.viewEdit')}
                       <ArrowRight size={16} />
@@ -169,8 +184,10 @@ export default function SummaryPage() {
                 </div>
                 <Link
                   to="/sign-in"
-                  className="px-4 py-1.5 bg-primary text-primary-foreground text-sm rounded-md transition-all 
-                  hover:bg-primary/90 flex items-center gap-1.5 font-medium"
+                  className={cn(
+                    "px-4 py-1.5 bg-primary text-primary-foreground text-sm rounded-md transition-all flex items-center gap-1.5 font-medium",
+                    "hover:bg-primary/90"
+                  )}
                 >
                   {t('common.signIn')}
                   <ArrowRight size={14} />
@@ -191,7 +208,11 @@ export default function SummaryPage() {
           >
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center">
-                <div className="bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/15 dark:to-primary/5 p-3 rounded-xl mr-4">
+                <div className={cn(
+                  "p-3 rounded-xl mr-4",
+                  "bg-gradient-to-r from-primary/10 to-primary/5",
+                  "dark:from-primary/15 dark:to-primary/5"
+                )}>
                   <MessageSquare className="text-primary/80" size={28} />
                 </div>
                 <h2 className="text-2xl font-medium text-foreground/90">
@@ -200,14 +221,23 @@ export default function SummaryPage() {
               </div>
               <Link
                 to="/posts"
-                className="group flex items-center gap-1 px-4 py-2 rounded-full bg-background hover:bg-card/80 border border-border/30 transition-all duration-300"
+                className={cn(
+                  "group flex items-center gap-1 px-4 py-2 rounded-full bg-background border border-border/30 transition-all duration-300",
+                  "hover:bg-card/80"
+                )}
               >
-                <span className="text-muted-foreground/90 group-hover:text-foreground/90 transition-colors">
+                <span className={cn(
+                  "text-muted-foreground/90 transition-colors",
+                  "group-hover:text-foreground/90"
+                )}>
                   {t('common.viewAll')}
                 </span>
                 <ArrowRight
                   size={16}
-                  className="text-primary/70 transform group-hover:translate-x-1 transition-transform"
+                  className={cn(
+                    "text-primary/70 transform transition-transform",
+                    "group-hover:translate-x-1"
+                  )}
                 />
               </Link>
             </div>

@@ -4,6 +4,7 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import AppLoading from '@/components/AppLoading';
 import { useTranslation } from 'react-i18next';
 import { Id } from '../../../../../../convex/_generated/dataModel';
 import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-react';
@@ -13,6 +14,7 @@ import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import PostWrite from '../../Post/PostWrite';
 import Comments from './Comments';
 import { useAuthStore } from '@/stores/authStore';
+import { cn } from '@/lib/utils';
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
@@ -98,11 +100,7 @@ export default function PostDetailsPage() {
   }
 
   if (!post) {
-    return (
-      <div className="mt-8 text-center">
-        {t('posts.loadingPost', { defaultValue: 'Loading...' })}
-      </div>
-    );
+    return <AppLoading />;
   }
 
   // 포스트 통계 데이터 - post 객체에서 직접 가져옴
@@ -152,14 +150,20 @@ export default function PostDetailsPage() {
               <div className="absolute top-0 right-0 flex items-center gap-2">
                 <button
                   onClick={handleEdit}
-                  className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-full transition-colors"
+                  className={cn(
+                    'p-2 text-muted-foreground rounded-full transition-colors',
+                    'hover:text-foreground hover:bg-muted/50',
+                  )}
                   title={t('posts.edit', { defaultValue: 'Edit Post' })}
                 >
                   <Pencil size={18} />
                 </button>
                 <button
                   onClick={() => setShowConfirmDelete(true)}
-                  className="p-2 text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 rounded-full transition-colors"
+                  className={cn(
+                    'p-2 text-muted-foreground rounded-full transition-colors',
+                    'hover:text-rose-500 hover:bg-rose-500/10',
+                  )}
                   title={t('posts.delete', { defaultValue: 'Delete Post' })}
                 >
                   <Trash2 size={18} />
@@ -181,9 +185,11 @@ export default function PostDetailsPage() {
               {/* Like button */}
               <button
                 onClick={handleLikeClick}
-                className={`flex items-center gap-1.5 py-1 px-2 rounded-md bg-transparent border-0 ${
-                  hasLiked ? 'text-rose-500' : 'text-muted-foreground hover:text-rose-500'
-                } hover:bg-rose-500/10 transition-colors`}
+                className={cn(
+                  'flex items-center gap-1.5 py-1 px-2 rounded-md bg-transparent border-0 transition-colors',
+                  hasLiked ? 'text-rose-500' : 'text-muted-foreground hover:text-rose-500',
+                  'hover:bg-rose-500/10',
+                )}
                 title={t('posts.like', { defaultValue: 'Like this post' })}
                 aria-pressed={hasLiked}
               >
@@ -214,7 +220,12 @@ export default function PostDetailsPage() {
       </div>
 
       {/* Post content with footer containing social actions */}
-      <div className="bg-white dark:bg-gray-800/30 px-8 py-10 relative overflow-hidden border-b border-border/30">
+      <div
+        className={cn(
+          'px-8 py-10 relative overflow-hidden border-b border-border/30',
+          'bg-white dark:bg-gray-800/30',
+        )}
+      >
         <div
           className="prose prose-lg max-w-none whitespace-pre-wrap"
           style={{ wordBreak: 'break-word' }}
@@ -223,7 +234,9 @@ export default function PostDetailsPage() {
       </div>
 
       {/* 댓글 컴포넌트 추가 - border 제거 */}
-      <div className="bg-background dark:bg-gray-800/20 px-8 py-8 mt-2 rounded-lg shadow-sm">
+      <div
+        className={cn('px-8 py-8 mt-2 rounded-lg shadow-sm', 'bg-background dark:bg-gray-800/20')}
+      >
         {post && <Comments postId={post._id} />}
       </div>
 

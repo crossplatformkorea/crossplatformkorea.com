@@ -35,7 +35,8 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       onClick={toggleDarkMode}
       className={cn(
-        "rounded-full p-2 transition-colors hover:bg-accent",
+        "rounded-full p-2 transition-colors",
+        "hover:bg-accent",
         className
       )}
       aria-label="Toggle theme"

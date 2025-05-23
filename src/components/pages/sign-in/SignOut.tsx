@@ -57,13 +57,12 @@ export default function SignOut() {
           onClick={() => void handleSignOut()}
           disabled={isLoading}
           className={cn(
-            // Base styles
             'w-full py-3 rounded-lg font-medium transition-all',
             'bg-gradient-to-r from-red-600 to-red-500',
             'text-white shadow-lg shadow-red-500/20',
             // State styles
             'hover:from-red-700 hover:to-red-600',
-            'disabled:opacity-50 disabled:cursor-not-allowed',
+            'disabled:opacity-50 disabled:cursor-not-allowed'
           )}
         >
           {isLoading ? t('signIn.signingOut') : t('signIn.signOut')}

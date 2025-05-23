@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
     <aside
       className={cn(
         'border-r h-full flex flex-col transition-all duration-300',
-        'bg-gray-50 dark:bg-zinc-900 dark:border-zinc-800',
+        'bg-gray-50 dark:bg-zinc-900 dark:border-zinc-800'
       )}
     >
       {/* Main navigation links */}
@@ -58,7 +58,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
                   'hover:bg-gray-100 dark:hover:bg-zinc-800',
                   isActive(item.route)
                     ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-foreground font-medium'
-                    : 'text-gray-700 dark:text-zinc-300',
+                    : 'text-gray-700 dark:text-zinc-300'
                 )}
               >
                 <div className="shrink-0">
@@ -74,7 +74,10 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
       </nav>
 
       {/* Login button at the bottom */}
-      <div className="p-4 border-t border-gray-200 dark:border-zinc-800 mt-auto">
+      <div className={cn(
+        "border-t border-gray-200 dark:border-zinc-800 mt-auto",
+        showContent ? "p-4" : "p-0" // Adjust padding
+      )}>
         {!isAuthenticated ? (
           <Link
             to="/sign-in"
@@ -82,6 +85,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
               'flex items-center py-2 px-3 rounded-md transition-colors',
               'bg-primary text-primary-foreground hover:bg-primary/90',
               'dark:bg-primary/80 dark:hover:bg-primary/70',
+              !showContent && 'hidden' // Hide completely when sidebar is collapsed
             )}
           >
             <LogIn size={18} />
@@ -96,6 +100,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
               'flex items-center py-2 px-3 rounded-md transition-colors w-full',
               'bg-primary/10 text-primary hover:bg-primary/20',
               'dark:bg-primary/20 dark:text-white dark:hover:bg-primary/30',
+              !showContent && 'hidden' // Hide completely when sidebar is collapsed
             )}
           >
             {/* User avatar or default icon */}
@@ -112,7 +117,10 @@ export default function Sidebar({ isOpen = false, isTransitioning = false }: Sid
             {/* Show displayName with truncation when sidebar is open */}
             {showContent && (
               <div className="flex-1 flex items-center justify-between ml-2">
-                <span className="transition-opacity duration-150 truncate max-w-[100px] dark:text-gray-100">
+                <span className={cn(
+                  "transition-opacity duration-150 truncate max-w-[100px]",
+                  "text-slate-700 dark:text-gray-100" // Updated text color for light mode
+                )}>
                   {userData?.displayName || t('common.profile')}
                 </span>
                 <ChevronRight size={16} className="ml-1 text-primary/70 dark:text-white/70" />

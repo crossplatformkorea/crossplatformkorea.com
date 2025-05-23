@@ -119,7 +119,11 @@ export default function Comments({ postId }: CommentsProps) {
               className="w-full p-3 min-h-[100px] bg-transparent border-0 focus:ring-0 resize-none"
               disabled={isSubmitting}
             />
-            <div className="flex justify-end p-2 border-t border-border dark:border-gray-700 bg-muted/20 dark:bg-gray-800/50">
+            <div className={cn(
+              "flex justify-end p-2 border-t border-border",
+              "dark:border-gray-700",
+              "bg-muted/20 dark:bg-gray-800/50"
+            )}>
               <button
                 type="submit"
                 disabled={isSubmitting || !comment.trim()}
@@ -127,7 +131,7 @@ export default function Comments({ postId }: CommentsProps) {
                   'flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors',
                   comment.trim()
                     ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-muted text-muted-foreground cursor-not-allowed',
+                    : 'bg-muted text-muted-foreground cursor-not-allowed'
                 )}
               >
                 {isSubmitting ? (
@@ -141,7 +145,10 @@ export default function Comments({ postId }: CommentsProps) {
           </div>
         </form>
       ) : (
-        <div className="bg-muted/30 dark:bg-gray-800/40 rounded-md p-4 mb-8 text-center">
+        <div className={cn(
+          "rounded-md p-4 mb-8 text-center",
+          "bg-muted/30 dark:bg-gray-800/40"
+        )}>
           <p className="text-muted-foreground">
             {t('comments.loginRequired')}
           </p>
@@ -172,10 +179,16 @@ export default function Comments({ postId }: CommentsProps) {
                       <img
                         src={commentAuthor.avatarUrl}
                         alt={commentAuthor.displayName || ''}
-                        className="h-8 w-8 rounded-full mr-2 object-cover border border-border/30 dark:border-gray-700/50"
+                        className={cn(
+                          "h-8 w-8 rounded-full mr-2 object-cover border border-border/30",
+                          "dark:border-gray-700/50"
+                        )}
                       />
                     ) : (
-                      <div className="h-8 w-8 bg-muted dark:bg-gray-700 rounded-full mr-2 flex items-center justify-center">
+                      <div className={cn(
+                        "h-8 w-8 rounded-full mr-2 flex items-center justify-center",
+                        "bg-muted dark:bg-gray-700"
+                      )}>
                         <User className="h-4 w-4 text-muted-foreground" />
                       </div>
                     )}
@@ -196,7 +209,10 @@ export default function Comments({ postId }: CommentsProps) {
                   {isCommentAuthor && (
                     <button
                       onClick={() => setShowDeleteCommentModal(comment._id)}
-                      className="text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 p-1.5 rounded-full transition-colors"
+                      className={cn(
+                        "text-muted-foreground p-1.5 rounded-full transition-colors",
+                        "hover:text-rose-500 hover:bg-rose-500/10"
+                      )}
                       title={t('common.delete')}
                     >
                       <Trash2 className="h-4 w-4" />

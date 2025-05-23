@@ -56,7 +56,7 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
       <motion.div
         className={cn(
           'flex items-center justify-start gap-3 text-sm text-muted-foreground',
-          className,
+          className
         )}
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,10 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
         {stats.map((stat, index) => (
           <React.Fragment key={stat.title}>
             <div className="flex items-center gap-1" title={stat.title}>
-              <span className={cn('flex items-center justify-center', stat.color)}>
+              <span className={cn(
+                'flex items-center justify-center',
+                stat.color
+              )}>
                 {stat.icon}
               </span>
               <span className="font-medium">{stat.value}</span>
@@ -82,7 +85,10 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
   // Full version with more modern, minimalist UI like Summary component
   return (
     <motion.div
-      className={cn('mb-6 flex flex-wrap justify-center sm:justify-between gap-4', className)}
+      className={cn(
+        'mb-6 flex flex-wrap justify-center sm:justify-between gap-4',
+        className
+      )}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, staggerChildren: 0.1 }}
@@ -90,11 +96,17 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
       {stats.map((stat) => (
         <motion.div
           key={stat.title}
-          className="flex-1 flex items-center gap-3 p-4 bg-card/40 backdrop-blur-[1px] border border-border/30 rounded-xl hover:border-border/50 transition-colors"
+          className={cn(
+            "flex-1 flex items-center gap-3 p-4 bg-card/40 backdrop-blur-[1px] border border-border/30 rounded-xl",
+            "hover:border-border/50 transition-colors"
+          )}
           whileHover={{ scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         >
-          <div className={cn('p-3 rounded-full', stat.bgColor)}>
+          <div className={cn(
+            'p-3 rounded-full',
+            stat.bgColor
+          )}>
             <span className={stat.color}>{stat.icon}</span>
           </div>
           <div>

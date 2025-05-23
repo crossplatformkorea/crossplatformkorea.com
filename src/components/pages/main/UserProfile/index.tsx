@@ -59,7 +59,10 @@ export default function UserProfilePage() {
         <div className="flex items-center mb-6">
           <button
             onClick={handleGoBack}
-            className="flex items-center text-muted-foreground hover:text-foreground transition-colors bg-transparent border-0 cursor-pointer"
+            className={cn(
+              'flex items-center text-muted-foreground bg-transparent border-0 cursor-pointer',
+              'hover:text-foreground transition-colors',
+            )}
           >
             <ArrowLeft size={18} className="mr-2" />
             {t('common.back')}
@@ -125,7 +128,10 @@ export default function UserProfilePage() {
       <div className="flex items-center mb-6">
         <button
           onClick={handleGoBack}
-          className="flex items-center text-muted-foreground hover:text-foreground transition-colors bg-transparent border-0 cursor-pointer"
+          className={cn(
+            'flex items-center text-muted-foreground bg-transparent border-0 cursor-pointer',
+            'hover:text-foreground transition-colors',
+          )}
         >
           <ArrowLeft size={18} className="mr-2" />
           {t('common.back')}
@@ -196,7 +202,7 @@ export default function UserProfilePage() {
                       </a>
                     );
                   } catch {
-                    return null; // Skip invalid URLs
+                    return null;
                   }
                 })}
               </div>
@@ -250,44 +256,33 @@ export default function UserProfilePage() {
               ))}
             </div>
           ) : (
-            <div className="p-8 text-center border border-border/30 rounded-lg bg-card/20">
-              <p className="text-muted-foreground">{t('user.noPosts')}</p>
-            </div>
+            <div className="text-center py-6 text-muted-foreground">{t('user.noPostsYet')}</div>
           )}
         </div>
       ) : (
-        <div className="space-y-6">
-          <h2 className="text-xl font-semibold mb-4">{t('user.about')}</h2>
-
-          {/* Description */}
-          {description && (
-            <div>
-              <h3 className="text-lg font-medium mb-2">{t('user.aboutMe')}</h3>
-              <p className="text-muted-foreground whitespace-pre-line">{description}</p>
-            </div>
+        <div className="bg-card/30 border border-border/50 rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">
+            {t('user.aboutUser', { name: displayName || t('user.anonymousUser') })}
+          </h2>
+          {description ? (
+            <p className="text-muted-foreground mb-4 whitespace-pre-wrap">{description}</p>
+          ) : (
+            <p className="text-muted-foreground mb-4">{t('user.noDescription')}</p>
           )}
-
-          {/* Looking for */}
           {lookingFor && (
-            <div>
-              <h3 className="text-lg font-medium mb-2">{t('user.lookingFor')}</h3>
-              <p className="text-muted-foreground whitespace-pre-line">{lookingFor}</p>
+            <div className="mb-4">
+              <h3 className="font-medium text-foreground mb-1">{t('user.lookingFor')}</h3>
+              <p className="text-muted-foreground whitespace-pre-wrap">{lookingFor}</p>
             </div>
           )}
-
-          {/* Expectations */}
           {expectations && (
             <div>
-              <h3 className="text-lg font-medium mb-2">{t('user.expectations')}</h3>
-              <p className="text-muted-foreground whitespace-pre-line">{expectations}</p>
+              <h3 className="font-medium text-foreground mb-1">{t('user.expectations')}</h3>
+              <p className="text-muted-foreground whitespace-pre-wrap">{expectations}</p>
             </div>
           )}
-
-          {/* If no additional info is available */}
           {!description && !lookingFor && !expectations && (
-            <div className="p-8 text-center border border-border/30 rounded-lg bg-card/20">
-              <p className="text-muted-foreground">{t('user.noAdditionalInfo')}</p>
-            </div>
+            <p className="text-muted-foreground">{t('user.noProfileDetails')}</p>
           )}
         </div>
       )}

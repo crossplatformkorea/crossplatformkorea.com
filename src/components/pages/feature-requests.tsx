@@ -6,6 +6,7 @@ import { t } from 'i18next';
 import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
+import { cn } from '@/lib/utils';
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
 type StatusBadgeProps = { status: StatusType };
@@ -46,7 +47,10 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
 
   return (
     <span
-      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide border ${getBadgeStyle()}`}
+      className={cn(
+        'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide border',
+        getBadgeStyle()
+      )}
     >
       {getStatusText()}
     </span>
@@ -57,7 +61,10 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
 const UpvoteIcon = ({ voted }: { voted?: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className={`h-5 w-5 ${voted ? 'text-primary fill-primary/20' : 'text-gray-500 dark:text-gray-400 group-hover:text-primary'}`}
+    className={cn(
+      'h-5 w-5',
+      voted ? 'text-primary fill-primary/20' : 'text-gray-500 dark:text-gray-400 group-hover:text-primary'
+    )}
     viewBox="0 0 20 20"
     fill="currentColor"
   >
@@ -192,14 +199,12 @@ export default function FeatureRequestsPage() {
 
       {/* Wrapper div for transition */}
       <div
-        className={`
-          overflow-hidden
-          transition-all duration-300 ease-in-out
-          ${showForm
+        className={cn(
+          'overflow-hidden transition-all duration-300 ease-in-out',
+          showForm
             ? 'max-h-[1000px] opacity-100 mb-12' // Adjust max-h if your form can be taller
             : 'max-h-0 opacity-0 mb-0' // Collapses the div and its margin when hidden
-          }
-        `}
+        )}
       >
         <section className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
@@ -220,7 +225,11 @@ export default function FeatureRequestsPage() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
                 placeholder={t('featureRequest.titlePlaceholder')}
                 required
-                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-white sm:text-sm"
+                className={cn(
+                  "w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm sm:text-sm",
+                  "dark:border-gray-600 dark:bg-gray-700 dark:text-white",
+                  "focus:ring-primary focus:border-primary"
+                )}
               />
             </div>
             <div>
@@ -310,13 +319,22 @@ export default function FeatureRequestsPage() {
             {featureRequests.map((request) => (
               <article
                 key={request._id}
-                className="bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                className={cn(
+                  "bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700",
+                  "hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                )}
               >
                 <div className="p-5 sm:p-6 flex gap-4 sm:gap-6">
                   <div className="flex flex-col items-center pt-1 shrink-0">
                     <button
                       onClick={() => void handleVote(request._id)}
-                      className="group p-2.5 rounded-md border border-gray-300 dark:border-gray-600 hover:border-primary dark:hover:border-primary bg-gray-50 dark:bg-gray-700/50 hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-150 flex flex-col items-center w-[60px]"
+                      className={cn(
+                        "group p-2.5 rounded-md border border-gray-300 dark:border-gray-600",
+                        "hover:border-primary dark:hover:border-primary",
+                        "bg-gray-50 dark:bg-gray-700/50",
+                        "hover:bg-primary/5 dark:hover:bg-primary/10",
+                        "transition-colors duration-150 flex flex-col items-center w-[60px]"
+                      )}
                       aria-label={t('featureRequest.voteAriaLabel')}
                     >
                       <UpvoteIcon />
@@ -328,7 +346,10 @@ export default function FeatureRequestsPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-col sm:flex-row justify-between sm:items-start mb-2">
-                      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer">
+                      <h2 className={cn(
+                        "text-lg sm:text-xl font-semibold text-gray-900 dark:text-white cursor-pointer transition-colors",
+                        "hover:text-primary dark:hover:text-primary"
+                      )}>
                         {request.title}
                       </h2>
                       <div className="mt-2 sm:mt-0 sm:ml-4 shrink-0">
