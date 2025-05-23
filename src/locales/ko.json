@@ -143,11 +143,30 @@
   },
   "postCategories": {
     "ALL": { "name": "전체", "description": "모든 게시글" },
-    "NEWS": { "name": "소식", "description": "최신 소식 및 릴리즈 정보" },
-    "QA": { "name": "Q&A", "description": "질문과 답변" },
-    "READING": { "name": "읽을 거리", "description": "칼럼, 회고, 인사이트" },
-    "INFO_SHARE": { "name": "정보 공유", "description": "팁, 링크, 유용한 도구" },
-    "FREE_BOARD": { "name": "자유 게시판", "description": "자유로운 토론 및 커뮤니티 소통" }
+    "NEWS": {
+      "name": "소식",
+      "description": "크로스 플랫폼 개발 커뮤니티의 최신 소식과 공지사항입니다."
+    },
+    "QA": {
+      "name": "질문과 답변",
+      "description": "크로스 플랫폼 개발 관련 질문과 답변을 나누는 공간입니다."
+    },
+    "READING": {
+      "name": "읽을거리",
+      "description": "흥미로운 기사, 튜토리얼 및 학습 자료를 공유합니다."
+    },
+    "INFO_SHARE": {
+      "name": "정보 공유",
+      "description": "유용한 정보, 팁, 자료를 커뮤니티와 공유합니다."
+    },
+    "FREE_BOARD": {
+      "name": "자유게시판",
+      "description": "크로스 플랫폼 개발에 관한 일반적인 토론을 나눕니다."
+    },
+    "JOB_POSTING": {
+      "name": "구인 구직",
+      "description": "크로스 플랫폼 개발 관련 채용 정보를 공유하거나 구직 정보를 올릴 수 있습니다."
+    }
   },
   "pages": {
     "posts": "게시물",

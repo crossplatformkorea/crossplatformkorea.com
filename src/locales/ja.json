@@ -144,12 +144,30 @@
     "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？"
   },
   "postCategories": {
-    "ALL": { "name": "すべて", "description": "すべての投稿" },
-    "NEWS": { "name": "ニュース", "description": "最新のニュースとリリース情報" },
-    "QA": { "name": "Q&A", "description": "質問と回答" },
-    "READING": { "name": "読み物", "description": "記事、回顧、インサイト" },
-    "INFO_SHARE": { "name": "情報共有", "description": "ヒント、リンク、有用なツール" },
-    "FREE_BOARD": { "name": "フリーボード", "description": "カジュアルな議論とコミュニティチャット" }
+    "NEWS": {
+      "name": "ニュース",
+      "description": "クロスプラットフォーム開発コミュニティからの最新情報とお知らせです。"
+    },
+    "QA": {
+      "name": "質問と回答",
+      "description": "クロスプラットフォーム開発に関する質問と回答を共有する場です。"
+    },
+    "READING": {
+      "name": "読み物",
+      "description": "興味深い記事、チュートリアル、学習リソースを共有します。"
+    },
+    "INFO_SHARE": {
+      "name": "情報共有",
+      "description": "役立つ情報、ヒント、リソースをコミュニティと共有します。"
+    },
+    "FREE_BOARD": {
+      "name": "自由掲示板",
+      "description": "クロスプラットフォーム開発に関する一般的なディスカッションの場です。"
+    },
+    "JOB_POSTING": {
+      "name": "求人情報",
+      "description": "クロスプラットフォーム開発に関連する求人情報を共有したり、求職情報を投稿できます。"
+    }
   },
   "pages": {
     "posts": "投稿",

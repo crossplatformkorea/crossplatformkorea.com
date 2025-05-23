@@ -1,7 +1,7 @@
 /**
  * Sidebar items for rendering the navigation menu
  */
-import { FileText, Lightbulb, Palette, Briefcase, Calendar } from "lucide-react";
+import { FileText, Lightbulb, Palette, Calendar } from 'lucide-react';
 
 export type SidebarItem = {
   key: string;
@@ -12,10 +12,10 @@ export type SidebarItem = {
 
 export const sidebarItems: SidebarItem[] = [
   {
-    key: "posts",
-    route: "/posts",
+    key: 'posts',
+    route: '/posts',
     icon: FileText,
-    labelKey: "pages.posts",
+    labelKey: 'pages.posts',
   },
   // {
   //   key: "showcase",
@@ -24,21 +24,15 @@ export const sidebarItems: SidebarItem[] = [
   //   labelKey: "pages.showcase",
   // },
   // {
-  //   key: "jobs",
-  //   route: "/jobs",
-  //   icon: Briefcase,
-  //   labelKey: "pages.jobs",
-  // },
-  // {
   //   key: "events",
   //   route: "/events",
   //   icon: Calendar,
   //   labelKey: "pages.events",
   // },
   {
-    key: "featureRequest",
-    route: "/feature-request",
+    key: 'featureRequest',
+    route: '/feature-request',
     icon: Lightbulb,
-    labelKey: "pages.featureRequests",
+    labelKey: 'pages.featureRequests',
   },
 ];

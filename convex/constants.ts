@@ -36,6 +36,12 @@ export const CATEGORIES: CategoryType[] = [
     slug: "free-board",
     order: 5,
   },
+  {
+    key: "JOB_POSTING",
+    icon: "💼",
+    slug: "job-posting",
+    order: 6,
+  },
 ];
 
 // Add default category constant to standardize usage
