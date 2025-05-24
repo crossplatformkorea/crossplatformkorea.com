@@ -120,7 +120,7 @@ export function Header({
             {t('common.navCommunity')}
           </a>
           <a
-            href="https://blog.crossplatformkorea.com"
+            href="https://doc.crossplatformkorea.com"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -128,7 +128,7 @@ export function Header({
               'hover:bg-muted dark:hover:bg-muted',
             )}
           >
-            {t('common.navBlog')}
+            {t('common.navDoc')}
           </a>
         </nav>{' '}
         {/* Auth & Language Controls */}
