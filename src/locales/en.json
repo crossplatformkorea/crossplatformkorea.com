@@ -270,7 +270,7 @@
     "events": "Events",
     "featureRequests": "Feature Requests"
   },
-  "showcases": {
+  "showcase": {
     "title": "Showcase",
     "description": "Discover amazing cross-platform applications",
     "addNew": "Add New",

@@ -16,6 +16,7 @@ import { cn } from '../../../../../lib/utils';
 import { DEFAULT_CATEGORY } from '../../../../../../convex/constants';
 import PostListItem from './PostListItem';
 import { Button } from '@/components/uis/Button';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 // Define the Post type
 type Post = {
@@ -69,6 +70,10 @@ const Posts = memo(function PostsPage() {
     paginationOpts,
   });
 
+  useMetaTags({
+    title: `${t('common.sidePosts')} - ${t('meta.title')}`,
+  });
+
   // Update pagination state when result changes
   useEffect(() => {
     if (result) {
@@ -114,9 +119,7 @@ const Posts = memo(function PostsPage() {
   const renderWriteButton = () => (
     <Button
       onClick={() => setIsWriteModalOpen(true)}
-      className={cn(
-        !isAuthenticated && 'opacity-70 cursor-not-allowed',
-      )}
+      className={cn(!isAuthenticated && 'opacity-70 cursor-not-allowed')}
       disabled={!isAuthenticated}
       title={!isAuthenticated ? translate('common.loginToWrite') : undefined}
     >
@@ -164,11 +167,7 @@ const Posts = memo(function PostsPage() {
 
         {/* Add load more button if there are more posts */}
         {hasMore && (
-          <Button
-            variant="outline"
-            onClick={loadMore}
-            className="mt-4 w-full"
-          >
+          <Button variant="outline" onClick={loadMore} className="mt-4 w-full">
             {translate('common.loadMore')}
           </Button>
         )}
@@ -206,11 +205,7 @@ const Posts = memo(function PostsPage() {
 
       {/* Add load more button if there are more posts */}
       {hasMore && (
-        <Button
-          variant="outline"
-          onClick={loadMore}
-          className="mt-4 w-full"
-        >
+        <Button variant="outline" onClick={loadMore} className="mt-4 w-full">
           {translate('common.loadMore')}
         </Button>
       )}

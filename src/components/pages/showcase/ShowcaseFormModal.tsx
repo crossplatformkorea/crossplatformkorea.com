@@ -178,46 +178,46 @@ const ShowcaseFormModal = ({
 
     // Basic validation
     if (!title.trim()) {
-      setError(t('showcases.form.error.titleRequired'));
+      setError(t('showcase.form.error.titleRequired'));
       return;
     }
 
     if (!category) {
-      setError(t('showcases.form.error.categoryRequired'));
+      setError(t('showcase.form.error.categoryRequired'));
       return;
     }
 
     if (!imageUrl.trim()) {
-      setError(t('showcases.form.error.imageRequired'));
+      setError(t('showcase.form.error.imageRequired'));
       return;
     }
 
     // URL validation
     if (websiteUrl.trim() && !isValidUrl(websiteUrl)) {
-      setError(t('showcases.form.error.invalidUrl', { url: websiteUrl }));
+      setError(t('showcase.form.error.invalidUrl', { url: websiteUrl }));
       return;
     }
 
     if (appStoreUrl.trim() && !isValidUrl(appStoreUrl)) {
-      setError(t('showcases.form.error.invalidUrl', { url: appStoreUrl }));
+      setError(t('showcase.form.error.invalidUrl', { url: appStoreUrl }));
       return;
     }
 
     if (playStoreUrl.trim() && !isValidUrl(playStoreUrl)) {
-      setError(t('showcases.form.error.invalidUrl', { url: playStoreUrl }));
+      setError(t('showcase.form.error.invalidUrl', { url: playStoreUrl }));
       return;
     }
 
     // Check if at least one URL is provided
     if (!websiteUrl.trim() && !appStoreUrl.trim() && !playStoreUrl.trim()) {
-      setError(t('showcases.form.error.oneUrlRequired'));
+      setError(t('showcase.form.error.oneUrlRequired'));
       return;
     }
 
     // Validate each other link
     for (const link of otherLinks) {
       if (!isValidUrl(link)) {
-        setError(t('showcases.form.error.invalidUrl', { url: link }));
+        setError(t('showcase.form.error.invalidUrl', { url: link }));
         return;
       }
     }
@@ -247,11 +247,11 @@ const ShowcaseFormModal = ({
           showcaseId: showcase._id as Id<'showcases'>,
           ...showcaseData,
         });
-        setSuccessMessage(t('showcases.form.success.updated'));
+        setSuccessMessage(t('showcase.form.success.updated'));
       } else {
         // Create new showcase
         await createShowcase(showcaseData);
-        setSuccessMessage(t('showcases.form.success.created'));
+        setSuccessMessage(t('showcase.form.success.created'));
       }
 
       // Auto close after showing success message for 1 second
@@ -260,7 +260,7 @@ const ShowcaseFormModal = ({
       }, 1000);
     } catch (error) {
       devConsole.error('Error submitting showcase:', error);
-      setError(t('showcases.form.error.general'));
+      setError(t('showcase.form.error.general'));
     } finally {
       setIsSubmitting(false);
     }
@@ -285,7 +285,7 @@ const ShowcaseFormModal = ({
           )}
         >
           <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-            {isEditMode ? t('showcases.form.edit') : t('showcases.form.create')}
+            {isEditMode ? t('showcase.form.edit') : t('showcase.form.create')}
           </h3>
           <Button
             variant="ghost"
@@ -331,7 +331,7 @@ const ShowcaseFormModal = ({
                 htmlFor="category"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {t('showcases.form.category')}{' '}
+                {t('showcase.form.category')}{' '}
                 <span className="text-red-500 dark:text-red-400">*</span>
               </label>
               <div className="relative">
@@ -379,7 +379,7 @@ const ShowcaseFormModal = ({
                 htmlFor="title"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {t('showcases.form.title')} <span className="text-red-500 dark:text-red-400">*</span>
+                {t('showcase.form.title')} <span className="text-red-500 dark:text-red-400">*</span>
               </label>
               <input
                 id="title"
@@ -392,7 +392,7 @@ const ShowcaseFormModal = ({
                   'text-gray-900 dark:text-gray-100',
                   'focus:border-gray-500 dark:focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
                 )}
-                placeholder={t('showcases.form.titlePlaceholder')}
+                placeholder={t('showcase.form.titlePlaceholder')}
                 required
               />
             </div>
@@ -403,7 +403,7 @@ const ShowcaseFormModal = ({
                 htmlFor="imageUrl"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {t('showcases.form.imageUrl')}{' '}
+                {t('showcase.form.imageUrl')}{' '}
                 <span className="text-red-500 dark:text-red-400">*</span>
               </label>
               <div className="flex">
@@ -439,16 +439,16 @@ const ShowcaseFormModal = ({
                 )}
               </div>
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {t('showcases.form.imageUrlHelp')}
+                {t('showcase.form.imageUrlHelp')}
               </p>
             </div>
 
             {/* URLs */}
             <div className="space-y-4">
               <h4 className="font-medium text-gray-800 dark:text-gray-200">
-                {t('showcases.form.links')} <span className="text-red-500 dark:text-red-400">*</span>
+                {t('showcase.form.links')} <span className="text-red-500 dark:text-red-400">*</span>
                 <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 font-normal">
-                  {t('showcases.form.linksRequired')}
+                  {t('showcase.form.linksRequired')}
                 </span>
               </h4>
 
@@ -458,7 +458,7 @@ const ShowcaseFormModal = ({
                   htmlFor="websiteUrl"
                   className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {t('showcases.form.websiteUrl')}
+                  {t('showcase.form.websiteUrl')}
                 </label>
                 <div className="flex">
                   <div className="flex-shrink-0 flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-l-md">
@@ -486,7 +486,7 @@ const ShowcaseFormModal = ({
                   htmlFor="appStoreUrl"
                   className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {t('showcases.form.appStoreUrl')}
+                  {t('showcase.form.appStoreUrl')}
                 </label>
                 <div className="flex">
                   <div className="flex-shrink-0 flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-l-md">
@@ -514,7 +514,7 @@ const ShowcaseFormModal = ({
                   htmlFor="playStoreUrl"
                   className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  {t('showcases.form.playStoreUrl')}
+                  {t('showcase.form.playStoreUrl')}
                 </label>
                 <div className="flex">
                   <div className="flex-shrink-0 flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-l-md">
@@ -541,7 +541,7 @@ const ShowcaseFormModal = ({
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {t('showcases.form.otherLinks')}
+                  {t('showcase.form.otherLinks')}
                 </label>
               </div>
               {/* 기존 링크 목록 표시 */}
@@ -592,7 +592,7 @@ const ShowcaseFormModal = ({
                   disabled={!otherLinkInput.trim()}
                   className="rounded-l-none"
                 >
-                  {t('showcases.form.addLink')}
+                  {t('showcase.form.addLink')}
                 </Button>
               </div>
             </div>
@@ -603,7 +603,7 @@ const ShowcaseFormModal = ({
                 htmlFor="tags"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {t('showcases.form.tags')}
+                {t('showcase.form.tags')}
               </label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {tags.map((tag, index) => (
@@ -638,7 +638,7 @@ const ShowcaseFormModal = ({
                     'text-gray-900 dark:text-gray-100',
                     'focus:border-gray-500 dark:focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
                   )}
-                  placeholder={t('showcases.form.tagsPlaceholder')}
+                  placeholder={t('showcase.form.tagsPlaceholder')}
                 />
                 <Button
                   variant={tagInput.trim() ? "default" : "secondary"}
@@ -647,7 +647,7 @@ const ShowcaseFormModal = ({
                   disabled={!tagInput.trim()}
                   className="rounded-l-none"
                 >
-                  {t('showcases.form.addTag')}
+                  {t('showcase.form.addTag')}
                 </Button>
               </div>
             </div>
@@ -658,7 +658,7 @@ const ShowcaseFormModal = ({
                 htmlFor="description"
                 className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                {t('showcases.form.description')}
+                {t('showcase.form.description')}
               </label>
               <textarea
                 id="description"
@@ -671,7 +671,7 @@ const ShowcaseFormModal = ({
                   'text-gray-900 dark:text-gray-100',
                   'focus:border-gray-500 dark:focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
                 )}
-                placeholder={t('showcases.form.descriptionPlaceholder')}
+                placeholder={t('showcase.form.descriptionPlaceholder')}
               />
             </div>
           </form>
@@ -690,7 +690,7 @@ const ShowcaseFormModal = ({
             onClick={onClose}
             disabled={isSubmitting || !!successMessage}
           >
-            {t('showcases.form.cancel')}
+            {t('showcase.form.cancel')}
           </Button>
           <Button
             variant="default"
@@ -698,10 +698,10 @@ const ShowcaseFormModal = ({
             disabled={isSubmitting || !!successMessage}
           >
             {isSubmitting
-              ? t('showcases.form.submitting')
+              ? t('showcase.form.submitting')
               : isEditMode
-                ? t('showcases.form.update')
-                : t('showcases.form.createButton')}
+                ? t('showcase.form.update')
+                : t('showcase.form.createButton')}
           </Button>
         </div>
       </div>

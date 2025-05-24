@@ -21,7 +21,7 @@ export const createShowcase = mutation({
     }
 
     // Validate category (must be valid)
-    const validCategory = SHOWCASE_CATEGORIES.some(cat => cat.key === args.category);
+    const validCategory = SHOWCASE_CATEGORIES.some((cat) => cat.key === args.category);
     if (!validCategory) {
       throw new Error('유효한 카테고리를 선택해주세요');
     }
@@ -44,9 +44,10 @@ export const createShowcase = mutation({
 
     // Convert otherLinks string to array before inserting
     const otherLinksArray = args.otherLinks
-      ? args.otherLinks.split(',')
-          .filter(link => link.trim())
-          .map(link => ensureHttpsPrefix(link.trim()))
+      ? args.otherLinks
+          .split(',')
+          .filter((link) => link.trim())
+          .map((link) => ensureHttpsPrefix(link.trim()))
       : undefined;
 
     // 새 쇼케이스 생성
@@ -58,7 +59,7 @@ export const createShowcase = mutation({
       playStoreUrl,
       websiteUrl,
       otherLinks: otherLinksArray,
-      tags: args.tags?.map(tag => tag.trim()),
+      tags: args.tags?.map((tag) => tag.trim()),
       imageUrl,
       userId,
       featured: false,
@@ -103,7 +104,7 @@ export const updateShowcase = mutation({
     }
 
     // Validate category (must be valid)
-    const validCategory = SHOWCASE_CATEGORIES.some(cat => cat.key === inputData.category);
+    const validCategory = SHOWCASE_CATEGORIES.some((cat) => cat.key === inputData.category);
     if (!validCategory) {
       throw new Error('유효한 카테고리를 선택해주세요');
     }
@@ -120,15 +121,20 @@ export const updateShowcase = mutation({
 
     // Format URLs with https:// prefix
     const websiteUrl = inputData.websiteUrl ? ensureHttpsPrefix(inputData.websiteUrl) : undefined;
-    const appStoreUrl = inputData.appStoreUrl ? ensureHttpsPrefix(inputData.appStoreUrl) : undefined;
-    const playStoreUrl = inputData.playStoreUrl ? ensureHttpsPrefix(inputData.playStoreUrl) : undefined;
+    const appStoreUrl = inputData.appStoreUrl
+      ? ensureHttpsPrefix(inputData.appStoreUrl)
+      : undefined;
+    const playStoreUrl = inputData.playStoreUrl
+      ? ensureHttpsPrefix(inputData.playStoreUrl)
+      : undefined;
     const imageUrl = ensureHttpsPrefix(inputData.imageUrl);
 
     // Convert otherLinks string to array before updating
     const otherLinksArray = inputData.otherLinks
-      ? inputData.otherLinks.split(',')
-          .filter(link => link.trim())
-          .map(link => ensureHttpsPrefix(link.trim()))
+      ? inputData.otherLinks
+          .split(',')
+          .filter((link) => link.trim())
+          .map((link) => ensureHttpsPrefix(link.trim()))
       : undefined;
 
     // Prepare update data with correct types and formatting
@@ -140,7 +146,7 @@ export const updateShowcase = mutation({
       playStoreUrl,
       websiteUrl,
       otherLinks: otherLinksArray,
-      tags: inputData.tags?.map(tag => tag.trim()),
+      tags: inputData.tags?.map((tag) => tag.trim()),
       imageUrl,
     };
 

@@ -57,7 +57,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
               'bg-gray-600 dark:bg-gray-500',
             )}
           >
-            {t('showcases.featured')}
+            {t('showcase.featured')}
           </span>
         )}
       </div>
@@ -120,7 +120,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
               )}
             >
               <ExternalLink size={12} />
-              <span>{t('showcases.website')}</span>
+              <span>{t('showcase.website')}</span>
             </a>
           )}
 
@@ -136,7 +136,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
               )}
             >
               <ExternalLink size={12} />
-              <span>{t('showcases.appStore')}</span>
+              <span>{t('showcase.appStore')}</span>
             </a>
           )}
 
@@ -152,7 +152,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
               )}
             >
               <ExternalLink size={12} />
-              <span>{t('showcases.playStore')}</span>
+              <span>{t('showcase.playStore')}</span>
             </a>
           )}
         </div>
@@ -205,7 +205,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                 </div>
               )}
               <span className="truncate max-w-[100px]">
-                {showcase.author.name || t('showcases.user')}
+                {showcase.author.name || t('showcase.user')}
               </span>
             </Link>
           ) : (
@@ -214,7 +214,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                 <User size={10} className="text-gray-100 dark:text-gray-800" />
               </div>
               <span className="truncate max-w-[100px]">
-                {t('showcases.user')}
+                {t('showcase.user')}
               </span>
             </div>
           )}

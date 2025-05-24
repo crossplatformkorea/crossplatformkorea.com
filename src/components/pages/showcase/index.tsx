@@ -14,10 +14,7 @@ import { Button } from '../../uis/Button';
 export default function ShowcasePage() {
   // Apply showcase-specific meta tags
   useMetaTags({
-    title: `${t('showcases.title', { defaultValue: 'Showcases' })} - ${t('meta.title')}`,
-    description: t('showcases.description', {
-      defaultValue: 'Explore amazing cross-platform projects from our community',
-    }),
+    title: `${t('showcase.title')} - ${t('meta.title')}`,
   });
 
   const { t: translate } = useTranslation();
@@ -96,10 +93,10 @@ export default function ShowcasePage() {
             'text-gray-800 dark:text-gray-100',
           )}
         >
-          {translate('showcases.title')}
+          {translate('showcase.title')}
         </h1>
         <p className={cn('text-center sm:text-left', 'text-gray-600 dark:text-gray-400')}>
-          {translate('showcases.description')}
+          {translate('showcase.description')}
         </p>
       </div>
 
@@ -111,7 +108,7 @@ export default function ShowcasePage() {
             type="text"
             value={searchText}
             onChange={handleSearchChange}
-            placeholder={translate('showcases.searchPlaceholder')}
+            placeholder={translate('showcase.searchPlaceholder')}
             className={cn(
               'h-10 w-full rounded-full border pl-10 pr-4',
               'border-gray-300 dark:border-gray-600',
@@ -157,7 +154,7 @@ export default function ShowcasePage() {
               'focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
             )}
           >
-            <option value="">{translate('showcases.allCategories')}</option>
+            <option value="">{translate('showcase.allCategories')}</option>
             {categories.map((category) => (
               <option key={category.key} value={category.key}>
                 {translate(`showcaseCategories.${category.key}.name`, {
@@ -182,7 +179,7 @@ export default function ShowcasePage() {
               setIsFormOpen(true);
             }}
           >
-            <Plus size={16} /> {translate('showcases.addNew')}
+            <Plus size={16} /> {translate('showcase.addNew')}
           </Button>
         )}
       </div>
@@ -203,10 +200,12 @@ export default function ShowcasePage() {
             <AppWindow size={48} />
           </div>
           <h3 className={cn('mb-2 text-xl font-medium', 'text-gray-800 dark:text-gray-200')}>
-            {searchText ? translate('showcases.noSearchResults') : translate('showcases.noShowcases')}
+            {searchText
+              ? translate('showcase.noSearchResults')
+              : translate('showcase.noShowcases')}
           </h3>
           <p className={cn('mx-auto max-w-md', 'text-gray-500 dark:text-gray-400')}>
-            {searchText ? translate('showcases.tryAdjusting') : translate('showcases.beTheFirst')}
+            {searchText ? translate('showcase.tryAdjusting') : translate('showcase.beTheFirst')}
           </p>
           {isAuthenticated && (
             <Button
@@ -219,7 +218,7 @@ export default function ShowcasePage() {
               }}
             >
               <Plus size={16} />
-              <span>{translate('showcases.addFirst')}</span>
+              <span>{translate('showcase.addFirst')}</span>
             </Button>
           )}
         </div>
@@ -248,11 +247,8 @@ export default function ShowcasePage() {
           {/* 더 보기 버튼 */}
           {!isDone && (
             <div className="mt-8 flex justify-center">
-              <Button
-                variant="default"
-                onClick={handleLoadMore}
-              >
-                {translate('showcases.loadMore')}
+              <Button variant="default" onClick={handleLoadMore}>
+                {translate('showcase.loadMore')}
               </Button>
             </div>
           )}
