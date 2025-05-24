@@ -15,7 +15,11 @@ interface SidebarProps {
   onClose?: () => void;
 }
 
-export default function Sidebar({ isOpen = false, isTransitioning = false, onClose }: SidebarProps) {
+export default function Sidebar({
+  isOpen = false,
+  isTransitioning = false,
+  onClose,
+}: SidebarProps) {
   const location = useLocation();
   const { isAuthenticated } = useAuthStore();
   const [showContent, setShowContent] = useState(isOpen);
@@ -46,7 +50,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
       className={cn(
         'border-r h-full flex flex-col transition-all duration-300 relative',
         'bg-gray-50 dark:bg-zinc-900 dark:border-zinc-800',
-        'md:pt-0 pt-14' // Add padding top for mobile devices to prevent overlap
+        'md:pt-0 pt-14', // Add padding top for mobile devices to prevent overlap
       )}
     >
       {/* Close button for mobile - only visible on mobile */}
@@ -59,7 +63,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
             className={cn(
               'p-2 rounded-full bg-gray-200 dark:bg-zinc-800',
               'hover:bg-gray-300 dark:hover:bg-zinc-700 transition-colors',
-              'flex items-center justify-center'
+              'flex items-center justify-center',
             )}
             aria-label={t('common.close')}
           >
@@ -80,7 +84,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
                   'hover:bg-gray-100 dark:hover:bg-zinc-800',
                   isActive(item.route)
                     ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-foreground font-medium'
-                    : 'text-gray-700 dark:text-zinc-300'
+                    : 'text-gray-700 dark:text-zinc-300',
                 )}
               >
                 <div className="shrink-0">
@@ -96,10 +100,12 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
       </nav>
 
       {/* Login button at the bottom */}
-      <div className={cn(
-        "border-t border-gray-200 dark:border-zinc-800 mt-auto",
-        showContent ? "p-4" : "p-0" // Adjust padding
-      )}>
+      <div
+        className={cn(
+          'border-t border-gray-200 dark:border-zinc-800 mt-auto',
+          showContent ? 'p-4' : 'p-0', // Adjust padding
+        )}
+      >
         {!isAuthenticated ? (
           <Link
             to="/sign-in"
@@ -112,7 +118,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
               'dark:from-primary/85 dark:to-primary/95',
               'dark:text-primary-foreground',
               'dark:hover:from-primary/90 dark:hover:to-primary/100',
-              !showContent && 'hidden' // Hide completely when sidebar is collapsed
+              !showContent && 'hidden', // Hide completely when sidebar is collapsed
             )}
           >
             <LogIn size={18} />
@@ -127,7 +133,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
               'flex items-center py-2 px-3 rounded-md transition-colors w-full',
               'bg-primary/10 text-primary hover:bg-primary/20',
               'dark:bg-primary/20 dark:text-white dark:hover:bg-primary/30',
-              !showContent && 'hidden' // Hide completely when sidebar is collapsed
+              !showContent && 'hidden', // Hide completely when sidebar is collapsed
             )}
           >
             {/* User avatar or default icon */}
@@ -144,10 +150,12 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
             {/* Show displayName with truncation when sidebar is open */}
             {showContent && (
               <div className="flex-1 flex items-center justify-between ml-2">
-                <span className={cn(
-                  "transition-opacity duration-150 truncate max-w-[100px]",
-                  "text-slate-700 dark:text-gray-100" // Updated text color for light mode
-                )}>
+                <span
+                  className={cn(
+                    'transition-opacity duration-150 truncate max-w-[100px]',
+                    'text-slate-700 dark:text-gray-100', // Updated text color for light mode
+                  )}
+                >
                   {userData?.displayName || t('common.profile')}
                 </span>
                 <ChevronRight size={16} className="ml-1 text-primary/70 dark:text-white/70" />
