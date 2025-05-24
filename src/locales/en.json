@@ -9,7 +9,7 @@
     "cancel": "Cancel",
     "loading": "Loading...",
     "loadMore": "Load more posts",
-    "appName": "Cross Platform Korea",
+    "appName": "CrossPlatformKorea",
     "sideFeatureRequests": "Feature Requests",
     "signIn": "Sign In",
     "remove": "Remove",
@@ -383,5 +383,18 @@
       "name": "Other",
       "description": "Other cross-platform development technologies"
     }
+  },
+  "pwa": {
+    "install": "Install App",
+    "installing": "Installing...",
+    "installed": "Installed",
+    "offline": "Offline Mode",
+    "updateAvailable": "New version available",
+    "reload": "Reload"
+  },
+  "meta": {
+    "title": "CrossPlatformKorea",
+    "description": "Korean Cross-Platform Developer Community",
+    "keywords": "cross-platform, developer, community, React Native, Flutter, PWA, mobile development"
   }
 }

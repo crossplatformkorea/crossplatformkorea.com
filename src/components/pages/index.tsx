@@ -8,11 +8,15 @@ import FeatureRequestsPage from './feature-requests';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
 import ShowcasePage from './showcases';
+import { useMetaTags } from '../../hooks/useMetaTags';
 
 // This component only handles routing
 export default function AppRoutes() {
   const location = useLocation();
   const isSignInPage = location.pathname === '/sign-in';
+
+  // Apply default meta tags for home page
+  useMetaTags();
 
   return (
     <AppLayout>
