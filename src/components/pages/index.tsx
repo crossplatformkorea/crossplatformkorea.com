@@ -7,7 +7,7 @@ import UserProfilePage from './user';
 import FeatureRequestsPage from './feature-requests';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
-import ShowcasePage from './showcases';
+import ShowcasePage from './showcase';
 import { useMetaTags } from '../../hooks/useMetaTags';
 import DevPanel from '../DevPanel';
 
