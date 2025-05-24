@@ -17,7 +17,8 @@ export function usePWA() {
   useEffect(() => {
     // Service Worker 등록
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker
+        .register('/sw.js')
         .then((registration) => {
           console.log('SW registered: ', registration);
         })
@@ -60,7 +61,7 @@ export function usePWA() {
     try {
       await deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      
+
       if (outcome === 'accepted') {
         setIsInstallable(false);
         setDeferredPrompt(null);
