@@ -269,5 +269,119 @@
     "jobs": "Jobs",
     "events": "Events",
     "featureRequests": "Feature Requests"
+  },
+  "showcases": {
+    "title": "Showcase",
+    "description": "Discover amazing cross-platform applications",
+    "addNew": "Add New",
+    "addFirst": "Add First Showcase",
+    "searchPlaceholder": "Search showcases...",
+    "allCategories": "All Categories",
+    "noShowcases": "No showcases yet",
+    "noSearchResults": "No search results found",
+    "tryAdjusting": "Try adjusting your search or filter to find what you're looking for.",
+    "beTheFirst": "Be the first to add your cross-platform application to our showcase!",
+    "loadMore": "Load More",
+    "form": {
+      "create": "Create Showcase",
+      "edit": "Edit Showcase",
+      "title": "Title",
+      "titlePlaceholder": "Enter showcase title",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe your showcase (optional)",
+      "category": "Category",
+      "imageUrl": "Image URL",
+      "imageUrlPlaceholder": "example.com/image.jpg",
+      "imageUrlHelp": "Provide a URL to your showcase image",
+      "links": "Links",
+      "linksRequired": "(At least one URL is required)",
+      "websiteUrl": "Website URL",
+      "appStoreUrl": "App Store URL",
+      "playStoreUrl": "Play Store URL",
+      "otherLinks": "Other Links",
+      "addLink": "Add",
+      "tags": "Tags",
+      "tagsPlaceholder": "Add tags (press Enter to add)",
+      "addTag": "Add Tag",
+      "submitting": "Submitting...",
+      "createButton": "Create",
+      "update": "Update",
+      "cancel": "Cancel",
+      "success": {
+        "created": "Showcase created successfully!",
+        "updated": "Showcase updated successfully!"
+      },
+      "error": {
+        "titleRequired": "Title is required",
+        "categoryRequired": "Category is required",
+        "imageRequired": "Image URL is required",
+        "oneUrlRequired": "At least one URL (Website, App Store, or Play Store) is required",
+        "invalidUrl": "Please enter a valid URL: {{url}}",
+        "general": "An error occurred. Please try again."
+      }
+    },
+    "website": "Website",
+    "appStore": "App Store",
+    "playStore": "Play Store",
+    "featured": "Featured",
+    "user": "User"
+  },
+  "showcaseCategories": {
+    "REACT_NATIVE": {
+      "name": "React Native",
+      "description": "A framework for building native mobile apps using JavaScript and React"
+    },
+    "FLUTTER": {
+      "name": "Flutter",
+      "description": "Google's UI toolkit for building natively compiled applications"
+    },
+    "IONIC": {
+      "name": "Ionic",
+      "description": "An open source mobile UI toolkit for building cross-platform apps using web technologies"
+    },
+    "XAMARIN": {
+      "name": "Xamarin",
+      "description": "Microsoft's platform for building Android and iOS apps with .NET and C#"
+    },
+    "MAUI": {
+      "name": "MAUI",
+      "description": "Microsoft's .NET Multi-platform App UI framework for building cross-platform applications"
+    },
+    "KOTLIN": {
+      "name": "Kotlin Multiplatform",
+      "description": "JetBrains' Kotlin-based framework for cross-platform mobile and desktop development"
+    },
+    "CAPACITOR": {
+      "name": "Capacitor",
+      "description": "An open source native runtime for building web native apps"
+    },
+    "CORDOVA": {
+      "name": "Cordova",
+      "description": "An open source framework for building mobile native apps using HTML, CSS, and JavaScript"
+    },
+    "TAURI": {
+      "name": "Tauri",
+      "description": "A framework for building tiny, blazingly fast binaries for all major desktop platforms"
+    },
+    "ELECTRON": {
+      "name": "Electron",
+      "description": "Build cross-platform desktop apps with JavaScript, HTML, and CSS"
+    },
+    "PWA": {
+      "name": "Progressive Web App",
+      "description": "Web applications that provide native app-like experiences on web platforms"
+    },
+    "LYNX": {
+      "name": "Lynx",
+      "description": "A modern cross-platform app framework based on web technologies"
+    },
+    "PHP_NATIVE": {
+      "name": "PHP Native",
+      "description": "Native app development framework using PHP"
+    },
+    "OTHER": {
+      "name": "Other",
+      "description": "Other cross-platform development technologies"
+    }
   }
 }

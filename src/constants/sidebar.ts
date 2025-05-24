@@ -1,7 +1,7 @@
 /**
  * Sidebar items for rendering the navigation menu
  */
-import { FileText, Lightbulb, Palette, Calendar } from 'lucide-react';
+import { FileText, Lightbulb, Palette } from 'lucide-react';
 
 export type SidebarItem = {
   key: string;
@@ -17,17 +17,17 @@ export const sidebarItems: SidebarItem[] = [
     icon: FileText,
     labelKey: 'pages.posts',
   },
+  {
+    key: 'showcase',
+    route: '/showcase',
+    icon: Palette,
+    labelKey: 'pages.showcase',
+  },
   // {
-  //   key: "showcase",
-  //   route: "/showcase",
-  //   icon: Palette,
-  //   labelKey: "pages.showcase",
-  // },
-  // {
-  //   key: "events",
-  //   route: "/events",
-  //   icon: Calendar,
-  //   labelKey: "pages.events",
+  //   key: "contributors",
+  //   route: "/contributors",
+  //   icon: Users,
+  //   labelKey: "pages.contributors",
   // },
   {
     key: 'featureRequest',
