@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { devConsole } from '../lib/utils';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -9,21 +10,43 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+// Service Worker 등록 상태를 전역으로 관리
+let isServiceWorkerRegistered = false;
+
 export function usePWA() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
-    // Service Worker 등록
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/sw.js')
+    // 이미 초기화되었다면 중복 실행 방지
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+
+    // Service Worker 등록 (전역 상태로 중복 방지)
+    if ('serviceWorker' in navigator && !isServiceWorkerRegistered) {
+      void navigator.serviceWorker
+        .getRegistration()
+        .then((existingRegistration) => {
+          if (existingRegistration) {
+            devConsole.log('SW already registered');
+            isServiceWorkerRegistered = true;
+            return;
+          }
+
+          return navigator.serviceWorker.register('/sw.js', {
+            scope: '/',
+          });
+        })
         .then((registration) => {
-          console.log('SW registered: ', registration);
+          if (registration) {
+            devConsole.log('SW registered:', registration);
+            isServiceWorkerRegistered = true;
+          }
         })
         .catch((registrationError) => {
-          console.log('SW registration failed: ', registrationError);
+          devConsole.log('SW registration failed:', registrationError);
         });
     }
 
@@ -67,7 +90,7 @@ export function usePWA() {
         setDeferredPrompt(null);
       }
     } catch (error) {
-      console.error('앱 설치 중 오류 발생:', error);
+      devConsole.error('앱 설치 중 오류 발생:', error);
     }
   };
 

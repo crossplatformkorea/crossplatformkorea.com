@@ -1033,3 +1033,31 @@ export default function SignIn() {
   );
 }
 ```
+
+---
+
+### **Development Console Utilities**
+
+- Always use development-only console utilities instead of direct `console` methods in client-side code.
+- Import and use `devLog` and `devConsole` from `src/lib/utils.ts`:
+
+  ```typescript
+  import { devLog, devConsole } from '../lib/utils';
+
+  // Use devLog for simple logging (replaces console.log)
+  devLog('This message only appears in development mode');
+  devLog('User data:', userData);
+
+  // Use devConsole for different log levels
+  devConsole.log('General information');
+  devConsole.warn('Warning message');
+  devConsole.error('Error occurred:', error);
+  devConsole.info('Info message');
+  devConsole.debug('Debug information');
+  ```
+
+- These utilities automatically check `import.meta.env.DEV` and only output logs in development mode.
+- Never use direct `console.log`, `console.error`, etc. in client code - always use the dev utilities.
+- This ensures no console output appears in production builds, improving performance and security.
+
+---

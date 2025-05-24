@@ -1,5 +1,6 @@
 import { initReactI18next } from "react-i18next";
 import i18next from "i18next";
+import { devConsole } from "./utils";
 import en from "../locales/en.json";
 import ko from "../locales/ko.json";
 import ja from "../locales/ja.json";
@@ -43,7 +44,7 @@ i18next
     },
   })
   .catch((error) => {
-    console.error("i18next initialization error:", error);
+    devConsole.error("i18next initialization error:", error);
   });
 
 export const getLocale = (): "en" | "ko" | "ja" => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { t, getLocale } from '../../../lib/i18n';
-import { cn } from '../../../lib/utils';
+import { cn, devConsole } from '../../../lib/utils';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { useMutation } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
@@ -34,7 +34,7 @@ export default function SigningIn() {
       await signIn(providerId, { email });
       setIsCodeSent(true);
     } catch (error) {
-      console.error('Error sending verification code:', error);
+      devConsole.error('Error sending verification code:', error);
       setError(
         error instanceof Error
           ? error.message
@@ -54,7 +54,7 @@ export default function SigningIn() {
       await signIn('github');
       // 프로필 생성은 이제 AuthStateListener에서 자동 처리됨
     } catch (error) {
-      console.error('Error signing in with GitHub:', error);
+      devConsole.error('Error signing in with GitHub:', error);
       setError(
         error instanceof Error ? error.message : 'Failed to sign in with GitHub. Please try again.',
       );
@@ -77,7 +77,7 @@ export default function SigningIn() {
       // Navigate to the main screen after successful authentication
       void navigate('/');
     } catch (error) {
-      console.error('Error verifying code:', error);
+      devConsole.error('Error verifying code:', error);
       setError(
         error instanceof Error
           ? error.message

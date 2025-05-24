@@ -41,13 +41,6 @@ const Posts = memo(function PostsPage() {
   // State for the PostWrite modal
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
 
-  // 개발 환경에서만 로그 출력 (프로덕션에서는 출력 안함)
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Posts rendering with category:', categorySlug);
-    }
-  }, [categorySlug]);
-
   // Fetch all categories from Convex
   const categoriesData = useQuery(api.categories.query.getCategories);
 

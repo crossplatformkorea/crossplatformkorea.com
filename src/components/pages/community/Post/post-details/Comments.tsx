@@ -6,7 +6,7 @@ import { Id } from '../../../../../../convex/_generated/dataModel';
 import { formatDistanceToNow } from 'date-fns';
 import { ko, ja, enUS } from 'date-fns/locale';
 import { User, Send, MessageSquare, Trash2, Loader2 } from 'lucide-react';
-import { cn } from '../../../../../lib/utils';
+import { cn, devConsole } from '../../../../../lib/utils';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import { useAuthStore } from '@/stores/authStore';
 
@@ -64,7 +64,7 @@ export default function Comments({ postId }: CommentsProps) {
         await addComment({ postId, content: comment.trim() });
         setComment('');
       } catch (error) {
-        console.error('Error adding comment:', error);
+        devConsole.error('Error adding comment:', error);
       } finally {
         setIsSubmitting(false);
       }
@@ -79,7 +79,7 @@ export default function Comments({ postId }: CommentsProps) {
         await deleteComment({ commentId });
         setShowDeleteCommentModal(null);
       } catch (error) {
-        console.error('Error deleting comment:', error);
+        devConsole.error('Error deleting comment:', error);
       }
     })();
   };

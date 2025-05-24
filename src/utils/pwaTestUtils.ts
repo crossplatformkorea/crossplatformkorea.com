@@ -1,3 +1,5 @@
+import { devLog, devConsole } from '../lib/utils';
+
 export interface PWATestResult {
   manifestExists: boolean;
   serviceWorkerRegistered: boolean;
@@ -61,11 +63,10 @@ export async function runPWATests(): Promise<PWATestResult> {
 }
 
 export function logPWATestResults(results: PWATestResult): void {
-  console.group('PWA 테스트 결과');
-  console.log('📄 매니페스트 존재:', results.manifestExists ? '✅' : '❌');
-  console.log('⚙️ Service Worker 등록:', results.serviceWorkerRegistered ? '✅' : '❌');
-  console.log('📱 설치 가능:', results.isInstallable ? '✅' : '❌');
-  console.log('💾 캐시 사용 가능:', results.cacheAvailable ? '✅' : '❌');
-  console.log('🌐 오프라인 기능:', results.offlineCapable ? '✅' : '❌');
-  console.groupEnd();
+  devConsole.log('PWA 테스트 결과');
+  devLog('📄 매니페스트 존재:', results.manifestExists ? '✅' : '❌');
+  devLog('⚙️ Service Worker 등록:', results.serviceWorkerRegistered ? '✅' : '❌');
+  devLog('📱 설치 가능:', results.isInstallable ? '✅' : '❌');
+  devLog('💾 캐시 사용 가능:', results.cacheAvailable ? '✅' : '❌');
+  devLog('🌐 오프라인 기능:', results.offlineCapable ? '✅' : '❌');
 }

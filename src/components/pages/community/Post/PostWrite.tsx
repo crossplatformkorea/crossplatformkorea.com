@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { useTranslation } from 'react-i18next';
-import { cn } from '../../../../lib/utils';
+import { cn, devLog, devConsole } from '../../../../lib/utils';
 import { Id } from '../../../../../convex/_generated/dataModel';
 import { MAX_FILE_SIZE, MAX_FILE_SIZE_READABLE } from '../../../../constants';
 import { DEFAULT_CATEGORY } from '../../../../../convex/constants';
@@ -162,18 +162,18 @@ export default function PostWrite({
     if (uploadedStorageIds.length > 0) {
       try {
         // Log the cleanup process
-        console.log(`Cleaning up ${uploadedStorageIds.length} uploaded images...`);
+        devLog(`Cleaning up ${uploadedStorageIds.length} uploaded images...`);
 
         // Attempt to delete all uploaded files
         const deletePromises = uploadedStorageIds.map((storageId) => deleteFile({ storageId }));
 
         await Promise.all(deletePromises);
-        console.log(`Successfully cleaned up ${uploadedStorageIds.length} temporary images`);
+        devLog(`Successfully cleaned up ${uploadedStorageIds.length} temporary images`);
 
         // Reset the tracking array
         setUploadedStorageIds([]);
       } catch (error) {
-        console.error('Error cleaning up uploaded files:', error);
+        devConsole.error('Error cleaning up uploaded files:', error);
       }
     }
   }, [deleteFile, uploadedStorageIds]);
@@ -305,7 +305,7 @@ export default function PostWrite({
             void deleteFile({ storageId });
           } catch {
             // Can't do much in the unload event
-            console.error('Error cleaning up uploaded file on unload:', storageId);
+            devConsole.error('Error cleaning up uploaded file on unload:', storageId);
           }
         });
       }
@@ -389,7 +389,7 @@ export default function PostWrite({
       resetFormData();
       onClose();
     } catch (error) {
-      console.error(isEditMode ? 'Error updating post:' : 'Error creating post:', error);
+      devConsole.error(isEditMode ? 'Error updating post:' : 'Error creating post:', error);
       setError(isEditMode ? t('errors.postUpdateFailed') : t('errors.postCreationFailed'));
     } finally {
       setIsSubmitting(false);
@@ -469,7 +469,7 @@ export default function PostWrite({
       // Return HTML img tag instead of markdown image syntax
       return `<img src="${saveResult.url}" alt="${file.name}" width="300" />`;
     } catch (err) {
-      console.error('Error uploading file:', err);
+      devConsole.error('Error uploading file:', err);
       setError(t('errors.imageUploadFailed'));
 
       if (Object.keys(uploadProgress).length === 0) {

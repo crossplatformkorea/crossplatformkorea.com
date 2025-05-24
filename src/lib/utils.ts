@@ -18,3 +18,39 @@ export function formatDate(dateString: string): string {
     day: "numeric",
   }).format(date);
 }
+
+// Development-only console.log utility
+export function devLog(...args: any[]): void {
+  if (import.meta.env.DEV) {
+    console.log(...args);
+  }
+}
+
+// Development-only console utilities
+export const devConsole = {
+  log: (...args: any[]) => {
+    if (import.meta.env.DEV) {
+      console.log(...args);
+    }
+  },
+  warn: (...args: any[]) => {
+    if (import.meta.env.DEV) {
+      console.warn(...args);
+    }
+  },
+  error: (...args: any[]) => {
+    if (import.meta.env.DEV) {
+      console.error(...args);
+    }
+  },
+  info: (...args: any[]) => {
+    if (import.meta.env.DEV) {
+      console.info(...args);
+    }
+  },
+  debug: (...args: any[]) => {
+    if (import.meta.env.DEV) {
+      console.debug(...args);
+    }
+  },
+};
