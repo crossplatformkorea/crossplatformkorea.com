@@ -10,8 +10,9 @@
 
     <meta property="og:image" content="/og-preview.jpg" />
 
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#000000" />
+    <!-- PWA Meta Tags with dynamic theme color -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="CrossPlatformKorea" />
@@ -34,11 +35,25 @@
     <link rel="apple-touch-icon" href="/icons/icon-180x180.png" />
     <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png" />
+
+    <!-- Theme initialization script to prevent FOUC -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const html = document.documentElement;
+        
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.add('light');
+          html.classList.remove('dark');
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <body class="bg-background text-foreground">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
   </body>
 </html>

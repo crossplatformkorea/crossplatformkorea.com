@@ -15,17 +15,21 @@ export function ThemeToggle({ className }: { className?: string }) {
 
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
     }
   }, []);
 
   const toggleDarkMode = () => {
     if (isDark) {
       document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
       localStorage.theme = 'light';
     } else {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
       localStorage.theme = 'dark';
     }
     setIsDark(!isDark);

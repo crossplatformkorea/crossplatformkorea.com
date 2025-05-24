@@ -64,6 +64,70 @@
     --input: 0 0% 80%;
     --ring: 0 0% 80%;
   }
+
+  /* 시스템 다크모드 자동 감지 - 클래스 설정이 없을 때만 적용 */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light):not(.dark) {
+      --background: 0 0% 0%;
+      --foreground: 210 40% 98%;
+
+      --card: 0 0% 0%;
+      --card-foreground: 210 40% 98%;
+
+      --popover: 0 0% 0%;
+      --popover-foreground: 210 40% 98%;
+
+      --primary: 0 0% 100%;
+      --primary-foreground: 0 0% 0%;
+
+      --secondary: 0 0% 20%;
+      --secondary-foreground: 0 0% 100%;
+
+      --muted: 0 0% 20%;
+      --muted-foreground: 0 0% 95%;
+
+      --accent: 0 0% 50%;
+      --accent-foreground: 0 0% 100%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 40% 98%;
+
+      --border: 0 0% 80%;
+      --input: 0 0% 80%;
+      --ring: 0 0% 80%;
+    }
+  }
+
+  /* 라이트모드 강제 설정 */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 20%;
+
+    --accent: 0 0% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 0 0% 80%;
+  }
 }
 
 body {
