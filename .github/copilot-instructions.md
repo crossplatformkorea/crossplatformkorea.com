@@ -1036,28 +1036,131 @@ export default function SignIn() {
 
 ---
 
-### **Development Console Utilities**
+### **Button Component Guidelines**
 
-- Always use development-only console utilities instead of direct `console` methods in client-side code.
-- Import and use `devLog` and `devConsole` from `src/lib/utils.ts`:
+#### **Consistent Button Usage**
+- **Always use the `Button` component** instead of hardcoded `<button>` elements throughout the application
+- Import the Button component: `import { Button } from '@/components/uis/Button';`
 
-  ```typescript
-  import { devLog, devConsole } from '../lib/utils';
+#### **Button Variants**
+Use appropriate variants based on the button's purpose:
 
-  // Use devLog for simple logging (replaces console.log)
-  devLog('This message only appears in development mode');
-  devLog('User data:', userData);
+- **`default`** (no variant specified): Primary actions, main CTAs
+  - Gray background with white text
+  - Rounded-full style with gap-2 spacing (default styling)
+  - Example: Write post, Submit form, Save changes
 
-  // Use devConsole for different log levels
-  devConsole.log('General information');
-  devConsole.warn('Warning message');
-  devConsole.error('Error occurred:', error);
-  devConsole.info('Info message');
-  devConsole.debug('Debug information');
-  ```
+- **`outline`**: Secondary actions, less prominent buttons
+  - Border with transparent background
+  - Example: Load more, Cancel, Secondary actions
 
-- These utilities automatically check `import.meta.env.DEV` and only output logs in development mode.
-- Never use direct `console.log`, `console.error`, etc. in client code - always use the dev utilities.
-- This ensures no console output appears in production builds, improving performance and security.
+- **`ghost`**: Subtle actions, minimal styling
+  - Transparent background, only text/icon visible
+  - Example: Tab navigation, back buttons, icon buttons
+
+- **`destructive`**: Dangerous actions
+  - Red background for destructive operations
+  - Example: Delete, Remove, Clear data
+
+#### **Button Conversion Examples**
+
+**Before (hardcoded button):**
+```tsx
+<button
+  onClick={handleClick}
+  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-center transition-colors"
+>
+  Load More
+</button>
+```
+
+**After (Button component):**
+```tsx
+<Button
+  variant="outline"
+  onClick={handleClick}
+  className="w-full" // Keep only layout/positioning classes
+>
+  Load More
+</Button>
+```
+
+#### **Guidelines for Conversion**
+1. **Remove styling classes** that are handled by Button variants:
+   - Remove: `bg-*`, `text-*`, `hover:*`, `px-*`, `py-*`, `rounded-*`, `transition-*`
+   - Keep: Layout classes like `w-full`, `mt-4`, positioning classes
+
+2. **Choose appropriate variants**:
+   - Primary actions → `default` or no variant
+   - Secondary actions → `outline`
+   - Navigation/subtle → `ghost`  
+   - Dangerous actions → `destructive`
+
+3. **Preserve functionality**:
+   - Keep `onClick`, `disabled`, `title`, `aria-label` props
+   - Preserve conditional styling through `className` prop if needed
+
+4. **Maintain accessibility**:
+   - Keep ARIA attributes and semantic props
+   - Preserve disabled states and conditional logic
+
+#### **Real-world Examples**
+
+**Write Post Button:**
+```tsx
+const renderWriteButton = () => (
+  <Button
+    onClick={() => setIsWriteModalOpen(true)}
+    className={cn(
+      !isAuthenticated && 'opacity-70 cursor-not-allowed',
+    )}
+    disabled={!isAuthenticated}
+    title={!isAuthenticated ? translate('common.loginToWrite') : undefined}
+  >
+    <PenLine size={18} />
+    {translate('posts.write')}
+  </Button>
+);
+```
+
+**Load More Button:**
+```tsx
+<Button
+  variant="outline"
+  onClick={loadMore}
+  className="mt-4 w-full"
+>
+  {translate('common.loadMore')}
+</Button>
+```
+
+**Tab Navigation Button:**
+```tsx
+<Button
+  variant="ghost"
+  className={cn(
+    'px-4 py-2 font-medium transition-colors rounded-none',
+    selectedTab === 'posts'
+      ? 'border-b-2 border-primary text-primary'
+      : 'text-muted-foreground hover:text-foreground',
+  )}
+  onClick={() => setSelectedTab('posts')}
+>
+  {t('user.posts')}
+</Button>
+```
+
+**Delete Button:**
+```tsx
+<Button
+  variant="destructive"
+  size="sm"
+  onClick={removeSelectedImage}
+  className="absolute -top-1 -right-1 rounded-full p-1 w-6 h-6"
+  aria-label={t('profile.buttons.removeImage')}
+>
+  <X className="w-3 h-3" />
+</Button>
+```
 
 ---

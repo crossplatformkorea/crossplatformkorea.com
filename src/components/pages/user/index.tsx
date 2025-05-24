@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
-import { Link as LinkIcon, ArrowLeft } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import AppLoading from '@/components/AppLoading';
 import { Id } from '../../../../convex/_generated/dataModel';
-import { cn } from '../../../lib/utils';
+import { cn } from '@/lib/utils';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { t } from 'i18next';
+import { Button } from '@/components/uis/Button';
+import AppLoading from '@/components/AppLoading';
 import {
   SiGithub,
   SiX,
@@ -22,7 +23,6 @@ import PostListItem from '../community/Post/posts/PostListItem';
 
 export default function UserProfilePage() {
   const { userId } = useParams<{ userId: string }>();
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState<'posts' | 'about'>('posts');
 
@@ -57,16 +57,14 @@ export default function UserProfilePage() {
     return (
       <div className="pt-6 max-w-4xl mx-auto px-4">
         <div className="flex items-center mb-6">
-          <button
+          <Button
+            variant="ghost"
             onClick={handleGoBack}
-            className={cn(
-              'flex items-center text-muted-foreground bg-transparent border-0 cursor-pointer',
-              'hover:text-foreground transition-colors',
-            )}
+            className="text-muted-foreground hover:text-foreground p-2"
           >
             <ArrowLeft size={18} className="mr-2" />
             {t('common.back')}
-          </button>
+          </Button>
         </div>
 
         <div className="p-8 text-center border border-border/50 rounded-lg bg-card/30">
@@ -92,7 +90,7 @@ export default function UserProfilePage() {
 
   // Get the appropriate icon for a social media URL
   const getSocialIcon = (url: string) => {
-    if (!url) return <LinkIcon className="w-4 h-4" />;
+    if (!url) return <ExternalLink className="w-4 h-4" />;
 
     try {
       // Try to extract the domain from the URL
@@ -107,7 +105,7 @@ export default function UserProfilePage() {
       if (hostname.includes('github.com')) return <SiGithub size={16} />;
       if (hostname.includes('twitter.com') || hostname.includes('x.com')) return <SiX size={16} />;
       if (hostname.includes('facebook.com')) return <SiFacebook size={16} />;
-      if (hostname.includes('linkedin.com')) return <LinkIcon className="w-4 h-4" />;
+      if (hostname.includes('linkedin.com')) return <ExternalLink className="w-4 h-4" />;
       if (hostname.includes('instagram.com')) return <SiInstagram size={16} />;
       if (hostname.includes('youtube.com') || hostname.includes('youtu.be'))
         return <SiYoutube size={16} />;
@@ -116,9 +114,9 @@ export default function UserProfilePage() {
       if (hostname.includes('blogger') || hostname.includes('blog')) return <SiBlogger size={16} />;
       if (hostname.includes('mail') || hostname.includes('gmail')) return <SiGmail size={16} />;
 
-      return <LinkIcon className="w-4 h-4" />;
+      return <ExternalLink className="w-4 h-4" />;
     } catch {
-      return <LinkIcon className="w-4 h-4" />;
+      return <ExternalLink className="w-4 h-4" />;
     }
   };
 
@@ -126,16 +124,14 @@ export default function UserProfilePage() {
     <div className="pt-6 max-w-4xl mx-auto px-4 pb-16">
       {/* Back button */}
       <div className="flex items-center mb-6">
-        <button
+        <Button
+          variant="ghost"
           onClick={handleGoBack}
-          className={cn(
-            'flex items-center text-muted-foreground bg-transparent border-0 cursor-pointer',
-            'hover:text-foreground transition-colors',
-          )}
+          className="text-muted-foreground hover:text-foreground p-2"
         >
           <ArrowLeft size={18} className="mr-2" />
           {t('common.back')}
-        </button>
+        </Button>
       </div>
 
       {/* Profile header */}
@@ -213,9 +209,10 @@ export default function UserProfilePage() {
 
       {/* Tabs */}
       <div className="flex border-b border-border/50 mb-6">
-        <button
+        <Button
+          variant="ghost"
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-4 py-2 font-medium transition-colors rounded-none',
             selectedTab === 'posts'
               ? 'border-b-2 border-primary text-primary'
               : 'text-muted-foreground hover:text-foreground',
@@ -223,10 +220,11 @@ export default function UserProfilePage() {
           onClick={() => setSelectedTab('posts')}
         >
           {t('user.posts')}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="ghost"
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-4 py-2 font-medium transition-colors rounded-none',
             selectedTab === 'about'
               ? 'border-b-2 border-primary text-primary'
               : 'text-muted-foreground hover:text-foreground',
@@ -234,7 +232,7 @@ export default function UserProfilePage() {
           onClick={() => setSelectedTab('about')}
         >
           {t('user.about')}
-        </button>
+        </Button>
       </div>
 
       {/* Tab content */}

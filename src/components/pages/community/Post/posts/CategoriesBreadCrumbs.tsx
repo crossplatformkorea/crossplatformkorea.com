@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../../../../uis/Button';
 import { cn } from '../../../../../lib/utils';
 
 export default function CategoriesBreadCrumbs() {
@@ -51,10 +52,12 @@ export default function CategoriesBreadCrumbs() {
     <div className="flex flex-wrap items-center gap-2 text-sm">
       <div className="flex items-center">
         {/* "All" category - remove the category param */}
-        <button
+        <Button
           onClick={() => handleCategoryClick(null)}
+          variant={!currentCategory ? "outline" : "ghost"}
+          size="sm"
           className={cn(
-            'px-3 py-1.5 rounded-md transition-all duration-200 flex items-center',
+            'px-3 py-1.5 rounded-md transition-all duration-200 flex items-center h-auto',
             !currentCategory
               ? 'text-primary font-medium bg-primary/10 border border-primary/20 shadow-sm'
               : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-transparent',
@@ -62,17 +65,19 @@ export default function CategoriesBreadCrumbs() {
         >
           <span className="text-base mr-1">📋</span>
           <span>{t('common.all')}</span>
-        </button>
+        </Button>
       </div>
 
       {/* Show all categories as a list */}
       <div className="flex flex-wrap gap-2 ml-4">
         {categories.map((category) => (
-          <button
+          <Button
             key={category.key}
             onClick={() => handleCategoryClick(category.slug)}
+            variant={currentCategory === category.slug ? "outline" : "ghost"}
+            size="sm"
             className={cn(
-              'px-3 py-1.5 rounded-md transition-all duration-200 flex items-center',
+              'px-3 py-1.5 rounded-md transition-all duration-200 flex items-center h-auto',
               currentCategory === category.slug
                 ? 'text-primary font-medium bg-primary/10 border border-primary/20 shadow-sm'
                 : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-transparent',
@@ -80,7 +85,7 @@ export default function CategoriesBreadCrumbs() {
           >
             <span className="text-base mr-1">{category.icon}</span>
             <span>{t(`postCategories.${category.key}.name`)}</span>
-          </button>
+          </Button>
         ))}
       </div>
     </div>

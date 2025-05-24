@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { useAuthActions } from '@convex-dev/auth/react';
-import { cn } from '@/lib/utils';
+import { devConsole } from '@/lib/utils';
 // Import translation utility for error messages
 import { User, LogOut, Globe, Link as LinkIcon, LucideLinkedin, ArrowLeft } from 'lucide-react';
 // 브랜드 아이콘 가져오기
@@ -25,6 +25,7 @@ import ProfileDetails from './ProfileDetails';
 import ProfileStats from './ProfileStats';
 import { useAuthStore } from '@/stores/authStore'; // Added
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Button } from '@/components/uis/Button';
 
 export default function ProfilePage() {
   // const { isAuthenticated, isLoading } = useConvexAuth();
@@ -168,7 +169,7 @@ export default function ProfilePage() {
           // Refresh the page to load the new profile
           window.location.reload();
         } catch (error) {
-          console.error('Failed to create user profile:', error);
+          devConsole.error('Failed to create user profile:', error);
         }
       }
     };
@@ -398,7 +399,7 @@ export default function ProfilePage() {
           try {
             await deleteFile({ storageId: originalAvatarStorageId as any });
           } catch (error) {
-            console.error('Error deleting old avatar:', error);
+            devConsole.error('Error deleting old avatar:', error);
             // Continue with profile update even if deletion fails
           }
         }
@@ -434,7 +435,7 @@ export default function ProfilePage() {
               try {
                 await deleteFile({ storageId: originalAvatarStorageId as any });
               } catch (error) {
-                console.error('Error deleting old avatar:', error);
+                devConsole.error('Error deleting old avatar:', error);
                 // Continue with profile update even if deletion fails
               }
             }
@@ -442,7 +443,7 @@ export default function ProfilePage() {
             throw new Error('Failed to save file metadata');
           }
         } catch (error) {
-          console.error('Error uploading image:', error);
+          devConsole.error('Error uploading image:', error);
           setSaveError(t('errors.general'));
           setIsSaving(false);
           return;
@@ -521,7 +522,7 @@ export default function ProfilePage() {
       // Remove the page refresh - Convex will automatically update the UI with new data
       // window.location.reload(); - REMOVED THIS LINE
     } catch (error) {
-      console.error('Error saving profile:', error);
+      devConsole.error('Error saving profile:', error);
       setSaveError(t('errors.general'));
     } finally {
       setIsSaving(false);
@@ -542,7 +543,7 @@ export default function ProfilePage() {
         void navigate('/');
       }, 1000);
     } catch (error) {
-      console.error('Error signing out:', error);
+      devConsole.error('Error signing out:', error);
       setIsSigningOut(false);
     }
   };
@@ -559,21 +560,17 @@ export default function ProfilePage() {
             <ThemeToggle className="block sm:hidden ml-2" />
           </h1>
 
-          <button
-            type="button"
+          <Button
             onClick={() => {
               void handleSignOut();
             }}
             disabled={isSigningOut}
-            className={cn(
-              'px-3 py-1.5 rounded-md transition-colors flex items-center',
-              'bg-red-500/10 text-red-500 hover:bg-red-500/20',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
-            )}
+            variant="outline"
+            className="flex items-center bg-red-500/10 text-red-500 hover:bg-red-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <LogOut size={16} className="mr-1" />
             {isSigningOut ? t('common.loading') : t('profile.buttons.signOut')}
-          </button>
+          </Button>
         </div>
 
         {/* Profile Image and Display Name Card */}
@@ -625,31 +622,23 @@ export default function ProfilePage() {
 
           {/* Action buttons */}
           <div className="flex space-x-3 w-full sm:w-auto">
-            <button
-              type="button"
+            <Button
               onClick={() => void navigate(-1)}
-              className={cn(
-                'px-5 py-2.5 rounded-md border border-border/50 bg-background',
-                'text-muted-foreground hover:bg-muted/30 transition-colors flex items-center',
-              )}
+              variant="outline"
+              className="flex items-center"
             >
               <ArrowLeft size={16} className="mr-1.5" />
               {t('common.buttons.cancel')}
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="submit"
               form="profileForm"
               disabled={isSaving || !hasProfileChanged()}
-              className={cn(
-                'px-5 py-2.5 rounded-md',
-                'bg-primary text-primary-foreground hover:bg-primary/90 transition-colors',
-                'flex items-center',
-                (isSaving || !hasProfileChanged()) && 'opacity-70 cursor-not-allowed',
-              )}
+              className="flex items-center"
             >
               {isSaving ? t('common.buttons.saving') : t('common.buttons.save')}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

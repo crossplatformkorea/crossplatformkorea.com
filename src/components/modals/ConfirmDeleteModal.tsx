@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { t } from 'i18next';
+import { Button } from '@/components/uis/Button';
 
 interface ConfirmDeleteModalProps {
   isOpen: boolean;
@@ -69,26 +70,19 @@ export default function ConfirmDeleteModal({
         </h3>
         <p className="text-muted-foreground dark:text-gray-300 mb-4">{modalMessage}</p>
         <div className="flex justify-end gap-2">
-          <button
+          <Button
             onClick={onClose}
-            className={cn(
-              'px-4 py-2 text-sm font-medium rounded-md transition-colors',
-              'bg-muted dark:bg-gray-700',
-              'hover:bg-muted/80 dark:hover:bg-gray-600',
-            )}
+            variant="outline"
+            className="w-full sm:w-auto"
           >
             {modalCancelText}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onConfirm}
-            className={cn(
-              'px-4 py-2 text-sm font-medium rounded-md transition-colors',
-              'bg-rose-500 text-white',
-              'hover:bg-rose-600 dark:hover:bg-rose-600',
-            )}
+            className="w-full sm:w-auto"
           >
             {modalConfirmText}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

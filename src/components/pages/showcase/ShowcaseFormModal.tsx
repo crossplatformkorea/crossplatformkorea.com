@@ -6,7 +6,9 @@ import { ShowcaseItemType } from './ShowcaseItem';
 import { ShowcaseCategoryType } from '../../../../convex/constants';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { devConsole } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../../uis/Button';
 
 interface ShowcaseFormProps {
   isOpen: boolean;
@@ -257,7 +259,7 @@ const ShowcaseFormModal = ({
         onSubmitSuccess();
       }, 1000);
     } catch (error) {
-      console.error('Error submitting showcase:', error);
+      devConsole.error('Error submitting showcase:', error);
       setError(t('showcases.form.error.general'));
     } finally {
       setIsSubmitting(false);
@@ -285,16 +287,14 @@ const ShowcaseFormModal = ({
           <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
             {isEditMode ? t('showcases.form.edit') : t('showcases.form.create')}
           </h3>
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onClose}
-            className={cn(
-              'rounded-full p-1',
-              'text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100',
-              'hover:bg-gray-300 dark:hover:bg-gray-600',
-            )}
+            className="rounded-full p-1"
           >
             <X size={20} />
-          </button>
+          </Button>
         </div>
 
         {/* Form Content - Scrollable */}
@@ -552,13 +552,14 @@ const ShowcaseFormModal = ({
                     className="flex items-center gap-1 px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md"
                   >
                     <span className="text-sm truncate max-w-[200px]">{link}</span>
-                    <button
-                      type="button"
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => handleRemoveLink(link)}
                       className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                     >
                       <X size={14} />
-                    </button>
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -584,19 +585,15 @@ const ShowcaseFormModal = ({
                   )}
                   placeholder="example.com/page"
                 />
-                <button
-                  type="button"
+                <Button
+                  variant={otherLinkInput.trim() ? "default" : "secondary"}
+                  size="sm"
                   onClick={handleAddLink}
                   disabled={!otherLinkInput.trim()}
-                  className={cn(
-                    'px-3 py-2 rounded-r-md transition-colors',
-                    otherLinkInput.trim()
-                      ? 'bg-gray-600 text-white hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500',
-                  )}
+                  className="rounded-l-none"
                 >
                   {t('showcases.form.addLink')}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -615,13 +612,14 @@ const ShowcaseFormModal = ({
                     className="flex items-center gap-1 px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md"
                   >
                     <span>{tag}</span>
-                    <button
-                      type="button"
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => handleRemoveTag(tag)}
                       className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                     >
                       <X size={14} />
-                    </button>
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -642,19 +640,15 @@ const ShowcaseFormModal = ({
                   )}
                   placeholder={t('showcases.form.tagsPlaceholder')}
                 />
-                <button
-                  type="button"
+                <Button
+                  variant={tagInput.trim() ? "default" : "secondary"}
+                  size="sm"
                   onClick={handleAddTag}
                   disabled={!tagInput.trim()}
-                  className={cn(
-                    'px-3 py-2 rounded-r-md transition-colors',
-                    tagInput.trim()
-                      ? 'bg-gray-600 text-white hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500',
-                  )}
+                  className="rounded-l-none"
                 >
                   {t('showcases.form.addTag')}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -691,25 +685,16 @@ const ShowcaseFormModal = ({
             'bg-gray-200 dark:bg-gray-700',
           )}
         >
-          <button
-            type="button"
+          <Button
+            variant="ghost"
             onClick={onClose}
-            className={cn(
-              'rounded-md border px-4 py-2',
-              'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800',
-              'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700',
-            )}
             disabled={isSubmitting || !!successMessage}
           >
             {t('showcases.form.cancel')}
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="default"
             onClick={(e) => void handleSubmit(e)}
-            className={cn(
-              'rounded-md px-4 py-2 text-white disabled:opacity-70',
-              'bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600',
-            )}
             disabled={isSubmitting || !!successMessage}
           >
             {isSubmitting
@@ -717,7 +702,7 @@ const ShowcaseFormModal = ({
               : isEditMode
                 ? t('showcases.form.update')
                 : t('showcases.form.createButton')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

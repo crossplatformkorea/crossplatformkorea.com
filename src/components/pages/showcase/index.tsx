@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import { useMetaTags } from '../../../hooks/useMetaTags';
 import { t } from '../../../lib/i18n';
+import { Button } from '../../uis/Button';
 
 export default function ShowcasePage() {
   // Apply showcase-specific meta tags
@@ -124,9 +125,11 @@ export default function ShowcasePage() {
             <Search size={18} className="text-gray-400 dark:text-gray-500" />
           </div>
           {searchText && (
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setSearchText('')}
-              className="absolute inset-y-0 right-3 flex items-center"
+              className="absolute inset-y-0 right-3 flex items-center p-0 h-auto"
               aria-label="Clear search"
             >
               <X
@@ -136,7 +139,7 @@ export default function ShowcasePage() {
                   'hover:text-gray-600 dark:hover:text-gray-300',
                 )}
               />
-            </button>
+            </Button>
           )}
         </div>
 
@@ -171,19 +174,16 @@ export default function ShowcasePage() {
 
         {/* 새 쇼케이스 추가 버튼 */}
         {isAuthenticated && (
-          <button
+          <Button
+            variant="default"
             onClick={() => {
               setIsEditMode(false);
               setEditingShowcase(null);
               setIsFormOpen(true);
             }}
-            className={cn(
-              'inline-flex items-center gap-2 rounded-full px-4 py-2 text-white shadow-sm',
-              'bg-gray-600 dark:bg-gray-500 hover:bg-gray-700 dark:hover:bg-gray-600',
-            )}
           >
             <Plus size={16} /> {translate('showcases.addNew')}
-          </button>
+          </Button>
         )}
       </div>
 
@@ -209,20 +209,18 @@ export default function ShowcasePage() {
             {searchText ? translate('showcases.tryAdjusting') : translate('showcases.beTheFirst')}
           </p>
           {isAuthenticated && (
-            <button
+            <Button
+              variant="default"
+              className="mt-6"
               onClick={() => {
                 setIsEditMode(false);
                 setEditingShowcase(null);
                 setIsFormOpen(true);
               }}
-              className={cn(
-                'mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-white',
-                'bg-gray-600 dark:bg-gray-500 hover:bg-gray-700 dark:hover:bg-gray-600',
-              )}
             >
               <Plus size={16} />
               <span>{translate('showcases.addFirst')}</span>
-            </button>
+            </Button>
           )}
         </div>
       ) : (
@@ -250,18 +248,12 @@ export default function ShowcasePage() {
           {/* 더 보기 버튼 */}
           {!isDone && (
             <div className="mt-8 flex justify-center">
-              <button
+              <Button
+                variant="default"
                 onClick={handleLoadMore}
-                className={cn(
-                  'rounded-full border px-6 py-2',
-                  'border-gray-300 dark:border-gray-600',
-                  'bg-white dark:bg-gray-700',
-                  'text-gray-700 dark:text-gray-300',
-                  'hover:bg-gray-100 dark:hover:bg-gray-600',
-                )}
               >
                 {translate('showcases.loadMore')}
-              </button>
+              </Button>
             </div>
           )}
         </>

@@ -15,6 +15,7 @@ import PostWriteModal from '../PostWriteModal';
 import { cn } from '../../../../../lib/utils';
 import { DEFAULT_CATEGORY } from '../../../../../../convex/constants';
 import PostListItem from './PostListItem';
+import { Button } from '@/components/uis/Button';
 
 // Define the Post type
 type Post = {
@@ -111,11 +112,9 @@ const Posts = memo(function PostsPage() {
 
   // Helper function to render the write button
   const renderWriteButton = () => (
-    <button
+    <Button
       onClick={() => setIsWriteModalOpen(true)}
       className={cn(
-        'flex items-center gap-2 px-4 py-2 rounded-md transition-colors',
-        'bg-primary text-primary-foreground hover:bg-primary/90',
         !isAuthenticated && 'opacity-70 cursor-not-allowed',
       )}
       disabled={!isAuthenticated}
@@ -123,7 +122,7 @@ const Posts = memo(function PostsPage() {
     >
       <PenLine size={18} />
       {translate('posts.write')}
-    </button>
+    </Button>
   );
 
   // If we have a category, display category-specific header
@@ -165,12 +164,13 @@ const Posts = memo(function PostsPage() {
 
         {/* Add load more button if there are more posts */}
         {hasMore && (
-          <button
+          <Button
+            variant="outline"
             onClick={loadMore}
-            className="mt-4 w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md text-center transition-colors"
+            className="mt-4 w-full"
           >
             {translate('common.loadMore')}
-          </button>
+          </Button>
         )}
       </div>
     );
@@ -206,12 +206,13 @@ const Posts = memo(function PostsPage() {
 
       {/* Add load more button if there are more posts */}
       {hasMore && (
-        <button
+        <Button
+          variant="outline"
           onClick={loadMore}
-          className="mt-4 w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md text-center transition-colors"
+          className="mt-4 w-full"
         >
           {translate('common.loadMore')}
-        </button>
+        </Button>
       )}
     </div>
   );

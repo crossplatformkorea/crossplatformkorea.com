@@ -3,6 +3,7 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
 import { Heart } from 'lucide-react';
+import { Button } from './Button';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
@@ -57,10 +58,12 @@ export default function LikeButton({
   };
 
   return (
-    <button
+    <Button
       onClick={() => void handleToggleLike()}
+      variant="ghost"
+      size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'default'}
       className={cn(
-        'flex items-center gap-1.5 rounded-full transition-colors',
+        'flex items-center gap-1.5 rounded-full transition-colors h-auto',
         hasLiked
           ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40'
           : 'bg-muted hover:bg-muted/80 text-muted-foreground',
@@ -79,6 +82,6 @@ export default function LikeButton({
         )}
       />
       {showCount && <span className="font-medium">{likeCount ?? 0}</span>}
-    </button>
+    </Button>
   );
 }

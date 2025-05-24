@@ -9,6 +9,7 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
 import { useAuthStore } from '@/stores/authStore';
 import CategoryBadge from '../../../../uis/CategoryBadge';
+import { Button } from '../../../../uis/Button';
 import { cn } from '@/lib/utils';
 
 // Import Post type from Convex data model
@@ -133,10 +134,12 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
         {/* Left side - author and date */}
         <div className="flex items-center text-muted-foreground dark:text-gray-300">
           {post.authorId && author && (
-            <button
+            <Button
               onClick={handleAuthorClick}
+              variant="ghost"
+              size="sm"
               className={cn(
-                "flex items-center transition-colors bg-transparent border-0 py-1 px-2 -ml-2 rounded-md cursor-pointer group",
+                "flex items-center transition-colors py-1 px-2 -ml-2 h-auto",
                 "hover:text-foreground hover:bg-muted/50",
                 "dark:hover:bg-gray-700/60"
               )}
@@ -160,7 +163,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
               )}>
                 {author.displayName || ''}
               </span>
-            </button>
+            </Button>
           )}
           <span className="mx-1.5 text-muted-foreground/50 dark:text-gray-500">•</span>
           <time
@@ -176,10 +179,12 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
 
         {/* Right side - engagement metrics */}
         <div className="flex items-center gap-3 text-sm text-muted-foreground dark:text-gray-300">
-          <button
+          <Button
             onClick={handleLikeClick}
+            variant="ghost"
+            size="sm"
             className={cn(
-              "flex items-center py-1 px-1.5 rounded-md transition-colors",
+              "flex items-center py-1 px-1.5 h-auto",
               hasLiked ? 'text-rose-500' : '',
               "hover:bg-rose-500/10 dark:hover:bg-rose-500/20 hover:text-rose-500"
             )}
@@ -188,7 +193,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
           >
             <Heart size={14} className={cn("mr-1.5", hasLiked ? 'fill-rose-500' : 'opacity-70')} />
             <span className="text-xs">{likeCount}</span>
-          </button>
+          </Button>
 
           <div
             className="flex items-center py-1 px-1 text-primary/80 dark:text-gray-200"

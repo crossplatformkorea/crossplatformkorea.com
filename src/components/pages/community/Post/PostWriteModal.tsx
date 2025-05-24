@@ -19,6 +19,7 @@ import { Id } from '../../../../../convex/_generated/dataModel';
 import { MAX_FILE_SIZE, MAX_FILE_SIZE_READABLE } from '../../../../constants';
 import { DEFAULT_CATEGORY } from '../../../../../convex/constants';
 import { useAuthStore } from '@/stores/authStore';
+import { Button } from '../../../uis/Button';
 
 // Import additional plugins for ReactMarkdown to handle HTML content and line breaks
 import ReactMarkdown from 'react-markdown';
@@ -611,35 +612,32 @@ export default function PostWriteModal({
           <div className="flex items-center gap-2">
             {/* View toggle for mobile */}
             <div className="md:hidden flex items-center gap-2 bg-muted/50 rounded-md overflow-hidden">
-              <button
-                type="button"
+              <Button
+                variant={!isPreviewMode ? "default" : "ghost"}
+                size="sm"
                 onClick={() => setIsPreviewMode(false)}
-                className={cn(
-                  'p-2 text-sm transition-colors flex items-center gap-1',
-                  !isPreviewMode ? 'bg-primary text-primary-foreground' : 'hover:bg-muted',
-                )}
+                className="rounded-none flex items-center gap-1"
               >
                 <Edit size={16} />
                 {t('postWrite.edit')}
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant={isPreviewMode ? "default" : "ghost"}
+                size="sm"
                 onClick={() => setIsPreviewMode(true)}
-                className={cn(
-                  'p-2 text-sm transition-colors flex items-center gap-1',
-                  isPreviewMode ? 'bg-primary text-primary-foreground' : 'hover:bg-muted',
-                )}
+                className="rounded-none flex items-center gap-1"
               >
                 <Eye size={16} />
                 {t('postWrite.preview')}
-              </button>
+              </Button>
             </div>
 
             {/* Fullscreen toggle button */}
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={toggleFullscreen}
-              className="p-2 hover:bg-muted rounded-full transition-colors"
+              className="rounded-full p-2"
               aria-label={isFullscreen ? t('common.exitFullscreen') : t('common.enterFullscreen')}
               title={isFullscreen ? t('common.exitFullscreen') : t('common.enterFullscreen')}
             >
@@ -678,16 +676,18 @@ export default function PostWriteModal({
                   <line x1="3" y1="21" x2="10" y2="14"></line>
                 </svg>
               )}
-            </button>
+            </Button>
 
             {/* Close button - updated to use handleClose */}
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={handleClose}
-              className="p-2 hover:bg-muted rounded-full transition-colors"
+              className="rounded-full p-2"
               aria-label={t('common.close')}
             >
               <X size={20} />
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -763,13 +763,14 @@ export default function PostWriteModal({
                   className="flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md dark:bg-primary/20"
                 >
                   <span>{tag}</span>
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => handleRemoveTag(tag)}
-                    className="hover:text-primary/70"
+                    className="hover:text-primary/70 p-0 h-auto"
                   >
                     <X size={14} />
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>
@@ -784,19 +785,15 @@ export default function PostWriteModal({
                 className="flex-1 px-3 py-2 border border-border rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary/30
                   dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
               />
-              <button
-                type="button"
+              <Button
+                variant={tagInput.trim() ? "default" : "secondary"}
+                size="sm"
                 onClick={handleAddTag}
                 disabled={!tagInput.trim()}
-                className={cn(
-                  'px-3 py-2 rounded-r-md transition-colors',
-                  tagInput.trim()
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-muted text-muted-foreground cursor-not-allowed dark:bg-gray-700',
-                )}
+                className="rounded-l-none"
               >
                 {t('postWrite.addTag')}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -818,54 +815,60 @@ export default function PostWriteModal({
           >
             {/* Formatting toolbar */}
             <div className="flex items-center gap-1 border-t-0 border-b border-x p-1 bg-muted/50 dark:bg-gray-800/50 mb-0 flex-shrink-0">
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => handleFormatting('bold')}
-                className="p-1.5 hover:bg-background rounded transition-colors dark:hover:bg-gray-700"
+                className="p-1.5 rounded"
                 title={t('postWrite.formatting.bold')}
               >
                 <Bold size={18} />
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => handleFormatting('italic')}
-                className="p-1.5 hover:bg-background rounded transition-colors dark:hover:bg-gray-700"
+                className="p-1.5 rounded"
                 title={t('postWrite.formatting.italic')}
               >
                 <Italic size={18} />
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => handleFormatting('link')}
-                className="p-1.5 hover:bg-background rounded transition-colors dark:hover:bg-gray-700"
+                className="p-1.5 rounded"
                 title={t('postWrite.formatting.link')}
               >
                 <Link size={18} />
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => handleFormatting('image')}
-                className="p-1.5 hover:bg-background rounded transition-colors dark:hover:bg-gray-700"
+                className="p-1.5 rounded"
                 title={t('postWrite.formatting.image')}
               >
                 <Image size={18} />
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => handleFormatting('list')}
-                className="p-1.5 hover:bg-background rounded transition-colors dark:hover:bg-gray-700"
+                className="p-1.5 rounded"
                 title={t('postWrite.formatting.list')}
               >
                 <List size={18} />
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => handleFormatting('ordered-list')}
-                className="p-1.5 hover:bg-background rounded transition-colors dark:hover:bg-gray-700"
+                className="p-1.5 rounded"
                 title={t('postWrite.formatting.orderedList')}
               >
                 <ListOrdered size={18} />
-              </button>
+              </Button>
             </div>
 
             {/* Upload progress indicator */}
@@ -934,43 +937,39 @@ export default function PostWriteModal({
               <AlertCircle size={16} />
               <span>{error}</span>
             </div>
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setError(null)}
-              className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 p-1 rounded-full transition-colors"
+              className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 p-1 rounded-full"
               aria-label={t('common.dismiss')}
             >
               <X size={16} />
-            </button>
+            </Button>
           </div>
         )}
 
         {/* Modal footer */}
         <div className="flex justify-end gap-2 p-4 border-t dark:border-gray-700/70">
-          <button
-            type="button"
+          <Button
+            variant="ghost"
             onClick={handleClose}
-            className="px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors dark:hover:bg-gray-700 dark:border-gray-700"
           >
             {t('common.cancel')}
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="default"
             onClick={(e) => {
               void handleSubmit(e);
             }}
             disabled={isSubmitting}
-            className={cn(
-              'px-4 py-2 rounded-md transition-colors',
-              'bg-primary text-primary-foreground hover:bg-primary/90',
-              isSubmitting && 'opacity-70 cursor-not-allowed',
-            )}
           >
             {isSubmitting
               ? t('common.buttons.submitting')
               : isEditMode
                 ? t('postWrite.updatePost')
                 : t('postWrite.publishPost')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

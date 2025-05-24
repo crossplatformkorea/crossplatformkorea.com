@@ -16,6 +16,7 @@ import PostWriteModal from '../PostWriteModal';
 import Comments from './Comments';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/uis/Button';
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
@@ -112,13 +113,14 @@ export default function PostDetailsPage() {
   return (
     <div className="max-w-5xl mx-auto">
       {/* Back button - 로딩 상태와 관계 없이 항상 표시 */}
-      <button
+      <Button
+        variant="ghost"
         onClick={handleGoBack}
-        className="flex items-center mb-6 text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center mb-6 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft size={18} className="mr-1" />
         <span>{t('common.back', { defaultValue: 'Back' })}</span>
-      </button>
+      </Button>
 
       {/* Show loading state while waiting for post data */}
       {!postId ? null : !post ? (
@@ -150,26 +152,24 @@ export default function PostDetailsPage() {
                 {/* Post actions - For author only */}
                 {isAuthor && (
                   <div className="absolute top-0 right-0 flex items-center gap-2">
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={handleEdit}
-                      className={cn(
-                        'p-2 text-muted-foreground rounded-full transition-colors',
-                        'hover:text-foreground hover:bg-muted/50',
-                      )}
+                      className="p-2 text-muted-foreground rounded-full hover:text-foreground hover:bg-muted/50"
                       title={t('posts.edit', { defaultValue: 'Edit Post' })}
                     >
                       <Pencil size={18} />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setShowConfirmDelete(true)}
-                      className={cn(
-                        'p-2 text-muted-foreground rounded-full transition-colors',
-                        'hover:text-rose-500 hover:bg-rose-500/10',
-                      )}
+                      className="p-2 text-muted-foreground rounded-full hover:text-rose-500 hover:bg-rose-500/10"
                       title={t('posts.delete', { defaultValue: 'Delete Post' })}
                     >
                       <Trash2 size={18} />
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>
@@ -185,10 +185,12 @@ export default function PostDetailsPage() {
                 {/* Stats row - all aligned in one container */}
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   {/* Like button */}
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleLikeClick}
                     className={cn(
-                      'flex items-center gap-1.5 py-1 px-2 rounded-md bg-transparent border-0 transition-colors',
+                      'flex items-center gap-1.5 py-1 px-2 rounded-md',
                       hasLiked ? 'text-rose-500' : 'text-muted-foreground hover:text-rose-500',
                       'hover:bg-rose-500/10',
                     )}
@@ -197,7 +199,7 @@ export default function PostDetailsPage() {
                   >
                     <Heart size={15} className={`${hasLiked ? 'fill-rose-500' : ''}`} />
                     <span>{likeCount}</span>
-                  </button>
+                  </Button>
 
                   {/* Comment count */}
                   <div

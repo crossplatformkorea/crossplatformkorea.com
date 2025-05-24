@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { t } from '../../../lib/i18n';
 import { cn } from '../../../lib/utils';
+import { Button } from '../../uis/Button';
 
 export default function SignOut() {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,33 +54,22 @@ export default function SignOut() {
           </div>
         )}
 
-        <button
+        <Button
           onClick={() => void handleSignOut()}
           disabled={isLoading}
-          className={cn(
-            'w-full py-3 rounded-lg font-medium transition-all',
-            'bg-gradient-to-r from-red-600 to-red-500',
-            'text-white shadow-lg shadow-red-500/20',
-            // State styles
-            'hover:from-red-700 hover:to-red-600',
-            'disabled:opacity-50 disabled:cursor-not-allowed'
-          )}
+          variant="danger"
+          className="w-full py-3"
         >
           {isLoading ? t('signIn.signingOut') : t('signIn.signOut')}
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={() => void navigate('/')}
-          className={cn(
-            // Base styles
-            'w-full py-3 rounded-lg font-medium transition-all',
-            'bg-muted/50 text-muted-foreground',
-            // Hover styles
-            'hover:bg-muted',
-          )}
+          variant="ghost"
+          className="w-full py-3"
         >
           {t('signIn.returnToHome')}
-        </button>
+        </Button>
       </div>
     </>
   );

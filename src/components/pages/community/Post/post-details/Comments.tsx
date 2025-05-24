@@ -9,6 +9,7 @@ import { User, Send, MessageSquare, Trash2, Loader2 } from 'lucide-react';
 import { cn, devConsole } from '../../../../../lib/utils';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import { useAuthStore } from '@/stores/authStore';
+import { Button } from '../../../../uis/Button';
 
 interface CommentsProps {
   postId: Id<'posts'>;
@@ -124,15 +125,12 @@ export default function Comments({ postId }: CommentsProps) {
               "dark:border-gray-700",
               "bg-muted/20 dark:bg-gray-800/50"
             )}>
-              <button
+              <Button
                 type="submit"
                 disabled={isSubmitting || !comment.trim()}
-                className={cn(
-                  'flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors',
-                  comment.trim()
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-muted text-muted-foreground cursor-not-allowed'
-                )}
+                variant={comment.trim() ? "default" : "secondary"}
+                size="sm"
+                className="gap-1.5"
               >
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -140,7 +138,7 @@ export default function Comments({ postId }: CommentsProps) {
                   <Send className="h-4 w-4" />
                 )}
                 <span>{t('comments.submit')}</span>
-              </button>
+              </Button>
             </div>
           </div>
         </form>
@@ -207,16 +205,15 @@ export default function Comments({ postId }: CommentsProps) {
 
                   {/* 댓글 삭제 버튼 - 작성자만 볼 수 있음 */}
                   {isCommentAuthor && (
-                    <button
+                    <Button
                       onClick={() => setShowDeleteCommentModal(comment._id)}
-                      className={cn(
-                        "text-muted-foreground p-1.5 rounded-full transition-colors",
-                        "hover:text-rose-500 hover:bg-rose-500/10"
-                      )}
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 h-8 w-8"
                       title={t('common.delete')}
                     >
                       <Trash2 className="h-4 w-4" />
-                    </button>
+                    </Button>
                   )}
                 </div>
 

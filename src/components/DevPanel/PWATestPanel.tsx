@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { usePWA } from '../../hooks/usePWA';
 import { cn } from '../../lib/utils';
+import { Button } from '@/components/uis/Button';
 
 export default function PWATestPanel() {
   const { isInstallable, isInstalled, installApp } = usePWA();
@@ -127,34 +128,34 @@ export default function PWATestPanel() {
       {/* 테스트 버튼들 */}
       <div className="space-y-3 pt-4 border-t border-gray-700">
         {isInstallable && (
-          <button
+          <Button
             onClick={() => void installApp()}
             className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
           >
             앱 설치 테스트
-          </button>
+          </Button>
         )}
         
-        <button
+        <Button
           onClick={() => void checkCacheStatus()}
           className="w-full px-4 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-colors"
         >
           캐시 상태 새로고침
-        </button>
+        </Button>
         
-        <button
+        <Button
           onClick={() => void clearCache()}
           className="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors"
         >
           캐시 클리어
-        </button>
+        </Button>
         
-        <button
+        <Button
           onClick={testOfflineMode}
           className="w-full px-4 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm font-medium transition-colors"
         >
           오프라인 모드 테스트
-        </button>
+        </Button>
       </div>
     </div>
   );

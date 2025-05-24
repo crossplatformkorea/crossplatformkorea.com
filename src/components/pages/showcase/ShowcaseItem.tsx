@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppWindow, ExternalLink, Tag, Edit, User } from 'lucide-react';
+import { Button } from '../../uis/Button';
 import { cn } from '@/lib/utils';
 import { Doc } from '../../../../convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
@@ -75,16 +76,18 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
           </span>
 
           {isEditable && (
-            <button
+            <Button
               onClick={onEditClick}
+              variant="ghost"
+              size="icon"
               className={cn(
-                'rounded-md p-1 transition-colors',
+                'rounded-md p-1 transition-colors h-auto w-auto',
                 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300',
               )}
               title="Edit"
             >
               <Edit size={16} />
-            </button>
+            </Button>
           )}
         </div>
 

@@ -6,6 +6,7 @@ import { useAuthActions } from '@convex-dev/auth/react';
 import { useMutation } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
 import { SiGithub } from '@icons-pack/react-simple-icons';
+import { Button } from '../../uis/Button';
 
 export default function SigningIn() {
   const [email, setEmail] = useState('');
@@ -163,22 +164,14 @@ export default function SigningIn() {
           </div>
 
           <div>
-            <button
+            <Button
               type="submit"
               disabled={isLoading}
-              className={cn(
-                // Base styles
-                'w-full py-3 rounded-lg font-medium transition-all',
-                'bg-gradient-to-r from-primary to-primary/90',
-                'text-primary-foreground shadow-lg shadow-primary/20',
-                // Hover styles
-                'hover:from-primary/90 hover:to-primary/80',
-                // Disabled styles
-                'disabled:opacity-50 disabled:cursor-not-allowed'
-              )}
+              variant="auth"
+              className="w-full py-3"
             >
               {isLoading ? t('signIn.sendingCode') : t('signIn.signInWithEmail')}
-            </button>
+            </Button>
           </div>
         </form>
 
@@ -194,22 +187,18 @@ export default function SigningIn() {
 
         {/* GitHub login button */}
         <div className="mt-6">
-          <button
+          <Button
             type="button"
             onClick={() => {
               void handleGitHubSignIn();
             }}
             disabled={isGitHubLoading}
-            className={cn(
-              // Base styles
-              'w-full py-3 px-4 rounded-lg font-medium transition-all flex items-center justify-center space-x-2',
-              'bg-gray-800 text-white hover:bg-gray-700',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
-            )}
+            variant="secondary"
+            className="w-full py-3 px-4 bg-gray-800 text-white hover:bg-gray-700"
           >
             <SiGithub size={20} />
             <span>{isGitHubLoading ? 'Signing in with GitHub...' : 'Sign in with GitHub'}</span>
-          </button>
+          </Button>
         </div>
 
         {/* Helper text below the form */}
@@ -277,35 +266,23 @@ export default function SigningIn() {
         </div>
 
         <div className="flex flex-col space-y-3">
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className={cn(
-              // Base styles
-              'w-full py-3 rounded-lg font-medium transition-all',
-              'bg-gradient-to-r from-primary to-primary/90',
-              'text-primary-foreground shadow-lg shadow-primary/20',
-              // State styles
-              'hover:from-primary/90 hover:to-primary/80',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
-            )}
+            variant="auth"
+            className="w-full py-3"
           >
             {isLoading ? t('signIn.verifying') : t('signIn.verifyCode')}
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="button"
             onClick={() => setIsCodeSent(false)}
-            className={cn(
-              // Base styles
-              'w-full py-3 rounded-lg font-medium transition-all',
-              'bg-muted/50 text-muted-foreground',
-              // Hover styles
-              'hover:bg-muted',
-            )}
+            variant="ghost"
+            className="w-full py-3"
           >
             {t('signIn.back')}
-          </button>
+          </Button>
         </div>
       </form>
     </>

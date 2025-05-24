@@ -1,6 +1,7 @@
 import React, { KeyboardEvent, FormEvent, ReactNode } from 'react';
 import { Settings, X, Plus, Trash2 } from 'lucide-react';
 import { TFunction } from 'i18next';
+import { Button } from '@/components/uis/Button';
 
 interface ProfileDetailsProps {
   formValues: {
@@ -78,19 +79,20 @@ export default function ProfileDetails({
                   </div>
                 </div>
                 {socialLinks.length > 1 && (
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => removeSocialLink(index)}
                     className="p-2 text-red-500 hover:text-red-600 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
-                  </button>
+                  </Button>
                 )}
               </div>
             ))}
             {socialLinks.length < 10 && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
                 onClick={addSocialLink}
                 className="mt-2 flex items-center text-sm text-primary hover:text-primary/80 transition-colors"
               >
@@ -99,7 +101,7 @@ export default function ProfileDetails({
                   count: socialLinks.length,
                   max: 10,
                 })}
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -115,13 +117,14 @@ export default function ProfileDetails({
                 className="flex items-center bg-primary/10 text-primary px-2 py-1 rounded-md text-sm"
               >
                 <span>{tag}</span>
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => removeTag(tag)}
-                  className="ml-1 text-primary hover:text-primary/80"
+                  className="ml-1 text-primary hover:text-primary/80 p-0 h-auto"
                 >
                   <X className="w-3 h-3" />
-                </button>
+                </Button>
               </div>
             ))}
           </div>
@@ -140,13 +143,14 @@ export default function ProfileDetails({
               className="w-full px-3 py-2 bg-background border border-border/50 rounded-md focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none"
             />
             {tagInput.trim() && (
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => addTag(tagInput)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary/80"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary/80 p-1 h-auto"
               >
                 <Plus className="w-4 h-4" />
-              </button>
+              </Button>
             )}
           </div>
           <input type="hidden" name="tags" value={tags.join(',')} />

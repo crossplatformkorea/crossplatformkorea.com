@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Info } from "lucide-react";
+import { Button } from "./Button";
 import { cn } from "../../lib/utils";
 
 export interface TooltipProps {
@@ -12,9 +13,11 @@ export interface TooltipProps {
 export function Tooltip({ content, isOpen, onToggle, className }: TooltipProps) {
   return (
     <>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         className={cn(
-          "ml-2 text-muted-foreground",
+          "ml-2 text-muted-foreground h-auto w-auto p-1",
           "hover:text-foreground transition-colors"
         )}
         onClick={(e) => {
@@ -25,7 +28,7 @@ export function Tooltip({ content, isOpen, onToggle, className }: TooltipProps) 
         aria-label="Show tooltip"
       >
         <Info size={14} />
-      </button>
+      </Button>
 
       {isOpen && (
         <div

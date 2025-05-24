@@ -2,6 +2,7 @@ import React, { RefObject, ChangeEvent } from 'react';
 import { User, X, Camera } from 'lucide-react';
 import { TFunction } from 'i18next';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/uis/Button';
 
 interface ProfileDisplayProps {
   imagePreview: string | null;
@@ -35,18 +36,19 @@ export default function ProfileDisplay({
         <div className="relative group pt-2 pr-2 pb-2 pl-2">
           {/* Delete button - made smaller and less obtrusive */}
           {imagePreview && (
-            <button
-              type="button"
+            <Button
+              variant="destructive"
+              size="sm"
               onClick={removeSelectedImage}
               title={t('profile.buttons.removeImage')}
               className={cn(
-                "absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 shadow-md transition-all duration-200 z-10 border border-white",
-                "hover:bg-red-600 hover:scale-110"
+                "absolute -top-1 -right-1 rounded-full p-1 shadow-md transition-all duration-200 z-10 border border-white w-6 h-6",
+                "hover:scale-110"
               )}
               aria-label={t('profile.buttons.removeImage')}
             >
               <X className="w-3 h-3" />
-            </button>
+            </Button>
           )}
 
           <div className="w-24 h-24 rounded-full overflow-hidden bg-muted flex items-center justify-center relative">

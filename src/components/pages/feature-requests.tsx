@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
-import { cn } from '@/lib/utils';
+import { cn, devConsole } from '@/lib/utils';
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
 type StatusBadgeProps = { status: StatusType };
@@ -131,7 +131,7 @@ export default function FeatureRequestsPage() {
       const errorMessage =
         err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit');
       setError(errorMessage);
-      console.error('Error submitting feature request:', err);
+      devConsole.error('Error submitting feature request:', err);
       // Consider using a toast for errors too
     } finally {
       setIsSubmitting(false);
@@ -151,7 +151,7 @@ export default function FeatureRequestsPage() {
       await voteForFeature({ id });
       // Optionally, provide feedback to the user (e.g., optimistic update or toast)
     } catch (err) {
-      console.error('Failed to vote:', err);
+      devConsole.error('Failed to vote:', err);
       // Optionally show an error toast
     }
   };
@@ -348,14 +348,15 @@ export default function FeatureRequestsPage() {
               >
                 <div className="p-5 sm:p-6 flex gap-4 sm:gap-6">
                   <div className="flex flex-col items-center pt-1 shrink-0">
-                    <button
+                    <Button
                       onClick={() => void handleVote(request._id)}
+                      variant="ghost"
                       className={cn(
-                        'group p-2.5 rounded-md border border-gray-300 dark:border-gray-600',
+                        'p-2.5 border border-gray-300 dark:border-gray-600',
                         'hover:border-primary dark:hover:border-primary',
                         'bg-gray-50 dark:bg-gray-700/50',
                         'hover:bg-primary/5 dark:hover:bg-primary/10',
-                        'transition-colors duration-150 flex flex-col items-center w-[60px]',
+                        'flex flex-col items-center w-[60px]',
                       )}
                       aria-label={t('featureRequest.voteAriaLabel')}
                     >
@@ -363,7 +364,7 @@ export default function FeatureRequestsPage() {
                       <span className="mt-1 text-sm font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">
                         {request.votes}
                       </span>
-                    </button>
+                    </Button>
                   </div>
 
                   <div className="flex-1 min-w-0">

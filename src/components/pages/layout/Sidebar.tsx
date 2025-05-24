@@ -5,6 +5,7 @@ import { api } from '../../../../convex/_generated/api';
 import { cn } from '@/lib/utils';
 import { sidebarItems } from '@/constants/sidebar';
 import { LogIn, User, ChevronRight, X } from 'lucide-react';
+import { Button } from '../../uis/Button';
 import { t } from 'i18next';
 import { useAuthStore } from '@/stores/authStore';
 
@@ -51,8 +52,10 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
       {/* Close button for mobile - only visible on mobile */}
       {onClose && (
         <div className="absolute top-0 left-0 right-0 h-14 md:hidden flex items-center justify-end px-4 border-b border-gray-200 dark:border-zinc-800 bg-gray-50/95 dark:bg-zinc-900/95 backdrop-blur-sm z-10">
-          <button
+          <Button
             onClick={onClose}
+            variant="ghost"
+            size="icon"
             className={cn(
               'p-2 rounded-full bg-gray-200 dark:bg-zinc-800',
               'hover:bg-gray-300 dark:hover:bg-zinc-700 transition-colors',
@@ -61,7 +64,7 @@ export default function Sidebar({ isOpen = false, isTransitioning = false, onClo
             aria-label={t('common.close')}
           >
             <X size={18} />
-          </button>
+          </Button>
         </div>
       )}
 

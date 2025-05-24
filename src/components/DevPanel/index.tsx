@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Settings, Terminal, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import PWATestPanel from './PWATestPanel';
+import { Button } from '@/components/uis/Button';
 
 export default function DevPanel() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,12 +37,14 @@ export default function DevPanel() {
             <Settings size={16} />
             <span className="text-sm font-semibold">Dev Panel</span>
           </div>
-          <button
+          <Button
             onClick={() => setIsOpen(false)}
-            className="p-1 rounded hover:bg-gray-700 transition-colors"
+            variant="ghost"
+            size="sm"
+            className="p-1 rounded hover:bg-gray-700"
           >
             <X size={16} />
-          </button>
+          </Button>
         </div>
 
         {/* 패널 내용 */}
@@ -65,19 +68,18 @@ export default function DevPanel() {
 
       {/* 토글 버튼 - 오른쪽 아래에 배치 */}
       {!isOpen && (
-        <button
+        <Button
           onClick={() => setIsOpen(true)}
           className={cn(
             'fixed bottom-4 right-4 z-40',
             'flex items-center justify-center',
             'w-12 h-12 bg-gray-900 text-white shadow-lg',
             'rounded-lg border border-gray-700',
-            'hover:bg-gray-800 transition-colors',
-            'group',
+            'hover:bg-gray-800',
           )}
         >
           <Terminal size={18} />
-        </button>
+        </Button>
       )}
     </>
   );
