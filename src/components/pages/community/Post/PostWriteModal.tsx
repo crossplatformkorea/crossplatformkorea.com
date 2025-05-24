@@ -37,9 +37,9 @@ interface PostWriteProps {
   defaultTags?: string[];
 }
 
-export default function PostWrite({ 
-  isOpen, 
-  onClose, 
+export default function PostWriteModal({
+  isOpen,
+  onClose,
   defaultCategory,
   isEditMode = false,
   postId,
@@ -965,10 +965,10 @@ export default function PostWrite({
               isSubmitting && 'opacity-70 cursor-not-allowed',
             )}
           >
-            {isSubmitting 
-              ? t('common.buttons.submitting') 
-              : isEditMode 
-                ? t('postWrite.updatePost') 
+            {isSubmitting
+              ? t('common.buttons.submitting')
+              : isEditMode
+                ? t('postWrite.updatePost')
                 : t('postWrite.publishPost')}
           </button>
         </div>

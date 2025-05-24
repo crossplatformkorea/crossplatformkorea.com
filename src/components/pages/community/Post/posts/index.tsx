@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { Id } from '../../../../../../convex/_generated/dataModel';
 import CategoriesBreadCrumbs from './CategoriesBreadCrumbs';
 import { api } from '../../../../../../convex/_generated/api';
-import PostWrite from '../PostWrite';
+import PostWriteModal from '../PostWriteModal';
 import { cn } from '../../../../../lib/utils';
 import { DEFAULT_CATEGORY } from '../../../../../../convex/constants';
 import PostListItem from './PostListItem';
@@ -131,7 +131,7 @@ const Posts = memo(function PostsPage() {
     return (
       <div>
         {/* Write modal - Always pass the currentCategoryKey */}
-        <PostWrite
+        <PostWriteModal
           isOpen={isWriteModalOpen}
           onClose={() => setIsWriteModalOpen(false)}
           defaultCategory={currentCategoryKey}
@@ -180,7 +180,7 @@ const Posts = memo(function PostsPage() {
   return (
     <div>
       {/* Write modal - Always pass the currentCategoryKey */}
-      <PostWrite
+      <PostWriteModal
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         defaultCategory={currentCategoryKey}

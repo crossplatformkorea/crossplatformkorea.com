@@ -12,7 +12,7 @@ import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-rea
 import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
-import PostWrite from '../../Post/PostWrite';
+import PostWriteModal from '../PostWriteModal';
 import Comments from './Comments';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
@@ -249,7 +249,7 @@ export default function PostDetailsPage() {
 
       {/* 수정 및 삭제 모달은 로딩 상태와 관계없이 항상 조건부 렌더링 */}
       {post && (
-        <PostWrite
+        <PostWriteModal
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
           isEditMode={true}
