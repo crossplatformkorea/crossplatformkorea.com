@@ -8,7 +8,7 @@
     },
     "cancel": "キャンセル",
     "loading": "ローディング中...",
-    "appName": "クロスプラットフォーム コリア",
+    "appName": "CrossPlatformKorea",
     "sideFeatureRequests": "機能リクエスト",
     "signIn": "ログイン",
     "remove": "削除",
@@ -23,7 +23,7 @@
     "viewAll": "すべて見る",
     "loginToAccess": "サインインして始める",
     "back": "戻る",
-    "loginToWrite": "ログインして書き込んでください"
+    "loginToWrite": "書き込むにはログインしてください"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -369,7 +369,7 @@
       "description": "JavaScript、HTML、CSSでクロスプラットフォームデスクトップアプリを構築"
     },
     "PWA": {
-      "name": "Progressive Web App",
+      "name": "PWA",
       "description": "ネイティブアプリのような体験を提供するウェブアプリケーション"
     },
     "LYNX": {
@@ -382,7 +382,20 @@
     },
     "OTHER": {
       "name": "その他",
-      "description": "その他のクロスプラットフォーム開発技術"
+      "description": "その他のカテゴリ"
     }
+  },
+  "pwa": {
+    "install": "アプリをインストール",
+    "installing": "インストール中...",
+    "installed": "インストール完了",
+    "offline": "オフラインモード",
+    "updateAvailable": "新しいバージョンが利用可能です",
+    "reload": "再読み込み"
+  },
+  "meta": {
+    "title": "CrossPlatformKorea",
+    "description": "韓国クロスプラットフォーム開発者コミュニティ",
+    "keywords": "クロスプラットフォーム, 開発者, コミュニティ, React Native, Flutter, PWA, モバイル開発"
   }
 }

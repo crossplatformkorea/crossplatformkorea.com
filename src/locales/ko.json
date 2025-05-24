@@ -383,5 +383,18 @@
       "name": "기타",
       "description": "기타 크로스 플랫폼 개발 기술"
     }
+  },
+  "pwa": {
+    "install": "앱 설치",
+    "installing": "설치 중...",
+    "installed": "설치 완료",
+    "offline": "오프라인 모드",
+    "updateAvailable": "새 버전이 있습니다",
+    "reload": "새로고침"
+  },
+  "meta": {
+    "title": "CrossPlatformKorea",
+    "description": "한국 크로스플랫폼 개발자 커뮤니티",
+    "keywords": "크로스플랫폼, 개발자, 커뮤니티, React Native, Flutter, PWA, 모바일 개발"
   }
 }

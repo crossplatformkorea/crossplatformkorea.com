@@ -1,15 +1,11 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppLayout from './components/pages';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AuthProvider } from './providers/AuthProvider';
+import { useMetaTags } from './hooks/useMetaTags';
 
 export default function App() {
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    document.title = t('common.appName');
-  }, [t]);
+  // Set default meta tags for the entire app (includes title)
+  useMetaTags();
 
   return (
     <Router>

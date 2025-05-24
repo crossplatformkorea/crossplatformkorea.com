@@ -7,9 +7,19 @@ import ShowcaseFormModal from './ShowcaseFormModal';
 import { ShowcaseSkeletonGroup } from './ShowcaseSkeleton';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { useMetaTags } from '../../../hooks/useMetaTags';
+import { t } from '../../../lib/i18n';
 
 export default function ShowcasePage() {
-  const { t } = useTranslation();
+  // Apply showcase-specific meta tags
+  useMetaTags({
+    title: `${t('showcases.title', { defaultValue: 'Showcases' })} - ${t('meta.title')}`,
+    description: t('showcases.description', {
+      defaultValue: 'Explore amazing cross-platform projects from our community',
+    }),
+  });
+
+  const { t: translate } = useTranslation();
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -85,10 +95,10 @@ export default function ShowcasePage() {
             'text-gray-800 dark:text-gray-100',
           )}
         >
-          {t('showcases.title')}
+          {translate('showcases.title')}
         </h1>
         <p className={cn('text-center sm:text-left', 'text-gray-600 dark:text-gray-400')}>
-          {t('showcases.description')}
+          {translate('showcases.description')}
         </p>
       </div>
 
@@ -100,7 +110,7 @@ export default function ShowcasePage() {
             type="text"
             value={searchText}
             onChange={handleSearchChange}
-            placeholder={t('showcases.searchPlaceholder')}
+            placeholder={translate('showcases.searchPlaceholder')}
             className={cn(
               'h-10 w-full rounded-full border pl-10 pr-4',
               'border-gray-300 dark:border-gray-600',
@@ -144,10 +154,10 @@ export default function ShowcasePage() {
               'focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
             )}
           >
-            <option value="">{t('showcases.allCategories')}</option>
+            <option value="">{translate('showcases.allCategories')}</option>
             {categories.map((category) => (
               <option key={category.key} value={category.key}>
-                {t(`showcaseCategories.${category.key}.name`, {
+                {translate(`showcaseCategories.${category.key}.name`, {
                   defaultValue: category.name || category.key,
                 })}
               </option>
@@ -172,7 +182,7 @@ export default function ShowcasePage() {
               'bg-gray-600 dark:bg-gray-500 hover:bg-gray-700 dark:hover:bg-gray-600',
             )}
           >
-            <Plus size={16} /> {t('showcases.addNew')}
+            <Plus size={16} /> {translate('showcases.addNew')}
           </button>
         )}
       </div>
@@ -193,10 +203,10 @@ export default function ShowcasePage() {
             <AppWindow size={48} />
           </div>
           <h3 className={cn('mb-2 text-xl font-medium', 'text-gray-800 dark:text-gray-200')}>
-            {searchText ? t('showcases.noSearchResults') : t('showcases.noShowcases')}
+            {searchText ? translate('showcases.noSearchResults') : translate('showcases.noShowcases')}
           </h3>
           <p className={cn('mx-auto max-w-md', 'text-gray-500 dark:text-gray-400')}>
-            {searchText ? t('showcases.tryAdjusting') : t('showcases.beTheFirst')}
+            {searchText ? translate('showcases.tryAdjusting') : translate('showcases.beTheFirst')}
           </p>
           {isAuthenticated && (
             <button
@@ -211,7 +221,7 @@ export default function ShowcasePage() {
               )}
             >
               <Plus size={16} />
-              <span>{t('showcases.addFirst')}</span>
+              <span>{translate('showcases.addFirst')}</span>
             </button>
           )}
         </div>
@@ -224,7 +234,7 @@ export default function ShowcasePage() {
                 showcase={{
                   ...showcase,
                   categoryName: categories.find((c) => c.key === showcase.category)
-                    ? t(`showcaseCategories.${showcase.category}.name`, {
+                    ? translate(`showcaseCategories.${showcase.category}.name`, {
                         defaultValue:
                           categories.find((c) => c.key === showcase.category)?.name ||
                           showcase.category,
@@ -250,7 +260,7 @@ export default function ShowcasePage() {
                   'hover:bg-gray-100 dark:hover:bg-gray-600',
                 )}
               >
-                {t('showcases.loadMore')}
+                {translate('showcases.loadMore')}
               </button>
             </div>
           )}
