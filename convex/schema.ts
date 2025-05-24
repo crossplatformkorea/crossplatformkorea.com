@@ -73,4 +73,28 @@ export default defineSchema({
   })
     .index('by_post', ['postId'])
     .index('by_author', ['authorId']),
+  // showcases 테이블 정의
+  showcases: defineTable({
+    title: v.string(),
+    description: v.string(),
+    category: v.string(), // SHOWCASE_CATEGORIES의 key 값
+    // URLs - at least one of these is required (enforced in mutation)
+    appStoreUrl: v.optional(v.string()),
+    playStoreUrl: v.optional(v.string()),
+    websiteUrl: v.optional(v.string()),
+    otherLinks: v.optional(v.array(v.string())),
+    tags: v.optional(v.array(v.string())),
+    imageUrl: v.string(), // Changed to required (not optional)
+    userId: v.id('users'), // 작성자 ID
+    featured: v.optional(v.boolean()), // 추천 앱 여부
+    viewCount: v.optional(v.number()), // 조회수 필드 추가
+    likeCount: v.optional(v.number()), // 좋아요 수 필드 추가
+    likedBy: v.optional(v.array(v.id('users'))), // 좋아요 누른 사용자 ID 배열 추가
+  })
+    .index("by_category", ["category"])
+    .index("by_userId", ["userId"])
+    .searchIndex("search", {
+      searchField: "title",
+      filterFields: ["category"]
+    }),
 });

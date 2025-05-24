@@ -270,5 +270,119 @@
     "lookingFor": "探しているもの",
     "expectations": "期待すること",
     "anonymousUser": "匿名ユーザー"
+  },
+  "showcases": {
+    "title": "ショーケース",
+    "description": "素晴らしいクロスプラットフォームアプリケーションを発見しましょう",
+    "addNew": "追加",
+    "addFirst": "最初のショーケースを追加",
+    "searchPlaceholder": "ショーケースを検索...",
+    "allCategories": "すべてのカテゴリ",
+    "noShowcases": "まだショーケースがありません",
+    "noSearchResults": "検索結果が見つかりません",
+    "tryAdjusting": "検索語やフィルターを調整して探しているものを見つけてください。",
+    "beTheFirst": "あなたのクロスプラットフォームアプリケーションを最初にショーケースに追加してみましょう！",
+    "loadMore": "もっと見る",
+    "form": {
+      "create": "ショーケースを作成",
+      "edit": "ショーケースを編集",
+      "title": "タイトル",
+      "titlePlaceholder": "ショーケースのタイトルを入力",
+      "description": "説明",
+      "descriptionPlaceholder": "ショーケースの説明を入力してください（任意）",
+      "category": "カテゴリ",
+      "imageUrl": "画像URL",
+      "imageUrlPlaceholder": "example.com/image.jpg",
+      "imageUrlHelp": "ショーケース画像のURLを提供してください",
+      "links": "リンク",
+      "linksRequired": "（少なくとも1つのURLが必要です）",
+      "websiteUrl": "ウェブサイトURL",
+      "appStoreUrl": "App Store URL",
+      "playStoreUrl": "Play Store URL",
+      "otherLinks": "その他のリンク",
+      "addLink": "追加",
+      "tags": "タグ",
+      "tagsPlaceholder": "タグを追加（Enterキーで追加）",
+      "addTag": "タグを追加",
+      "submitting": "送信中...",
+      "createButton": "作成",
+      "update": "更新",
+      "cancel": "キャンセル",
+      "success": {
+        "created": "ショーケースが正常に作成されました！",
+        "updated": "ショーケースが正常に更新されました！"
+      },
+      "error": {
+        "titleRequired": "タイトルは必須です",
+        "categoryRequired": "カテゴリは必須です",
+        "imageRequired": "画像URLは必須です",
+        "oneUrlRequired": "少なくとも1つのURL（ウェブサイト、App Store、またはPlay Store）が必要です",
+        "invalidUrl": "有効なURLを入力してください: {{url}}",
+        "general": "エラーが発生しました。もう一度お試しください。"
+      }
+    },
+    "website": "ウェブサイト",
+    "appStore": "App Store",
+    "playStore": "Play Store",
+    "featured": "注目",
+    "user": "ユーザー"
+  },
+  "showcaseCategories": {
+    "REACT_NATIVE": {
+      "name": "React Native",
+      "description": "JavaScriptとReactを使用してネイティブモバイルアプリを構築するためのフレームワーク"
+    },
+    "FLUTTER": {
+      "name": "Flutter",
+      "description": "Googleのネイティブにコンパイルされるアプリケーションを構築するためのUIツールキット"
+    },
+    "IONIC": {
+      "name": "Ionic",
+      "description": "ウェブ技術を使用してクロスプラットフォームアプリを構築するためのオープンソースモバイルUIツールキット"
+    },
+    "XAMARIN": {
+      "name": "Xamarin",
+      "description": ".NETとC#でAndroidとiOSアプリを構築するためのMicrosoftのプラットフォーム"
+    },
+    "MAUI": {
+      "name": "MAUI",
+      "description": "Microsoftの.NET Multi-platform App UIフレームワークでクロスプラットフォームアプリを開発"
+    },
+    "KOTLIN": {
+      "name": "Kotlin Multiplatform",
+      "description": "JetBrainsのKotlinを使用したクロスプラットフォームモバイルおよびデスクトップ開発フレームワーク"
+    },
+    "CAPACITOR": {
+      "name": "Capacitor",
+      "description": "ウェブネイティブアプリを構築するためのオープンソースネイティブランタイム"
+    },
+    "CORDOVA": {
+      "name": "Cordova",
+      "description": "HTML、CSS、JavaScriptを使用してモバイルネイティブアプリを開発するためのオープンソースフレームワーク"
+    },
+    "TAURI": {
+      "name": "Tauri",
+      "description": "すべての主要なデスクトッププラットフォーム用の小さく高速なバイナリを構築するためのフレームワーク"
+    },
+    "ELECTRON": {
+      "name": "Electron",
+      "description": "JavaScript、HTML、CSSでクロスプラットフォームデスクトップアプリを構築"
+    },
+    "PWA": {
+      "name": "Progressive Web App",
+      "description": "ネイティブアプリのような体験を提供するウェブアプリケーション"
+    },
+    "LYNX": {
+      "name": "Lynx",
+      "description": "ウェブ技術をベースにした現代的なクロスプラットフォームアプリフレームワーク"
+    },
+    "PHP_NATIVE": {
+      "name": "PHP Native",
+      "description": "PHPを使用したネイティブアプリ開発フレームワーク"
+    },
+    "OTHER": {
+      "name": "その他",
+      "description": "その他のクロスプラットフォーム開発技術"
+    }
   }
 }

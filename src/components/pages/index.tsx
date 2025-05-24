@@ -7,6 +7,7 @@ import UserProfilePage from './user';
 import FeatureRequestsPage from './feature-requests';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
+import ShowcasePage from './showcases';
 
 // This component only handles routing
 export default function AppRoutes() {
@@ -31,6 +32,7 @@ export default function AppRoutes() {
           <div className="max-w-5xl mx-auto"> {/* Added max-width container for large screens */}
             <Routes>
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/showcase" element={<ShowcasePage />} />
               <Route path="/user/:userId" element={<UserProfilePage />} />
               <Route path="/feature-request" element={<FeatureRequestsPage />} />
               <Route path="/*" element={<CommunityPage />} />
