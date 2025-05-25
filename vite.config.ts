@@ -12,51 +12,36 @@ export default defineConfig({
     },
   },
   build: {
+    sourcemap: false, // Disable source maps for production
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // React ecosystem
-          if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-            return 'react-vendor';
-          }
+        manualChunks: {
+          // Core React libraries
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+
+          // UI and styling libraries
+          'ui-vendor': [
+            '@radix-ui/react-dialog', 
+            'clsx', 
+            'tailwind-merge', 
+            'framer-motion'
+          ],
           
-          // Convex
-          if (id.includes('convex') || id.includes('@convex-dev')) {
-            return 'convex-vendor';
-          }
+          // Icon libraries
+          'icons-vendor': ['lucide-react', '@icons-pack/react-simple-icons'],
           
-          // UI libraries
-          if (id.includes('@radix-ui') || id.includes('class-variance-authority') || id.includes('clsx') || id.includes('tailwind-merge')) {
-            return 'ui-vendor';
-          }
+          // Internationalization and utilities
+          'i18n-vendor': ['i18next', 'react-i18next', 'date-fns'],
           
-          // Icon libraries (split into separate chunks due to size)
-          if (id.includes('lucide-react')) {
-            return 'lucide-vendor';
-          }
-          if (id.includes('@icons-pack')) {
-            return 'icons-vendor';
-          }
+          // Markdown processing
+          'markdown-vendor': [
+            'react-markdown', 
+            'rehype-raw', 
+            'remark-breaks'
+          ],
           
-          // Date and i18n utilities
-          if (id.includes('date-fns') || id.includes('i18next')) {
-            return 'i18n-vendor';
-          }
-          
-          // Markdown and text processing
-          if (id.includes('micromark') || id.includes('hast') || id.includes('mdast') || id.includes('remark') || id.includes('rehype')) {
-            return 'markdown-vendor';
-          }
-          
-          // Framer Motion (animation library)
-          if (id.includes('framer-motion')) {
-            return 'animation-vendor';
-          }
-          
-          // Other vendor libraries
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
+          // Other utilities
+          'utils-vendor': ['uuid', 'zustand', 'sonner', 'resend']
         },
       },
     },

@@ -241,6 +241,7 @@ export default function PostWriteModal({
     const start = contentRef.current.selectionStart;
     const end = contentRef.current.selectionEnd;
     const selectedText = content.substring(start, end);
+
     let formattedText = '';
     let cursorPosition = 0;
 

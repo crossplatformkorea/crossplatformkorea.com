@@ -28,8 +28,10 @@ const getBrowserLanguage = (): "en" | "ko" | "ja" => {
   return "en"; // Default fallback for non-browser environments
 };
 
-// Initialize i18next
-i18next
+// Initialize i18next with proper error handling and promise management
+let isInitialized = false;
+
+const initPromise = i18next
   .use(initReactI18next)
   .init({
     resources: {
@@ -43,13 +45,17 @@ i18next
       escapeValue: false, // React already escapes values
     },
   })
+  .then(() => {
+    isInitialized = true;
+  })
   .catch((error) => {
     devConsole.error("i18next initialization error:", error);
+    isInitialized = true; // Set to true even on error to prevent hanging
   });
 
 export const getLocale = (): "en" | "ko" | "ja" => {
   // Safely access i18next language in any environment
-  if (i18next.language) {
+  if (isInitialized && i18next.language) {
     const lang = i18next.language.slice(0, 2);
     return lang === "en" || lang === "ko" || lang === "ja" ? lang : "en";
   }
@@ -62,7 +68,15 @@ export const setLocale = (locale: "en" | "ko" | "ja"): void => {
   if (typeof window !== "undefined" && window.localStorage) {
     window.localStorage.setItem("locale", locale);
   }
-  void i18next.changeLanguage(locale);
+  
+  // Wait for initialization if needed
+  if (!isInitialized) {
+    void initPromise.then(() => {
+      void i18next.changeLanguage(locale);
+    });
+  } else {
+    void i18next.changeLanguage(locale);
+  }
 };
 
 type NestedKeys<T> = T extends object
@@ -77,6 +91,11 @@ export const t = (
   param: NestedKeys<typeof en>,
   mapObj?: Record<string, any>
 ): string => {
+  // Ensure i18next is initialized before using it
+  if (!isInitialized) {
+    devConsole.warn("i18next not initialized yet, returning key:", param);
+    return param as string;
+  }
   return i18next.t(param, mapObj);
 };
 
