@@ -247,6 +247,82 @@ body {
   margin-top: 1em;
 }
 
+/* 링크 스타일링 */
+.prose a {
+  @apply text-blue-600 hover:text-blue-800 underline decoration-1 underline-offset-2 transition-colors;
+  font-weight: 500;
+}
+
+.dark .prose a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* 리스트 스타일링 */
+.prose ul {
+  @apply list-disc list-inside space-y-1 my-4;
+  padding-left: 1.5rem;
+}
+
+.prose ol {
+  @apply list-decimal list-inside space-y-1 my-4;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  @apply leading-relaxed;
+  padding-left: 0.5rem;
+}
+
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
+  @apply mt-2 mb-2;
+  padding-left: 1.5rem;
+}
+
+/* 제목 스타일링 */
+.prose h1 {
+  @apply text-2xl font-bold mt-8 mb-4 text-foreground;
+}
+
+.prose h2 {
+  @apply text-xl font-semibold mt-6 mb-3 text-foreground;
+}
+
+.prose h3 {
+  @apply text-lg font-medium mt-5 mb-2 text-foreground;
+}
+
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply font-medium mt-4 mb-2 text-foreground;
+}
+
+/* 인용문 스타일링 */
+.prose blockquote {
+  @apply border-l-4 border-muted-foreground/30 pl-4 italic text-muted-foreground my-4;
+}
+
+.dark .prose blockquote {
+  @apply border-muted/50 text-muted;
+}
+
+/* 구분선 스타일링 */
+.prose hr {
+  @apply border-0 border-t border-border my-8;
+}
+
+/* 강조 텍스트 스타일링 */
+.prose strong {
+  @apply font-semibold text-foreground;
+}
+
+.prose em {
+  @apply italic;
+}
+
 /* 코드 블록 스타일링 - GitHub/Discourse 스타일 */
 .prose pre {
   @apply bg-gray-100 border border-gray-300 rounded-lg p-4 text-sm font-mono shadow-sm overflow-x-auto;
@@ -290,6 +366,71 @@ body {
   background-color: #21262d !important;
   color: #79c0ff !important;
   border: 1px solid #30363d !important;
+}
+
+/* 링크 스타일링 */
+.prose a {
+  color: #2563eb !important; /* blue-600 */
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.prose a:hover {
+  color: #1d4ed8 !important; /* blue-700 */
+  text-decoration: underline;
+}
+
+.dark .prose a {
+  color: #60a5fa !important; /* blue-400 for dark mode */
+}
+
+.dark .prose a:hover {
+  color: #93c5fd !important; /* blue-300 for dark mode hover */
+}
+
+/* 리스트 스타일링 */
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}
+
+.prose ul ul, .prose ol ol, .prose ul ol, .prose ol ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose ul > li::marker {
+  color: #6b7280; /* gray-500 */
+}
+
+.prose ol > li::marker {
+  color: #6b7280; /* gray-500 */
+  font-weight: 500;
+}
+
+.dark .prose ul > li::marker,
+.dark .prose ol > li::marker {
+  color: #9ca3af; /* gray-400 for dark mode */
 }
 
 /* 코드 블록에 복사 버튼 공간 확보 */

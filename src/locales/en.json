@@ -23,7 +23,8 @@
     "viewAll": "View All",
     "loginToAccess": "Sign in to get started",
     "back": "Back",
-    "loginToWrite": "Please login to write"
+    "loginToWrite": "Please login to write",
+    "add": "Add"
   },
   "errors": {
     "general": "An error occurred. Please try again.",
@@ -204,7 +205,13 @@
       "image": "Insert Image",
       "list": "Bullet List",
       "orderedList": "Numbered List"
-    }
+    },
+    "bold": "Bold",
+    "italic": "Italic",
+    "link": "Link",
+    "image": "Image",
+    "bulletList": "Bullet List",
+    "numberedList": "Numbered List"
   },
   "summary": {
     "welcome": "Welcome to Cross-Platform Korea",

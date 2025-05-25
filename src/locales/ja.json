@@ -23,7 +23,8 @@
     "viewAll": "すべて見る",
     "loginToAccess": "サインインして始める",
     "back": "戻る",
-    "loginToWrite": "書き込むにはログインしてください"
+    "loginToWrite": "書き込むにはログインしてください",
+    "add": "追加"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -235,10 +236,10 @@
     "formatting": {
       "bold": "太字",
       "italic": "斜体",
-      "link": "リンクを挿入",
-      "image": "画像を挿入",
-      "list": "箇条書き",
-      "orderedList": "番号付きリスト"
+      "link": "リンク",
+      "image": "画像",
+      "bulletList": "箇条書き",
+      "numberedList": "番号付きリスト"
     }
   },
   "summary": {
