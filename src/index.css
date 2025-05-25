@@ -233,21 +233,82 @@ body {
 
 /* Prose 스타일 커스터마이징 - 포스트 콘텐츠 띄어쓰기 문제 해결 */
 .prose {
-  white-space: pre-wrap;
+  white-space: normal;
 }
 
 .prose p {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
-}
-
-.prose br + br {
-  display: block;
-  content: "";
-  margin-top: 1em;
+  white-space: pre-line;
 }
 
 /* 단락 사이 간격 추가 */
 .prose p + p {
   margin-top: 1em;
+}
+
+/* 코드 블록 스타일링 - GitHub/Discourse 스타일 */
+.prose pre {
+  @apply bg-gray-100 border border-gray-300 rounded-lg p-4 text-sm font-mono shadow-sm overflow-x-auto;
+  background-color: #f6f8fa !important;
+  border: 1px solid #d1d9e0 !important;
+  color: #24292f !important;
+  position: relative;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 rounded-none text-sm font-mono;
+  background-color: transparent !important;
+  color: inherit !important;
+  font-weight: normal !important;
+}
+
+/* 인라인 코드 스타일링 */
+.prose code {
+  @apply bg-gray-200 px-1.5 py-0.5 rounded text-sm font-mono font-semibold;
+  background-color: #f6f8fa !important;
+  color: #d73a49 !important;
+  border: 1px solid #e1e8ed !important;
+}
+
+/* 다크모드 코드 블록 */
+.dark .prose pre {
+  @apply bg-gray-900 border-gray-700;
+  background-color: #0d1117 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+.dark .prose pre code {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+/* 다크모드 인라인 코드 */
+.dark .prose code {
+  @apply bg-gray-800 text-gray-200;
+  background-color: #21262d !important;
+  color: #79c0ff !important;
+  border: 1px solid #30363d !important;
+}
+
+/* 코드 블록에 복사 버튼 공간 확보 */
+.prose pre {
+  padding-right: 3rem;
+}
+
+/* 더 나은 구분을 위한 추가 스타일 */
+.prose pre::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #6b7280, #374151);
+  border-radius: 2px 0 0 2px;
+}
+
+.dark .prose pre::before {
+  background: linear-gradient(to bottom, #9ca3af, #6b7280);
 }

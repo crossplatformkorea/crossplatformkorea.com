@@ -552,25 +552,6 @@ export default function PostWriteModal({
     }, 0);
   };
 
-  // Enhanced function to prepare content for preview - add cache busting to images
-  const prepareContentForPreview = (rawContent: string) => {
-    // First handle the line breaks as before
-    let content = rawContent.replace(/\n{2,}/g, (match) => {
-      const breaks = Array(match.length).fill('<br />').join('');
-      return breaks;
-    });
-
-    // Add cache busting to image URLs to prevent showing deleted images
-    content = content.replace(/<img src="([^"]+)"([^>]*)>/g, (match, url, rest) => {
-      // Add cache busting parameter to URL
-      const cacheBuster = `?t=${Date.now()}`;
-      const newUrl = url.includes('?') ? `${url}&_=${cacheBuster}` : `${url}${cacheBuster}`;
-      return `<img src="${newUrl}"${rest}>`;
-    });
-
-    return content;
-  };
-
   // Don't render anything if modal is closed and not in closing animation
   if (!isOpen && !isClosing) {
     return null;
@@ -714,40 +695,21 @@ export default function PostWriteModal({
             {/* Category selection */}
             <div>
               <label htmlFor="post-category" className="block text-sm font-medium mb-1">
-                {t('postWrite.categoryLabel')} <span className="text-red-500">*</span>
+                {t('postWrite.categoryLabel')}
               </label>
-              <div className="relative">
-                <select
-                  id="post-category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 pr-10 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30
-                    dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 appearance-none"
-                >
-                  {categories?.map((cat) => (
-                    <option key={cat.key} value={cat.key}>
-                      {cat.icon} {t(`postCategories.${cat.key}.name`)}
-                    </option>
-                  )) || <option value="GENERAL">{t('postCategories.GENERAL.name')}</option>}
-                </select>
-                {/* Custom dropdown arrow */}
-                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <svg
-                    className="w-5 h-5 text-gray-400 dark:text-gray-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
+              <select
+                id="post-category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 
+                  dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
+              >
+                {categories?.map((cat) => (
+                  <option key={cat.key} value={cat.key}>
+                    {t(`postCategories.${cat.key}.name`)}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -757,40 +719,39 @@ export default function PostWriteModal({
               {t('postWrite.tagsLabel')}
             </label>
             <div className="flex flex-wrap gap-2 mb-2">
-              {tags.map((tag, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md dark:bg-primary/20"
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md text-sm"
                 >
-                  <span>{tag}</span>
+                  {tag}
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => handleRemoveTag(tag)}
-                    className="hover:text-primary/70 p-0 h-auto"
+                    className="p-0 h-auto w-auto ml-1 hover:bg-transparent"
                   >
                     <X size={14} />
                   </Button>
-                </div>
+                </span>
               ))}
             </div>
-            <div className="flex">
+            <div className="flex gap-2">
               <input
                 id="post-tags"
                 type="text"
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleTagKeyDown}
-                placeholder={t('postWrite.tagsPlaceholder')}
-                className="flex-1 px-3 py-2 border border-border rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary/30
+                placeholder={t('postWrite.addTag')}
+                className="flex-1 px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 
                   dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
               />
               <Button
-                variant={tagInput.trim() ? "default" : "secondary"}
-                size="sm"
+                variant="outline"
                 onClick={handleAddTag}
                 disabled={!tagInput.trim()}
-                className="rounded-l-none"
+                type="button"
               >
                 {t('postWrite.addTag')}
               </Button>
@@ -798,178 +759,273 @@ export default function PostWriteModal({
           </div>
         </div>
 
-        {/* Split view editor section */}
-        <div
-          className={cn(
-            'flex flex-1 overflow-hidden',
-            isFullscreen ? 'h-[calc(100vh-180px)]' : 'h-[calc(100%-180px)]',
-          )}
-        >
-          {/* Editor side */}
-          <div
-            className={cn(
-              'flex flex-col flex-1 overflow-hidden',
-              'md:block',
-              isPreviewMode ? 'hidden' : 'block',
-            )}
-          >
-            {/* Formatting toolbar */}
-            <div className="flex items-center gap-1 border-t-0 border-b border-x p-1 bg-muted/50 dark:bg-gray-800/50 mb-0 flex-shrink-0">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleFormatting('bold')}
-                className="p-1.5 rounded"
-                title={t('postWrite.formatting.bold')}
-              >
-                <Bold size={18} />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleFormatting('italic')}
-                className="p-1.5 rounded"
-                title={t('postWrite.formatting.italic')}
-              >
-                <Italic size={18} />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleFormatting('link')}
-                className="p-1.5 rounded"
-                title={t('postWrite.formatting.link')}
-              >
-                <Link size={18} />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleFormatting('image')}
-                className="p-1.5 rounded"
-                title={t('postWrite.formatting.image')}
-              >
-                <Image size={18} />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleFormatting('list')}
-                className="p-1.5 rounded"
-                title={t('postWrite.formatting.list')}
-              >
-                <List size={18} />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleFormatting('ordered-list')}
-                className="p-1.5 rounded"
-                title={t('postWrite.formatting.orderedList')}
-              >
-                <ListOrdered size={18} />
-              </Button>
-            </div>
-
-            {/* Upload progress indicator */}
-            {isUploading && (
-              <div className="px-3 py-1 bg-primary/10 border-b border-x border-border flex items-center gap-2 flex-shrink-0">
-                <Loader2 size={16} className="animate-spin" />
-                <span className="text-sm">{t('postWrite.uploadingImages')}...</span>
+        {/* Main content area */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Mobile view - single pane with toggle */}
+          <div className="md:hidden w-full flex flex-col">
+            {!isPreviewMode ? (
+              <div className="flex-1 flex flex-col">
+                {/* Formatting toolbar - always visible at top */}
+                <div className="bg-background border-b p-2 flex items-center gap-2 overflow-x-auto shadow-sm min-h-[52px]">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleFormatting('bold')}
+                    className="flex-shrink-0"
+                    title={t('postWrite.bold')}
+                  >
+                    <Bold size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleFormatting('italic')}
+                    className="flex-shrink-0"
+                    title={t('postWrite.italic')}
+                  >
+                    <Italic size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleFormatting('link')}
+                    className="flex-shrink-0"
+                    title={t('postWrite.link')}
+                  >
+                    <Link size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                    className="flex-shrink-0"
+                    title={t('postWrite.image')}
+                    disabled={isUploading}
+                  >
+                    {isUploading ? <Loader2 size={16} className="animate-spin" /> : <Image size={16} />}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleFormatting('list')}
+                    className="flex-shrink-0"
+                    title={t('postWrite.bulletList')}
+                  >
+                    <List size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleFormatting('ordered-list')}
+                    className="flex-shrink-0"
+                    title={t('postWrite.numberedList')}
+                  >
+                    <ListOrdered size={16} />
+                  </Button>
+                  {/* Hidden file input for image upload */}
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={async (e) => {
+                      const files = e.target.files;
+                      if (!files) return;
+                      
+                      for (const file of Array.from(files)) {
+                        const imageHtml = await uploadFile(file);
+                        if (imageHtml) {
+                          insertTextAtCursor(imageHtml + '\n');
+                        }
+                      }
+                      e.target.value = ''; // Reset input
+                    }}
+                  />
+                </div>
+                
+                {/* Content textarea container with overflow and top padding to prevent toolbar overlap */}
+                <div className="flex-1 overflow-hidden">
+                  <textarea
+                    ref={contentRef}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    onPaste={handlePaste}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    placeholder={t('postWrite.contentPlaceholder')}
+                    className="w-full h-full p-4 pt-6 border-0 focus:outline-none resize-none min-h-[400px]
+                      dark:bg-gray-800 dark:text-gray-100"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="flex-1 p-4 overflow-y-auto overflow-x-hidden">
+                <div className="prose prose-sm max-w-none dark:prose-invert break-words text-sm">
+                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
+                </div>
               </div>
             )}
-
-            {/* Content textarea with drag drop support */}
-            <textarea
-              ref={contentRef}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              onPaste={(e) => {
-                void handlePaste(e);
-              }}
-              onDragOver={handleDragOver}
-              onDrop={(e) => {
-                void handleDrop(e);
-              }}
-              placeholder={t('postWrite.contentPlaceholder')}
-              className={cn(
-                'flex-1 w-full px-3 py-2 border border-t-0 border-border focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none',
-                'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
-                'block h-full min-h-0',
-                isFullscreen ? 'h-full' : 'min-h-[350px]',
-              )}
-              style={{ marginTop: 0, marginBottom: 0 }}
-            />
           </div>
 
-          {/* Preview side - show on desktop or when preview mode is active on mobile */}
-          <div
-            className={cn(
-              'flex-1 border-l border-border overflow-y-auto p-4',
-              'md:block', // Always show on desktop
-              isPreviewMode ? 'block' : 'hidden', // Toggle on mobile
-              isFullscreen ? 'h-full' : '', // Fill height in fullscreen mode
-            )}
-          >
-            <div className="prose dark:prose-invert max-w-none">
-              <h2 className="mb-4">{title || t('postWrite.previewTitle')}</h2>
-              {content ? (
-                <ReactMarkdown
-                  rehypePlugins={[rehypeRaw]}
-                  components={{
-                    // Handle paragraphs with preserved whitespace
-                    p: (props) => <p style={{ whiteSpace: 'pre-wrap' }} {...props} />,
-                  }}
+          {/* Desktop view - split pane */}
+          <div className="hidden md:flex w-full">
+            {/* Editor pane */}
+            <div className="w-1/2 flex flex-col border-r">
+              {/* Formatting toolbar - always visible at top */}
+              <div className="bg-background border-b p-2 flex items-center gap-2 overflow-x-auto shadow-sm min-h-[52px]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFormatting('bold')}
+                  className="flex-shrink-0"
+                  title={t('postWrite.bold')}
                 >
-                  {prepareContentForPreview(content)}
-                </ReactMarkdown>
-              ) : (
-                <p className="text-muted-foreground italic">{t('postWrite.previewPlaceholder')}</p>
-              )}
+                  <Bold size={16} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFormatting('italic')}
+                  className="flex-shrink-0"
+                  title={t('postWrite.italic')}
+                >
+                  <Italic size={16} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFormatting('link')}
+                  className="flex-shrink-0"
+                  title={t('postWrite.link')}
+                >
+                  <Link size={16} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => document.getElementById('image-upload-desktop')?.click()}
+                  className="flex-shrink-0"
+                  title={t('postWrite.image')}
+                  disabled={isUploading}
+                >
+                  {isUploading ? <Loader2 size={16} className="animate-spin" /> : <Image size={16} />}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFormatting('list')}
+                  className="flex-shrink-0"
+                  title={t('postWrite.bulletList')}
+                >
+                  <List size={16} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleFormatting('ordered-list')}
+                  className="flex-shrink-0"
+                  title={t('postWrite.numberedList')}
+                >
+                  <ListOrdered size={16} />
+                </Button>
+                {/* Hidden file input for image upload */}
+                <input
+                  id="image-upload-desktop"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={async (e) => {
+                    const files = e.target.files;
+                    if (!files) return;
+                    
+                    for (const file of Array.from(files)) {
+                      const imageHtml = await uploadFile(file);
+                      if (imageHtml) {
+                        insertTextAtCursor(imageHtml + '\n');
+                      }
+                    }
+                    e.target.value = ''; // Reset input
+                  }}
+                />
+              </div>
+              
+              {/* Content textarea container with overflow and padding to prevent toolbar overlap */}
+              <div className="flex-1 overflow-hidden">
+                <textarea
+                  ref={contentRef}
+                  value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    onPaste={handlePaste}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    placeholder={t('postWrite.contentPlaceholder')}
+                    className="w-full h-full p-4 pt-10 border-0 focus:outline-none resize-none min-h-[400px]
+                      dark:bg-gray-800 dark:text-gray-100"
+                  />
+                </div>
+            </div>
+
+            {/* Preview pane */}
+            <div className="w-1/2 flex flex-col">
+              <div className="sticky top-0 z-10 bg-background border-b p-2 flex items-center min-h-[52px]">
+                <Eye size={16} className="mr-2" />
+                <span className="text-sm font-medium">{t('postWrite.preview')}</span>
+              </div>
+              <div className="flex-1 pb-4 px-4 overflow-y-auto overflow-x-hidden">
+                <div className="prose prose-sm max-w-none dark:prose-invert text-sm">
+                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Error message with dismiss button */}
+        {/* Error message */}
         {error && (
-          <div className="flex items-center justify-between gap-2 text-red-500 p-2 bg-red-50 dark:bg-red-900/20 mx-4 my-2 rounded-md">
-            <div className="flex items-center gap-2">
-              <AlertCircle size={16} />
-              <span>{error}</span>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setError(null)}
-              className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 p-1 rounded-full"
-              aria-label={t('common.dismiss')}
-            >
-              <X size={16} />
-            </Button>
+          <div className="px-4 py-2 bg-destructive/10 border-l-4 border-destructive text-destructive text-sm flex items-center gap-2">
+            <AlertCircle size={16} />
+            {error}
           </div>
         )}
 
-        {/* Modal footer */}
-        <div className="flex justify-end gap-2 p-4 border-t dark:border-gray-700/70">
-          <Button
-            variant="ghost"
-            onClick={handleClose}
-          >
-            {t('common.cancel')}
-          </Button>
-          <Button
-            variant="default"
-            onClick={(e) => {
-              void handleSubmit(e);
-            }}
-            disabled={isSubmitting}
-          >
-            {isSubmitting
-              ? t('common.buttons.submitting')
-              : isEditMode
-                ? t('postWrite.updatePost')
-                : t('postWrite.publishPost')}
-          </Button>
+        {/* Footer with submit button */}
+        <div className="p-4 border-t bg-background">
+          <div className="flex justify-between items-center">
+            <div className="text-sm text-muted-foreground">
+              {isUploading && (
+                <span className="flex items-center gap-2">
+                  <Loader2 size={16} className="animate-spin" />
+                  {t('postWrite.uploadingImages')}
+                </span>
+              )}
+            </div>
+            
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={handleClose}
+                disabled={isSubmitting}
+              >
+                {t('common.cancel')}
+              </Button>
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting || !title.trim() || !content.trim()}
+                className="min-w-[100px]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin mr-2" />
+                    {isEditMode ? t('postWrite.updatePost') : t('postWrite.publishPost')}
+                  </>
+                ) : (
+                  isEditMode ? t('postWrite.updatePost') : t('postWrite.publishPost')
+                )}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
