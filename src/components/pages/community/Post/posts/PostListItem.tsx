@@ -11,6 +11,8 @@ import { useAuthStore } from '@/stores/authStore';
 import CategoryBadge from '../../../../uis/CategoryBadge';
 import { Button } from '../../../../uis/Button';
 import { cn } from '@/lib/utils';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 // Import Post type from Convex data model
 type Post = Doc<'posts'>;
@@ -67,11 +69,9 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const likeCount = post.likeCount || 0;
   const author = authorQuery || null;
 
-  // Process content for preview (strip HTML tags, limit length)
-  const isTruncated = post.content ? post.content.replace(/<[^>]*>?/gm, '').length > 150 : false;
-  const contentPreview = post.content
-    ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + (isTruncated ? '…' : '')
-    : '';
+  // Process content for preview - Using a different approach to preserve Markdown
+  const contentForPreview = post.content ? (post.content.length > 300 ? 
+    post.content.substring(0, 300) + '...' : post.content) : '';
 
   return (
     <Link
@@ -115,11 +115,15 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
           </div>
         )}
 
-        {/* Content preview */}
-        {contentPreview && (
-          <p className="text-sm text-muted-foreground dark:text-gray-300/80 line-clamp-2 mb-3">
-            {contentPreview}
-          </p>
+        {/* Content preview - Using ReactMarkdown to properly render links */}
+        {post.content && (
+          <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-3 overflow-hidden">
+            <div className="line-clamp-2 prose prose-sm dark:prose-invert max-w-none">
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                {contentForPreview}
+              </ReactMarkdown>
+            </div>
+          </div>
         )}
       </div>
 

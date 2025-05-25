@@ -4,7 +4,6 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
-// AppLoading 대신 PostDetailsSkeleton 임포트
 import PostDetailsSkeleton from './PostDetailsSkeleton';
 import { useTranslation } from 'react-i18next';
 import { Id } from '../../../../../../convex/_generated/dataModel';
@@ -17,6 +16,8 @@ import Comments from './Comments';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/uis/Button';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
@@ -26,29 +27,20 @@ export default function PostDetailsPage() {
   const user = useQuery(api.users.query.currentUser);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [viewIncremented, setViewIncremented] = useState(false);
-  // 수정 모달 관련 상태 추가
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // Delete post mutation
   const deletePost = useMutation(api.posts.mutation.deletePost);
-
-  // Add toggleLike mutation
   const toggleLike = useMutation(api.posts.mutation.toggleLike);
-
-  // Add incrementViewCount mutation
   const incrementViewCount = useMutation(api.posts.mutation.incrementViewCount);
 
-  // If no postId is provided, navigate back
   useEffect(() => {
     if (!postId) {
       void navigate(-1);
     }
   }, [postId, navigate]);
 
-  // Only query when postId exists and is a valid ID format
   const post = useQuery(api.posts.query.getById, postId ? { id: postId as Id<'posts'> } : 'skip');
 
-  // Increment view count once when the post is loaded
   useEffect(() => {
     if (post && postId && !viewIncremented) {
       void incrementViewCount({ postId: postId as Id<'posts'> });
@@ -56,14 +48,11 @@ export default function PostDetailsPage() {
     }
   }, [post, postId, incrementViewCount, viewIncremented]);
 
-  // Get author info when post and authorId exist
   const author = useQuery(
     api.users.query.getProfile,
     post && post.authorId ? { userId: post.authorId } : 'skip',
   );
 
-  // 개별 통계 쿼리 제거하고 post 객체에서 직접 가져오도록 변경
-  // 단, hasLiked는 현재 사용자의 상태이므로 쿼리 유지
   const hasLiked = useQuery(api.posts.query.hasLiked, post ? { postId: post._id } : 'skip');
 
   const handleGoBack = () => {
@@ -72,7 +61,6 @@ export default function PostDetailsPage() {
 
   const handleEdit = () => {
     if (post) {
-      // 편집 버튼을 클릭하면 모달 열기
       setIsEditModalOpen(true);
     }
   };
@@ -84,11 +72,9 @@ export default function PostDetailsPage() {
     }
   };
 
-  // Add handleLikeClick function
   const handleLikeClick = () => {
     if (post) {
       if (!isAuthenticated) {
-        // zustand 스토어를 사용한 로그인 필요 토스트 표시
         requireAuth();
         return;
       }
@@ -96,15 +82,12 @@ export default function PostDetailsPage() {
     }
   };
 
-  // Extract metrics from post object
   const commentCount = post?.commentCount || 0;
   const viewCount = post?.viewCount || 0;
   const likeCount = post?.likeCount || 0;
 
-  // Check if current user is the author
   const isAuthor = isAuthenticated && user && post?.authorId === user._id;
 
-  // Format the date
   const formattedDate = post ? formatDistanceToNow(new Date(post._creationTime), {
     addSuffix: true,
     locale: i18n.language === 'ko' ? ko : undefined,
@@ -230,11 +213,13 @@ export default function PostDetailsPage() {
               'bg-white dark:bg-gray-800/30',
             )}
           >
+            {/* Replace dangerouslySetInnerHTML with ReactMarkdown */}
             <div
-              className="prose prose-lg max-w-none whitespace-pre-wrap"
+              className="prose prose-lg max-w-none"
               style={{ wordBreak: 'break-word' }}
-              dangerouslySetInnerHTML={{ __html: post.content || '' }}
-            />
+            >
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{post.content || ''}</ReactMarkdown>
+            </div>
           </div>
 
           {/* 댓글 컴포넌트 추가 - border 제거 */}
