@@ -829,17 +829,19 @@ export default function PostWriteModal({
                     accept="image/*"
                     multiple
                     className="hidden"
-                    onChange={async (e) => {
-                      const files = e.target.files;
-                      if (!files) return;
-                      
-                      for (const file of Array.from(files)) {
-                        const imageHtml = await uploadFile(file);
-                        if (imageHtml) {
-                          insertTextAtCursor(imageHtml + '\n');
+                    onChange={(e) => {
+                      void (async () => {
+                        const files = e.target.files;
+                        if (!files) return;
+                        
+                        for (const file of Array.from(files)) {
+                          const imageHtml = await uploadFile(file);
+                          if (imageHtml) {
+                            insertTextAtCursor(imageHtml + '\n');
+                          }
                         }
-                      }
-                      e.target.value = ''; // Reset input
+                        e.target.value = ''; // Reset input
+                      })();
                     }}
                   />
                 </div>
@@ -850,11 +852,11 @@ export default function PostWriteModal({
                     ref={contentRef}
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    onPaste={handlePaste}
+                    onPaste={(e) => void handlePaste(e)}
                     onDragOver={handleDragOver}
-                    onDrop={handleDrop}
+                    onDrop={(e) => void handleDrop(e)}
                     placeholder={t('postWrite.contentPlaceholder')}
-                    className="w-full h-full p-4 pt-6 border-0 focus:outline-none resize-none min-h-[400px]
+                    className="w-full h-full p-4 pt-8 border-0 focus:outline-none resize-none min-h-[400px]
                       dark:bg-gray-800 dark:text-gray-100"
                   />
                 </div>
@@ -936,17 +938,19 @@ export default function PostWriteModal({
                   accept="image/*"
                   multiple
                   className="hidden"
-                  onChange={async (e) => {
-                    const files = e.target.files;
-                    if (!files) return;
-                    
-                    for (const file of Array.from(files)) {
-                      const imageHtml = await uploadFile(file);
-                      if (imageHtml) {
-                        insertTextAtCursor(imageHtml + '\n');
+                  onChange={(e) => {
+                    void (async () => {
+                      const files = e.target.files;
+                      if (!files) return;
+                      
+                      for (const file of Array.from(files)) {
+                        const imageHtml = await uploadFile(file);
+                        if (imageHtml) {
+                          insertTextAtCursor(imageHtml + '\n');
+                        }
                       }
-                    }
-                    e.target.value = ''; // Reset input
+                      e.target.value = ''; // Reset input
+                    })();
                   }}
                 />
               </div>
@@ -957,11 +961,11 @@ export default function PostWriteModal({
                   ref={contentRef}
                   value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    onPaste={handlePaste}
+                    onPaste={(e) => void handlePaste(e)}
                     onDragOver={handleDragOver}
-                    onDrop={handleDrop}
+                    onDrop={(e) => void handleDrop(e)}
                     placeholder={t('postWrite.contentPlaceholder')}
-                    className="w-full h-full p-4 pt-10 border-0 focus:outline-none resize-none min-h-[400px]
+                    className="w-full h-full p-4 pt-12 border-0 focus:outline-none resize-none min-h-[400px]
                       dark:bg-gray-800 dark:text-gray-100"
                   />
                 </div>
@@ -1011,7 +1015,7 @@ export default function PostWriteModal({
                 {t('common.cancel')}
               </Button>
               <Button
-                onClick={handleSubmit}
+                onClick={(e) => void handleSubmit(e)}
                 disabled={isSubmitting || !title.trim() || !content.trim()}
                 className="min-w-[100px]"
               >
