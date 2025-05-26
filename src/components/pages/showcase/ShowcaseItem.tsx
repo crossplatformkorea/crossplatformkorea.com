@@ -5,6 +5,7 @@ import { Button } from '../../uis/Button';
 import { cn } from '@/lib/utils';
 import { Doc } from '../../../../convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
+import LikeButton from '../../uis/LikeButton';
 
 // ShowcaseItem 타입 정의
 export type ShowcaseItemType = Doc<'showcases'> & {
@@ -180,44 +181,53 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
           </div>
         )}
 
-        {/* 작성자 정보 */}
+        {/* 작성자 정보 + 좋아요 버튼 우측 정렬 */}
         <div
           className={cn(
-            'mt-4 flex items-center pt-2 text-xs',
+            'mt-4 flex items-center pt-2 text-xs justify-between',
             'border-t border-gray-200 dark:border-gray-700',
             'text-gray-500 dark:text-gray-400',
           )}
         >
-          {showcase.author?._id ? (
-            <Link 
-              to={`/user/${showcase.author._id}`}
-              className="flex items-center gap-1.5 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-            >
-              {showcase.author.avatarUrl ? (
-                <img
-                  src={showcase.author.avatarUrl}
-                  alt={showcase.author.name}
-                  className="h-4 w-4 rounded-full object-cover border border-gray-200 dark:border-gray-600"
-                />
-              ) : (
+          <div className="flex items-center gap-1.5 min-w-0">
+            {showcase.author?._id ? (
+              <Link 
+                to={`/user/${showcase.author._id}`}
+                className="flex items-center gap-1.5 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+              >
+                {showcase.author.avatarUrl ? (
+                  <img
+                    src={showcase.author.avatarUrl}
+                    alt={showcase.author.name}
+                    className="h-4 w-4 rounded-full object-cover border border-gray-200 dark:border-gray-600"
+                  />
+                ) : (
+                  <div className="h-4 w-4 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
+                    <User size={10} className="text-gray-100 dark:text-gray-800" />
+                  </div>
+                )}
+                <span className="truncate max-w-[100px]">
+                  {showcase.author.name || t('showcase.user')}
+                </span>
+              </Link>
+            ) : (
+              <div className="flex items-center gap-1.5">
                 <div className="h-4 w-4 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
                   <User size={10} className="text-gray-100 dark:text-gray-800" />
                 </div>
-              )}
-              <span className="truncate max-w-[100px]">
-                {showcase.author.name || t('showcase.user')}
-              </span>
-            </Link>
-          ) : (
-            <div className="flex items-center gap-1.5">
-              <div className="h-4 w-4 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                <User size={10} className="text-gray-100 dark:text-gray-800" />
+                <span className="truncate max-w-[100px]">
+                  {t('showcase.user')}
+                </span>
               </div>
-              <span className="truncate max-w-[100px]">
-                {t('showcase.user')}
-              </span>
-            </div>
-          )}
+            )}
+          </div>
+          <LikeButton
+            postId={showcase._id}
+            type="showcases"
+            showCount={true}
+            size="sm"
+            className="!px-2 !py-1 ml-2"
+          />
         </div>
       </div>
     </div>

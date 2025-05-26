@@ -9,7 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
 
 interface LikeButtonProps {
-  postId: Id<'posts'>;
+  postId: Id<'posts'> | Id<'showcases'>;
+  type?: 'posts' | 'showcases';
   size?: 'sm' | 'md' | 'lg';
   showCount?: boolean;
   className?: string;
@@ -17,6 +18,7 @@ interface LikeButtonProps {
 
 export default function LikeButton({
   postId,
+  type = 'posts',
   size = 'md',
   showCount = true,
   className,
@@ -24,24 +26,37 @@ export default function LikeButton({
   const { t } = useTranslation();
   const { isAuthenticated, requireAuth } = useAuthStore();
 
-  // 좋아요 상태 조회
-  const hasLiked = useQuery(api.posts.query.hasLiked, { postId });
-  // 게시물 가져오기
-  const post = useQuery(api.posts.query.getById, { id: postId });
-  const likeCount = post?.likeCount || 0;
+  // Determine API endpoints based on type
+  const hasLiked = useQuery(
+    type === 'showcases'
+      ? api.showcases.query.hasLikedShowcase
+      : api.posts.query.hasLiked,
+    type === 'showcases' ? { showcaseId: postId as Id<'showcases'> } : { postId: postId as Id<'posts'> }
+  );
+  const doc = useQuery(
+    type === 'showcases'
+      ? api.showcases.query.getShowcase
+      : api.posts.query.getById,
+    type === 'showcases' ? { showcaseId: postId as Id<'showcases'> } : { id: postId as Id<'posts'> }
+  );
+  const likeCount = doc?.likeCount || 0;
 
-  // 좋아요 토글 액션
-  const toggleLike = useMutation(api.posts.mutation.toggleLike);
+  const toggleLike = useMutation(
+    type === 'showcases'
+      ? api.showcases.mutation.toggleLike
+      : api.posts.mutation.toggleLike
+  );
 
-  // 좋아요 토글 핸들러
   const handleToggleLike = async () => {
     if (!isAuthenticated) {
-      // zustand 스토어를 사용한 로그인 필요 토스트 표시
       requireAuth();
       return;
     }
-
-    await toggleLike({ postId });
+    if (type === 'showcases') {
+      await toggleLike({ showcaseId: postId as Id<'showcases'> });
+    } else {
+      await toggleLike({ postId: postId as Id<'posts'> });
+    }
   };
 
   // 사이즈에 따른 스타일 설정
