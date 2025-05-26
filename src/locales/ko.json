@@ -414,7 +414,21 @@
     "totalCount": "총 {{count}}개 알림",
     "unreadCount": "{{count}}개 읽지 않음",
     "selectAll": "모두 선택",
-    "deselectAll": "선택 해제"
+    "deselectAll": "선택 해제",
+    "messages": {
+      "commentOnPost": {
+        "title": "새로운 댓글",
+        "message": "{{commenterName}}님이 \"{{postTitle}}\" 포스트에 댓글을 달았습니다."
+      },
+      "likeOnShowcase": {
+        "title": "쇼케이스에 좋아요",
+        "message": "{{likerName}}님이 \"{{showcaseTitle}}\" 쇼케이스에 좋아요를 눌렀습니다."
+      },
+      "likeOnPost": {
+        "title": "포스트에 좋아요",
+        "message": "{{likerName}}님이 \"{{postTitle}}\" 포스트에 좋아요를 눌렀습니다."
+      }
+    }
   },
   "meta": {
     "title": "CrossPlatformKorea",

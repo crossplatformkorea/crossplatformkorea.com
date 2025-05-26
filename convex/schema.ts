@@ -101,9 +101,9 @@ export default defineSchema({
   notifications: defineTable({
     userId: v.id('users'), // 알림을 받을 사용자
     type: v.union(
-      v.literal('comment_on_post'), // 내 포스트에 댓글
-      v.literal('like_on_showcase'), // 내 showcase에 좋아요
-      v.literal('like_on_post'), // 내 포스트에 좋아요 (선택사항)
+      v.literal('COMMENT_ON_POST'), // 내 포스트에 댓글
+      v.literal('LIKE_ON_SHOWCASE'), // 내 showcase에 좋아요
+      v.literal('LIKE_ON_POST'), // 내 포스트에 좋아요 (선택사항)
     ),
     title: v.string(), // 알림 제목
     message: v.string(), // 알림 메시지

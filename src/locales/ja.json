@@ -415,7 +415,21 @@
     "totalCount": "合計{{count}}件の通知",
     "unreadCount": "{{count}}件未読",
     "selectAll": "すべて選択",
-    "deselectAll": "選択解除"
+    "deselectAll": "選択解除",
+    "messages": {
+      "commentOnPost": {
+        "title": "新しいコメント",
+        "message": "{{commenterName}}さんがあなたの投稿「{{postTitle}}」にコメントしました。"
+      },
+      "likeOnShowcase": {
+        "title": "ショーケースにいいね",
+        "message": "{{likerName}}さんがあなたのショーケース「{{showcaseTitle}}」にいいねしました。"
+      },
+      "likeOnPost": {
+        "title": "投稿にいいね",
+        "message": "{{likerName}}さんがあなたの投稿「{{postTitle}}」にいいねしました。"
+      }
+    }
   },
   "meta": {
     "title": "CrossPlatformKorea",

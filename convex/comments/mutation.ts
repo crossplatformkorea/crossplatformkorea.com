@@ -1,6 +1,7 @@
 import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
+import { internal } from '../_generated/api';
 import { Id } from '../_generated/dataModel';
 
 // 댓글 추가
@@ -45,16 +46,16 @@ export const addComment = mutation({
       
       const commenterName = commenterProfile?.displayName || 'Someone';
       
-      // 알림 생성
-      await ctx.db.insert('notifications', {
+      // 알림 생성 (기본 로케일 사용)
+      await ctx.runMutation(internal.notifications.mutation.createNotification, {
         userId: post.authorId,
-        type: 'comment_on_post',
-        title: '새로운 댓글',
-        message: `${commenterName}님이 "${post.title}" 포스트에 댓글을 달았습니다.`,
+        type: 'COMMENT_ON_POST',
         postId: args.postId,
         commentId: commentId,
         triggeredById: userId,
-        isRead: false,
+        commenterName: commenterName,
+        postTitle: post.title,
+        locale: 'en', // 기본값으로 영어 사용
       });
     }
 

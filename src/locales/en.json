@@ -420,7 +420,21 @@
     "totalCount": "{{count}} total notifications",
     "unreadCount": "{{count}} unread",
     "selectAll": "Select all",
-    "deselectAll": "Deselect all"
+    "deselectAll": "Deselect all",
+    "messages": {
+      "commentOnPost": {
+        "title": "New comment",
+        "message": "{{commenterName}} commented on your post \"{{postTitle}}\"."
+      },
+      "likeOnShowcase": {
+        "title": "Showcase liked",
+        "message": "{{likerName}} liked your showcase \"{{showcaseTitle}}\"."
+      },
+      "likeOnPost": {
+        "title": "Post liked", 
+        "message": "{{likerName}} liked your post \"{{postTitle}}\"."
+      }
+    }
   },
   "meta": {
     "title": "CrossPlatformKorea",

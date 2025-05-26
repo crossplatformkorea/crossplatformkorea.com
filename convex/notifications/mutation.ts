@@ -1,22 +1,27 @@
 import { v } from 'convex/values';
 import { mutation, internalMutation } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
+import { getNotificationMessages, type NotificationType, type NotificationMessageParams } from '../utils';
 
-// 알림 생성 (내부 함수)
+// 알림 생성 (내부 함수) - 다국어 지원
 export const createNotification = internalMutation({
   args: {
     userId: v.id('users'),
     type: v.union(
-      v.literal('comment_on_post'),
-      v.literal('like_on_showcase'),
-      v.literal('like_on_post'),
+      v.literal('COMMENT_ON_POST'),
+      v.literal('LIKE_ON_SHOWCASE'),
+      v.literal('LIKE_ON_POST'),
     ),
-    title: v.string(),
-    message: v.string(),
     postId: v.optional(v.id('posts')),
     showcaseId: v.optional(v.id('showcases')),
     commentId: v.optional(v.id('comments')),
     triggeredById: v.id('users'),
+    // 메시지 파라미터들
+    commenterName: v.optional(v.string()),
+    likerName: v.optional(v.string()),
+    postTitle: v.optional(v.string()),
+    showcaseTitle: v.optional(v.string()),
+    locale: v.optional(v.string()), // 사용자 로케일
   },
   returns: v.id('notifications'),
   handler: async (ctx, args) => {
@@ -25,11 +30,25 @@ export const createNotification = internalMutation({
       throw new Error('Cannot create notification for self');
     }
 
+    // 다국어 메시지 생성
+    const params: NotificationMessageParams = {
+      commenterName: args.commenterName,
+      likerName: args.likerName,
+      postTitle: args.postTitle,
+      showcaseTitle: args.showcaseTitle,
+    };
+
+    const { title, message } = getNotificationMessages(
+      args.type as NotificationType,
+      args.locale || 'en',
+      params
+    );
+
     return await ctx.db.insert('notifications', {
       userId: args.userId,
       type: args.type,
-      title: args.title,
-      message: args.message,
+      title: title,
+      message: message,
       postId: args.postId,
       showcaseId: args.showcaseId,
       commentId: args.commentId,
