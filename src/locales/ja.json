@@ -385,6 +385,10 @@
       "name": "PHP Native",
       "description": "PHPを使用したネイティブアプリ開発フレームワーク"
     },
+    "UNITY": {
+      "name": "Unity",
+      "description": "2Dおよび3Dゲーム開発のためのクロスプラットフォームゲームエンジン"
+    },
     "OTHER": {
       "name": "その他",
       "description": "その他のカテゴリ"

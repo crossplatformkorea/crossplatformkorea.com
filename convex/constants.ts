@@ -155,22 +155,28 @@ export const SHOWCASE_CATEGORIES: ShowcaseCategoryType[] = [
     order: 11,
   },
   {
+    key: "UNITY",
+    name: "Unity",
+    description: "게임 및 인터랙티브 콘텐츠 개발을 위한 크로스플랫폼 게임 엔진",
+    order: 12,
+  },
+  {
     key: "LYNX",
     name: "Lynx",
     description: "웹 기술을 기반으로 한 현대적인 크로스플랫폼 앱 프레임워크",
-    order: 12,
+    order: 13,
   },
   {
     key: "PHP_NATIVE",
     name: "PHP Native",
     description: "PHP를 사용한 네이티브 앱 개발 프레임워크",
-    order: 13,
+    order: 14,
   },
   {
     key: "OTHER",
     name: "기타",
     description: "기타 크로스플랫폼 개발 기술",
-    order: 14,
+    order: 15,
   },
 ];
 
