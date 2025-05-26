@@ -302,7 +302,7 @@ export const getUserPushSubscriptionStatus = query({
     hasSubscriptions: v.boolean(),
     subscriptionCount: v.number(),
   }),
-  handler: async (ctx, args) => {
+  handler: async (ctx, _args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return { hasSubscriptions: false, subscriptionCount: 0 };

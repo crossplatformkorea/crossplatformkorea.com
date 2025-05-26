@@ -48,9 +48,8 @@ export default function NotificationPermissionBanner({ className }: Notification
       return () => clearTimeout(timer);
     } else {
       setIsVisible(false);
-    }
-  }, [isAuthenticated, isSupported, permission]);
-  const [isPermissionBlocked, setIsPermissionBlocked] = useState(false);
+    }  }, [isAuthenticated, isSupported, permission]);
+  const [, setIsPermissionBlocked] = useState(false); // _ 사용하지 않음 표시
   const [showSettingsGuide, setShowSettingsGuide] = useState(false);
   const handleEnableNotifications = async () => {
     try {
@@ -148,11 +147,10 @@ export default function NotificationPermissionBanner({ className }: Notification
             >
               다음에 하기
             </Button>
-            <Button
-              onClick={() => {
+            <Button              onClick={() => {
                 setShowSettingsGuide(false);
                 // 권한 재요청 (이미 차단된 경우 효과 없음)
-                handleEnableNotifications();
+                void handleEnableNotifications(); // void 연산자로 Promise 무시
               }}
             >
               알림 다시 요청하기
@@ -193,8 +191,7 @@ export default function NotificationPermissionBanner({ className }: Notification
           <div className="flex gap-2">
             <Button
               size="sm"
-              variant="outline"
-              onClick={handleEnableNotifications}
+              variant="outline"              onClick={() => void handleEnableNotifications()} // void로 Promise 처리
               disabled={isLoading}
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 border-primary-foreground/20"
             >

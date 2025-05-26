@@ -110,7 +110,7 @@ function ProductionUI({ className, state, handlers }: UIProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={handleRequestPermission}
+                onClick={() => void handleRequestPermission()}
                 disabled={isLoading}
                 className="flex items-center gap-1.5"
               >
@@ -150,7 +150,7 @@ function ProductionUI({ className, state, handlers }: UIProps) {
               <div>
                 <Button
                   size="sm"
-                  onClick={handleSubscribe}
+                  onClick={() => void handleSubscribe()}
                   disabled={isLoading || permission !== 'granted'}
                   className="flex items-center gap-1.5"
                 >
@@ -282,7 +282,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={handleRequestPermission}
+                  onClick={() => void handleRequestPermission()}
                   disabled={isLoading}
                   className="flex items-center gap-1.5"
                 >
@@ -294,7 +294,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={handleRevokePermission}
+                  onClick={() => void handleRevokePermission()}
                   disabled={isLoading}
                   className="flex items-center gap-1.5 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-900/20"
                 >
@@ -333,7 +333,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleTestNotification}
+                    onClick={() => void handleTestNotification()}
                     disabled={isLoading}
                     className="flex items-center gap-1.5 border-orange-200 text-orange-700 hover:bg-orange-50 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-900/20"
                   >
@@ -343,7 +343,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleUnsubscribe}
+                    onClick={() => void handleUnsubscribe()}
                     disabled={isLoading}
                     className="flex items-center gap-1.5"
                   >
@@ -354,7 +354,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
               ) : (
                 <Button
                   size="sm"
-                  onClick={handleSubscribe}
+                  onClick={() => void handleSubscribe()}
                   disabled={isLoading || permission !== 'granted'}
                   className="flex items-center gap-1.5"
                 >

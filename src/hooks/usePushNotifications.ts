@@ -185,7 +185,7 @@ export const usePushNotifications = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [isSupported, isAuthenticated, permission, requestPermission]);
+  }, [isSupported, isAuthenticated, permission, requestPermission, subscribeToPush]);
 
   // 푸시 구독 해제
   const unsubscribe = useCallback(async (): Promise<boolean> => {
@@ -220,7 +220,7 @@ export const usePushNotifications = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [isSupported]);
+  }, [isSupported, unsubscribeFromPush]);
 
   // 테스트 노티피케이션 보내기
   const sendTestNotification = useCallback(async (title?: string, message?: string) => {
