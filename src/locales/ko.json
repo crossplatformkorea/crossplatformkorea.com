@@ -8,7 +8,7 @@
     },
     "cancel": "취소",
     "loading": "로딩 중...",
-    "loadMore": "더 보기",
+    "loadMore": "더 많은 게시물 보기",
     "appName": "크로스플랫폼 코리아",
     "sideFeatureRequests": "기능 요청",
     "signIn": "로그인",
@@ -24,7 +24,19 @@
     "loginToAccess": "로그인하여 시작하기",
     "back": "뒤로",
     "loginToWrite": "로그인 후 작성이 가능합니다",
-    "add": "추가"
+    "add": "추가",
+    "dismiss": "닫기",
+    "time": {
+      "hours": "{{count}}시간",
+      "hour": "1시간",
+      "minutes": "{{count}}분",
+      "minute": "1분",
+      "seconds": "{{count}}초",
+      "second": "1초",
+      "now": "지금",
+      "ago": "전",
+      "in": "후"
+    }
   },
   "errors": {
     "general": "오류가 발생했습니다. 다시 시도해주세요.",
@@ -235,11 +247,17 @@
     "formatting": {
       "bold": "굵게",
       "italic": "기울임",
-      "link": "링크",
-      "image": "이미지",
-      "bulletList": "글머리 기호",
-      "numberedList": "번호 매기기"
-    }
+      "link": "링크 삽입",
+      "image": "이미지 삽입",
+      "list": "글머리 기호",
+      "orderedList": "번호 매기기"
+    },
+    "bold": "굵게",
+    "italic": "기울임",
+    "link": "링크",
+    "image": "이미지",
+    "bulletList": "글머리 기호",
+    "numberedList": "번호 매기기"
   },
   "summary": {
     "welcome": "크로스플랫폼 코리아에 오신 것을 환영합니다",
@@ -444,6 +462,10 @@
         "subscribed": "✅ 구독 중",
         "notSubscribed": "❌ 구독하지 않음"
       },
+      "test": {
+        "title": "테스트 알림",
+        "description": "모든 것이 제대로 작동하는지 확인하기 위해 테스트 알림을 보냅니다"
+      },
       "buttons": {
         "requestPermission": "권한 요청",
         "subscribe": "구독하기",
@@ -472,6 +494,14 @@
         "browserNotSupported": "이 브라우저는 푸시 알림을 지원하지 않습니다. 최신 브라우저를 사용해보세요.",
         "subscribeHelp": "게시물에 댓글이나 좋아요가 달릴 때 알림을 받으려면 구독하세요.",
         "subscriptionHelp": "다른 사람이 내 게시물에 댓글을 달거나 좋아요를 누르면 알림을 받게 됩니다."
+      },
+      "banner": {
+        "title": "알림을 받아보세요!",
+        "description": "새로운 댓글과 좋아요 알림을 받아보세요.",
+        "enable": "알림 활성화",
+        "remindLater": "24시간 후 다시 알림",
+        "laterInfo": "프로필 설정에서 언제든지 알림을 활성화할 수 있습니다.",
+        "aboutTime": "알림을 활성화하지 않은 경우 24시간 후에 이 알림이 다시 표시됩니다."
       }
     }
   },

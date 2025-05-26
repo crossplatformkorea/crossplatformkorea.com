@@ -9,7 +9,7 @@ import { getAuthUserId } from '@convex-dev/auth/server';
 // VAPID 키 설정 (환경 변수에서 가져오기)
 const vapidDetails = {
   subject: process.env.VAPID_SUBJECT || 'mailto:your-email@example.com',
-  publicKey: process.env.VAPID_PUBLIC_KEY || '',
+  publicKey: process.env.VITE_VAPID_PUBLIC_KEY || '',
   privateKey: process.env.VAPID_PRIVATE_KEY || '',
 };
 

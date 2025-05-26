@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useConvexAuth } from 'convex/react';
 import { useMutation, useQuery, useAction } from 'convex/react';
 import { api } from '../../convex/_generated/api';
+import { BANNER_REDISPLAY_INTERVAL } from '../constants';
 
 interface PushSubscriptionData {
   endpoint: string;
@@ -84,6 +85,50 @@ export const usePushNotifications = () => {
       throw new Error('노티피케이션 권한을 얻을 수 없습니다.');
     }
   }, [isSupported]);
+
+  // 자동 권한 요청 (사이트 방문 시)
+  const requestPermissionOnLoad = useCallback(async (): Promise<boolean> => {
+    if (!isSupported || !isAuthenticated) {
+      return false;
+    }
+
+    // 이미 권한이 설정된 경우 요청하지 않음
+    if (permission !== 'default') {
+      return permission === 'granted';
+    }
+
+    // localStorage에서 이전에 거부했는지 확인 (24시간 후 재시도)
+    const checkDismissalExpiry = () => {
+      const dismissedAt = localStorage.getItem('notificationPermissionDismissedAt');
+      if (!dismissedAt) return true; // 한 번도 거부하지 않았음
+      
+      const dismissedTime = parseInt(dismissedAt, 10);
+      const now = Date.now();
+      
+      return (now - dismissedTime) > BANNER_REDISPLAY_INTERVAL; // 설정된 간격이 지났으면 true
+    };
+
+    if (!checkDismissalExpiry()) {
+      return false;
+    }
+
+    try {
+      // 약간의 지연 후 권한 요청 (UX 개선)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const granted = await requestPermission();
+      
+      if (!granted) {
+        // 사용자가 거부한 경우 현재 시간 기록
+        localStorage.setItem('notificationPermissionDismissedAt', Date.now().toString());
+      }
+      
+      return granted;
+    } catch (error) {
+      console.error('자동 권한 요청 실패:', error);
+      return false;
+    }
+  }, [isSupported, isAuthenticated, permission, requestPermission]);
 
   // 푸시 구독
   const subscribe = useCallback(async (): Promise<boolean> => {
@@ -230,6 +275,7 @@ export const usePushNotifications = () => {
     subscribe,
     unsubscribe,
     requestPermission,
+    requestPermissionOnLoad,
     sendTestNotification,
     checkSubscription,
   };

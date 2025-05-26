@@ -16,6 +16,7 @@
     "delete": "Delete",
     "authRequired": "Please sign in to access all features",
     "close": "Close",
+    "dismiss": "Dismiss",
     "sidePosts": "Posts",
     "navCommunity": "Community",
     "navDoc": "Doc",
@@ -24,7 +25,18 @@
     "loginToAccess": "Sign in to get started",
     "back": "Back",
     "loginToWrite": "Please login to write",
-    "add": "Add"
+    "add": "Add",
+    "time": {
+      "hours": "{{count}} hours",
+      "hour": "1 hour",
+      "minutes": "{{count}} minutes",
+      "minute": "1 minute",
+      "seconds": "{{count}} seconds",
+      "second": "1 second",
+      "now": "now",
+      "ago": "ago",
+      "in": "in"
+    }
   },
   "errors": {
     "general": "An error occurred. Please try again.",
@@ -482,6 +494,14 @@
         "browserNotSupported": "Your browser does not support push notifications. Please try using a modern browser.",
         "subscribeHelp": "Subscribe to receive notifications about new comments and likes on your posts.",
         "subscriptionHelp": "You'll receive notifications when someone comments on your posts or likes your content."
+      },
+      "banner": {
+        "title": "Stay Notified!",
+        "description": "Get notified about new comments and likes on your posts.",
+        "enable": "Enable Notifications",
+        "remindLater": "Remind me in 24 hours",
+        "laterInfo": "You can enable notifications anytime in your profile settings.",
+        "aboutTime": "This reminder will appear again in 24 hours if you haven't enabled notifications."
       }
     }
   },
