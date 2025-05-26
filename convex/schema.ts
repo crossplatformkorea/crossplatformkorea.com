@@ -39,6 +39,7 @@ export default defineSchema({
     tags: v.optional(v.array(v.string())), // Skills, interests, or status tags
     lookingFor: v.optional(v.string()), // Who they want to connect with
     expectations: v.optional(v.string()), // What they're expecting from the community
+    locale: v.optional(v.string()), // 사용자 언어 설정 (en, ko, ja)
   })
     .index('by_email', ['email'])
     .index('by_user', ['userId'])

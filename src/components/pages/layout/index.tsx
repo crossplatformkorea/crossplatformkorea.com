@@ -1,19 +1,27 @@
 import { ReactNode, useState, useEffect } from 'react';
 import { useConvexAuth } from 'convex/react';
+import { useQuery, useMutation } from 'convex/react';
+import { api } from '../../../../convex/_generated/api';
 import AppLoading from '../../AppLoading';
 import Sidebar from './Sidebar';
 import { Header } from './Header';
 import { t } from 'i18next';
 import { cn } from '@/lib/utils';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
+import { getLocale } from '../../../lib/i18n';
 
 type AppLayoutProps = {
   children: ReactNode;
 };
 
 export function AppLayout({ children }: AppLayoutProps) {
-  const { isLoading } = useConvexAuth();
+  const { isLoading, isAuthenticated } = useConvexAuth();
   const { requestPermissionOnLoad } = usePushNotifications();
+
+  // 현재 사용자 정보 조회
+  const currentUser = useQuery(api.users.query.currentUser);
+  // locale 전용 업데이트 mutation
+  const updateUserLocale = useMutation(api.users.mutation.updateUserLocale);
 
   // Initialize sidebar state from localStorage or default to closed (false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
@@ -33,6 +41,30 @@ export function AppLayout({ children }: AppLayoutProps) {
   useEffect(() => {
     void requestPermissionOnLoad();
   }, [requestPermissionOnLoad]);
+
+  // 사용자 locale 업데이트 (locale만 업데이트)
+  useEffect(() => {
+    const updateLocaleIfNeeded = async () => {
+      if (!isAuthenticated || !currentUser?.profile) return;
+
+      const currentLocale = getLocale();
+      const userLocale = currentUser.profile.locale;
+
+      // locale이 저장되지 않았거나 현재 언어와 다른 경우에만 업데이트
+      if (!userLocale || userLocale !== currentLocale) {
+        try {
+          await updateUserLocale({
+            locale: currentLocale,
+          });
+          console.log(`User locale updated to: ${currentLocale}`);
+        } catch (error) {
+          console.error('Failed to update user locale:', error);
+        }
+      }
+    };
+
+    void updateLocaleIfNeeded();
+  }, [isAuthenticated, currentUser?.profile?.locale, updateUserLocale, currentUser?.profile]);
 
   const toggleSidebar = () => {
     setIsTransitioning(true);

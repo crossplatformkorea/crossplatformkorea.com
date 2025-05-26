@@ -26,27 +26,27 @@ export const getCommentsByPostId = query({
   },
 });
 
-// 댓글 작성자 프로필 한번에 조회 - 수정: validator에 누락된 필드 추가
+// 댓글 작성자 프로필 한번에 조회 - 수정: postId를 받아서 댓글 작성자들의 프로필 조회
 export const getCommentAuthorProfiles = query({
   args: { postId: v.id('posts') },
   returns: v.array(
     v.object({
+      _creationTime: v.number(),
       _id: v.id('userProfiles'),
-      _creationTime: v.number(), // 누락됐던 필드 추가
-      userId: v.id('users'),
-      displayName: v.string(),
       avatarUrl: v.optional(v.string()),
+      deletedAt: v.optional(v.string()),
+      description: v.optional(v.string()),
+      displayName: v.string(),
       email: v.string(),
-      // 추가 필드들
+      expectations: v.optional(v.string()),
+      githubId: v.optional(v.string()),
+      lookingFor: v.optional(v.string()),
       name: v.optional(v.string()),
       organization: v.optional(v.string()),
-      description: v.optional(v.string()),
-      deletedAt: v.optional(v.string()),
-      githubId: v.optional(v.string()),
       socialLinks: v.optional(v.array(v.string())),
       tags: v.optional(v.array(v.string())),
-      lookingFor: v.optional(v.string()),
-      expectations: v.optional(v.string()),
+      userId: v.id('users'),
+      locale: v.optional(v.string()),
     }),
   ),
   handler: async (ctx, args) => {

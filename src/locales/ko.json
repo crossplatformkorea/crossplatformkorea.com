@@ -60,7 +60,8 @@
   "profile": {
     "title": "프로필",
     "buttons": {
-      "signOut": "로그아웃"
+      "signOut": "로그아웃",
+      "removeImage": "이미지 제거"
     },
     "sections": {
       "details": "프로필 정보"
@@ -421,87 +422,46 @@
   },
   "notifications": {
     "title": "알림",
-    "bellAriaLabel": "알림 열기",
-    "markAllAsRead": "모두 읽음 처리",
-    "markAsRead": "읽음 처리",
-    "delete": "삭제",
-    "deleteSelected": "선택한 {{count}}개 삭제",
+    "bellAriaLabel": "알림 보기",
+    "markAllAsRead": "모두 읽음",
     "noNotifications": "알림이 없습니다",
-    "noNotificationsDesc": "댓글, 좋아요 및 기타 활동에 대한 알림이 여기에 표시됩니다.",
     "viewAll": "모든 알림 보기",
-    "totalCount": "총 {{count}}개 알림",
-    "unreadCount": "{{count}}개 읽지 않음",
-    "selectAll": "모두 선택",
-    "deselectAll": "선택 해제",
-    "messages": {
-      "commentOnPost": {
-        "title": "새로운 댓글",
-        "message": "{{commenterName}}님이 \"{{postTitle}}\" 포스트에 댓글을 달았습니다."
-      },
-      "likeOnShowcase": {
-        "title": "쇼케이스에 좋아요",
-        "message": "{{likerName}}님이 \"{{showcaseTitle}}\" 쇼케이스에 좋아요를 눌렀습니다."
-      },
-      "likeOnPost": {
-        "title": "포스트에 좋아요",
-        "message": "{{likerName}}님이 \"{{postTitle}}\" 포스트에 좋아요를 눌렀습니다."
-      }
-    },
     "pushNotifications": {
       "title": "푸시 알림",
-      "description": "댓글이나 좋아요가 달릴 때 알림을 받아보세요",
-      "notSupported": "이 브라우저는 푸시 노티피케이션을 지원하지 않습니다.",
+      "description": "브라우저 푸시 알림을 설정하세요",
       "permission": {
-        "title": "알림 권한",
-        "granted": "✅ 허용됨",
-        "denied": "❌ 거부됨",
-        "default": "⏳ 미설정"
+        "title": "권한",
+        "granted": "허용됨",
+        "denied": "거부됨",
+        "default": "대기 중"
       },
       "subscription": {
-        "title": "구독 상태",
-        "subscribed": "✅ 구독 중",
-        "notSubscribed": "❌ 구독하지 않음"
-      },
-      "test": {
-        "title": "테스트 알림",
-        "description": "모든 것이 제대로 작동하는지 확인하기 위해 테스트 알림을 보냅니다"
+        "title": "구독",
+        "subscribed": "구독됨",
+        "notSubscribed": "구독 안됨"
       },
       "buttons": {
         "requestPermission": "권한 요청",
         "subscribe": "구독하기",
-        "unsubscribe": "구독 해제",
-        "sendTest": "테스트 알림 보내기"
-      },
-      "messages": {
-        "subscribeSuccess": "알림 구독에 성공했습니다!",
-        "unsubscribeSuccess": "알림 구독을 해제했습니다!",
-        "permissionGranted": "알림 권한이 허용되었습니다!",
-        "testSent": "테스트 알림이 성공적으로 전송되었습니다!",
-        "testNotificationSent": "테스트 알림이 성공적으로 전송되었습니다!"
-      },
-      "errors": {
-        "subscriptionFailed": "구독에 실패했습니다.",
-        "unsubscriptionFailed": "구독 해제에 실패했습니다.",
-        "permissionFailed": "권한 요청에 실패했습니다.",
-        "testFailed": "테스트 알림 전송에 실패했습니다.",
-        "permissionDenied": "알림 권한 요청이 거부되었습니다.",
-        "testNotificationFailed": "테스트 알림 전송에 실패했습니다."
+        "unsubscribe": "구독 해제"
       },
       "help": {
-        "permissionDefault": "'권한 요청'을 클릭하여 이 사이트의 알림을 허용해주세요.",
-        "permissionDenied": "브라우저 설정에서 노티피케이션 권한을 허용해주세요. 주소표시줄의 자물쇠 아이콘을 클릭하여 설정할 수 있습니다.",
-        "permissionDeniedTitle": "권한 거부됨",
-        "browserNotSupported": "이 브라우저는 푸시 알림을 지원하지 않습니다. 최신 브라우저를 사용해보세요.",
-        "subscribeHelp": "게시물에 댓글이나 좋아요가 달릴 때 알림을 받으려면 구독하세요.",
-        "subscriptionHelp": "다른 사람이 내 게시물에 댓글을 달거나 좋아요를 누르면 알림을 받게 됩니다."
+        "browserNotSupported": "이 브라우저는 푸시 알림을 지원하지 않습니다",
+        "permissionDefault": "알림을 받으려면 권한을 허용하세요",
+        "permissionDenied": "브라우저 설정에서 알림을 허용해주세요",
+        "subscriptionHelp": "알림을 받으려면 구독하세요"
       },
-      "banner": {
-        "title": "알림을 받아보세요!",
-        "description": "새로운 댓글과 좋아요 알림을 받아보세요.",
-        "enable": "알림 활성화",
-        "remindLater": "24시간 후 다시 알림",
-        "laterInfo": "프로필 설정에서 언제든지 알림을 활성화할 수 있습니다.",
-        "aboutTime": "알림을 활성화하지 않은 경우 24시간 후에 이 알림이 다시 표시됩니다."
+      "messages": {
+        "subscribeSuccess": "푸시 알림을 구독했습니다",
+        "unsubscribeSuccess": "푸시 알림 구독을 해제했습니다",
+        "permissionGranted": "알림 권한이 허용되었습니다",
+        "testNotificationSent": "테스트 알림을 전송했습니다"
+      },
+      "errors": {
+        "subscriptionFailed": "구독에 실패했습니다",
+        "unsubscriptionFailed": "구독 해제에 실패했습니다",
+        "permissionDenied": "알림 권한이 거부되었습니다",
+        "testNotificationFailed": "테스트 알림 전송에 실패했습니다"
       }
     }
   },

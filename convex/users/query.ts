@@ -8,39 +8,35 @@ export const currentUser = query({
   args: {},
   returns: v.union(
     v.object({
-      _id: v.id('users'),
       _creationTime: v.number(),
-      // Fields from various OAuth providers
-      name: v.optional(v.string()),
+      _id: v.id('users'),
+      avatarUrl: v.optional(v.string()),
+      displayName: v.optional(v.string()),
       email: v.optional(v.string()),
       emailVerificationTime: v.optional(v.number()),
-      // GitHub specific fields
       image: v.optional(v.string()),
-      // 명시적 tokenIdentifier 필드 추가 - 오류 해결
-      tokenIdentifier: v.optional(v.string()),
-      // User profile from our database
+      name: v.optional(v.string()),
       profile: v.optional(
         v.object({
-          _id: v.id('userProfiles'),
           _creationTime: v.number(),
-          userId: v.id('users'),
-          email: v.string(),
-          displayName: v.string(),
-          name: v.optional(v.string()),
-          organization: v.optional(v.string()),
-          description: v.optional(v.string()),
+          _id: v.id('userProfiles'),
           avatarUrl: v.optional(v.string()),
           deletedAt: v.optional(v.string()),
+          description: v.optional(v.string()),
+          displayName: v.string(),
+          email: v.string(),
+          expectations: v.optional(v.string()),
           githubId: v.optional(v.string()),
+          lookingFor: v.optional(v.string()),
+          name: v.optional(v.string()),
+          organization: v.optional(v.string()),
           socialLinks: v.optional(v.array(v.string())),
           tags: v.optional(v.array(v.string())),
-          lookingFor: v.optional(v.string()),
-          expectations: v.optional(v.string()),
+          userId: v.id('users'),
+          locale: v.optional(v.string()), // locale 필드 추가
         }),
       ),
-      // Convenience fields
-      displayName: v.optional(v.string()),
-      avatarUrl: v.optional(v.string()),
+      tokenIdentifier: v.optional(v.string()),
     }),
     v.null(),
   ),
@@ -59,7 +55,7 @@ export const currentUser = query({
         .query('userProfiles')
         .withIndex('by_user', (q) => q.eq('userId', userId as Id<'users'>))
         .first();
-        
+
       // 인증 정보에서 tokenIdentifier 가져오기
       let tokenIdentifier: string | undefined;
       try {
@@ -103,6 +99,7 @@ export const getProfile = query({
       tags: v.optional(v.array(v.string())),
       lookingFor: v.optional(v.string()),
       expectations: v.optional(v.string()),
+      locale: v.optional(v.string()),
     }),
     v.null(),
   ),
@@ -138,6 +135,7 @@ export const getProfilesByUserIds = query({
       tags: v.optional(v.array(v.string())),
       lookingFor: v.optional(v.string()),
       expectations: v.optional(v.string()),
+      locale: v.optional(v.string()),
     }),
   ),
   handler: async (ctx, args) => {

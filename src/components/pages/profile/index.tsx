@@ -27,6 +27,7 @@ import PushNotificationSettings from './PushNotificationSettings';
 import { useAuthStore } from '@/stores/authStore'; // Added
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/uis/Button';
+import { getLocale } from '../../../lib/i18n';
 
 export default function ProfilePage() {
   // const { isAuthenticated, isLoading } = useConvexAuth();
@@ -452,7 +453,10 @@ export default function ProfilePage() {
         }
       }
 
-      // Update profile with new data including avatar URL
+      // 현재 locale 가져오기
+      const currentLocale = getLocale();
+
+      // Update profile with new data including avatar URL and locale
       await updateProfile({
         displayName,
         description,
@@ -462,6 +466,7 @@ export default function ProfilePage() {
         tags,
         lookingFor,
         expectations,
+        locale: currentLocale,
       });
 
       // Also update basic user info
@@ -476,6 +481,7 @@ export default function ProfilePage() {
         expectations,
         tags,
         socialLinks: filteredSocialLinks,
+        locale: currentLocale,
       };
 
       // Submit to server with updated response handling

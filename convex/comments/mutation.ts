@@ -43,10 +43,18 @@ export const addComment = mutation({
         .query('userProfiles')
         .withIndex('by_user', (q) => q.eq('userId', userId))
         .unique();
-      
+
+      // 포스트 작성자의 언어 설정 조회
+      const postAuthorProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', post.authorId!))
+        .unique();
+
       const commenterName = commenterProfile?.displayName || 'Someone';
-      
-      // 알림 생성 및 푸시 알림 전송 (기본 로케일 사용)
+      // locale이 없는 경우 기본값 'ko' 사용 (한국 서비스이므로)
+      const userLocale = postAuthorProfile?.locale || 'ko';
+
+      // 알림 생성 및 푸시 알림 전송 (사용자의 locale 사용)
       await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
         userId: post.authorId,
         type: 'COMMENT_ON_POST',
@@ -55,7 +63,7 @@ export const addComment = mutation({
         triggeredById: userId,
         commenterName: commenterName,
         postTitle: post.title,
-        locale: 'en', // 기본값으로 영어 사용
+        locale: userLocale,
       });
     }
 

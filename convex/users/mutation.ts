@@ -8,28 +8,29 @@ import { ErrorCode } from '../constants';
 // Create or update a user profile after authentication
 export const createOrUpdateUser = mutation({
   args: {
-    name: v.optional(v.string()),
     email: v.string(),
-    // Add displayName to the validator to match client input
+    name: v.optional(v.string()),
+    realName: v.optional(v.string()),
     displayName: v.optional(v.string()),
-    // 추가 필드
-    realName: v.optional(v.string()), // 실명
-    organization: v.optional(v.string()), // 소속
-    // New fields
-    githubId: v.optional(v.string()),
+    organization: v.optional(v.string()),
     description: v.optional(v.string()),
     lookingFor: v.optional(v.string()),
     expectations: v.optional(v.string()),
     tags: v.optional(v.array(v.string())),
     socialLinks: v.optional(v.array(v.string())),
+    locale: v.optional(v.string()), // locale 필드 추가
+    githubId: v.optional(v.string()), // githubId 필드 추가
   },
   returns: v.union(
     v.object({
       profileId: v.id('userProfiles'),
       success: v.boolean(),
-      errorCode: v.optional(v.string()),
     }),
-    v.null(),
+    v.object({
+      profileId: v.id('userProfiles'),
+      success: v.boolean(),
+      errorCode: v.string(),
+    }),
   ),
   handler: async (ctx, args) => {
     // Get authenticated user ID using getAuthUserId
@@ -195,9 +196,40 @@ export const createOrUpdateUser = mutation({
   },
 });
 
+// locale만 업데이트하는 가벼운 mutation
+export const updateUserLocale = mutation({
+  args: {
+    locale: v.string(),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 사용자 프로필 조회
+    const userProfile = await ctx.db
+      .query('userProfiles')
+      .withIndex('by_user', (q) => q.eq('userId', userId))
+      .unique();
+
+    if (!userProfile) {
+      throw new Error('User profile not found');
+    }
+
+    // locale만 업데이트
+    await ctx.db.patch(userProfile._id, {
+      locale: args.locale,
+    });
+
+    return null;
+  },
+});
+
 export const updateProfile = mutation({
   args: {
-    displayName: v.optional(v.string()),
+    displayName: v.string(),
     description: v.optional(v.string()),
     avatarUrl: v.optional(v.string()),
     githubId: v.optional(v.string()),
@@ -205,41 +237,39 @@ export const updateProfile = mutation({
     tags: v.optional(v.array(v.string())),
     lookingFor: v.optional(v.string()),
     expectations: v.optional(v.string()),
+    locale: v.optional(v.string()), // locale 필드 추가
   },
-  returns: v.id('userProfiles'),
+  returns: v.null(),
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       throw new Error('Authentication required');
     }
 
-    const profile = await ctx.db
+    // 사용자 프로필 조회
+    const userProfile = await ctx.db
       .query('userProfiles')
-      .withIndex('by_user', (q) => q.eq('userId', userId as Id<'users'>))
-      .first();
+      .withIndex('by_user', (q) => q.eq('userId', userId))
+      .unique();
 
-    if (!profile) {
-      throw new Error('Profile not found');
+    if (!userProfile) {
+      throw new Error('User profile not found');
     }
 
-    // Build update object with only provided fields
-    const updateFields: Partial<Doc<'userProfiles'>> = {};
+    // 프로필 업데이트
+    await ctx.db.patch(userProfile._id, {
+      displayName: args.displayName,
+      description: args.description,
+      avatarUrl: args.avatarUrl,
+      githubId: args.githubId,
+      socialLinks: args.socialLinks,
+      tags: args.tags,
+      lookingFor: args.lookingFor,
+      expectations: args.expectations,
+      locale: args.locale, // locale 필드 포함
+    });
 
-    // Basic fields
-    if (args.displayName !== undefined) updateFields.displayName = args.displayName;
-    if (args.description !== undefined) updateFields.description = args.description;
-    if (args.avatarUrl !== undefined) updateFields.avatarUrl = args.avatarUrl;
-
-    // New fields
-    if (args.githubId !== undefined) updateFields.githubId = args.githubId;
-    if (args.lookingFor !== undefined) updateFields.lookingFor = args.lookingFor;
-    if (args.expectations !== undefined) updateFields.expectations = args.expectations;
-    if (args.tags !== undefined) updateFields.tags = args.tags;
-    if (args.socialLinks !== undefined) updateFields.socialLinks = args.socialLinks;
-
-    await ctx.db.patch(profile._id, updateFields);
-
-    return profile._id;
+    return null;
   },
 });
 

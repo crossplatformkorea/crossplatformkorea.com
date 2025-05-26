@@ -60,7 +60,8 @@
   "profile": {
     "title": "プロフィール",
     "buttons": {
-      "signOut": "ログアウト"
+      "signOut": "ログアウト",
+      "removeImage": "画像を削除"
     },
     "sections": {
       "details": "プロフィール詳細"
@@ -423,87 +424,46 @@
   },
   "notifications": {
     "title": "通知",
-    "bellAriaLabel": "通知を開く",
+    "bellAriaLabel": "通知を見る",
     "markAllAsRead": "すべて既読にする",
-    "markAsRead": "既読にする",
-    "delete": "削除",
-    "deleteSelected": "選択した{{count}}件を削除",
-    "noNotifications": "通知がありません",
-    "noNotificationsDesc": "コメント、いいね、その他のアクティビティに関する通知がここに表示されます。",
-    "viewAll": "すべての通知を表示",
-    "totalCount": "合計{{count}}件の通知",
-    "unreadCount": "{{count}}件未読",
-    "selectAll": "すべて選択",
-    "deselectAll": "選択解除",
-    "messages": {
-      "commentOnPost": {
-        "title": "新しいコメント",
-        "message": "{{commenterName}}さんがあなたの投稿「{{postTitle}}」にコメントしました。"
-      },
-      "likeOnShowcase": {
-        "title": "ショーケースにいいね",
-        "message": "{{likerName}}さんがあなたのショーケース「{{showcaseTitle}}」にいいねしました。"
-      },
-      "likeOnPost": {
-        "title": "投稿にいいね",
-        "message": "{{likerName}}さんがあなたの投稿「{{postTitle}}」にいいねしました。"
-      }
-    },
+    "noNotifications": "通知はありません",
+    "viewAll": "すべての通知を見る",
     "pushNotifications": {
       "title": "プッシュ通知",
-      "description": "コメントやいいねがついた時に通知を受け取ります",
-      "notSupported": "このブラウザはプッシュ通知をサポートしていません。",
+      "description": "ブラウザプッシュ通知を設定してください",
       "permission": {
-        "title": "通知権限",
-        "granted": "✅ 許可済み",
-        "denied": "❌ 拒否済み",
-        "default": "⏳ 未設定"
+        "title": "権限",
+        "granted": "許可済み",
+        "denied": "拒否済み",
+        "default": "待機中"
       },
       "subscription": {
-        "title": "購読状態",
-        "subscribed": "✅ 購読中",
-        "notSubscribed": "❌ 購読していません"
-      },
-      "test": {
-        "title": "テスト通知",
-        "description": "すべてが正常に動作していることを確認するためにテスト通知を送信します"
+        "title": "購読",
+        "subscribed": "購読済み",
+        "notSubscribed": "未購読"
       },
       "buttons": {
-        "requestPermission": "権限をリクエスト",
+        "requestPermission": "権限を要求",
         "subscribe": "購読する",
-        "unsubscribe": "購読解除",
-        "sendTest": "テスト通知を送信"
-      },
-      "messages": {
-        "subscribeSuccess": "通知の購読に成功しました！",
-        "unsubscribeSuccess": "通知の購読を解除しました！",
-        "permissionGranted": "通知権限が許可されました！",
-        "testSent": "テスト通知が正常に送信されました！",
-        "testNotificationSent": "テスト通知が正常に送信されました！"
-      },
-      "errors": {
-        "subscriptionFailed": "購読に失敗しました。",
-        "unsubscriptionFailed": "購読解除に失敗しました。",
-        "permissionFailed": "権限リクエストに失敗しました。",
-        "testFailed": "テスト通知の送信に失敗しました。",
-        "permissionDenied": "通知権限のリクエストが拒否されました。",
-        "testNotificationFailed": "テスト通知の送信に失敗しました。"
+        "unsubscribe": "購読解除"
       },
       "help": {
-        "permissionDefault": "'権限をリクエスト'をクリックして、このサイトからの通知を許可してください。",
-        "permissionDenied": "ブラウザ設定で通知権限を許可してください。アドレスバーの鍵アイコンをクリックして設定できます。",
-        "permissionDeniedTitle": "権限が拒否されました",
-        "browserNotSupported": "このブラウザはプッシュ通知をサポートしていません。最新のブラウザをお試しください。",
-        "subscribeHelp": "投稿にコメントやいいねがついた時に通知を受け取るには購読してください。",
-        "subscriptionHelp": "他の人があなたの投稿にコメントしたり、いいねを押したりすると通知を受け取ります。"
+        "browserNotSupported": "このブラウザはプッシュ通知をサポートしていません",
+        "permissionDefault": "通知を受信するには権限を許可してください",
+        "permissionDenied": "ブラウザ設定で通知を許可してください",
+        "subscriptionHelp": "通知を受信するには購読してください"
       },
-      "banner": {
-        "title": "通知を受け取りましょう！",
-        "description": "新しいコメントやいいねの通知を受け取ることができます。",
-        "enable": "通知を有効にする",
-        "remindLater": "24時間後にもう一度お知らせ",
-        "laterInfo": "プロフィール設定でいつでも通知を有効にできます。",
-        "aboutTime": "通知を有効にしていない場合、24時間後にこのお知らせが再び表示されます。"
+      "messages": {
+        "subscribeSuccess": "プッシュ通知を購読しました",
+        "unsubscribeSuccess": "プッシュ通知の購読を解除しました",
+        "permissionGranted": "通知権限が許可されました",
+        "testNotificationSent": "テスト通知を送信しました"
+      },
+      "errors": {
+        "subscriptionFailed": "購読に失敗しました",
+        "unsubscriptionFailed": "購読解除に失敗しました",
+        "permissionDenied": "通知権限が拒否されました",
+        "testNotificationFailed": "テスト通知の送信に失敗しました"
       }
     }
   },
