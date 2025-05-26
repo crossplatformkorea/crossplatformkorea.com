@@ -74,7 +74,7 @@ export const markAsRead = mutation({
 export const markAllAsRead = mutation({
   args: {},
   returns: v.null(),
-  handler: async (ctx, args) => {
+  handler: async (ctx, _args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       throw new Error('Authentication required');

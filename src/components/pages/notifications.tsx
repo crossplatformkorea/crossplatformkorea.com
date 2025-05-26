@@ -130,7 +130,7 @@ export default function NotificationsPage() {
           <h1 className="text-2xl font-bold">{t('notifications.title')}</h1>
           <div className="flex items-center gap-2">
             {unreadNotifications.length > 0 && (
-              <Button variant="outline" size="sm" onClick={handleMarkAllAsRead}>
+              <Button variant="outline" size="sm" onClick={() => void handleMarkAllAsRead()}>
                 <CheckCheck size={16} className="mr-2" />
                 {t('notifications.markAllAsRead')}
               </Button>
@@ -172,7 +172,7 @@ export default function NotificationsPage() {
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={handleDeleteSelected}
+                onClick={() => void handleDeleteSelected()}
                 className="ml-auto"
               >
                 <Trash2 size={16} className="mr-2" />
@@ -203,7 +203,7 @@ export default function NotificationsPage() {
                     />
                     <div
                       className="flex-1 min-w-0 cursor-pointer"
-                      onClick={() => handleNotificationClick(notification._id, notification.isRead)}
+                      onClick={() => void handleNotificationClick(notification._id, notification.isRead)}
                     >
                       <div className="flex items-center gap-2 mb-2">
                         <p className="font-medium text-foreground">{notification.title}</p>
@@ -226,7 +226,7 @@ export default function NotificationsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleNotificationClick(notification._id, false)}
+                          onClick={() => void handleNotificationClick(notification._id, false)}
                           className="p-1"
                           title={t('notifications.markAsRead')}
                         >
@@ -236,7 +236,7 @@ export default function NotificationsPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDeleteNotification(notification._id)}
+                        onClick={() => void handleDeleteNotification(notification._id)}
                         className="p-1 text-destructive hover:text-destructive"
                         title={t('notifications.delete')}
                       >

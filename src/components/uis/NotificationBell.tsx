@@ -3,7 +3,6 @@ import { Bell, X } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
-import { getAuthUserId } from '@convex-dev/auth/server';
 import { useConvexAuth } from 'convex/react';
 import { cn } from '../../lib/utils';
 import { Button } from '../uis/Button';
@@ -102,7 +101,7 @@ export default function NotificationBell() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={handleMarkAllAsRead}
+                  onClick={() => void handleMarkAllAsRead()}
                   className="text-xs"
                 >
                   {t('notifications.markAllAsRead')}
@@ -130,7 +129,7 @@ export default function NotificationBell() {
                       'p-4 hover:bg-muted/50 cursor-pointer transition-colors',
                       !notification.isRead && 'bg-primary/5',
                     )}
-                    onClick={() => handleNotificationClick(notification._id, notification.isRead)}
+                    onClick={() => void handleNotificationClick(notification._id, notification.isRead)}
                   >
                     <div className="flex items-start gap-3">
                       <div className="flex-1 min-w-0">

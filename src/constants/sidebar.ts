@@ -1,7 +1,7 @@
 /**
  * Sidebar items for rendering the navigation menu
  */
-import { FileText, Lightbulb, Palette } from 'lucide-react';
+import { FileText, Lightbulb, Palette, BookOpen } from 'lucide-react';
 
 export type SidebarItem = {
   key: string;
@@ -34,5 +34,11 @@ export const sidebarItems: SidebarItem[] = [
     route: '/feature-request',
     icon: Lightbulb,
     labelKey: 'pages.featureRequests',
+  },
+  {
+    key: 'docs',
+    route: 'https://doc.crossplatformkorea.com',
+    icon: BookOpen,
+    labelKey: 'common.navDoc',
   },
 ];

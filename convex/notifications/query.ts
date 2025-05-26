@@ -114,7 +114,7 @@ export const getUserNotifications = query({
 export const getUnreadCount = query({
   args: {},
   returns: v.number(),
-  handler: async (ctx, args) => {
+  handler: async (ctx, _args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return 0;
@@ -154,7 +154,7 @@ export const getRecentUnreadNotifications = query({
       }),
     })
   ),
-  handler: async (ctx, args) => {
+  handler: async (ctx, _args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return [];

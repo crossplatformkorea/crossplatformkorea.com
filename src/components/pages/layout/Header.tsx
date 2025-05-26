@@ -120,17 +120,6 @@ export function Header({
           >
             {t('common.navCommunity')}
           </a>
-          <a
-            href="https://doc.crossplatformkorea.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              'font-medium text-sm px-3 py-2 rounded-md transition-colors',
-              'hover:bg-muted dark:hover:bg-muted',
-            )}
-          >
-            {t('common.navDoc')}
-          </a>
         </nav>{' '}
         {/* Auth & Language Controls */}
         <div className="flex items-center gap-1 sm:gap-3">

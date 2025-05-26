@@ -2,7 +2,6 @@ import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
-import { internal } from '../_generated/api';
 
 // 댓글 추가
 export const addComment = mutation({
