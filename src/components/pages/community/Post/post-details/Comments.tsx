@@ -5,11 +5,12 @@ import { api } from '../../../../../../convex/_generated/api';
 import { Id } from '../../../../../../convex/_generated/dataModel';
 import { formatDistanceToNow } from 'date-fns';
 import { ko, ja, enUS } from 'date-fns/locale';
-import { User, Send, MessageSquare, Trash2, Loader2 } from 'lucide-react';
+import { User, Send, MessageSquare, Trash2, Loader2, Heart } from 'lucide-react';
 import { cn, devConsole } from '../../../../../lib/utils';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '../../../../uis/Button';
+import { useNavigate } from 'react-router-dom';
 
 interface CommentsProps {
   postId: Id<'posts'>;
@@ -22,6 +23,7 @@ export default function Comments({ postId }: CommentsProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState<Id<'comments'> | null>(null);
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
+  const navigate = useNavigate();
 
   // 댓글과 현재 사용자 가져오기
   const comments = useQuery(api.comments.query.getCommentsByPostId, { postId });
@@ -33,6 +35,7 @@ export default function Comments({ postId }: CommentsProps) {
   // 뮤테이션
   const addComment = useMutation(api.comments.mutation.addComment);
   const deleteComment = useMutation(api.comments.mutation.deleteComment);
+  const toggleLike = useMutation(api.comments.mutation.toggleLike);
 
   // 언어별 로케일 설정
   const getLocale = () => {
@@ -83,6 +86,32 @@ export default function Comments({ postId }: CommentsProps) {
         devConsole.error('Error deleting comment:', error);
       }
     })();
+  };
+  
+  // 사용자 프로필 페이지로 이동 핸들러
+  const handleUserClick = (userId: Id<'users'>, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    void navigate(`/user/${userId}`);
+  };
+  
+  // 댓글 좋아요 토글 핸들러
+  const handleToggleLike = (commentId: Id<'comments'>, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!isAuthenticated) {
+      requireAuth();
+      return;
+    }
+    
+    void toggleLike({ commentId });
+  };
+
+  // 좋아요 상태 체크 함수
+  const checkIfLiked = (comment: any): boolean => {
+    if (!currentUser || !comment.likedBy) return false;
+    return comment.likedBy.some((id: Id<'users'>) => id === currentUser._id);
   };
 
   if (!comments) {
@@ -164,6 +193,10 @@ export default function Comments({ postId }: CommentsProps) {
 
             const isCommentAuthor =
               currentUser && commentAuthor && currentUser._id === comment.authorId;
+              
+            // 좋아요 상태 체크 - 주석 처리된 기존 코드 대신 새 함수 사용
+            const hasLiked = checkIfLiked(comment);
+            const likeCount = comment.likeCount || 0;
 
             return (
               <div
@@ -173,25 +206,39 @@ export default function Comments({ postId }: CommentsProps) {
                 {/* 댓글 작성자 정보 */}
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center">
-                    {commentAuthor?.avatarUrl ? (
-                      <img
-                        src={commentAuthor.avatarUrl}
-                        alt={commentAuthor.displayName || ''}
-                        className={cn(
-                          "h-8 w-8 rounded-full mr-2 object-cover border border-border/30",
-                          "dark:border-gray-700/50"
-                        )}
-                      />
-                    ) : (
-                      <div className={cn(
-                        "h-8 w-8 rounded-full mr-2 flex items-center justify-center",
-                        "bg-muted dark:bg-gray-700"
-                      )}>
-                        <User className="h-4 w-4 text-muted-foreground" />
-                      </div>
-                    )}
-                    <div>
-                      <div className="font-medium text-sm">
+                    {/* 프로필 이미지 - 클릭 시 사용자 페이지로 이동 */}
+                    <div 
+                      onClick={comment.authorId ? (e) => handleUserClick(comment.authorId, e) : undefined}
+                      className="cursor-pointer"
+                    >
+                      {commentAuthor?.avatarUrl ? (
+                        <img
+                          src={commentAuthor.avatarUrl}
+                          alt={commentAuthor.displayName || ''}
+                          className={cn(
+                            "h-8 w-8 rounded-full mr-3", // Increased margin-right from mr-2 to mr-3
+                            "object-cover border border-border/30",
+                            "hover:border-primary/60 transition-colors",
+                            "dark:border-gray-700/50"
+                          )}
+                        />
+                      ) : (
+                        <div className={cn(
+                          "h-8 w-8 rounded-full mr-3", // Increased margin-right from mr-2 to mr-3
+                          "flex items-center justify-center",
+                          "bg-muted hover:bg-muted/80 transition-colors",
+                          "dark:bg-gray-700"
+                        )}>
+                          <User className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="ml-0.5"> {/* Added a small left margin */}
+                      {/* 사용자 이름 - 클릭 시 사용자 페이지로 이동 */}
+                      <div 
+                        className="font-medium text-sm cursor-pointer hover:text-primary transition-colors"
+                        onClick={comment.authorId ? (e) => handleUserClick(comment.authorId, e) : undefined}
+                      >
                         {commentAuthor?.displayName || t('user.anonymousUser')}
                       </div>
                       <div className="text-xs text-muted-foreground">
@@ -203,22 +250,42 @@ export default function Comments({ postId }: CommentsProps) {
                     </div>
                   </div>
 
-                  {/* 댓글 삭제 버튼 - 작성자만 볼 수 있음 */}
-                  {isCommentAuthor && (
+                  <div className="flex items-center">
+                    {/* 좋아요 버튼 */}
                     <Button
-                      onClick={() => setShowDeleteCommentModal(comment._id)}
+                      onClick={(e) => handleToggleLike(comment._id, e)}
                       variant="ghost"
-                      size="icon"
-                      className="text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 h-8 w-8"
-                      title={t('common.delete')}
+                      size="sm"
+                      className={cn(
+                        "flex items-center gap-1 py-1 px-2 h-8",
+                        hasLiked ? 'text-rose-500' : 'text-muted-foreground',
+                        "hover:bg-rose-500/10 hover:text-rose-500"
+                      )}
+                      title={hasLiked ? t('common.unlike') : t('common.like')}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Heart 
+                        className={cn("h-3.5 w-3.5", hasLiked && "fill-rose-500")} 
+                      />
+                      <span className="text-xs">{likeCount}</span>
                     </Button>
-                  )}
+
+                    {/* 댓글 삭제 버튼 - 작성자만 볼 수 있음 */}
+                    {isCommentAuthor && (
+                      <Button
+                        onClick={() => setShowDeleteCommentModal(comment._id)}
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 h-8 w-8 ml-1"
+                        title={t('common.delete')}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
-                {/* 댓글 내용 */}
-                <div className="ml-10 mb-2">
+                {/* 댓글 내용 - Also adjusted margin for consistency */}
+                <div className="ml-11 mb-2"> {/* Increased from ml-10 to ml-11 to match new avatar spacing */}
                   <p className="text-foreground dark:text-gray-200 whitespace-pre-wrap break-words text-sm">
                     {comment.content}
                   </p>

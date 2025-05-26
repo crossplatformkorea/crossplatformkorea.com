@@ -70,6 +70,8 @@ export default defineSchema({
     authorId: v.id('users'),
     content: v.string(),
     updatedAt: v.optional(v.string()),
+    likeCount: v.optional(v.number()), // Ensure this field is defined
+    likedBy: v.optional(v.array(v.id('users'))), // Ensure this field is defined
   })
     .index('by_post', ['postId'])
     .index('by_author', ['authorId']),

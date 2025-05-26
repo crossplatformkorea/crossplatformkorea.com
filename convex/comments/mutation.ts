@@ -99,3 +99,45 @@ export const deleteComment = mutation({
     return true;
   },
 });
+
+// 댓글 좋아요 토글
+export const toggleLike = mutation({
+  args: {
+    commentId: v.id('comments'),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 댓글 가져오기
+    const comment = await ctx.db.get(args.commentId);
+    if (!comment) {
+      throw new Error('Comment not found');
+    }
+
+    // 사용자가 이미 댓글에 좋아요를 눌렀는지 확인
+    const likedBy = comment.likedBy || [];
+    const hasLiked = likedBy.some((id) => id === userId);
+
+    if (hasLiked) {
+      // 이미 좋아요를 눌렀다면, 좋아요 취소
+      const likeCount = Math.max(0, (comment.likeCount || 0) - 1);
+      await ctx.db.patch(args.commentId, {
+        likedBy: likedBy.filter((id) => id !== userId),
+        likeCount: likeCount,
+      });
+      return false; // 댓글의 좋아요가 취소되었음을 나타내기 위해 false 반환
+    } else {
+      // 아직 좋아요를 누르지 않았다면, 좋아요 추가
+      const likeCount = (comment.likeCount || 0) + 1;
+      await ctx.db.patch(args.commentId, {
+        likedBy: [...likedBy, userId as Id<'users'>],
+        likeCount: likeCount,
+      });
+      return true; // 댓글에 좋아요가 추가되었음을 나타내기 위해 true 반환
+    }
+  },
+});

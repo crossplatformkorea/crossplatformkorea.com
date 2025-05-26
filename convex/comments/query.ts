@@ -1,5 +1,6 @@
 import { v } from 'convex/values';
 import { query } from '../_generated/server';
+import { getAuthUserId } from '@convex-dev/auth/server';
 
 // 특정 게시물의 댓글 목록 조회
 export const getCommentsByPostId = query({
@@ -12,6 +13,8 @@ export const getCommentsByPostId = query({
       authorId: v.id('users'),
       content: v.string(),
       updatedAt: v.optional(v.string()),
+      likeCount: v.optional(v.number()), // Add likeCount field
+      likedBy: v.optional(v.array(v.id('users'))), // Add likedBy field
     }),
   ),
   handler: async (ctx, args) => {
@@ -89,5 +92,25 @@ export const getCommentCount = query({
       .collect();
 
     return comments.length;
+  },
+});
+
+// Check if user has liked a comment
+export const hasLiked = query({
+  args: { commentId: v.id('comments') },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      return false;
+    }
+
+    const comment = await ctx.db.get(args.commentId);
+    if (!comment) {
+      return false;
+    }
+
+    const likedBy = comment.likedBy || [];
+    return likedBy.some((id) => id === userId);
   },
 });
