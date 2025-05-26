@@ -14,6 +14,7 @@ const ProfilePage = lazy(() => import('./profile'));
 const UserProfilePage = lazy(() => import('./user'));
 const FeatureRequestsPage = lazy(() => import('./feature-requests'));
 const ShowcasePage = lazy(() => import('./showcase'));
+const NotificationsPage = lazy(() => import('./notifications'));
 
 // This component only handles routing
 export default function AppRoutes() {
@@ -52,6 +53,7 @@ export default function AppRoutes() {
               <Routes>
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/showcase" element={<ShowcasePage />} />
+                <Route path="/notifications" element={<NotificationsPage />} />
                 <Route path="/user/:userId" element={<UserProfilePage />} />
                 <Route path="/feature-request" element={<FeatureRequestsPage />} />
                 <Route path="/*" element={<CommunityPage />} />

@@ -97,4 +97,40 @@ export default defineSchema({
       searchField: "title",
       filterFields: ["category"]
     }),
+  // 알림 테이블 추가
+  notifications: defineTable({
+    userId: v.id('users'), // 알림을 받을 사용자
+    type: v.union(
+      v.literal('COMMENT_ON_POST'), // 내 포스트에 댓글
+      v.literal('LIKE_ON_SHOWCASE'), // 내 showcase에 좋아요
+      v.literal('LIKE_ON_POST'), // 내 포스트에 좋아요 (선택사항)
+    ),
+    title: v.string(), // 알림 제목
+    message: v.string(), // 알림 메시지
+    // 관련 리소스 ID (optional - 알림 유형에 따라 다름)
+    postId: v.optional(v.id('posts')), // 포스트 관련 알림일 때
+    showcaseId: v.optional(v.id('showcases')), // showcase 관련 알림일 때
+    commentId: v.optional(v.id('comments')), // 댓글 관련 알림일 때
+    // 알림을 발생시킨 사용자 (내가 아닌 다른 사용자)
+    triggeredById: v.id('users'),
+    isRead: v.boolean(), // 읽음 여부
+    readAt: v.optional(v.string()), // 읽은 시간
+  })
+    .index('by_userId', ['userId'])
+    .index('by_userId_isRead', ['userId', 'isRead'])
+    .index('by_type', ['type']),
+  
+  // 푸시 노티피케이션 구독 테이블
+  pushSubscriptions: defineTable({
+    userId: v.id('users'), // 구독한 사용자
+    endpoint: v.string(), // 푸시 서비스 엔드포인트
+    p256dh: v.string(), // 공개키
+    auth: v.string(), // 인증키
+    userAgent: v.optional(v.string()), // 브라우저 정보
+    isActive: v.boolean(), // 활성 상태
+    updatedAt: v.optional(v.string()), // 마지막 업데이트 시간
+  })
+    .index('by_userId', ['userId'])
+    .index('by_userId_endpoint', ['userId', 'endpoint'])
+    .index('by_endpoint', ['endpoint']),
 });

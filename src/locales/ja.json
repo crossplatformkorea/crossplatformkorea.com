@@ -15,6 +15,7 @@
     "delete": "削除",
     "authRequired": "すべての機能を利用するにはログインしてください",
     "close": "閉じる",
+    "dismiss": "閉じる",
     "sidePosts": "投稿",
     "navCommunity": "コミュニティ",
     "navDoc": "ドキュメント",
@@ -23,8 +24,19 @@
     "viewAll": "すべて見る",
     "loginToAccess": "サインインして始める",
     "back": "戻る",
-    "loginToWrite": "書き込むにはログインしてください",
-    "add": "追加"
+    "loginToWrite": "投稿するにはログインしてください",
+    "add": "追加",
+    "time": {
+      "hours": "{{count}}時間",
+      "hour": "1時間",
+      "minutes": "{{count}}分",
+      "minute": "1分",
+      "seconds": "{{count}}秒",
+      "second": "1秒",
+      "now": "今",
+      "ago": "前",
+      "in": "後"
+    }
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -145,6 +157,7 @@
     "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？"
   },
   "postCategories": {
+    "ALL": { "name": "すべて", "description": "すべての投稿" },
     "NEWS": {
       "name": "ニュース",
       "description": "クロスプラットフォーム開発コミュニティからの最新情報とお知らせです。"
@@ -236,11 +249,17 @@
     "formatting": {
       "bold": "太字",
       "italic": "斜体",
-      "link": "リンク",
-      "image": "画像",
-      "bulletList": "箇条書き",
-      "numberedList": "番号付きリスト"
-    }
+      "link": "リンク挿入",
+      "image": "画像挿入",
+      "list": "箇条書き",
+      "orderedList": "番号付きリスト"
+    },
+    "bold": "太字",
+    "italic": "斜体",
+    "link": "リンク",
+    "image": "画像",
+    "bulletList": "箇条書き",
+    "numberedList": "番号付きリスト"
   },
   "summary": {
     "welcome": "クロスプラットフォーム・コリアへようこそ",
@@ -401,6 +420,92 @@
     "offline": "オフラインモード",
     "updateAvailable": "新しいバージョンが利用可能です",
     "reload": "再読み込み"
+  },
+  "notifications": {
+    "title": "通知",
+    "bellAriaLabel": "通知を開く",
+    "markAllAsRead": "すべて既読にする",
+    "markAsRead": "既読にする",
+    "delete": "削除",
+    "deleteSelected": "選択した{{count}}件を削除",
+    "noNotifications": "通知がありません",
+    "noNotificationsDesc": "コメント、いいね、その他のアクティビティに関する通知がここに表示されます。",
+    "viewAll": "すべての通知を表示",
+    "totalCount": "合計{{count}}件の通知",
+    "unreadCount": "{{count}}件未読",
+    "selectAll": "すべて選択",
+    "deselectAll": "選択解除",
+    "messages": {
+      "commentOnPost": {
+        "title": "新しいコメント",
+        "message": "{{commenterName}}さんがあなたの投稿「{{postTitle}}」にコメントしました。"
+      },
+      "likeOnShowcase": {
+        "title": "ショーケースにいいね",
+        "message": "{{likerName}}さんがあなたのショーケース「{{showcaseTitle}}」にいいねしました。"
+      },
+      "likeOnPost": {
+        "title": "投稿にいいね",
+        "message": "{{likerName}}さんがあなたの投稿「{{postTitle}}」にいいねしました。"
+      }
+    },
+    "pushNotifications": {
+      "title": "プッシュ通知",
+      "description": "コメントやいいねがついた時に通知を受け取ります",
+      "notSupported": "このブラウザはプッシュ通知をサポートしていません。",
+      "permission": {
+        "title": "通知権限",
+        "granted": "✅ 許可済み",
+        "denied": "❌ 拒否済み",
+        "default": "⏳ 未設定"
+      },
+      "subscription": {
+        "title": "購読状態",
+        "subscribed": "✅ 購読中",
+        "notSubscribed": "❌ 購読していません"
+      },
+      "test": {
+        "title": "テスト通知",
+        "description": "すべてが正常に動作していることを確認するためにテスト通知を送信します"
+      },
+      "buttons": {
+        "requestPermission": "権限をリクエスト",
+        "subscribe": "購読する",
+        "unsubscribe": "購読解除",
+        "sendTest": "テスト通知を送信"
+      },
+      "messages": {
+        "subscribeSuccess": "通知の購読に成功しました！",
+        "unsubscribeSuccess": "通知の購読を解除しました！",
+        "permissionGranted": "通知権限が許可されました！",
+        "testSent": "テスト通知が正常に送信されました！",
+        "testNotificationSent": "テスト通知が正常に送信されました！"
+      },
+      "errors": {
+        "subscriptionFailed": "購読に失敗しました。",
+        "unsubscriptionFailed": "購読解除に失敗しました。",
+        "permissionFailed": "権限リクエストに失敗しました。",
+        "testFailed": "テスト通知の送信に失敗しました。",
+        "permissionDenied": "通知権限のリクエストが拒否されました。",
+        "testNotificationFailed": "テスト通知の送信に失敗しました。"
+      },
+      "help": {
+        "permissionDefault": "'権限をリクエスト'をクリックして、このサイトからの通知を許可してください。",
+        "permissionDenied": "ブラウザ設定で通知権限を許可してください。アドレスバーの鍵アイコンをクリックして設定できます。",
+        "permissionDeniedTitle": "権限が拒否されました",
+        "browserNotSupported": "このブラウザはプッシュ通知をサポートしていません。最新のブラウザをお試しください。",
+        "subscribeHelp": "投稿にコメントやいいねがついた時に通知を受け取るには購読してください。",
+        "subscriptionHelp": "他の人があなたの投稿にコメントしたり、いいねを押したりすると通知を受け取ります。"
+      },
+      "banner": {
+        "title": "通知を受け取りましょう！",
+        "description": "新しいコメントやいいねの通知を受け取ることができます。",
+        "enable": "通知を有効にする",
+        "remindLater": "24時間後にもう一度お知らせ",
+        "laterInfo": "プロフィール設定でいつでも通知を有効にできます。",
+        "aboutTime": "通知を有効にしていない場合、24時間後にこのお知らせが再び表示されます。"
+      }
+    }
   },
   "meta": {
     "title": "CrossPlatformKorea",

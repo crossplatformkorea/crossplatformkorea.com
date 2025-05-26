@@ -75,27 +75,56 @@ export default function Sidebar({
       {/* Main navigation links */}
       <nav className="flex-1 py-4">
         <ul className="space-y-1">
-          {sidebarItems.map((item) => (
-            <li key={item.key}>
-              <Link
-                to={item.route}
-                className={cn(
-                  'flex items-center py-3 px-4 transition-colors',
-                  'hover:bg-gray-100 dark:hover:bg-zinc-800',
-                  isActive(item.route)
-                    ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-foreground font-medium'
-                    : 'text-gray-700 dark:text-zinc-300',
-                )}
-              >
-                <div className="shrink-0">
-                  <item.icon size={20} />
-                </div>
-                {showContent && (
-                  <span className="ml-3 transition-opacity duration-150">{t(item.labelKey)}</span>
-                )}
-              </Link>
-            </li>
-          ))}
+          {sidebarItems.map((item) => {
+            // Check if it's an external link
+            const isExternalLink = item.route.startsWith('http');
+            
+            if (isExternalLink) {
+              return (
+                <li key={item.key}>
+                  <a
+                    href={item.route}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      'flex items-center py-3 px-4 transition-colors',
+                      'hover:bg-gray-100 dark:hover:bg-zinc-800',
+                      'text-gray-700 dark:text-zinc-300',
+                    )}
+                  >
+                    <div className="shrink-0">
+                      <item.icon size={20} />
+                    </div>
+                    {showContent && (
+                      <span className="ml-3 transition-opacity duration-150">{t(item.labelKey)}</span>
+                    )}
+                  </a>
+                </li>
+              );
+            }
+            
+            return (
+              <li key={item.key}>
+                <Link
+                  to={item.route}
+                  className={cn(
+                    'flex items-center py-3 px-4 transition-colors',
+                    'hover:bg-gray-100 dark:hover:bg-zinc-800',
+                    isActive(item.route)
+                      ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-foreground font-medium'
+                      : 'text-gray-700 dark:text-zinc-300',
+                  )}
+                >
+                  <div className="shrink-0">
+                    <item.icon size={20} />
+                  </div>
+                  {showContent && (
+                    <span className="ml-3 transition-opacity duration-150">{t(item.labelKey)}</span>
+                  )}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
 

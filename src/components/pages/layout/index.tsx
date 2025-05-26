@@ -3,15 +3,18 @@ import { useConvexAuth } from 'convex/react';
 import AppLoading from '../../AppLoading';
 import Sidebar from './Sidebar';
 import { Header } from './Header';
+import NotificationPermissionBanner from '../../NotificationPermissionBanner';
 import { t } from 'i18next';
 import { cn } from '@/lib/utils';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
 
 type AppLayoutProps = {
   children: ReactNode;
 };
 
 export function AppLayout({ children }: AppLayoutProps) {
-  const { isLoading } = useConvexAuth();
+  const { isLoading, isAuthenticated } = useConvexAuth();
+  const { requestPermissionOnLoad } = usePushNotifications();
 
   // Initialize sidebar state from localStorage or default to closed (false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
@@ -26,6 +29,13 @@ export function AppLayout({ children }: AppLayoutProps) {
   useEffect(() => {
     localStorage.setItem('sidebarOpen', JSON.stringify(isSidebarOpen));
   }, [isSidebarOpen]);
+
+  // Auto-request notification permission when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      void requestPermissionOnLoad();
+    }
+  }, [isAuthenticated, requestPermissionOnLoad]);
 
   const toggleSidebar = () => {
     setIsTransitioning(true);
@@ -45,6 +55,9 @@ export function AppLayout({ children }: AppLayoutProps) {
     <div className="flex flex-col h-screen">
       {/* Header at the top level with sidebar toggle */}
       <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+
+      {/* Notification Permission Banner */}
+      <NotificationPermissionBanner />
 
       {/* Main content with sidebar */}
       <div className="flex flex-1 overflow-hidden">
@@ -95,7 +108,9 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
 
         {/* Main content area */}
-        <main className="flex flex-col flex-1 w-full">{children}</main>
+        <main className="flex flex-col flex-1 w-full">
+          {children}
+        </main>
       </div>
     </div>
   );

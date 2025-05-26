@@ -1,6 +1,7 @@
 import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
+import { internal } from '../_generated/api';
 import { Id } from '../_generated/dataModel';
 
 // 댓글 추가
@@ -34,6 +35,29 @@ export const addComment = mutation({
     await ctx.db.patch(args.postId, {
       commentCount: (post.commentCount || 0) + 1,
     });
+
+    // 댓글 작성 알림 생성 (포스트 작성자에게)
+    if (post.authorId && post.authorId !== userId) {
+      // 댓글 작성자 정보 조회
+      const commenterProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', userId))
+        .unique();
+      
+      const commenterName = commenterProfile?.displayName || 'Someone';
+      
+      // 알림 생성 및 푸시 알림 전송 (기본 로케일 사용)
+      await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
+        userId: post.authorId,
+        type: 'COMMENT_ON_POST',
+        postId: args.postId,
+        commentId: commentId,
+        triggeredById: userId,
+        commenterName: commenterName,
+        postTitle: post.title,
+        locale: 'en', // 기본값으로 영어 사용
+      });
+    }
 
     return commentId;
   },

@@ -4,6 +4,7 @@ import { getAuthUserId } from '@convex-dev/auth/server';
 import { ErrorCode, SHOWCASE_CATEGORIES } from '../constants';
 import { Id } from '../_generated/dataModel';
 import { showcaseValidator, hasAtLeastOneUrl, ensureHttpsPrefix } from '../validators';
+import { internal } from '../_generated/api';
 
 // 새 쇼케이스 생성
 export const createShowcase = mutation({
@@ -223,6 +224,29 @@ export const toggleLike = mutation({
         likedBy: [...likedBy, userId],
         likeCount: likeCount + 1,
       });
+
+      // 쇼케이스 작성자에게 알림 생성 (자신의 쇼케이스가 아닌 경우)
+      if (showcase.userId !== userId) {
+        // 좋아요를 누른 사용자의 프로필 조회
+        const likerProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', userId))
+          .unique();
+        
+        const likerName = likerProfile?.displayName || 'Someone';
+
+        // 알림 생성 및 푸시 알림 전송
+        await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
+          userId: showcase.userId,
+          type: 'LIKE_ON_SHOWCASE',
+          showcaseId: args.showcaseId,
+          triggeredById: userId,
+          likerName: likerName,
+          showcaseTitle: showcase.title,
+          locale: 'en', // 기본값으로 영어 사용
+        });
+      }
+
       return true; // 좋아요 추가됨
     }
   },

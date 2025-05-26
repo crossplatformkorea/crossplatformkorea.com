@@ -148,3 +148,98 @@ self.addEventListener('fetch', (event) => {
       }),
   );
 });
+
+// 푸시 이벤트 핸들러
+self.addEventListener('push', (event) => {
+  console.log('Push event received:', event);
+  
+  let notificationData = {
+    title: '새로운 알림',
+    body: '새로운 메시지가 있습니다.',
+    icon: '/icons/icon-192x192.png',
+    badge: '/icons/icon-192x192.png',
+    tag: 'default',
+    requireInteraction: false,
+    data: {
+      url: '/'
+    }
+  };
+
+  // 푸시 데이터가 있으면 파싱
+  if (event.data) {
+    try {
+      const pushData = event.data.json();
+      notificationData = {
+        ...notificationData,
+        ...pushData
+      };
+    } catch (error) {
+      console.error('Push data parsing error:', error);
+      // 텍스트로 시도
+      notificationData.body = event.data.text() || notificationData.body;
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(notificationData.title, {
+      body: notificationData.body,
+      icon: notificationData.icon,
+      badge: notificationData.badge,
+      tag: notificationData.tag,
+      requireInteraction: notificationData.requireInteraction,
+      data: notificationData.data,
+      actions: [
+        {
+          action: 'view',
+          title: '보기',
+          icon: '/icons/icon-192x192.png'
+        },
+        {
+          action: 'close',
+          title: '닫기'
+        }
+      ]
+    })
+  );
+});
+
+// 노티피케이션 클릭 이벤트 핸들러
+self.addEventListener('notificationclick', (event) => {
+  console.log('Notification clicked:', event);
+  
+  event.notification.close();
+  
+  const action = event.action;
+  const data = event.notification.data || {};
+  const url = data.url || '/';
+  
+  if (action === 'close') {
+    return;
+  }
+  
+  // 클라이언트 창 열기/포커스
+  event.waitUntil(
+    clients.matchAll({ 
+      type: 'window',
+      includeUncontrolled: true 
+    }).then((clientList) => {
+      // 이미 열려있는 창이 있으면 포커스
+      for (const client of clientList) {
+        if (client.url === url && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      
+      // 새 창 열기
+      if (clients.openWindow) {
+        return clients.openWindow(url);
+      }
+    })
+  );
+});
+
+// 노티피케이션 닫기 이벤트 핸들러
+self.addEventListener('notificationclose', (event) => {
+  console.log('Notification closed:', event);
+  // 필요시 분석 데이터 전송
+});

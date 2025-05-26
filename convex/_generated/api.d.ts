@@ -25,12 +25,16 @@ import type * as files_action from "../files/action.js";
 import type * as files_mutation from "../files/mutation.js";
 import type * as files_query from "../files/query.js";
 import type * as http from "../http.js";
+import type * as notifications_action from "../notifications/action.js";
+import type * as notifications_mutation from "../notifications/mutation.js";
+import type * as notifications_query from "../notifications/query.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
 import type * as showcases_mutation from "../showcases/mutation.js";
 import type * as showcases_query from "../showcases/query.js";
 import type * as users_mutation from "../users/mutation.js";
 import type * as users_query from "../users/query.js";
+import type * as utils from "../utils.js";
 import type * as validators from "../validators.js";
 
 /**
@@ -54,12 +58,16 @@ declare const fullApi: ApiFromModules<{
   "files/mutation": typeof files_mutation;
   "files/query": typeof files_query;
   http: typeof http;
+  "notifications/action": typeof notifications_action;
+  "notifications/mutation": typeof notifications_mutation;
+  "notifications/query": typeof notifications_query;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;
   "showcases/mutation": typeof showcases_mutation;
   "showcases/query": typeof showcases_query;
   "users/mutation": typeof users_mutation;
   "users/query": typeof users_query;
+  utils: typeof utils;
   validators: typeof validators;
 }>;
 export declare const api: FilterApi<
