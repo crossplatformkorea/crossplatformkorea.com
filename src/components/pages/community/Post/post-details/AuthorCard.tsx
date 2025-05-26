@@ -22,7 +22,6 @@ interface AuthorCardProps {
 export default function AuthorCard({ author, creationTime, formattedDate }: AuthorCardProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  console.log('AuthorCard rendered with author:', author);
 
   const handleAuthorClick = () => {
     if (author && author.userId) {
