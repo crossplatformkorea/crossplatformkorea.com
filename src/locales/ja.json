@@ -270,7 +270,11 @@
     "aboutMe": "自己紹介",
     "lookingFor": "探しているもの",
     "expectations": "期待すること",
-    "anonymousUser": "匿名ユーザー"
+    "anonymousUser": "匿名ユーザー",
+    "aboutUser": "このユーザーについて",
+    "noDescription": "説明がありません",
+    "noProfileDetails": "プロフィール詳細はありません",
+    "noPostsYet": "まだ投稿がありません"
   },
   "showcase": {
     "title": "ショーケース",

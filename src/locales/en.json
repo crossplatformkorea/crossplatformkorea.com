@@ -241,7 +241,11 @@
     "aboutMe": "About me",
     "lookingFor": "Looking for",
     "expectations": "Expectations",
-    "anonymousUser": "Anonymous User"
+    "anonymousUser": "Anonymous User",
+    "aboutUser": "About this user",
+    "noDescription": "No description provided",
+    "noProfileDetails": "No profile details available",
+    "noPostsYet": "No posts yet"
   },
   "postCategories": {
     "ALL": { "name": "All", "description": "All posts" },

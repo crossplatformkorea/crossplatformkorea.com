@@ -269,7 +269,11 @@
     "aboutMe": "자기소개",
     "lookingFor": "찾고 있는 것",
     "expectations": "기대하는 것",
-    "anonymousUser": "익명 사용자"
+    "anonymousUser": "익명 사용자",
+    "aboutUser": "사용자 정보",
+    "noDescription": "설명이 없습니다",
+    "noProfileDetails": "프로필 정보가 없습니다",
+    "noPostsYet": "아직 게시물이 없습니다"
   },
   "showcase": {
     "title": "쇼케이스",
