@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { getLocale, setLocale, t } from '@/lib/i18n';
 import { ThemeToggle } from '../../ThemeToggle';
+import NotificationBell from '../../uis/NotificationBell';
 
 export interface HeaderProps {
   isSidebarOpen: boolean;
@@ -133,6 +134,9 @@ export function Header({
         </nav>{' '}
         {/* Auth & Language Controls */}
         <div className="flex items-center gap-1 sm:gap-3">
+          {/* Notification Bell */}
+          <NotificationBell />
+
           {/* Theme Toggle */}
           <ThemeToggle />
 

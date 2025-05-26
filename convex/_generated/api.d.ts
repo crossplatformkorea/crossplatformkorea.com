@@ -25,6 +25,8 @@ import type * as files_action from "../files/action.js";
 import type * as files_mutation from "../files/mutation.js";
 import type * as files_query from "../files/query.js";
 import type * as http from "../http.js";
+import type * as notifications_mutation from "../notifications/mutation.js";
+import type * as notifications_query from "../notifications/query.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
 import type * as showcases_mutation from "../showcases/mutation.js";
@@ -54,6 +56,8 @@ declare const fullApi: ApiFromModules<{
   "files/mutation": typeof files_mutation;
   "files/query": typeof files_query;
   http: typeof http;
+  "notifications/mutation": typeof notifications_mutation;
+  "notifications/query": typeof notifications_query;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;
   "showcases/mutation": typeof showcases_mutation;

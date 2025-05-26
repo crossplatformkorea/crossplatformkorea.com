@@ -4,6 +4,7 @@ import { getAuthUserId } from '@convex-dev/auth/server';
 import { ErrorCode, SHOWCASE_CATEGORIES } from '../constants';
 import { Id } from '../_generated/dataModel';
 import { showcaseValidator, hasAtLeastOneUrl, ensureHttpsPrefix } from '../validators';
+import { internal } from '../_generated/api';
 
 // 새 쇼케이스 생성
 export const createShowcase = mutation({
@@ -223,6 +224,24 @@ export const toggleLike = mutation({
         likedBy: [...likedBy, userId],
         likeCount: likeCount + 1,
       });
+
+      // 쇼케이스 작성자에게 알림 생성 (자신의 쇼케이스가 아닌 경우)
+      if (showcase.userId !== userId) {
+        // 좋아요를 누른 사용자의 프로필 조회
+        const liker = await ctx.db.get(userId);
+        const likerName = liker?.name || '익명 사용자';
+
+        // 알림 생성
+        await ctx.runMutation(internal.notifications.mutation.createNotification, {
+          userId: showcase.userId,
+          type: 'like_on_showcase',
+          title: '쇼케이스에 좋아요가 달렸습니다',
+          message: `${likerName}님이 "${showcase.title}" 쇼케이스에 좋아요를 눌렀습니다.`,
+          showcaseId: args.showcaseId,
+          triggeredById: userId,
+        });
+      }
+
       return true; // 좋아요 추가됨
     }
   },

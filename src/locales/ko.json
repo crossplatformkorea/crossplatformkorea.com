@@ -401,6 +401,21 @@
     "updateAvailable": "새 버전이 있습니다",
     "reload": "새로고침"
   },
+  "notifications": {
+    "title": "알림",
+    "bellAriaLabel": "알림 열기",
+    "markAllAsRead": "모두 읽음 처리",
+    "markAsRead": "읽음 처리",
+    "delete": "삭제",
+    "deleteSelected": "선택한 {{count}}개 삭제",
+    "noNotifications": "알림이 없습니다",
+    "noNotificationsDesc": "댓글, 좋아요 및 기타 활동에 대한 알림이 여기에 표시됩니다.",
+    "viewAll": "모든 알림 보기",
+    "totalCount": "총 {{count}}개 알림",
+    "unreadCount": "{{count}}개 읽지 않음",
+    "selectAll": "모두 선택",
+    "deselectAll": "선택 해제"
+  },
   "meta": {
     "title": "CrossPlatformKorea",
     "description": "한국 크로스플랫폼 개발자 커뮤니티",

@@ -3,6 +3,7 @@ import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
 import { DEFAULT_CATEGORY } from '../constants';
+import { internal } from '../_generated/api';
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -279,6 +280,24 @@ export const toggleLike = mutation({
         likedBy: [...likedBy, userId as Id<'users'>],
         likeCount: likeCount,
       });
+
+      // 포스트 작성자에게 알림 생성 (자신의 포스트가 아닌 경우)
+      if (post.authorId && post.authorId !== userId) {
+        // 좋아요를 누른 사용자의 프로필 조회
+        const liker = await ctx.db.get(userId);
+        const likerName = liker?.name || '익명 사용자';
+
+        // 알림 생성
+        await ctx.runMutation(internal.notifications.mutation.createNotification, {
+          userId: post.authorId,
+          type: 'like_on_post',
+          title: '포스트에 좋아요가 달렸습니다',
+          message: `${likerName}님이 "${post.title}" 포스트에 좋아요를 눌렀습니다.`,
+          postId: args.postId,
+          triggeredById: userId,
+        });
+      }
+
       return true; // Returning true to indicate the post is now liked
     }
   },

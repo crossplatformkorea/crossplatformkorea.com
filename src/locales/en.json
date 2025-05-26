@@ -407,6 +407,21 @@
     "updateAvailable": "New version available",
     "reload": "Reload"
   },
+  "notifications": {
+    "title": "Notifications",
+    "bellAriaLabel": "Open notifications",
+    "markAllAsRead": "Mark all as read",
+    "markAsRead": "Mark as read",
+    "delete": "Delete",
+    "deleteSelected": "Delete {{count}} selected",
+    "noNotifications": "No notifications",
+    "noNotificationsDesc": "You'll see notifications about comments, likes, and other activities here.",
+    "viewAll": "View all notifications",
+    "totalCount": "{{count}} total notifications",
+    "unreadCount": "{{count}} unread",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all"
+  },
   "meta": {
     "title": "CrossPlatformKorea",
     "description": "Korean Cross-Platform Developer Community",

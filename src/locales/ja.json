@@ -402,6 +402,21 @@
     "updateAvailable": "新しいバージョンが利用可能です",
     "reload": "再読み込み"
   },
+  "notifications": {
+    "title": "通知",
+    "bellAriaLabel": "通知を開く",
+    "markAllAsRead": "すべて既読にする",
+    "markAsRead": "既読にする",
+    "delete": "削除",
+    "deleteSelected": "選択した{{count}}件を削除",
+    "noNotifications": "通知がありません",
+    "noNotificationsDesc": "コメント、いいね、その他のアクティビティに関する通知がここに表示されます。",
+    "viewAll": "すべての通知を表示",
+    "totalCount": "合計{{count}}件の通知",
+    "unreadCount": "{{count}}件未読",
+    "selectAll": "すべて選択",
+    "deselectAll": "選択解除"
+  },
   "meta": {
     "title": "CrossPlatformKorea",
     "description": "韓国クロスプラットフォーム開発者コミュニティ",
