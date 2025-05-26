@@ -170,6 +170,17 @@ const ShowcaseFormModal = ({
     return pattern.test(url);
   };
 
+  // Add a paste handler to remove http:// or https:// prefix
+  const handleUrlPaste = (e: React.ClipboardEvent<HTMLInputElement>, 
+    setter: React.Dispatch<React.SetStateAction<string>>) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData('text');
+    
+    // Remove http:// or https:// prefix
+    const cleanedUrl = pastedText.replace(/^(https?:\/\/)/, '');
+    setter(cleanedUrl);
+  };
+
   // Form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -415,6 +426,7 @@ const ShowcaseFormModal = ({
                   type="text"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
+                  onPaste={(e) => handleUrlPaste(e, setImageUrl)}
                   className={cn(
                     'flex-1 rounded-r-md border border-l-0 px-4 py-2',
                     'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
@@ -469,6 +481,7 @@ const ShowcaseFormModal = ({
                     type="text"
                     value={websiteUrl}
                     onChange={(e) => setWebsiteUrl(e.target.value)}
+                    onPaste={(e) => handleUrlPaste(e, setWebsiteUrl)}
                     className={cn(
                       'flex-1 rounded-r-md border border-l-0 px-4 py-2',
                       'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
@@ -497,6 +510,7 @@ const ShowcaseFormModal = ({
                     type="text"
                     value={appStoreUrl}
                     onChange={(e) => setAppStoreUrl(e.target.value)}
+                    onPaste={(e) => handleUrlPaste(e, setAppStoreUrl)}
                     className={cn(
                       'flex-1 rounded-r-md border border-l-0 px-4 py-2',
                       'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
@@ -525,6 +539,7 @@ const ShowcaseFormModal = ({
                     type="text"
                     value={playStoreUrl}
                     onChange={(e) => setPlayStoreUrl(e.target.value)}
+                    onPaste={(e) => handleUrlPaste(e, setPlayStoreUrl)}
                     className={cn(
                       'flex-1 rounded-r-md border border-l-0 px-4 py-2',
                       'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
@@ -565,7 +580,7 @@ const ShowcaseFormModal = ({
               </div>
 
               {/* 링크 추가 UI */}
-              <div className="flex">
+              <div className="flex items-stretch">
                 <div className="flex-shrink-0 flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-l-md">
                   https://
                 </div>
@@ -576,6 +591,7 @@ const ShowcaseFormModal = ({
                   onKeyDown={handleLinkKeyDown}
                   onCompositionStart={handleCompositionStart}
                   onCompositionEnd={handleCompositionEnd}
+                  onPaste={(e) => handleUrlPaste(e, setOtherLinkInput)}
                   className={cn(
                     'flex-1 border border-l-0 px-4 py-2',
                     'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
@@ -587,10 +603,9 @@ const ShowcaseFormModal = ({
                 />
                 <Button
                   variant={otherLinkInput.trim() ? "default" : "secondary"}
-                  size="sm"
                   onClick={handleAddLink}
                   disabled={!otherLinkInput.trim()}
-                  className="rounded-l-none"
+                  className="rounded-l-none h-auto px-4"
                 >
                   {t('showcase.form.addLink')}
                 </Button>
@@ -623,7 +638,7 @@ const ShowcaseFormModal = ({
                   </div>
                 ))}
               </div>
-              <div className="flex">
+              <div className="flex items-stretch">
                 <input
                   id="tags"
                   type="text"
@@ -642,10 +657,9 @@ const ShowcaseFormModal = ({
                 />
                 <Button
                   variant={tagInput.trim() ? "default" : "secondary"}
-                  size="sm"
                   onClick={handleAddTag}
                   disabled={!tagInput.trim()}
-                  className="rounded-l-none"
+                  className="rounded-l-none h-auto px-4"
                 >
                   {t('showcase.form.addTag')}
                 </Button>
