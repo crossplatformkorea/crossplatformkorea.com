@@ -26,7 +26,7 @@ export default function AuthorCard({ author, creationTime, formattedDate }: Auth
 
   const handleAuthorClick = () => {
     if (author && author.userId) {
-      navigate(`/user/${author.userId}`);
+      void navigate(`/user/${author.userId}`);
     }
   };
 
