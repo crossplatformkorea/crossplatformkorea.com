@@ -443,7 +443,7 @@
         "message": "{{likerName}} liked your showcase \"{{showcaseTitle}}\"."
       },
       "likeOnPost": {
-        "title": "Post liked", 
+        "title": "Post liked",
         "message": "{{likerName}} liked your post \"{{postTitle}}\"."
       }
     },
