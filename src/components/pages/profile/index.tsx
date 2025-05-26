@@ -56,6 +56,7 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       requireAuth();
+      void navigate('/sign-in');
     }
   }, [isAuthenticated, isLoading, navigate, requireAuth]);
 

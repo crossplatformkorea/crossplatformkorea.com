@@ -9,7 +9,7 @@
     "cancel": "Cancel",
     "loading": "Loading...",
     "loadMore": "Load more posts",
-    "appName": "CrossPlatformKorea",
+    "appName": "Cross-Platform Korea",
     "sideFeatureRequests": "Feature Requests",
     "signIn": "Sign In",
     "remove": "Remove",
@@ -506,7 +506,7 @@
     }
   },
   "meta": {
-    "title": "CrossPlatformKorea",
+    "title": "Cross-Platform Korea",
     "description": "Korean Cross-Platform Developer Community",
     "keywords": "cross-platform, developer, community, React Native, Flutter, PWA, mobile development"
   }

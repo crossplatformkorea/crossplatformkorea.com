@@ -8,7 +8,7 @@
     },
     "cancel": "キャンセル",
     "loading": "ローディング中...",
-    "appName": "CrossPlatformKorea",
+    "appName": "クロスプラットフォームコリア",
     "sideFeatureRequests": "機能リクエスト",
     "signIn": "ログイン",
     "remove": "削除",
@@ -508,7 +508,7 @@
     }
   },
   "meta": {
-    "title": "CrossPlatformKorea",
+    "title": "クロスプラットフォームコリア",
     "description": "韓国クロスプラットフォーム開発者コミュニティ",
     "keywords": "クロスプラットフォーム, 開発者, コミュニティ, React Native, Flutter, PWA, モバイル開発"
   }
