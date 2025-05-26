@@ -1,5 +1,5 @@
 import { v } from 'convex/values';
-import { mutation, internalMutation } from '../_generated/server';
+import { mutation, internalMutation, query } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { getNotificationMessages, type NotificationType, type NotificationMessageParams } from '../utils';
 
@@ -140,6 +140,110 @@ export const deleteNotification = mutation({
     }
 
     await ctx.db.delete(args.notificationId);
+    return null;
+  },
+});
+
+// 푸시 구독 저장
+export const subscribeToPush = mutation({
+  args: {
+    endpoint: v.string(),
+    p256dh: v.string(),
+    auth: v.string(),
+    userAgent: v.optional(v.string()),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 기존 구독이 있는지 확인
+    const existingSubscription = await ctx.db
+      .query('pushSubscriptions')
+      .withIndex('by_userId_endpoint', (q) => 
+        q.eq('userId', userId).eq('endpoint', args.endpoint)
+      )
+      .unique();
+
+    if (existingSubscription) {
+      // 기존 구독 업데이트
+      await ctx.db.patch(existingSubscription._id, {
+        p256dh: args.p256dh,
+        auth: args.auth,
+        userAgent: args.userAgent,
+        isActive: true,
+        updatedAt: new Date().toISOString(),
+      });
+    } else {
+      // 새 구독 생성
+      await ctx.db.insert('pushSubscriptions', {
+        userId,
+        endpoint: args.endpoint,
+        p256dh: args.p256dh,
+        auth: args.auth,
+        userAgent: args.userAgent,
+        isActive: true,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    return null;
+  },
+});
+
+// 푸시 구독 해제
+export const unsubscribeFromPush = mutation({
+  args: {
+    endpoint: v.string(),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 해당 구독 찾기
+    const subscription = await ctx.db
+      .query('pushSubscriptions')
+      .withIndex('by_userId_endpoint', (q) => 
+        q.eq('userId', userId).eq('endpoint', args.endpoint)
+      )
+      .unique();
+
+    if (subscription) {
+      // 구독 비활성화 (완전 삭제 대신)
+      await ctx.db.patch(subscription._id, {
+        isActive: false,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    return null;
+  },
+});
+
+// 구독 비활성화 (내부용 - 만료된 구독 처리)
+export const deactivateSubscription = internalMutation({
+  args: {
+    endpoint: v.string(),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const subscription = await ctx.db
+      .query('pushSubscriptions')
+      .withIndex('by_endpoint', (q) => q.eq('endpoint', args.endpoint))
+      .unique();
+
+    if (subscription) {
+      await ctx.db.patch(subscription._id, {
+        isActive: false,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
     return null;
   },
 });

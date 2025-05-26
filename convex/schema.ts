@@ -119,4 +119,18 @@ export default defineSchema({
     .index('by_userId', ['userId'])
     .index('by_userId_isRead', ['userId', 'isRead'])
     .index('by_type', ['type']),
+  
+  // 푸시 노티피케이션 구독 테이블
+  pushSubscriptions: defineTable({
+    userId: v.id('users'), // 구독한 사용자
+    endpoint: v.string(), // 푸시 서비스 엔드포인트
+    p256dh: v.string(), // 공개키
+    auth: v.string(), // 인증키
+    userAgent: v.optional(v.string()), // 브라우저 정보
+    isActive: v.boolean(), // 활성 상태
+    updatedAt: v.optional(v.string()), // 마지막 업데이트 시간
+  })
+    .index('by_userId', ['userId'])
+    .index('by_userId_endpoint', ['userId', 'endpoint'])
+    .index('by_endpoint', ['endpoint']),
 });

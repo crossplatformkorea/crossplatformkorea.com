@@ -23,6 +23,7 @@ import { t } from 'i18next';
 import ProfileDisplay from './ProfileDisplay';
 import ProfileDetails from './ProfileDetails';
 import ProfileStats from './ProfileStats';
+import PushNotificationSettings from './PushNotificationSettings';
 import { useAuthStore } from '@/stores/authStore'; // Added
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/uis/Button';
@@ -608,6 +609,11 @@ export default function ProfilePage() {
           handleSaveProfile={handleSaveProfile}
           t={t}
         />
+
+        {/* Push Notification Settings Card */}
+        <div className="mt-6">
+          <PushNotificationSettings />
+        </div>
 
         {/* Action row with messages on left and buttons on right */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-6 mb-16">

@@ -21,6 +21,7 @@
     "@icons-pack/react-simple-icons": "^12.8.0",
     "@radix-ui/react-dialog": "^1.1.11",
     "@runwayml/sdk": "^2.0.1",
+    "@types/web-push": "^3.6.4",
     "clsx": "^2.1.1",
     "convex": "1.23.0",
     "date-fns": "^4.1.0",
@@ -38,6 +39,7 @@
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.2.0",
     "uuid": "^11.1.0",
+    "web-push": "^3.6.7",
     "zustand": "^5.0.5"
   },
   "overrides": {

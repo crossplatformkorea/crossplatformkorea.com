@@ -115,11 +115,23 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
           </div>
         )}
 
-        {/* Content preview - Using ReactMarkdown to properly render links */}
+        {/* Content preview - Render markdown without clickable links to avoid nested <a> tags */}
         {post.content && (
           <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-3 overflow-hidden">
             <div className="line-clamp-2 prose prose-sm dark:prose-invert max-w-none">
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+              <ReactMarkdown
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  // Convert links to plain text to avoid nested <a> tags
+                  a: ({ children, href }) => (
+                    <span className="text-primary font-medium">
+                      {children} {href && <span className="text-muted-foreground">({href})</span>}
+                    </span>
+                  ),
+                  // Ensure other interactive elements don't create nested links
+                  button: ({ children }) => <span>{children}</span>,
+                }}
+              >
                 {contentForPreview}
               </ReactMarkdown>
             </div>

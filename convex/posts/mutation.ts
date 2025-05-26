@@ -291,8 +291,8 @@ export const toggleLike = mutation({
         
         const likerName = likerProfile?.displayName || 'Someone';
 
-        // 알림 생성
-        await ctx.runMutation(internal.notifications.mutation.createNotification, {
+        // 알림 생성 및 푸시 알림 전송
+        await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
           userId: post.authorId,
           type: 'LIKE_ON_POST',
           postId: args.postId,

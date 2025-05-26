@@ -1,5 +1,5 @@
 import { v } from 'convex/values';
-import { query } from '../_generated/server';
+import { query, internalQuery } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { paginationOptsValidator } from 'convex/server';
 
@@ -263,5 +263,60 @@ export const getRecentNotifications = query({
     );
 
     return enrichedNotifications;
+  },
+});
+
+// 활성 푸시 구독 조회 (내부용)
+export const getActivePushSubscriptions = internalQuery({
+  args: {
+    userId: v.id('users'),
+  },
+  returns: v.array(v.object({
+    _id: v.id('pushSubscriptions'),
+    endpoint: v.string(),
+    p256dh: v.string(),
+    auth: v.string(),
+    userAgent: v.optional(v.string()),
+  })),
+  handler: async (ctx, args) => {
+    const subscriptions = await ctx.db
+      .query('pushSubscriptions')
+      .withIndex('by_userId', (q) => q.eq('userId', args.userId))
+      .filter((q) => q.eq(q.field('isActive'), true))
+      .collect();
+
+    return subscriptions.map(sub => ({
+      _id: sub._id,
+      endpoint: sub.endpoint,
+      p256dh: sub.p256dh,
+      auth: sub.auth,
+      userAgent: sub.userAgent,
+    }));
+  },
+});
+
+// 사용자의 푸시 구독 상태 조회 (공개용)
+export const getUserPushSubscriptionStatus = query({
+  args: {},
+  returns: v.object({
+    hasSubscriptions: v.boolean(),
+    subscriptionCount: v.number(),
+  }),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      return { hasSubscriptions: false, subscriptionCount: 0 };
+    }
+
+    const subscriptions = await ctx.db
+      .query('pushSubscriptions')
+      .withIndex('by_userId', (q) => q.eq('userId', userId))
+      .filter((q) => q.eq(q.field('isActive'), true))
+      .collect();
+
+    return {
+      hasSubscriptions: subscriptions.length > 0,
+      subscriptionCount: subscriptions.length,
+    };
   },
 });

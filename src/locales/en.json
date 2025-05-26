@@ -434,6 +434,55 @@
         "title": "Post liked", 
         "message": "{{likerName}} liked your post \"{{postTitle}}\"."
       }
+    },
+    "pushNotifications": {
+      "title": "Push Notifications",
+      "description": "Get notified when someone comments or likes your posts",
+      "notSupported": "This browser does not support push notifications.",
+      "permission": {
+        "title": "Permission Status",
+        "granted": "✅ Granted",
+        "denied": "❌ Denied",
+        "default": "⏳ Not set"
+      },
+      "subscription": {
+        "title": "Subscription Status",
+        "subscribed": "✅ Subscribed",
+        "notSubscribed": "❌ Not subscribed"
+      },
+      "test": {
+        "title": "Test Notifications",
+        "description": "Send a test notification to verify everything is working"
+      },
+      "buttons": {
+        "requestPermission": "Request Permission",
+        "subscribe": "Subscribe",
+        "unsubscribe": "Unsubscribe",
+        "sendTest": "Send Test Notification"
+      },
+      "messages": {
+        "subscribeSuccess": "Successfully subscribed to notifications!",
+        "unsubscribeSuccess": "Successfully unsubscribed from notifications!",
+        "permissionGranted": "Notification permission granted!",
+        "testSent": "Test notification sent successfully!",
+        "testNotificationSent": "Test notification sent successfully!"
+      },
+      "errors": {
+        "subscriptionFailed": "Subscription failed.",
+        "unsubscriptionFailed": "Unsubscription failed.",
+        "permissionFailed": "Permission request failed.",
+        "testFailed": "Test notification failed.",
+        "permissionDenied": "Permission request was denied.",
+        "testNotificationFailed": "Test notification failed to send."
+      },
+      "help": {
+        "permissionDefault": "Click 'Request Permission' to allow notifications from this site.",
+        "permissionDenied": "Please allow notification permission in your browser settings. You can click the lock icon in the address bar to configure it.",
+        "permissionDeniedTitle": "Permission Denied",
+        "browserNotSupported": "Your browser does not support push notifications. Please try using a modern browser.",
+        "subscribeHelp": "Subscribe to receive notifications about new comments and likes on your posts.",
+        "subscriptionHelp": "You'll receive notifications when someone comments on your posts or likes your content."
+      }
     }
   },
   "meta": {

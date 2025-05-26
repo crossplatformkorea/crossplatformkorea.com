@@ -429,6 +429,51 @@
         "title": "投稿にいいね",
         "message": "{{likerName}}さんがあなたの投稿「{{postTitle}}」にいいねしました。"
       }
+    },
+    "pushNotifications": {
+      "title": "プッシュ通知",
+      "description": "コメントやいいねがついた時に通知を受け取ります",
+      "notSupported": "このブラウザはプッシュ通知をサポートしていません。",
+      "permission": {
+        "title": "通知権限",
+        "granted": "✅ 許可済み",
+        "denied": "❌ 拒否済み",
+        "default": "⏳ 未設定"
+      },
+      "subscription": {
+        "title": "購読状態",
+        "subscribed": "✅ 購読中",
+        "notSubscribed": "❌ 購読していません"
+      },
+      "buttons": {
+        "requestPermission": "権限をリクエスト",
+        "subscribe": "購読する",
+        "unsubscribe": "購読解除",
+        "sendTest": "テスト通知を送信"
+      },
+      "messages": {
+        "subscribeSuccess": "通知の購読に成功しました！",
+        "unsubscribeSuccess": "通知の購読を解除しました！",
+        "permissionGranted": "通知権限が許可されました！",
+        "testSent": "テスト通知が正常に送信されました！",
+        "testNotificationSent": "テスト通知が正常に送信されました！"
+      },
+      "errors": {
+        "subscriptionFailed": "購読に失敗しました。",
+        "unsubscriptionFailed": "購読解除に失敗しました。",
+        "permissionFailed": "権限リクエストに失敗しました。",
+        "testFailed": "テスト通知の送信に失敗しました。",
+        "permissionDenied": "通知権限のリクエストが拒否されました。",
+        "testNotificationFailed": "テスト通知の送信に失敗しました。"
+      },
+      "help": {
+        "permissionDefault": "'権限をリクエスト'をクリックして、このサイトからの通知を許可してください。",
+        "permissionDenied": "ブラウザ設定で通知権限を許可してください。アドレスバーの鍵アイコンをクリックして設定できます。",
+        "permissionDeniedTitle": "権限が拒否されました",
+        "browserNotSupported": "このブラウザはプッシュ通知をサポートしていません。最新のブラウザをお試しください。",
+        "subscribeHelp": "投稿にコメントやいいねがついた時に通知を受け取るには購読してください。",
+        "subscriptionHelp": "他の人があなたの投稿にコメントしたり、いいねを押したりすると通知を受け取ります。"
+      }
     }
   },
   "meta": {
