@@ -212,12 +212,12 @@ body {
 
 /* Hide scrollbar for cleaner UI but keep functionality */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .logo-container {
@@ -337,14 +337,22 @@ body {
   background-color: transparent !important;
   color: inherit !important;
   font-weight: normal !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* 인라인 코드 스타일링 */
 .prose code {
-  @apply bg-gray-200 px-1.5 py-0.5 rounded text-sm font-mono font-semibold;
+  @apply bg-gray-200 px-1.5 py-0.5 rounded text-sm font-mono;
   background-color: #f6f8fa !important;
-  color: #d73a49 !important;
+  color: #24292f !important;
   border: 1px solid #e1e8ed !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 /* 다크모드 코드 블록 */
@@ -358,14 +366,22 @@ body {
 .dark .prose pre code {
   background-color: transparent !important;
   color: inherit !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* 다크모드 인라인 코드 */
 .dark .prose code {
   @apply bg-gray-800 text-gray-200;
   background-color: #21262d !important;
-  color: #79c0ff !important;
+  color: #e6edf3 !important;
   border: 1px solid #30363d !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 /* 링크 스타일링 */
@@ -410,7 +426,10 @@ body {
   line-height: 1.6;
 }
 
-.prose ul ul, .prose ol ol, .prose ul ol, .prose ol ul {
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
