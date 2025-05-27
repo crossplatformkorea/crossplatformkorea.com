@@ -326,6 +326,7 @@
       "playStoreUrl": "플레이 스토어 URL",
       "otherLinks": "기타 링크",
       "addLink": "추가",
+      "maxLinksReached": "최대 {{max}}개의 링크까지 허용됩니다",
       "tags": "태그",
       "tagsPlaceholder": "태그 추가 (Enter 키를 눌러 추가)",
       "addTag": "태그 추가",
@@ -349,6 +350,8 @@
     "website": "웹사이트",
     "appStore": "앱 스토어",
     "playStore": "플레이 스토어",
+    "otherLinksButton": "기타 링크",
+    "linkLabel": "링크",
     "featured": "추천",
     "user": "사용자"
   },

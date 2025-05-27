@@ -328,6 +328,7 @@
       "playStoreUrl": "Play Store URL",
       "otherLinks": "その他のリンク",
       "addLink": "追加",
+      "maxLinksReached": "最大{{max}}個のリンクまで許可されています",
       "tags": "タグ",
       "tagsPlaceholder": "タグを追加（Enterキーで追加）",
       "addTag": "タグを追加",
@@ -351,6 +352,8 @@
     "website": "ウェブサイト",
     "appStore": "App Store",
     "playStore": "Play Store",
+    "otherLinksButton": "その他リンク",
+    "linkLabel": "リンク",
     "featured": "注目",
     "user": "ユーザー"
   },

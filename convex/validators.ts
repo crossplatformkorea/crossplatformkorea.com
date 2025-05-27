@@ -1,8 +1,8 @@
 import { v } from 'convex/values';
 import { SHOWCASE_CATEGORIES } from './constants';
 
-// URL validator
-export const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
+// URL validator - supports query parameters, hashes, and special characters
+export const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\w\-._~:/?#[\]@!$&'()*+,;=%]*)*\/?$/i;
 
 // Showcase validators
 export const showcaseValidator = {

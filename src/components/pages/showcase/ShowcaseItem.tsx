@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { AppWindow, ExternalLink, Tag, Edit, User } from 'lucide-react';
+import { AppWindow, ExternalLink, Tag, Edit, User, ChevronDown } from 'lucide-react';
 import { Button } from '../../uis/Button';
 import { cn } from '@/lib/utils';
 import { Doc } from '../../../../convex/_generated/dataModel';
@@ -27,6 +27,36 @@ interface ShowcaseItemProps {
 
 const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: ShowcaseItemProps) => {
   const { t } = useTranslation();
+  const [showOtherLinksDropdown, setShowOtherLinksDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  // Other Links 파싱 헬퍼 함수
+  const parseOtherLinks = (otherLinks: string | string[] | undefined): string[] => {
+    if (!otherLinks) return [];
+    if (typeof otherLinks === 'string') {
+      return otherLinks.split(',').map(link => link.trim()).filter(Boolean);
+    }
+    if (Array.isArray(otherLinks)) {
+      return otherLinks.filter(Boolean);
+    }
+    return [];
+  };
+
+  const otherLinksArray = parseOtherLinks(showcase.otherLinks);
+
+  // 외부 클릭 시 드롭다운 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowOtherLinksDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   
   return (
     <div
@@ -37,15 +67,16 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
       )}
     >
       {/* 이미지 영역 */}
-      <div className="relative aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+      <div className="relative w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
         {showcase.imageUrl ? (
           <img
             src={showcase.imageUrl}
             alt={showcase.title}
-            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+            className="w-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
           />
         ) : (
-          <div className="flex h-full items-center justify-center bg-gray-100 dark:bg-gray-700">
+          <div className="flex h-48 items-center justify-center bg-gray-100 dark:bg-gray-700">
             <AppWindow size={48} className="text-gray-400 dark:text-gray-500" />
           </div>
         )}
@@ -103,7 +134,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
         </h3>
 
         {/* 설명 */}
-        <p className="mb-3 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+        <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
           {showcase.description}
         </p>
 
@@ -125,7 +156,117 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
             </a>
           )}
 
-          {showcase.appStoreUrl && (
+          {/* App Store와 Play Store는 website가 있을 때만 배지로 표시 */}
+          {showcase.websiteUrl && (showcase.appStoreUrl || showcase.playStoreUrl) && (
+            <div className="flex gap-1">
+              {showcase.appStoreUrl && (
+                <a
+                  href={showcase.appStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium transition-colors',
+                    'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
+                    'hover:bg-blue-200 dark:hover:bg-blue-900/50',
+                  )}
+                >
+                  {t('showcase.appStore')}
+                </a>
+              )}
+              
+              {showcase.playStoreUrl && (
+                <a
+                  href={showcase.playStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium transition-colors',
+                    'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300',
+                    'hover:bg-green-200 dark:hover:bg-green-900/50',
+                  )}
+                >
+                  {t('showcase.playStore')}
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* Other Links 드롭다운 표시 (website가 있을 때만 배지로) */}
+          {showcase.websiteUrl && otherLinksArray.length > 0 && (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setShowOtherLinksDropdown(!showOtherLinksDropdown)}
+                className={cn(
+                  'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium transition-colors',
+                  'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300',
+                  'hover:bg-purple-200 dark:hover:bg-purple-900/50',
+                )}
+              >
+                {t('showcase.otherLinksButton')} ({otherLinksArray.length})
+                <ChevronDown size={8} className={cn(
+                  'transition-transform',
+                  showOtherLinksDropdown && 'rotate-180'
+                )} />
+              </button>
+              
+              {/* 드롭다운 메뉴 */}
+              {showOtherLinksDropdown && (
+                <div className={cn(
+                  'absolute left-0 top-full mt-1 z-10 min-w-48 rounded-md border shadow-lg',
+                  'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700',
+                )}>
+                  <div className="p-2 max-h-32 overflow-y-auto">
+                    {otherLinksArray.map((link, idx) => {
+                      const cleanUrl = link.trim();
+                      const displayText = cleanUrl.replace(/^https?:\/\//, '').split('/')[0].split('?')[0];
+                      
+                      return (
+                        <a
+                          key={idx}
+                          href={cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={cn(
+                            'block px-2 py-1 text-xs rounded hover:bg-gray-100 dark:hover:bg-gray-700',
+                            'text-gray-700 dark:text-gray-300 transition-colors'
+                          )}
+                          title={cleanUrl}
+                          onClick={() => setShowOtherLinksDropdown(false)}
+                        >
+                          <div className="flex items-center gap-1">
+                            <ExternalLink size={10} />
+                            <span className="truncate">
+                              {displayText.length > 25 ? `${displayText.slice(0, 25)}...` : displayText}
+                            </span>
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* website가 없을 때는 첫 번째 Other Link를 기존 방식으로 표시 */}
+          {!showcase.websiteUrl && otherLinksArray.length > 0 && (
+            <a
+              href={otherLinksArray[0].startsWith('http') ? otherLinksArray[0] : `https://${otherLinksArray[0]}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'flex items-center gap-1 rounded-md px-2 py-1 text-xs transition-colors',
+                'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300',
+                'hover:bg-gray-300 dark:hover:bg-gray-600',
+              )}
+            >
+              <ExternalLink size={12} />
+              <span>{t('showcase.linkLabel')}</span>
+            </a>
+          )}
+
+          {/* website가 없을 때는 기존 방식으로 표시 */}
+          {!showcase.websiteUrl && showcase.appStoreUrl && (
             <a
               href={showcase.appStoreUrl}
               target="_blank"
@@ -141,7 +282,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
             </a>
           )}
 
-          {showcase.playStoreUrl && (
+          {!showcase.websiteUrl && showcase.playStoreUrl && (
             <a
               href={showcase.playStoreUrl}
               target="_blank"

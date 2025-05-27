@@ -51,25 +51,31 @@ const ShowcaseFormModal = ({
   const createShowcase = useMutation(api.showcases.mutation.createShowcase);
   const updateShowcase = useMutation(api.showcases.mutation.updateShowcase);
 
+  // Helper function to remove https:// prefix
+  const removeHttpsPrefix = (url: string): string => {
+    return url.replace(/^https?:\/\//, '');
+  };
+
   // Initialize form with showcase data if in edit mode
   useEffect(() => {
     if (isEditMode && showcase) {
       setTitle(showcase.title);
       setDescription(showcase.description);
       setCategory(showcase.category);
-      setAppStoreUrl(showcase.appStoreUrl || '');
-      setPlayStoreUrl(showcase.playStoreUrl || '');
-      setWebsiteUrl(showcase.websiteUrl || '');
+      // Remove https:// prefix from URLs when editing
+      setAppStoreUrl(showcase.appStoreUrl ? removeHttpsPrefix(showcase.appStoreUrl) : '');
+      setPlayStoreUrl(showcase.playStoreUrl ? removeHttpsPrefix(showcase.playStoreUrl) : '');
+      setWebsiteUrl(showcase.websiteUrl ? removeHttpsPrefix(showcase.websiteUrl) : '');
 
       // Handle otherLinks with improved type checking and type assertions
       if (showcase.otherLinks) {
         if (typeof showcase.otherLinks === 'string') {
           // Use type assertion to tell TypeScript this is a string
           const linkString = showcase.otherLinks as string;
-          setOtherLinks(linkString.split(',').filter((link) => link.trim()));
+          setOtherLinks(linkString.split(',').filter((link) => link.trim()).map(removeHttpsPrefix));
         } else if (Array.isArray(showcase.otherLinks)) {
           // Use type assertion to tell TypeScript this is an array
-          setOtherLinks(showcase.otherLinks);
+          setOtherLinks(showcase.otherLinks.map(removeHttpsPrefix));
         } else {
           setOtherLinks([]);
         }
@@ -78,7 +84,7 @@ const ShowcaseFormModal = ({
       }
 
       setTags(showcase.tags || []);
-      setImageUrl(showcase.imageUrl || '');
+      setImageUrl(showcase.imageUrl ? removeHttpsPrefix(showcase.imageUrl) : '');
     } else {
       // Default values for new showcase
       setTitle('');
@@ -135,7 +141,7 @@ const ShowcaseFormModal = ({
 
   // Handle adding another link
   const handleAddLink = () => {
-    if (otherLinkInput.trim()) {
+    if (otherLinkInput.trim() && otherLinks.length < 3) {
       const newLink = otherLinkInput.trim();
       if (!otherLinks.includes(newLink)) {
         setOtherLinks([...otherLinks, newLink]);
@@ -166,7 +172,8 @@ const ShowcaseFormModal = ({
   const isValidUrl = (url: string): boolean => {
     if (!url.trim()) return true; // Empty is allowed, required check is separate
 
-    const pattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
+    // More comprehensive URL pattern that supports query parameters, hashes, and special characters
+    const pattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\w\-._~:/?#[\]@!$&'()*+,;=%]*)*\/?$/i;
     return pattern.test(url);
   };
 
@@ -557,11 +564,14 @@ const ShowcaseFormModal = ({
               <div className="flex items-center justify-between mb-2">
                 <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   {t('showcase.form.otherLinks')}
+                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 font-normal">
+                    ({otherLinks.length}/3)
+                  </span>
                 </label>
               </div>
-              {/* 기존 링크 목록 표시 */}
+              {/* 기존 링크 목록 표시 - 최대 3개까지 */}
               <div className="flex flex-wrap gap-2 mb-2">
-                {otherLinks.map((link, index) => (
+                {otherLinks.slice(0, 3).map((link, index) => (
                   <div
                     key={index}
                     className="flex items-center gap-1 px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md"
@@ -579,37 +589,46 @@ const ShowcaseFormModal = ({
                 ))}
               </div>
 
-              {/* 링크 추가 UI */}
-              <div className="flex items-stretch">
-                <div className="flex-shrink-0 flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-l-md">
-                  https://
+              {/* 링크 추가 UI - 최대 3개까지만 허용 */}
+              {otherLinks.length < 3 && (
+                <div className="flex items-stretch">
+                  <div className="flex-shrink-0 flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-l-md">
+                    https://
+                  </div>
+                  <input
+                    type="text"
+                    value={otherLinkInput}
+                    onChange={(e) => setOtherLinkInput(e.target.value)}
+                    onKeyDown={handleLinkKeyDown}
+                    onCompositionStart={handleCompositionStart}
+                    onCompositionEnd={handleCompositionEnd}
+                    onPaste={(e) => handleUrlPaste(e, setOtherLinkInput)}
+                    className={cn(
+                      'flex-1 border border-l-0 px-4 py-2',
+                      'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
+                      'text-gray-900 dark:text-gray-100',
+                      'focus:border-gray-500 dark:focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
+                      'rounded-r-none',
+                    )}
+                    placeholder="example.com/page"
+                  />
+                  <Button
+                    variant={otherLinkInput.trim() ? "default" : "secondary"}
+                    onClick={handleAddLink}
+                    disabled={!otherLinkInput.trim()}
+                    className="rounded-l-none h-auto px-4"
+                  >
+                    {t('showcase.form.addLink')}
+                  </Button>
                 </div>
-                <input
-                  type="text"
-                  value={otherLinkInput}
-                  onChange={(e) => setOtherLinkInput(e.target.value)}
-                  onKeyDown={handleLinkKeyDown}
-                  onCompositionStart={handleCompositionStart}
-                  onCompositionEnd={handleCompositionEnd}
-                  onPaste={(e) => handleUrlPaste(e, setOtherLinkInput)}
-                  className={cn(
-                    'flex-1 border border-l-0 px-4 py-2',
-                    'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
-                    'text-gray-900 dark:text-gray-100',
-                    'focus:border-gray-500 dark:focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
-                    'rounded-r-none',
-                  )}
-                  placeholder="example.com/page"
-                />
-                <Button
-                  variant={otherLinkInput.trim() ? "default" : "secondary"}
-                  onClick={handleAddLink}
-                  disabled={!otherLinkInput.trim()}
-                  className="rounded-l-none h-auto px-4"
-                >
-                  {t('showcase.form.addLink')}
-                </Button>
-              </div>
+              )}
+              
+              {/* 최대 개수 도달 시 안내 메시지 */}
+              {otherLinks.length >= 3 && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  {t('showcase.form.maxLinksReached', { max: 3 })}
+                </p>
+              )}
             </div>
 
             {/* Tags */}

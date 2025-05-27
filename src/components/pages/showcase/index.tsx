@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useMetaTags } from '../../../hooks/useMetaTags';
 import { t } from '../../../lib/i18n';
 import { Button } from '../../uis/Button';
+import MasonryGrid from '../../uis/MasonryGrid';
 
 export default function ShowcasePage() {
   // Apply showcase-specific meta tags
@@ -224,7 +225,18 @@ export default function ShowcasePage() {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Pinterest-style masonry layout with JavaScript positioning */}
+          <MasonryGrid
+            className="w-full"
+            columnGap={24}
+            rowGap={24}
+            breakpoints={{
+              sm: 1,
+              md: 2,
+              lg: 3,
+              xl: 3,
+            }}
+          >
             {showcases.map((showcase) => (
               <ShowcaseItem
                 key={showcase._id}
@@ -242,7 +254,7 @@ export default function ShowcasePage() {
                 onEditClick={() => handleEditShowcase(showcase)}
               />
             ))}
-          </div>
+          </MasonryGrid>
 
           {/* 더 보기 버튼 */}
           {!isDone && (

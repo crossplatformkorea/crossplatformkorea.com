@@ -31,8 +31,14 @@ const ShowcaseSkeleton = ({ className }: ShowcaseSkeletonProps) => {
       )}
     >
       {/* Image area skeleton */}
-      <div className="relative aspect-video w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300/30 dark:via-gray-600/30 to-transparent shimmer"></div>
+      <div className="relative w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+        {/* Random height for masonry effect */}
+        <div 
+          className="w-full bg-gray-200 dark:bg-gray-700"
+          style={{ height: `${200 + Math.random() * 100}px` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300/30 dark:via-gray-600/30 to-transparent shimmer"></div>
+        </div>
       </div>
 
       {/* Content area skeleton */}
@@ -81,7 +87,11 @@ const ShowcaseSkeleton = ({ className }: ShowcaseSkeletonProps) => {
 // Skeleton group component for rendering multiple skeletons
 export const ShowcaseSkeletonGroup = ({ count = 6 }: { count?: number }) => {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className={cn(
+      'columns-1 sm:columns-2 lg:columns-3',
+      'gap-6 space-y-0',
+      '[&>*]:break-inside-avoid [&>*]:mb-6'
+    )}>
       {Array.from({ length: count }).map((_, index) => (
         <ShowcaseSkeleton key={index} />
       ))}

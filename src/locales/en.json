@@ -379,6 +379,7 @@
       "playStoreUrl": "Play Store URL",
       "otherLinks": "Other Links",
       "addLink": "Add",
+      "maxLinksReached": "Maximum {{max}} links allowed",
       "tags": "Tags",
       "tagsPlaceholder": "Add tags (press Enter to add)",
       "addTag": "Add Tag",
@@ -402,6 +403,8 @@
     "website": "Website",
     "appStore": "App Store",
     "playStore": "Play Store",
+    "otherLinksButton": "Other Links",
+    "linkLabel": "Link",
     "featured": "Featured",
     "user": "User"
   },
