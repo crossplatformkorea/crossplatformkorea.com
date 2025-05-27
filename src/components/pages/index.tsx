@@ -11,7 +11,7 @@ import PostDetailsPage from './community/Post/post-details';
 import SummaryPage from './community/Summary';
 
 // Lazy load pages for better performance
-const CommunityPage = lazy(() => import('./community'));
+const CommunityPage = lazy(() => import('./community/Post/posts'));
 const SignInPage = lazy(() => import('./sign-in'));
 const ProfilePage = lazy(() => import('./profile'));
 const UserProfilePage = lazy(() => import('./user'));
