@@ -13,6 +13,7 @@ import { Button } from '../../../../uis/Button';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { createUserProfileLink } from '@/lib/utils';
 
 // Import Post type from Convex data model
 type Post = Doc<'posts'>;
@@ -58,8 +59,8 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const handleAuthorClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation to post detail
     e.stopPropagation(); // Stop event propagation
-    if (post.authorId) {
-      void navigate(`/user/${post.authorId}`);
+    if (author?.displayName) {
+      void navigate(createUserProfileLink(author.displayName));
     }
   };
 
@@ -70,18 +71,21 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const author = authorQuery || null;
 
   // Process content for preview - Using a different approach to preserve Markdown
-  const contentForPreview = post.content ? (post.content.length > 300 ? 
-    post.content.substring(0, 300) + '...' : post.content) : '';
+  const contentForPreview = post.content
+    ? post.content.length > 300
+      ? post.content.substring(0, 300) + '...'
+      : post.content
+    : '';
 
   return (
     <Link
       to={`/post/${post._id}`}
       className={cn(
-        "block transition-all duration-200 overflow-hidden rounded-md shadow-sm border",
-        "bg-background/60 hover:bg-background",
-        "border-border/10 dark:border-border/15",
-        "dark:bg-gray-800/40 dark:hover:bg-gray-800/60 dark:shadow-md dark:shadow-black/5",
-        "hover:shadow"
+        'block transition-all duration-200 overflow-hidden rounded-md shadow-sm border',
+        'bg-background/60 hover:bg-background',
+        'border-border/10 dark:border-border/15',
+        'dark:bg-gray-800/40 dark:hover:bg-gray-800/60 dark:shadow-md dark:shadow-black/5',
+        'hover:shadow',
       )}
     >
       {/* Main content area */}
@@ -99,9 +103,9 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
               <span
                 key={index}
                 className={cn(
-                  "px-2 py-0.5 text-xs rounded-full border-[0.5px]",
-                  "bg-primary/10 text-primary border-primary/20",
-                  "dark:bg-primary/20 dark:text-white dark:border-primary/30"
+                  'px-2 py-0.5 text-xs rounded-full border-[0.5px]',
+                  'bg-primary/10 text-primary border-primary/20',
+                  'dark:bg-primary/20 dark:text-white dark:border-primary/30',
                 )}
               >
                 {tag}
@@ -143,21 +147,23 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
       <div className="border-t border-border/20 dark:border-gray-700 mx-4"></div>
 
       {/* Footer with stats and metadata */}
-      <div className={cn(
-        "px-4 py-3 flex items-center justify-between",
-        "bg-muted/5 dark:bg-gray-800/70"
-      )}>
+      <div
+        className={cn(
+          'px-4 py-3 flex items-center justify-between',
+          'bg-muted/5 dark:bg-gray-800/70',
+        )}
+      >
         {/* Left side - author and date */}
         <div className="flex items-center text-muted-foreground dark:text-gray-300">
-          {post.authorId && author && (
+          {author && (
             <Button
               onClick={handleAuthorClick}
               variant="ghost"
               size="sm"
               className={cn(
-                "flex items-center transition-colors py-1 px-2 -ml-2 h-auto",
-                "hover:text-foreground hover:bg-muted/50",
-                "dark:hover:bg-gray-700/60"
+                'flex items-center transition-colors py-1 px-2 -ml-2 h-auto',
+                'hover:text-foreground hover:bg-muted/50',
+                'dark:hover:bg-gray-700/60',
               )}
             >
               {author.avatarUrl ? (
@@ -165,18 +171,20 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
                   src={author.avatarUrl}
                   alt={author.displayName || 'User'}
                   className={cn(
-                    "w-6 h-6 rounded-full mr-2 object-cover transition-all",
-                    "group-hover:ring-1 group-hover:ring-primary/30",
-                    "dark:border dark:border-gray-600"
+                    'w-6 h-6 rounded-full mr-2 object-cover transition-all',
+                    'group-hover:ring-1 group-hover:ring-primary/30',
+                    'dark:border dark:border-gray-600',
                   )}
                 />
               ) : (
                 <User size={18} className="mr-2 text-muted-foreground/70" />
               )}
-              <span className={cn(
-                "font-medium text-foreground/80 transition-colors dark:text-gray-200",
-                "group-hover:text-foreground"
-              )}>
+              <span
+                className={cn(
+                  'font-medium text-foreground/80 transition-colors dark:text-gray-200',
+                  'group-hover:text-foreground',
+                )}
+              >
                 {author.displayName || ''}
               </span>
             </Button>
@@ -200,14 +208,14 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
             variant="ghost"
             size="sm"
             className={cn(
-              "flex items-center py-1 px-1.5 h-auto",
+              'flex items-center py-1 px-1.5 h-auto',
               hasLiked ? 'text-rose-500' : '',
-              "hover:bg-rose-500/10 dark:hover:bg-rose-500/20 hover:text-rose-500"
+              'hover:bg-rose-500/10 dark:hover:bg-rose-500/20 hover:text-rose-500',
             )}
             title={t('posts.likes')}
             aria-pressed={hasLiked}
           >
-            <Heart size={14} className={cn("mr-1.5", hasLiked ? 'fill-rose-500' : 'opacity-70')} />
+            <Heart size={14} className={cn('mr-1.5', hasLiked ? 'fill-rose-500' : 'opacity-70')} />
             <span className="text-xs">{likeCount}</span>
           </Button>
 

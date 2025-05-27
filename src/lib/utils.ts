@@ -1,6 +1,6 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { getLocale } from "./i18n";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { getLocale } from './i18n';
 
 // Utility for conditional class names
 export function cn(...inputs: ClassValue[]) {
@@ -13,9 +13,9 @@ export function formatDate(dateString: string): string {
   const locale = getLocale();
 
   return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   }).format(date);
 }
 
@@ -53,4 +53,13 @@ export const devConsole = {
       console.debug(...args);
     }
   },
+};
+
+/**
+ * Creates a user profile link using display name
+ */
+export const createUserProfileLink = (displayName: string): string => {
+  // Encode the display name to handle special characters and convert to lowercase
+  const encodedDisplayName = encodeURIComponent(displayName.toLowerCase());
+  return `/@${encodedDisplayName}`;
 };

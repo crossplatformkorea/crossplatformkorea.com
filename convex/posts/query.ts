@@ -145,16 +145,31 @@ export const getTags = query({
 // Get posts by author
 export const getPostsByAuthor = query({
   args: {
-    authorId: v.id('users'),
-    limit: v.number(),
+    authorId: v.id('users'), // Changed back to v.id('users') to match posts table schema
+    limit: v.optional(v.number()),
   },
-  returns: v.array(postObjectValidator),
+  returns: v.array(
+    v.object({
+      _id: v.id('posts'),
+      _creationTime: v.number(),
+      title: v.string(),
+      content: v.string(),
+      category: v.string(),
+      tags: v.array(v.string()),
+      authorId: v.optional(v.id('users')), // Also update this to match
+      commentCount: v.optional(v.number()),
+      likeCount: v.optional(v.number()),
+      viewCount: v.optional(v.number()),
+      updatedAt: v.optional(v.string()), // Add this missing field
+      likedBy: v.optional(v.array(v.id('users'))), // Add this missing field
+    }),
+  ),
   handler: async (ctx, args) => {
     const posts = await ctx.db
       .query('posts')
       .withIndex('by_author', (q) => q.eq('authorId', args.authorId))
       .order('desc')
-      .take(args.limit);
+      .take(args.limit || 10);
 
     return posts;
   },

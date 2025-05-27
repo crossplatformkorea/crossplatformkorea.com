@@ -1,50 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { api } from '../../../../convex/_generated/api';
-import { Id } from '../../../../convex/_generated/dataModel';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { t } from 'i18next';
 import { Button } from '@/components/uis/Button';
-import AppLoading from '@/components/AppLoading';
-import {
-  SiGithub,
-  SiX,
-  SiFacebook,
-  SiInstagram,
-  SiYoutube,
-  SiMedium,
-  SiVelog,
-  SiGmail,
-  SiBlogger,
-} from '@icons-pack/react-simple-icons';
 import PostListItem from '../community/Post/posts/PostListItem';
+import ProfileHeader from './ProfileHeader';
+import UserSkeleton from './UserSkeleton';
 
 export default function UserProfilePage() {
-  const { userId } = useParams<{ userId: string }>();
+  const { displayName } = useParams<{ displayName: string }>();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState<'posts' | 'about'>('posts');
 
-  // Fetch user data - this returns basic user info
+  // Check if the displayName starts with @ and extract the actual display name
+  const rawDisplayName = displayName || '';
+  const isValidUserProfile = rawDisplayName.startsWith('@');
+
+  // Extract displayName from the parameter (remove @ prefix and decode)
+  const decodedDisplayName = isValidUserProfile ? decodeURIComponent(rawDisplayName.slice(1)) : '';
+
+  // Redirect to home if not a valid user profile route
+  useEffect(() => {
+    if (!isValidUserProfile) {
+      void navigate('/', { replace: true });
+    }
+  }, [isValidUserProfile, navigate]);
+
+  // Fetch user data by display name (case-insensitive)
   const user = useQuery(
-    api.users.query.getProfile,
-    userId ? { userId: userId as Id<'users'> } : 'skip',
+    api.users.query.getProfileByDisplayName,
+    decodedDisplayName ? { displayName: decodedDisplayName } : 'skip',
   );
 
-  // Fetch user's posts with pagination
+  // Fetch user's posts with pagination (only if we have a user and pass the correct userId)
   const userPosts = useQuery(
     api.posts.query.getPostsByAuthor,
-    userId ? { authorId: userId as Id<'users'>, limit: 10 } : 'skip',
+    user && user !== null ? { authorId: user.userId, limit: 10 } : 'skip', // Use userId instead of _id
   );
 
   // Loading state
   if (user === undefined) {
-    return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <AppLoading />
-      </div>
-    );
+    return <UserSkeleton />;
+  }
+
+  // Early return if not a valid user profile route
+  if (!isValidUserProfile) {
+    return null;
   }
 
   // Handle back button click
@@ -75,53 +79,18 @@ export default function UserProfilePage() {
     );
   }
 
-  // Extract profile data - using safe access for potentially missing properties
-  // First check if we have profile data from the user object
-
-  // Combine data from user and profile objects with fallbacks
-  const displayName = user?.displayName || '';
-  const avatarUrl = user?.avatarUrl || '';
-  const organization = user?.organization || '';
-  const description = user?.description || '';
-  const lookingFor = user?.lookingFor || '';
-  const expectations = user?.expectations || '';
-  const socialLinks = user?.socialLinks || [];
-  const tags = user?.tags || [];
-
-  // Get the appropriate icon for a social media URL
-  const getSocialIcon = (url: string) => {
-    if (!url) return <ExternalLink className="w-4 h-4" />;
-
-    try {
-      // Try to extract the domain from the URL
-      let domain = url.toLowerCase();
-      if (!domain.startsWith('http')) {
-        domain = 'https://' + domain;
-      }
-
-      const urlObj = new URL(domain);
-      const hostname = urlObj.hostname;
-
-      if (hostname.includes('github.com')) return <SiGithub size={16} />;
-      if (hostname.includes('twitter.com') || hostname.includes('x.com')) return <SiX size={16} />;
-      if (hostname.includes('facebook.com')) return <SiFacebook size={16} />;
-      if (hostname.includes('linkedin.com')) return <ExternalLink className="w-4 h-4" />;
-      if (hostname.includes('instagram.com')) return <SiInstagram size={16} />;
-      if (hostname.includes('youtube.com') || hostname.includes('youtu.be'))
-        return <SiYoutube size={16} />;
-      if (hostname.includes('medium.com')) return <SiMedium size={16} />;
-      if (hostname.includes('velog.io')) return <SiVelog size={16} />;
-      if (hostname.includes('blogger') || hostname.includes('blog')) return <SiBlogger size={16} />;
-      if (hostname.includes('mail') || hostname.includes('gmail')) return <SiGmail size={16} />;
-
-      return <ExternalLink className="w-4 h-4" />;
-    } catch {
-      return <ExternalLink className="w-4 h-4" />;
-    }
-  };
+  // Extract profile data
+  const userDisplayName = user.displayName || '';
+  const avatarUrl = user.avatarUrl || '';
+  const organization = user.organization || '';
+  const description = user.description || '';
+  const lookingFor = user.lookingFor || '';
+  const expectations = user.expectations || '';
+  const socialLinks = user.socialLinks || [];
+  const tags = user.tags || [];
 
   return (
-    <div className="pt-6 max-w-4xl mx-auto px-4 pb-16">
+    <div>
       {/* Back button */}
       <div className="flex items-center mb-6">
         <Button
@@ -135,77 +104,13 @@ export default function UserProfilePage() {
       </div>
 
       {/* Profile header */}
-      <div className="border border-border/50 rounded-lg p-6 bg-card/30 mb-6">
-        {/* Top row: Avatar and Display Name */}
-        <div className="flex items-center gap-4 mb-4">
-          {/* Avatar */}
-          <div className="w-20 h-20 rounded-full overflow-hidden bg-muted flex-shrink-0">
-            {avatarUrl ? (
-              <img src={avatarUrl} alt={displayName || ''} className="w-full h-full object-cover" />
-            ) : (
-              <div className="w-full h-full bg-primary/10 flex items-center justify-center">
-                <span className="text-2xl font-bold text-primary">
-                  {displayName ? displayName[0].toUpperCase() : '?'}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Display Name */}
-          <h1 className="text-2xl font-bold">{displayName || t('user.anonymousUser')}</h1>
-        </div>
-
-        {/* Bottom row: Additional information (if available) */}
-        {(organization || tags.length > 0 || socialLinks.length > 0) && (
-          <div className="pt-4 border-t border-border/20">
-            {/* Organization */}
-            {organization && (
-              <p className="mb-3">
-                <span className="text-muted-foreground">{organization}</span>
-              </p>
-            )}
-
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {/* Social links */}
-            {socialLinks.length > 0 && (
-              <div className="flex flex-wrap gap-3">
-                {socialLinks.map((link, index) => {
-                  try {
-                    const url = new URL(link.startsWith('http') ? link : `https://${link}`);
-                    return (
-                      <a
-                        key={index}
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-                        title={url.hostname}
-                      >
-                        {getSocialIcon(link)}
-                      </a>
-                    );
-                  } catch {
-                    return null;
-                  }
-                })}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <ProfileHeader
+        displayName={userDisplayName}
+        avatarUrl={avatarUrl}
+        organization={organization}
+        tags={tags}
+        socialLinks={socialLinks}
+      />
 
       {/* Tabs */}
       <div className="flex border-b border-border/50 mb-6">
@@ -239,13 +144,42 @@ export default function UserProfilePage() {
       {selectedTab === 'posts' ? (
         <div className="space-y-4">
           <h2 className="text-xl font-semibold mb-4">
-            {t('user.postsBy', { name: displayName || t('user.anonymousUser') })}
+            {t('user.postsBy', { name: userDisplayName || t('user.anonymousUser') })}
           </h2>
 
           {/* User's posts */}
           {userPosts === undefined ? (
-            <div className="flex justify-center py-6">
-              <AppLoading />
+            <div className="space-y-4">
+              {/* Posts loading skeleton */}
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse bg-card/30 border border-border/50 rounded-lg p-4 space-y-3"
+                >
+                  {/* Post header */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-muted/40 rounded-full"></div>
+                    <div className="flex-1 space-y-2">
+                      <div className="w-24 h-4 bg-muted/30 rounded-md"></div>
+                      <div className="w-32 h-3 bg-muted/20 rounded-md"></div>
+                    </div>
+                  </div>
+                  {/* Post title */}
+                  <div className="w-3/4 h-5 bg-muted/40 rounded-md"></div>
+                  {/* Post content */}
+                  <div className="space-y-2">
+                    <div className="w-full h-4 bg-muted/20 rounded-md"></div>
+                    <div className="w-5/6 h-4 bg-muted/20 rounded-md"></div>
+                  </div>
+                  {/* Post actions */}
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex gap-4">
+                      <div className="w-12 h-6 bg-muted/30 rounded-md"></div>
+                      <div className="w-12 h-6 bg-muted/30 rounded-md"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           ) : userPosts.length > 0 ? (
             <div className="space-y-4">
@@ -260,7 +194,7 @@ export default function UserProfilePage() {
       ) : (
         <div className="bg-card/30 border border-border/50 rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">
-            {t('user.aboutUser', { name: displayName || t('user.anonymousUser') })}
+            {t('user.aboutUser', { name: userDisplayName || t('user.anonymousUser') })}
           </h2>
           {description ? (
             <p className="text-muted-foreground mb-4 whitespace-pre-wrap">{description}</p>

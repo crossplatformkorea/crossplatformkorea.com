@@ -218,3 +218,50 @@ export const getAllUsersForMention = query({
     }));
   },
 });
+
+// Add a new query to find users by display name
+export const getProfileByDisplayName = query({
+  args: { displayName: v.string() },
+  returns: v.union(
+    v.object({
+      _id: v.id('userProfiles'),
+      _creationTime: v.number(),
+      displayName: v.string(),
+      avatarUrl: v.optional(v.string()),
+      organization: v.optional(v.string()),
+      description: v.optional(v.string()),
+      lookingFor: v.optional(v.string()),
+      expectations: v.optional(v.string()),
+      socialLinks: v.optional(v.array(v.string())),
+      tags: v.optional(v.array(v.string())),
+      userId: v.id('users'),
+    }),
+    v.null(),
+  ),
+  handler: async (ctx, args) => {
+    // Convert search term to lowercase for case-insensitive search
+    const searchDisplayName = args.displayName.toLowerCase();
+    
+    // Get all userProfiles and filter by case-insensitive displayName match
+    const userProfiles = await ctx.db.query('userProfiles').collect();
+    const profile = userProfiles.find(p => p.displayName?.toLowerCase() === searchDisplayName);
+
+    if (!profile) {
+      return null;
+    }
+
+    return {
+      _id: profile._id,
+      _creationTime: profile._creationTime,
+      displayName: profile.displayName || '',
+      avatarUrl: profile.avatarUrl,
+      organization: profile.organization,
+      description: profile.description,
+      lookingFor: profile.lookingFor,
+      expectations: profile.expectations,
+      socialLinks: profile.socialLinks || [],
+      tags: profile.tags || [],
+      userId: profile.userId,
+    };
+  },
+});

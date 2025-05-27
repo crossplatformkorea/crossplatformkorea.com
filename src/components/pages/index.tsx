@@ -51,10 +51,11 @@ export default function AppRoutes() {
               {' '}
               {/* Added max-width container for large screens */}
               <Routes>
+                {/* @로 시작하는 모든 경로를 UserProfilePage로 라우팅 */}
+                <Route path="/:displayName" element={<UserProfilePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/showcase" element={<ShowcasePage />} />
                 <Route path="/notifications" element={<NotificationsPage />} />
-                <Route path="/user/:userId" element={<UserProfilePage />} />
                 <Route path="/feature-request" element={<FeatureRequestsPage />} />
                 <Route path="/*" element={<CommunityPage />} />
               </Routes>

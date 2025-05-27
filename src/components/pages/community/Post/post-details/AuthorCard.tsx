@@ -2,7 +2,7 @@ import React from 'react';
 import { User, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { cn, createUserProfileLink } from '@/lib/utils';
 
 // Update the interface to accept more flexible author types
 interface AuthorCardProps {
@@ -10,7 +10,6 @@ interface AuthorCardProps {
     | {
         displayName?: string;
         avatarUrl?: string;
-        userId?: string; // Changed from _id to userId
         [key: string]: any; // Allow additional properties from user profile
       }
     | null
@@ -24,21 +23,18 @@ export default function AuthorCard({ author, creationTime, formattedDate }: Auth
   const navigate = useNavigate();
 
   const handleAuthorClick = () => {
-    if (author && author.userId) {
-      void navigate(`/user/${author.userId}`);
+    if (author?.displayName) {
+      void navigate(createUserProfileLink(author.displayName));
     }
   };
 
-  const isClickable = !!author?.userId;
+  const isClickable = !!author?.displayName;
 
   return (
     <div className="flex items-center mr-6">
       <div
         onClick={isClickable ? handleAuthorClick : undefined}
-        className={cn(
-          'mr-3',
-          isClickable && 'cursor-pointer hover:opacity-80 transition-opacity',
-        )}
+        className={cn('mr-3', isClickable && 'cursor-pointer hover:opacity-80 transition-opacity')}
       >
         {author?.avatarUrl ? (
           <img

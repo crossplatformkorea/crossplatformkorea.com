@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Doc } from '../../../../convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
 import LikeButton from '../../uis/LikeButton';
+import { createUserProfileLink } from '@/lib/utils';
 
 // ShowcaseItem 타입 정의
 export type ShowcaseItemType = Doc<'showcases'> & {
@@ -29,12 +30,15 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
   const { t } = useTranslation();
   const [showOtherLinksDropdown, setShowOtherLinksDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
+
   // Other Links 파싱 헬퍼 함수
   const parseOtherLinks = (otherLinks: string | string[] | undefined): string[] => {
     if (!otherLinks) return [];
     if (typeof otherLinks === 'string') {
-      return otherLinks.split(',').map(link => link.trim()).filter(Boolean);
+      return otherLinks
+        .split(',')
+        .map((link) => link.trim())
+        .filter(Boolean);
     }
     if (Array.isArray(otherLinks)) {
       return otherLinks.filter(Boolean);
@@ -57,7 +61,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  
+
   return (
     <div
       className={cn(
@@ -134,9 +138,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
         </h3>
 
         {/* 설명 */}
-        <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
-          {showcase.description}
-        </p>
+        <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">{showcase.description}</p>
 
         {/* 링크 영역 */}
         <div className="mb-3 flex flex-wrap gap-2">
@@ -173,7 +175,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                   {t('showcase.appStore')}
                 </a>
               )}
-              
+
               {showcase.playStoreUrl && (
                 <a
                   href={showcase.playStoreUrl}
@@ -203,23 +205,28 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                 )}
               >
                 {t('showcase.otherLinksButton')} ({otherLinksArray.length})
-                <ChevronDown size={8} className={cn(
-                  'transition-transform',
-                  showOtherLinksDropdown && 'rotate-180'
-                )} />
+                <ChevronDown
+                  size={8}
+                  className={cn('transition-transform', showOtherLinksDropdown && 'rotate-180')}
+                />
               </button>
-              
+
               {/* 드롭다운 메뉴 */}
               {showOtherLinksDropdown && (
-                <div className={cn(
-                  'absolute left-0 top-full mt-1 z-10 min-w-48 rounded-md border shadow-lg',
-                  'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700',
-                )}>
+                <div
+                  className={cn(
+                    'absolute left-0 top-full mt-1 z-10 min-w-48 rounded-md border shadow-lg',
+                    'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700',
+                  )}
+                >
                   <div className="p-2 max-h-32 overflow-y-auto">
                     {otherLinksArray.map((link, idx) => {
                       const cleanUrl = link.trim();
-                      const displayText = cleanUrl.replace(/^https?:\/\//, '').split('/')[0].split('?')[0];
-                      
+                      const displayText = cleanUrl
+                        .replace(/^https?:\/\//, '')
+                        .split('/')[0]
+                        .split('?')[0];
+
                       return (
                         <a
                           key={idx}
@@ -228,7 +235,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                           rel="noopener noreferrer"
                           className={cn(
                             'block px-2 py-1 text-xs rounded hover:bg-gray-100 dark:hover:bg-gray-700',
-                            'text-gray-700 dark:text-gray-300 transition-colors'
+                            'text-gray-700 dark:text-gray-300 transition-colors',
                           )}
                           title={cleanUrl}
                           onClick={() => setShowOtherLinksDropdown(false)}
@@ -236,7 +243,9 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                           <div className="flex items-center gap-1">
                             <ExternalLink size={10} />
                             <span className="truncate">
-                              {displayText.length > 25 ? `${displayText.slice(0, 25)}...` : displayText}
+                              {displayText.length > 25
+                                ? `${displayText.slice(0, 25)}...`
+                                : displayText}
                             </span>
                           </div>
                         </a>
@@ -251,7 +260,11 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
           {/* website가 없을 때는 첫 번째 Other Link를 기존 방식으로 표시 */}
           {!showcase.websiteUrl && otherLinksArray.length > 0 && (
             <a
-              href={otherLinksArray[0].startsWith('http') ? otherLinksArray[0] : `https://${otherLinksArray[0]}`}
+              href={
+                otherLinksArray[0].startsWith('http')
+                  ? otherLinksArray[0]
+                  : `https://${otherLinksArray[0]}`
+              }
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
@@ -331,9 +344,9 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
           )}
         >
           <div className="flex items-center gap-1.5 min-w-0">
-            {showcase.author?._id ? (
-              <Link 
-                to={`/user/${showcase.author._id}`}
+            {showcase.author?.name ? (
+              <Link
+                to={createUserProfileLink(showcase.author.name)}
                 className="flex items-center gap-1.5 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
               >
                 {showcase.author.avatarUrl ? (
@@ -347,18 +360,14 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                     <User size={10} className="text-gray-100 dark:text-gray-800" />
                   </div>
                 )}
-                <span className="truncate max-w-[100px]">
-                  {showcase.author.name || t('showcase.user')}
-                </span>
+                <span className="truncate max-w-[100px]">{showcase.author.name}</span>
               </Link>
             ) : (
               <div className="flex items-center gap-1.5">
                 <div className="h-4 w-4 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
                   <User size={10} className="text-gray-100 dark:text-gray-800" />
                 </div>
-                <span className="truncate max-w-[100px]">
-                  {t('showcase.user')}
-                </span>
+                <span className="truncate max-w-[100px]">{t('showcase.user')}</span>
               </div>
             )}
           </div>
