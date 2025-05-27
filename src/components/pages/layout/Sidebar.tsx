@@ -76,32 +76,9 @@ export default function Sidebar({
       <nav className="flex-1 py-4">
         <ul className="space-y-1">
           {sidebarItems.map((item) => {
-            // Check if it's an external link
+            // Skip external links here - they'll be rendered at the bottom
             const isExternalLink = item.route.startsWith('http');
-            
-            if (isExternalLink) {
-              return (
-                <li key={item.key}>
-                  <a
-                    href={item.route}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      'flex items-center py-3 px-4 transition-colors',
-                      'hover:bg-gray-100 dark:hover:bg-zinc-800',
-                      'text-gray-700 dark:text-zinc-300',
-                    )}
-                  >
-                    <div className="shrink-0">
-                      <item.icon size={20} />
-                    </div>
-                    {showContent && (
-                      <span className="ml-3 transition-opacity duration-150">{t(item.labelKey)}</span>
-                    )}
-                  </a>
-                </li>
-              );
-            }
+            if (isExternalLink) return null;
             
             return (
               <li key={item.key}>
@@ -127,6 +104,34 @@ export default function Sidebar({
           })}
         </ul>
       </nav>
+
+      {/* External links section - compact style */}
+      {showContent && (
+        <div className="px-4 pb-2">
+          <div className="space-y-1">
+            {sidebarItems
+              .filter(item => item.route.startsWith('http'))
+              .map((item) => (
+                <a
+                  key={item.key}
+                  href={item.route}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'flex items-center py-2 px-2 rounded-md transition-colors text-xs',
+                    'hover:bg-gray-100 dark:hover:bg-zinc-800',
+                    'text-gray-600 dark:text-zinc-400',
+                  )}
+                >
+                  <div className="shrink-0">
+                    <item.icon size={14} />
+                  </div>
+                  <span className="ml-2 transition-opacity duration-150">{t(item.labelKey)}</span>
+                </a>
+              ))}
+          </div>
+        </div>
+      )}
 
       {/* Login button at the bottom */}
       <div
