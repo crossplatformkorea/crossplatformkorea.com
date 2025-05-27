@@ -55,10 +55,23 @@
       "required": "Authentication required",
       "loginRequired": "Please sign in to continue"
     },
+    "username": {
+      "required": "Username is required",
+      "tooShort": "Username must be at least 1 character long",
+      "tooLong": "Username must be at most 39 characters long",
+      "invalidCharacters": "Username may only contain alphanumeric characters or single hyphens",
+      "cannotStartOrEndWithHyphen": "Username cannot begin or end with a hyphen",
+      "consecutiveHyphens": "Username cannot contain consecutive hyphens",
+      "onlyHyphens": "Username cannot consist only of hyphens",
+      "reserved": "This username is reserved and cannot be used"
+    },
     "postUpdateFailed": "Failed to update post. Please try again."
   },
   "profile": {
     "title": "Profile",
+    "editProfile": "Edit Profile",
+    "saveProfile": "Save Profile",
+    "personalInfo": "Personal Information",
     "buttons": {
       "signOut": "Sign out",
       "removeImage": "Remove Image"
@@ -68,7 +81,9 @@
     },
     "fields": {
       "displayName": {
-        "label": "Display Name"
+        "label": "Display Name",
+        "placeholder": "Enter your display name",
+        "hint": "Username can only contain letters, numbers, and hyphens (1-39 characters)"
       },
       "realName": {
         "label": "Real Name"

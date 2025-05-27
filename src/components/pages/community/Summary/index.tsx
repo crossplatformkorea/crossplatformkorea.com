@@ -55,6 +55,11 @@ export default function SummaryPage() {
     show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
   };
 
+  // Generate user profile URL if display name exists
+  const userProfileUrl = userIdentity?.profile?.displayName
+    ? `/@${userIdentity.profile.displayName}`
+    : '';
+
   return (
     <div
       className={cn(
@@ -117,32 +122,70 @@ export default function SummaryPage() {
                     {/* Reduced gap on mobile */}
                     {/* 프로필 이미지 - 더 부드러운 효과 */}
                     <div className="relative group">
-                      <div
-                        className={cn(
-                          'absolute -inset-0.5 rounded-full opacity-60 blur-[2px] transition-opacity duration-500',
-                          'bg-gradient-to-r from-primary/60 to-secondary/60',
-                          'group-hover:opacity-80',
-                        )}
-                      />
-                      <div className="relative h-16 w-16 sm:h-24 sm:w-24 rounded-full overflow-hidden bg-muted/50 border border-background/30">
-                        {' '}
-                        {/* Smaller on mobile */}
-                        {userIdentity.avatarUrl ? (
-                          <img
-                            src={userIdentity.avatarUrl}
-                            alt={userIdentity.profile?.displayName || 'User'}
-                            className="h-full w-full object-cover"
+                      {userProfileUrl ? (
+                        <Link to={userProfileUrl} className="block">
+                          <div
+                            className={cn(
+                              'absolute -inset-0.5 rounded-full opacity-60 blur-[2px] transition-opacity duration-500',
+                              'bg-gradient-to-r from-primary/60 to-secondary/60',
+                              'group-hover:opacity-80',
+                            )}
                           />
-                        ) : (
-                          <User className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        )}
-                      </div>
+                          <div className="relative h-16 w-16 sm:h-24 sm:w-24 rounded-full overflow-hidden bg-muted/50 border border-background/30">
+                            {' '}
+                            {/* Smaller on mobile */}
+                            {userIdentity.avatarUrl ? (
+                              <img
+                                src={userIdentity.avatarUrl}
+                                alt={userIdentity.profile?.displayName || 'User'}
+                                className="h-full w-full object-cover"
+                              />
+                            ) : (
+                              <User className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                            )}
+                          </div>
+                        </Link>
+                      ) : (
+                        <>
+                          <div
+                            className={cn(
+                              'absolute -inset-0.5 rounded-full opacity-60 blur-[2px] transition-opacity duration-500',
+                              'bg-gradient-to-r from-primary/60 to-secondary/60',
+                              'group-hover:opacity-80',
+                            )}
+                          />
+                          <div className="relative h-16 w-16 sm:h-24 sm:w-24 rounded-full overflow-hidden bg-muted/50 border border-background/30">
+                            {' '}
+                            {/* Smaller on mobile */}
+                            {userIdentity.avatarUrl ? (
+                              <img
+                                src={userIdentity.avatarUrl}
+                                alt={userIdentity.profile?.displayName || 'User'}
+                                className="h-full w-full object-cover"
+                              />
+                            ) : (
+                              <User className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                            )}
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h2 className="text-xl sm:text-2xl font-bold truncate flex items-center gap-2">
                         {' '}
                         {/* Smaller font on mobile */}
-                        {userIdentity.profile?.displayName || userIdentity.email?.split('@')[0]}
+                        {userProfileUrl ? (
+                          <Link
+                            to={userProfileUrl}
+                            className="hover:text-primary transition-colors"
+                          >
+                            {userIdentity.profile?.displayName || userIdentity.email?.split('@')[0]}
+                          </Link>
+                        ) : (
+                          <span>
+                            {userIdentity.profile?.displayName || userIdentity.email?.split('@')[0]}
+                          </span>
+                        )}
                         <Sparkles size={16} className="text-yellow-500 animate-pulse" />
                       </h2>
                       {userIdentity.profile?.description && (
@@ -165,7 +208,6 @@ export default function SummaryPage() {
                         ))}
                       </div>
                     </div>
-                    
                     <Link
                       to="/profile"
                       className={cn(
@@ -179,7 +221,7 @@ export default function SummaryPage() {
                       )}
                     >
                       {t('profile.viewEdit')}
-                      <ArrowRight size={14} className="sm:w-4 sm:h-4" /> {/* 아이콘 크기도 약간 키움 */}
+                      <ArrowRight size={14} className="sm:w-4 sm:h-4" />{' '}
                     </Link>
                   </div>
                 </div>

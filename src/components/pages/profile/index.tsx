@@ -76,6 +76,9 @@ export default function ProfilePage() {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
+  // State for username validation
+  const [hasUsernameError, setHasUsernameError] = useState(false);
+
   // Add state to track original profile data
   const [originalData, setOriginalData] = useState({
     displayName: '',
@@ -591,6 +594,7 @@ export default function ProfilePage() {
           formValues={formValues}
           handleInputChange={handleInputChange}
           t={t}
+          onUsernameValidationChange={setHasUsernameError}
         />
 
         {/* 사용자 통계 정보 추가 */}
@@ -647,7 +651,7 @@ export default function ProfilePage() {
             <Button
               type="submit"
               form="profileForm"
-              disabled={isSaving || !hasProfileChanged()}
+              disabled={isSaving || !hasProfileChanged() || hasUsernameError}
               className="flex items-center"
             >
               {isSaving ? t('common.buttons.saving') : t('common.buttons.save')}

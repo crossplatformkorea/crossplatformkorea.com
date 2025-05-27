@@ -2,8 +2,8 @@ import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
 import { v } from 'convex/values';
 import { Doc, Id } from '../_generated/dataModel';
-import { v4 as uuidv4 } from 'uuid';
 import { ErrorCode } from '../constants';
+import { validateUsername, normalizeUsername } from '../validators';
 
 // Create or update a user profile after authentication
 export const createOrUpdateUser = mutation({
@@ -62,14 +62,20 @@ export const createOrUpdateUser = mutation({
 
     // Prioritize displayName from args, fallback to name, or generate
     let userDisplayName = args.displayName || args.name;
+
+    // Normalize displayName (replace spaces and special characters with hyphens)
+    if (userDisplayName) {
+      userDisplayName = normalizeUsername(userDisplayName);
+    }
+
     if (!userDisplayName) {
       try {
-        // Generate a unique nickname without passing ctx
+        // Generate a unique GitHub-style nickname
         let nickname = '';
         let isUnique = false;
 
         while (!isUnique) {
-          nickname = 'User_' + uuidv4().split('-')[0];
+          nickname = 'User' + Math.floor(Math.random() * 100000);
 
           const existingWithName = await ctx.db
             .query('userProfiles')
@@ -85,9 +91,19 @@ export const createOrUpdateUser = mutation({
       } catch (error) {
         console.error('Failed to generate unique nickname:', error);
         // Fallback to a basic name if generation fails
-        userDisplayName = 'User_' + Math.floor(Math.random() * 10000);
+        userDisplayName = 'User' + Math.floor(Math.random() * 10000);
       }
     } else {
+      // Validate username format first
+      const validation = validateUsername(userDisplayName);
+      if (!validation.isValid) {
+        return {
+          profileId: '' as Id<'userProfiles'>, // Empty ID as placeholder
+          success: false,
+          errorCode: validation.error || 'errors.username.invalidCharacters',
+        };
+      }
+
       // Check if the display name is already taken by another user
       const existingWithName = await ctx.db
         .query('userProfiles')
@@ -120,14 +136,27 @@ export const createOrUpdateUser = mutation({
 
       // Basic fields - now check for displayName uniqueness
       if (args.displayName && args.displayName.trim() !== '') {
+        // Normalize displayName (replace spaces and special characters with hyphens)
+        const normalizedDisplayName = normalizeUsername(args.displayName);
+
+        // Validate username format first
+        const validation = validateUsername(normalizedDisplayName);
+        if (!validation.isValid) {
+          return {
+            profileId: existingProfile._id,
+            success: false,
+            errorCode: validation.error || 'errors.username.invalidCharacters',
+          };
+        }
+
         // Only check uniqueness if display name is changing
-        if (args.displayName !== existingProfile.displayName) {
+        if (normalizedDisplayName !== existingProfile.displayName) {
           // Check if the display name is already taken by another user
           const existingWithName = await ctx.db
             .query('userProfiles')
             .filter((q) =>
               q.and(
-                q.eq(q.field('displayName'), args.displayName),
+                q.eq(q.field('displayName'), normalizedDisplayName),
                 q.neq(q.field('userId'), userId as Id<'users'>),
               ),
             )
@@ -142,11 +171,24 @@ export const createOrUpdateUser = mutation({
           }
         }
 
-        console.log('Updating displayName to:', args.displayName);
-        updateFields.displayName = args.displayName;
+        console.log('Updating displayName to:', normalizedDisplayName);
+        updateFields.displayName = normalizedDisplayName;
       } else if (args.name && args.name.trim() !== '') {
-        console.log('Updating displayName from name:', args.name);
-        updateFields.displayName = args.name;
+        // Normalize name if using it as displayName
+        const normalizedName = normalizeUsername(args.name);
+
+        // Validate name as username if using it as displayName
+        const validation = validateUsername(normalizedName);
+        if (!validation.isValid) {
+          return {
+            profileId: existingProfile._id,
+            success: false,
+            errorCode: validation.error || 'errors.username.invalidCharacters',
+          };
+        }
+
+        console.log('Updating displayName from name:', normalizedName);
+        updateFields.displayName = normalizedName;
       }
       if (args.description !== undefined) updateFields.description = args.description;
 
@@ -246,6 +288,16 @@ export const updateProfile = mutation({
       throw new Error('Authentication required');
     }
 
+    // Normalize and validate username format
+    const normalizedDisplayName = normalizeUsername(args.displayName);
+    const validation = validateUsername(normalizedDisplayName);
+    if (!validation.isValid) {
+      throw new Error(validation.error || 'Invalid username format');
+    }
+
+    // Replace the displayName with normalized version
+    args.displayName = normalizedDisplayName;
+
     // 사용자 프로필 조회
     const userProfile = await ctx.db
       .query('userProfiles')
@@ -254,6 +306,20 @@ export const updateProfile = mutation({
 
     if (!userProfile) {
       throw new Error('User profile not found');
+    }
+
+    // Check if displayName is changing and if the new name is available
+    if (args.displayName !== userProfile.displayName) {
+      const existingWithName = await ctx.db
+        .query('userProfiles')
+        .filter((q) =>
+          q.and(q.eq(q.field('displayName'), args.displayName), q.neq(q.field('userId'), userId)),
+        )
+        .first();
+
+      if (existingWithName) {
+        throw new Error('This display name is already taken');
+      }
     }
 
     // 프로필 업데이트

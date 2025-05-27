@@ -55,10 +55,23 @@
       "required": "認証が必要です",
       "loginRequired": "ログインが必要です"
     },
+    "username": {
+      "required": "ユーザー名は必須です",
+      "tooShort": "ユーザー名は1文字以上である必要があります",
+      "tooLong": "ユーザー名は最大39文字まで使用できます",
+      "invalidCharacters": "ユーザー名は英数字とハイフンのみ使用できます",
+      "cannotStartOrEndWithHyphen": "ユーザー名はハイフンで始まったり終わったりできません",
+      "consecutiveHyphens": "ユーザー名に連続するハイフンは使用できません",
+      "onlyHyphens": "ユーザー名をハイフンのみで構成することはできません",
+      "reserved": "このユーザー名は予約語のため使用できません"
+    },
     "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。"
   },
   "profile": {
     "title": "プロフィール",
+    "editProfile": "プロフィール編集",
+    "saveProfile": "プロフィール保存",
+    "personalInfo": "個人情報",
     "buttons": {
       "signOut": "ログアウト",
       "removeImage": "画像を削除"
@@ -68,7 +81,9 @@
     },
     "fields": {
       "displayName": {
-        "label": "表示名"
+        "label": "表示名",
+        "placeholder": "表示名を入力してください",
+        "hint": "ユーザー名は英数字とハイフンのみ使用できます (1-39文字)"
       },
       "realName": {
         "label": "本名"

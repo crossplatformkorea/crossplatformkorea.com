@@ -1,8 +1,9 @@
-import React, { RefObject, ChangeEvent } from 'react';
+import React, { RefObject, ChangeEvent, useState } from 'react';
 import { User, X, Camera } from 'lucide-react';
 import { TFunction } from 'i18next';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/uis/Button';
+import { validateUsername, normalizeUsername } from '@/utils/usernameValidation';
 
 interface ProfileDisplayProps {
   imagePreview: string | null;
@@ -17,6 +18,7 @@ interface ProfileDisplayProps {
   };
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   t: TFunction;
+  onUsernameValidationChange?: (hasError: boolean) => void;
 }
 
 export default function ProfileDisplay({
@@ -28,7 +30,47 @@ export default function ProfileDisplay({
   formValues,
   handleInputChange,
   t,
+  onUsernameValidationChange,
 }: ProfileDisplayProps) {
+  const [usernameError, setUsernameError] = useState<string | null>(null);
+
+  // Handle displayName change with validation
+  const handleDisplayNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const originalValue = e.target.value;
+
+    // Normalize the value (replace spaces and special characters with hyphens)
+    const normalizedValue = normalizeUsername(originalValue);
+
+    // Update the input value with normalized value
+    const syntheticEvent = {
+      ...e,
+      target: {
+        ...e.target,
+        value: normalizedValue,
+        name: 'displayName',
+      },
+    };
+
+    // Call the original handler
+    handleInputChange(syntheticEvent as React.ChangeEvent<HTMLInputElement>);
+
+    // Validate username
+    let hasError = false;
+    if (normalizedValue.trim()) {
+      const validation = validateUsername(normalizedValue);
+      if (!validation.isValid && validation.error) {
+        setUsernameError(t(validation.error));
+        hasError = true;
+      } else {
+        setUsernameError(null);
+      }
+    } else {
+      setUsernameError(null);
+    }
+
+    // Notify parent component about validation status
+    onUsernameValidationChange?.(hasError);
+  };
   return (
     <div className="border border-border/50 rounded-lg p-5 mb-6 bg-card/30">
       <div className="flex flex-col md:flex-row items-center gap-6">
@@ -42,8 +84,8 @@ export default function ProfileDisplay({
               onClick={removeSelectedImage}
               title={t('profile.buttons.removeImage')}
               className={cn(
-                "absolute -top-1 -right-1 rounded-full p-1 shadow-md transition-all duration-200 z-10 border border-white w-6 h-6",
-                "hover:scale-110"
+                'absolute -top-1 -right-1 rounded-full p-1 shadow-md transition-all duration-200 z-10 border border-white w-6 h-6',
+                'hover:scale-110',
               )}
               aria-label={t('profile.buttons.removeImage')}
             >
@@ -61,8 +103,8 @@ export default function ProfileDisplay({
             {/* Overlay for image upload */}
             <div
               className={cn(
-                "absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 cursor-pointer",
-                "group-hover:opacity-100 transition-opacity"
+                'absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 cursor-pointer',
+                'group-hover:opacity-100 transition-opacity',
               )}
               onClick={triggerFileInput}
             >
@@ -91,13 +133,18 @@ export default function ProfileDisplay({
               type="text"
               name="displayName"
               value={formValues.displayName}
-              onChange={handleInputChange}
+              onChange={handleDisplayNameChange}
               required
               className={cn(
-                "w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none",
-                "focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                'w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none',
+                'focus:border-primary/50 focus:ring-1 focus:ring-primary/50',
+                usernameError && 'border-red-500 focus:border-red-500 focus:ring-red-500',
               )}
             />
+            {usernameError && <p className="mt-1 text-sm text-red-500">{usernameError}</p>}
+            <p className="mt-1 text-xs text-muted-foreground">
+              {t('profile.fields.displayName.hint')}
+            </p>
           </div>
 
           {/* 실명 (Real Name) */}
@@ -111,8 +158,8 @@ export default function ProfileDisplay({
               value={formValues.realName}
               onChange={handleInputChange}
               className={cn(
-                "w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none",
-                "focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                'w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none',
+                'focus:border-primary/50 focus:ring-1 focus:ring-primary/50',
               )}
             />
           </div>
@@ -129,8 +176,8 @@ export default function ProfileDisplay({
               onChange={handleInputChange}
               placeholder={t('profile.fields.organization.placeholder')}
               className={cn(
-                "w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none",
-                "focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                'w-full px-3 py-2 bg-background/60 border border-border/50 rounded-md outline-none',
+                'focus:border-primary/50 focus:ring-1 focus:ring-primary/50',
               )}
             />
           </div>
