@@ -1,12 +1,17 @@
 // Notification message utilities
 
-export type NotificationType = 'COMMENT_ON_POST' | 'LIKE_ON_SHOWCASE' | 'LIKE_ON_POST';
+export type NotificationType =
+  | 'COMMENT_ON_POST'
+  | 'LIKE_ON_SHOWCASE'
+  | 'LIKE_ON_POST'
+  | 'MENTIONED';
 
 export interface NotificationMessageParams {
   commenterName?: string;
   likerName?: string;
   postTitle?: string;
   showcaseTitle?: string;
+  mentionerName?: string; // 멘션한 사람 이름
 }
 
 /**
@@ -16,70 +21,47 @@ export interface NotificationMessageParams {
 export function getNotificationMessages(
   type: NotificationType,
   locale: string = 'en',
-  params: NotificationMessageParams
+  params: NotificationMessageParams,
 ): { title: string; message: string } {
-  switch (type) {
-    case 'COMMENT_ON_POST':
-      switch (locale) {
-        case 'ko':
-          return {
-            title: '새로운 댓글',
-            message: `${params.commenterName}님이 "${params.postTitle}" 포스트에 댓글을 달았습니다.`
-          };
-        case 'ja':
-          return {
-            title: '新しいコメント',
-            message: `${params.commenterName}さんがあなたの投稿「${params.postTitle}」にコメントしました。`
-          };
-        default: // 'en'
-          return {
-            title: 'New comment',
-            message: `${params.commenterName} commented on your post "${params.postTitle}".`
-          };
-      }
+  const messages = {
+    en: {
+      COMMENT_ON_POST: {
+        title: 'New Comment',
+        message: `${params.commenterName} commented on your post "${params.postTitle}"`,
+      },
+      LIKE_ON_SHOWCASE: {
+        title: 'New Like',
+        message: `${params.likerName} liked your showcase "${params.showcaseTitle}"`,
+      },
+      LIKE_ON_POST: {
+        title: 'New Like',
+        message: `${params.likerName} liked your post "${params.postTitle}"`,
+      },
+      MENTIONED: {
+        title: 'You were mentioned',
+        message: `${params.mentionerName} mentioned you in a ${params.postTitle ? 'post' : 'comment'}`,
+      },
+    },
+    ko: {
+      COMMENT_ON_POST: {
+        title: '새 댓글',
+        message: `${params.commenterName}님이 회원님의 게시글 "${params.postTitle}"에 댓글을 달았습니다`,
+      },
+      LIKE_ON_SHOWCASE: {
+        title: '새 좋아요',
+        message: `${params.likerName}님이 회원님의 쇼케이스 "${params.showcaseTitle}"를 좋아합니다`,
+      },
+      LIKE_ON_POST: {
+        title: '새 좋아요',
+        message: `${params.likerName}님이 회원님의 게시글 "${params.postTitle}"를 좋아합니다`,
+      },
+      MENTIONED: {
+        title: '멘션 알림',
+        message: `${params.mentionerName}님이 회원님을 ${params.postTitle ? '게시글' : '댓글'}에서 언급했습니다`,
+      },
+    },
+  };
 
-    case 'LIKE_ON_SHOWCASE':
-      switch (locale) {
-        case 'ko':
-          return {
-            title: '쇼케이스에 좋아요',
-            message: `${params.likerName}님이 "${params.showcaseTitle}" 쇼케이스에 좋아요를 눌렀습니다.`
-          };
-        case 'ja':
-          return {
-            title: 'ショーケースにいいね',
-            message: `${params.likerName}さんがあなたのショーケース「${params.showcaseTitle}」にいいねしました。`
-          };
-        default: // 'en'
-          return {
-            title: 'Showcase liked',
-            message: `${params.likerName} liked your showcase "${params.showcaseTitle}".`
-          };
-      }
-
-    case 'LIKE_ON_POST':
-      switch (locale) {
-        case 'ko':
-          return {
-            title: '포스트에 좋아요',
-            message: `${params.likerName}님이 "${params.postTitle}" 포스트에 좋아요를 눌렀습니다.`
-          };
-        case 'ja':
-          return {
-            title: '投稿にいいね',
-            message: `${params.likerName}さんがあなたの投稿「${params.postTitle}」にいいねしました。`
-          };
-        default: // 'en'
-          return {
-            title: 'Post liked',
-            message: `${params.likerName} liked your post "${params.postTitle}".`
-          };
-      }
-
-    default:
-      return {
-        title: 'Notification',
-        message: 'You have a new notification.'
-      };
-  }
+  const localeMessages = messages[locale as keyof typeof messages] || messages.en;
+  return localeMessages[type];
 }

@@ -197,3 +197,24 @@ export const getUserStats = query({
     };
   },
 });
+
+// 사용자 목록을 가져오는 쿼리 - userProfiles에서 가져오도록 수정
+export const getAllUsersForMention = query({
+  args: {},
+  returns: v.array(
+    v.object({
+      _id: v.id('users'),
+      displayName: v.optional(v.string()),
+      avatarUrl: v.optional(v.string()),
+    }),
+  ),
+  handler: async (ctx) => {
+    const userProfiles = await ctx.db.query('userProfiles').collect();
+
+    return userProfiles.map((profile) => ({
+      _id: profile.userId,
+      displayName: profile.displayName,
+      avatarUrl: profile.avatarUrl,
+    }));
+  },
+});

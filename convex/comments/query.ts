@@ -12,9 +12,11 @@ export const getCommentsByPostId = query({
       postId: v.id('posts'),
       authorId: v.id('users'),
       content: v.string(),
+      likeCount: v.optional(v.number()),
+      likedBy: v.optional(v.array(v.id('users'))),
+      mentions: v.optional(v.array(v.id('users'))),
+      mentionedUsers: v.optional(v.array(v.id('users'))), // 누락된 필드 추가
       updatedAt: v.optional(v.string()),
-      likeCount: v.optional(v.number()), // Add likeCount field
-      likedBy: v.optional(v.array(v.id('users'))), // Add likedBy field
     }),
   ),
   handler: async (ctx, args) => {

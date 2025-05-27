@@ -1,7 +1,11 @@
 import { v } from 'convex/values';
 import { mutation, internalMutation } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
-import { getNotificationMessages, type NotificationType, type NotificationMessageParams } from '../utils';
+import {
+  getNotificationMessages,
+  type NotificationType,
+  type NotificationMessageParams,
+} from '../utils';
 
 // 알림 생성 (내부 함수) - 다국어 지원
 export const createNotification = internalMutation({
@@ -11,6 +15,7 @@ export const createNotification = internalMutation({
       v.literal('COMMENT_ON_POST'),
       v.literal('LIKE_ON_SHOWCASE'),
       v.literal('LIKE_ON_POST'),
+      v.literal('MENTIONED'),
     ),
     postId: v.optional(v.id('posts')),
     showcaseId: v.optional(v.id('showcases')),
@@ -19,9 +24,10 @@ export const createNotification = internalMutation({
     // 메시지 파라미터들
     commenterName: v.optional(v.string()),
     likerName: v.optional(v.string()),
+    mentionerName: v.optional(v.string()),
     postTitle: v.optional(v.string()),
     showcaseTitle: v.optional(v.string()),
-    locale: v.optional(v.string()), // 사용자 로케일
+    locale: v.optional(v.string()),
   },
   returns: v.id('notifications'),
   handler: async (ctx, args) => {
@@ -34,6 +40,7 @@ export const createNotification = internalMutation({
     const params: NotificationMessageParams = {
       commenterName: args.commenterName,
       likerName: args.likerName,
+      mentionerName: args.mentionerName, // 멘션한 사람 이름 추가
       postTitle: args.postTitle,
       showcaseTitle: args.showcaseTitle,
     };
@@ -41,7 +48,7 @@ export const createNotification = internalMutation({
     const { title, message } = getNotificationMessages(
       args.type as NotificationType,
       args.locale || 'en',
-      params
+      params,
     );
 
     return await ctx.db.insert('notifications', {
@@ -101,9 +108,7 @@ export const markAllAsRead = mutation({
 
     const unreadNotifications = await ctx.db
       .query('notifications')
-      .withIndex('by_userId_isRead', (q) => 
-        q.eq('userId', userId).eq('isRead', false)
-      )
+      .withIndex('by_userId_isRead', (q) => q.eq('userId', userId).eq('isRead', false))
       .collect();
 
     for (const notification of unreadNotifications) {
@@ -162,9 +167,7 @@ export const subscribeToPush = mutation({
     // 기존 구독이 있는지 확인
     const existingSubscription = await ctx.db
       .query('pushSubscriptions')
-      .withIndex('by_userId_endpoint', (q) => 
-        q.eq('userId', userId).eq('endpoint', args.endpoint)
-      )
+      .withIndex('by_userId_endpoint', (q) => q.eq('userId', userId).eq('endpoint', args.endpoint))
       .unique();
 
     if (existingSubscription) {
@@ -208,9 +211,7 @@ export const unsubscribeFromPush = mutation({
     // 해당 구독 찾기
     const subscription = await ctx.db
       .query('pushSubscriptions')
-      .withIndex('by_userId_endpoint', (q) => 
-        q.eq('userId', userId).eq('endpoint', args.endpoint)
-      )
+      .withIndex('by_userId_endpoint', (q) => q.eq('userId', userId).eq('endpoint', args.endpoint))
       .unique();
 
     if (subscription) {

@@ -21,6 +21,8 @@ export default defineSchema({
     likedBy: v.optional(v.array(v.id('users'))),
     viewCount: v.optional(v.number()),
     commentCount: v.optional(v.number()), // 댓글 수 필드 추가
+    // 멘션 필드 추가
+    mentions: v.optional(v.array(v.id('users'))), // 멘션된 사용자들
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
@@ -70,9 +72,11 @@ export default defineSchema({
     postId: v.id('posts'),
     authorId: v.id('users'),
     content: v.string(),
+    likeCount: v.optional(v.number()),
+    likedBy: v.optional(v.array(v.id('users'))),
+    mentions: v.optional(v.array(v.id('users'))),
+    mentionedUsers: v.optional(v.array(v.id('users'))), // 새 필드 추가
     updatedAt: v.optional(v.string()),
-    likeCount: v.optional(v.number()), // Ensure this field is defined
-    likedBy: v.optional(v.array(v.id('users'))), // Ensure this field is defined
   })
     .index('by_post', ['postId'])
     .index('by_author', ['authorId']),
@@ -107,6 +111,7 @@ export default defineSchema({
       v.literal('COMMENT_ON_POST'), // 내 포스트에 댓글
       v.literal('LIKE_ON_SHOWCASE'), // 내 showcase에 좋아요
       v.literal('LIKE_ON_POST'), // 내 포스트에 좋아요 (선택사항)
+      v.literal('MENTIONED'), // 멘션 알림 타입 추가
     ),
     title: v.string(), // 알림 제목
     message: v.string(), // 알림 메시지

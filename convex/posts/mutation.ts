@@ -4,6 +4,7 @@ import { mutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
 import { DEFAULT_CATEGORY } from '../constants';
 import { internal } from '../_generated/api';
+import { extractMentions, resolveMentions } from '../utils/mentions';
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -28,6 +29,10 @@ export const createPost = mutation({
     // Ensure a valid category is used
     const category = args.category || DEFAULT_CATEGORY;
 
+    // 멘션 추출 및 해결
+    const mentionedDisplayNames = extractMentions(args.content);
+    const mentionedUserIds = await resolveMentions(ctx, mentionedDisplayNames);
+
     // Create the post
     const postId = await ctx.db.insert('posts', {
       category, // Use validated category
@@ -38,7 +43,41 @@ export const createPost = mutation({
       startDate: args.startDate,
       endDate: args.endDate,
       authorId: userId as Id<'users'>,
+      mentions: mentionedUserIds.length > 0 ? mentionedUserIds : undefined,
     });
+
+    // 멘션 알림 생성
+    if (mentionedUserIds.length > 0) {
+      const authorProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', userId))
+        .unique();
+
+      const mentionerName = authorProfile?.displayName || 'Someone';
+
+      for (const mentionedUserId of mentionedUserIds) {
+        // 자신을 멘션한 경우는 알림 생성하지 않음
+        if (mentionedUserId !== userId) {
+          // 멘션된 사용자의 언어 설정 조회
+          const mentionedUserProfile = await ctx.db
+            .query('userProfiles')
+            .withIndex('by_user', (q) => q.eq('userId', mentionedUserId))
+            .unique();
+
+          const userLocale = mentionedUserProfile?.locale || 'ko';
+
+          await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
+            userId: mentionedUserId,
+            type: 'MENTIONED',
+            postId: postId,
+            triggeredById: userId,
+            commenterName: mentionerName,
+            postTitle: args.title,
+            locale: userLocale,
+          });
+        }
+      }
+    }
 
     console.log('args.storageIds', args.storageIds);
 
@@ -143,7 +182,14 @@ export const updatePost = mutation({
 
     if (args.category !== undefined) updateData.category = args.category;
     if (args.title !== undefined) updateData.title = args.title;
-    if (args.content !== undefined) updateData.content = args.content;
+    if (args.content !== undefined) {
+      updateData.content = args.content;
+
+      // 멘션 업데이트
+      const mentionedDisplayNames = extractMentions(args.content);
+      const mentionedUserIds = await resolveMentions(ctx, mentionedDisplayNames);
+      updateData.mentions = mentionedUserIds.length > 0 ? mentionedUserIds : undefined;
+    }
     if (args.tags !== undefined) updateData.tags = args.tags;
     if (args.startDate !== undefined) updateData.startDate = args.startDate;
     if (args.endDate !== undefined) updateData.endDate = args.endDate;
@@ -154,7 +200,7 @@ export const updatePost = mutation({
     // Handle file synchronization when content is updated
     if (args.content !== undefined) {
       console.log('Updating post files for post:', args.postId);
-      
+
       // Get all files currently associated with this post
       const currentFiles = await ctx.db
         .query('files')
@@ -167,11 +213,13 @@ export const updatePost = mutation({
 
       // Check existing files and remove unused ones
       for (const file of currentFiles) {
-        const isUrlUsed = file.url && usedUrls.some((url) => {
-          const cleanFileUrl = file.url?.split('?')[0];
-          const cleanContentUrl = url.split('?')[0];
-          return cleanContentUrl === cleanFileUrl;
-        });
+        const isUrlUsed =
+          file.url &&
+          usedUrls.some((url) => {
+            const cleanFileUrl = file.url?.split('?')[0];
+            const cleanContentUrl = url.split('?')[0];
+            return cleanContentUrl === cleanFileUrl;
+          });
 
         if (!isUrlUsed) {
           // File is no longer used in content, delete it
@@ -199,11 +247,13 @@ export const updatePost = mutation({
 
             if (file && file.userId === userId) {
               // Check if this file is used in the content
-              const isUrlUsed = file.url && usedUrls.some((url) => {
-                const cleanFileUrl = file.url?.split('?')[0];
-                const cleanContentUrl = url.split('?')[0];
-                return cleanContentUrl === cleanFileUrl;
-              });
+              const isUrlUsed =
+                file.url &&
+                usedUrls.some((url) => {
+                  const cleanFileUrl = file.url?.split('?')[0];
+                  const cleanContentUrl = url.split('?')[0];
+                  return cleanContentUrl === cleanFileUrl;
+                });
 
               if (isUrlUsed) {
                 // Connect file to post if not already connected
@@ -273,7 +323,7 @@ export const deletePost = mutation({
           await ctx.storage.delete(file.storageId);
           console.log(`Deleted file from storage: ${file.storageId}`);
         }
-        
+
         // Delete file record from database
         await ctx.db.delete(file._id);
         console.log(`Deleted file record: ${file._id}`);
@@ -422,7 +472,7 @@ export const toggleLike = mutation({
           .query('userProfiles')
           .withIndex('by_user', (q) => q.eq('userId', userId))
           .unique();
-        
+
         const likerName = likerProfile?.displayName || 'Someone';
 
         // 알림 생성 및 푸시 알림 전송
