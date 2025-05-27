@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../../../../convex/_generated/api';
@@ -34,6 +34,9 @@ export default function PostDetailsPage() {
   const deletePost = useMutation(api.posts.mutation.deletePost);
   const toggleLike = useMutation(api.posts.mutation.toggleLike);
   const incrementViewCount = useMutation(api.posts.mutation.incrementViewCount);
+
+  // Add ref for the comments section
+  const commentsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!postId) {
@@ -82,6 +85,13 @@ export default function PostDetailsPage() {
       }
       void toggleLike({ postId: post._id });
     }
+  };
+
+  const scrollToComments = () => {
+    commentsRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   };
 
   const commentCount = post?.commentCount || 0;
@@ -190,8 +200,10 @@ export default function PostDetailsPage() {
 
                   {/* Comment count */}
                   <div
-                    className="flex items-center"
+                    className="flex items-center cursor-pointer hover:text-primary transition-colors"
                     title={t('posts.comments', { defaultValue: 'Comments' })}
+                    onClick={scrollToComments}
+                    aria-label={`View ${commentCount} comments`}
                   >
                     <MessageSquare size={15} className="mr-1.5" />
                     <span>{commentCount}</span>
@@ -262,7 +274,10 @@ export default function PostDetailsPage() {
               'bg-background dark:bg-gray-800/20',
             )}
           >
-            {post && <Comments postId={post._id} />}
+            {/* Add ref to the Comments section */}
+            <div ref={commentsRef} id="comments">
+              {post && <Comments postId={post._id} />}
+            </div>
           </div>
         </>
       )}
