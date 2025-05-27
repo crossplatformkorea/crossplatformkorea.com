@@ -119,6 +119,7 @@ export default defineSchema({
     triggeredById: v.id('users'),
     isRead: v.boolean(), // 읽음 여부
     readAt: v.optional(v.string()), // 읽은 시간
+    updatedAt: v.optional(v.number()), // Add the updatedAt field
   })
     .index('by_userId', ['userId'])
     .index('by_userId_isRead', ['userId', 'isRead'])

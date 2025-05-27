@@ -7,6 +7,65 @@ import {
   type NotificationMessageParams,
   getNotificationTypeValidator,
 } from '../utils';
+import { Id } from '../_generated/dataModel';
+import { GenericMutationCtx } from 'convex/server';
+
+// 이미 존재하는 알림인지 확인하는 내부 헬퍼 함수
+async function checkIfNotificationExists(
+  ctx: GenericMutationCtx<any>,
+  args: {
+    userId: string | Id<'users'>;
+    type: NotificationType;
+    triggeredById: string | Id<'users'>;
+    postId?: string | Id<'posts'>;
+    commentId?: string | Id<'comments'>;
+    showcaseId?: string | Id<'showcases'>;
+  },
+) {
+  // 좋아요 관련 알림인지 확인
+  const isLikeNotification = ['LIKE_ON_POST', 'LIKE_ON_COMMENT', 'LIKE_ON_SHOWCASE'].includes(
+    args.type,
+  );
+
+  // 좋아요 관련 알림이 아니면 항상 새로 생성 (중복 체크 안함)
+  if (!isLikeNotification) {
+    return false;
+  }
+
+  // 기존 알림 찾기 - 수정된 필터 방식
+  const existingNotifications = await ctx.db
+    .query('notifications')
+    .filter((q) => {
+      // 기본 조건: userId, type, triggeredById는 항상 확인
+      const conditions = [
+        q.eq(q.field('userId'), args.userId),
+        q.eq(q.field('type'), args.type),
+        q.eq(q.field('triggeredById'), args.triggeredById),
+      ];
+
+      // 추가 필터 조건: 관련 항목 ID
+      if (args.postId) {
+        conditions.push(q.eq(q.field('postId'), args.postId));
+      }
+      if (args.commentId) {
+        conditions.push(q.eq(q.field('commentId'), args.commentId));
+      }
+      if (args.showcaseId) {
+        conditions.push(q.eq(q.field('showcaseId'), args.showcaseId));
+      }
+
+      // 모든 조건을 AND로 결합
+      if (conditions.length === 1) {
+        return conditions[0];
+      }
+
+      // 여러 조건을 q.and()로 결합
+      return q.and(...conditions);
+    })
+    .collect();
+
+  return existingNotifications.length > 0;
+}
 
 // 알림 생성 (내부 함수) - 다국어 지원
 export const createNotification = internalMutation({
@@ -17,13 +76,12 @@ export const createNotification = internalMutation({
     showcaseId: v.optional(v.id('showcases')),
     commentId: v.optional(v.id('comments')),
     triggeredById: v.id('users'),
-    // 메시지 파라미터들
     commenterName: v.optional(v.string()),
     likerName: v.optional(v.string()),
     mentionerName: v.optional(v.string()),
     postTitle: v.optional(v.string()),
     showcaseTitle: v.optional(v.string()),
-    commentContent: v.optional(v.string()), // 댓글 내용 추가
+    commentContent: v.optional(v.string()),
     locale: v.optional(v.string()),
   },
   returns: v.id('notifications'),
@@ -31,6 +89,49 @@ export const createNotification = internalMutation({
     // 자신에게는 알림을 보내지 않음
     if (args.userId === args.triggeredById) {
       throw new Error('Cannot create notification for self');
+    }
+
+    // 동일한 알림이 이미 존재하는지 확인 (좋아요 알림 중복 방지)
+    const exists = await checkIfNotificationExists(ctx, {
+      userId: args.userId,
+      type: args.type as NotificationType,
+      triggeredById: args.triggeredById,
+      postId: args.postId,
+      commentId: args.commentId,
+      showcaseId: args.showcaseId,
+    });
+
+    // 이미 동일한 알림이 있으면 가장 최근 알림 ID 반환
+    if (exists) {
+      const existingNotification = await ctx.db
+        .query('notifications')
+        .filter((q) => {
+          // 기본 조건들
+          const conditions = [
+            q.eq(q.field('userId'), args.userId),
+            q.eq(q.field('type'), args.type),
+            q.eq(q.field('triggeredById'), args.triggeredById),
+          ];
+
+          // 추가 조건들
+          if (args.postId) conditions.push(q.eq(q.field('postId'), args.postId));
+          if (args.commentId) conditions.push(q.eq(q.field('commentId'), args.commentId));
+          if (args.showcaseId) conditions.push(q.eq(q.field('showcaseId'), args.showcaseId));
+
+          // 모든 조건을 AND로 결합
+          return q.and(...conditions);
+        })
+        .order('desc')
+        .first();
+
+      if (existingNotification) {
+        await ctx.db.patch(existingNotification._id, {
+          isRead: false,
+          updatedAt: Date.now(), // 현재 시간으로 업데이트 시간 갱신
+        });
+
+        return existingNotification._id;
+      }
     }
 
     // 다국어 메시지 생성
@@ -49,17 +150,21 @@ export const createNotification = internalMutation({
       params,
     );
 
-    return await ctx.db.insert('notifications', {
+    // 새 알림 생성
+    const notificationId = await ctx.db.insert('notifications', {
       userId: args.userId,
       type: args.type,
-      title: title,
-      message: message,
+      title,
+      message,
       postId: args.postId,
-      showcaseId: args.showcaseId,
       commentId: args.commentId,
+      showcaseId: args.showcaseId,
       triggeredById: args.triggeredById,
       isRead: false,
+      updatedAt: Date.now(), // 생성 시점에도 updatedAt 필드 설정
     });
+
+    return notificationId;
   },
 });
 
@@ -250,16 +355,8 @@ export const deactivateSubscription = internalMutation({
 // 특정 엔티티와 관련된 모든 알림 삭제하는 내부 함수
 export const deleteNotificationsByEntity = internalMutation({
   args: {
-    entityType: v.union(
-      v.literal('postId'),
-      v.literal('commentId'),
-      v.literal('showcaseId')
-    ),
-    entityId: v.union(
-      v.id('posts'),
-      v.id('comments'),
-      v.id('showcases')
-    ),
+    entityType: v.union(v.literal('postId'), v.literal('commentId'), v.literal('showcaseId')),
+    entityId: v.union(v.id('posts'), v.id('comments'), v.id('showcases')),
   },
   returns: v.number(),
   handler: async (ctx, args) => {
@@ -269,18 +366,11 @@ export const deleteNotificationsByEntity = internalMutation({
       .filter((q) => q.eq(q.field(args.entityType), args.entityId))
       .collect();
 
-    console.log(`Found ${associatedNotifications.length} notifications to delete for ${args.entityType} ${args.entityId}`);
-
+    // 모든 알림 삭제
     let deletedCount = 0;
-    // 찾은 모든 알림 삭제
     for (const notification of associatedNotifications) {
-      try {
-        await ctx.db.delete(notification._id);
-        deletedCount++;
-        console.log(`Deleted notification: ${notification._id}`);
-      } catch (err) {
-        console.error(`Error deleting notification ${notification._id}:`, err);
-      }
+      await ctx.db.delete(notification._id);
+      deletedCount++;
     }
 
     return deletedCount;

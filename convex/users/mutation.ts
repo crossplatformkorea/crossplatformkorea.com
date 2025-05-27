@@ -79,7 +79,7 @@ export const createOrUpdateUser = mutation({
 
           const existingWithName = await ctx.db
             .query('userProfiles')
-            .filter((q: any) => q.eq(q.field('displayName'), nickname))
+            .filter((q) => q.eq(q.field('displayName'), nickname))
             .first();
 
           if (!existingWithName) {

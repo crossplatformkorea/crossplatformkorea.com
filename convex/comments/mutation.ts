@@ -34,7 +34,7 @@ export const addComment = mutation({
         // displayName으로 사용자 찾기 - 타입 주석 추가
         const userProfile = await ctx.db
           .query('userProfiles')
-          .filter((q: any) => q.eq(q.field('displayName'), displayName))
+          .filter((q) => q.eq(q.field('displayName'), displayName))
           .first();
 
         if (userProfile && !finalMentionedUsers.includes(userProfile.userId)) {
