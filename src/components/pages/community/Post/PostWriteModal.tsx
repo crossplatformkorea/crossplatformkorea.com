@@ -375,6 +375,7 @@ export default function PostWriteModal({
           content,
           category,
           tags,
+          storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
         });
       } else {
         // 생성 모드: createPost 호출

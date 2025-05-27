@@ -117,6 +117,7 @@ export const updatePost = mutation({
     tags: v.optional(v.array(v.string())),
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
+    storageIds: v.optional(v.array(v.id('_storage'))), // 업로드된 이미지 ID 목록 추가
   },
   returns: v.boolean(),
   handler: async (ctx, args) => {
@@ -131,7 +132,10 @@ export const updatePost = mutation({
       throw new Error('Post not found');
     }
 
-    // Optional: Check if user has permission to update this post
+    // Check if user has permission to update this post
+    if (post.authorId !== userId) {
+      throw new Error('Permission denied');
+    }
 
     const updateData: Record<string, any> = {
       updatedAt: new Date().toISOString(),
@@ -144,7 +148,87 @@ export const updatePost = mutation({
     if (args.startDate !== undefined) updateData.startDate = args.startDate;
     if (args.endDate !== undefined) updateData.endDate = args.endDate;
 
+    // Update the post first
     await ctx.db.patch(args.postId, updateData);
+
+    // Handle file synchronization when content is updated
+    if (args.content !== undefined) {
+      console.log('Updating post files for post:', args.postId);
+      
+      // Get all files currently associated with this post
+      const currentFiles = await ctx.db
+        .query('files')
+        .filter((q) => q.eq(q.field('postId'), args.postId))
+        .collect();
+
+      // Extract URLs from the updated content
+      const usedUrls = extractImageUrlsFromContent(args.content);
+      console.log('Used URLs in updated content:', usedUrls);
+
+      // Check existing files and remove unused ones
+      for (const file of currentFiles) {
+        const isUrlUsed = file.url && usedUrls.some((url) => {
+          const cleanFileUrl = file.url?.split('?')[0];
+          const cleanContentUrl = url.split('?')[0];
+          return cleanContentUrl === cleanFileUrl;
+        });
+
+        if (!isUrlUsed) {
+          // File is no longer used in content, delete it
+          try {
+            if (file.storageId) {
+              await ctx.storage.delete(file.storageId);
+            }
+            await ctx.db.delete(file._id);
+            console.log(`Removed unused file ${file._id} from post ${args.postId}`);
+          } catch (err) {
+            console.error(`Error deleting unused file ${file._id}:`, err);
+          }
+        }
+      }
+
+      // Handle newly uploaded files if they exist
+      if (args.storageIds && args.storageIds.length > 0) {
+        for (const storageId of args.storageIds) {
+          try {
+            // Find file record
+            const file = await ctx.db
+              .query('files')
+              .withIndex('by_storage_id', (q) => q.eq('storageId', storageId))
+              .unique();
+
+            if (file && file.userId === userId) {
+              // Check if this file is used in the content
+              const isUrlUsed = file.url && usedUrls.some((url) => {
+                const cleanFileUrl = file.url?.split('?')[0];
+                const cleanContentUrl = url.split('?')[0];
+                return cleanContentUrl === cleanFileUrl;
+              });
+
+              if (isUrlUsed) {
+                // Connect file to post if not already connected
+                if (file.postId !== args.postId) {
+                  await ctx.db.patch(file._id, { postId: args.postId });
+                  console.log(`File ${file._id} connected to post ${args.postId}`);
+                }
+              } else {
+                // File not used in content, delete it
+                try {
+                  await ctx.storage.delete(storageId);
+                  await ctx.db.delete(file._id);
+                  console.log(`Unused new file ${file._id} deleted`);
+                } catch (err) {
+                  console.error(`Error deleting unused new file ${file._id}:`, err);
+                }
+              }
+            }
+          } catch (err) {
+            console.error(`Error processing file ${storageId}:`, err);
+          }
+        }
+      }
+    }
+
     return true;
   },
 });
@@ -168,9 +252,59 @@ export const deletePost = mutation({
       throw new Error('Post not found');
     }
 
-    // Optional: Check if user has permission to delete this post
+    // Check if user has permission to delete this post
+    if (post.authorId !== userId) {
+      throw new Error('Permission denied');
+    }
 
+    // Delete all files associated with this post
+    console.log('Deleting files associated with post:', args.postId);
+    const associatedFiles = await ctx.db
+      .query('files')
+      .filter((q) => q.eq(q.field('postId'), args.postId))
+      .collect();
+
+    console.log(`Found ${associatedFiles.length} files to delete`);
+
+    for (const file of associatedFiles) {
+      try {
+        // Delete from storage if storageId exists
+        if (file.storageId) {
+          await ctx.storage.delete(file.storageId);
+          console.log(`Deleted file from storage: ${file.storageId}`);
+        }
+        
+        // Delete file record from database
+        await ctx.db.delete(file._id);
+        console.log(`Deleted file record: ${file._id}`);
+      } catch (err) {
+        console.error(`Error deleting file ${file._id}:`, err);
+        // Continue with other files even if one fails
+      }
+    }
+
+    // Delete all comments associated with this post
+    const associatedComments = await ctx.db
+      .query('comments')
+      .withIndex('by_post', (q) => q.eq('postId', args.postId))
+      .collect();
+
+    console.log(`Found ${associatedComments.length} comments to delete`);
+
+    for (const comment of associatedComments) {
+      try {
+        await ctx.db.delete(comment._id);
+        console.log(`Deleted comment: ${comment._id}`);
+      } catch (err) {
+        console.error(`Error deleting comment ${comment._id}:`, err);
+        // Continue with other comments even if one fails
+      }
+    }
+
+    // Finally, delete the post itself
     await ctx.db.delete(args.postId);
+    console.log(`Deleted post: ${args.postId}`);
+
     return true;
   },
 });
