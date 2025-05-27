@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation } from 'convex/react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../../../../../convex/_generated/api';
@@ -11,6 +11,8 @@ import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '../../../../uis/Button';
 import { useNavigate } from 'react-router-dom';
+import MentionInput from '../../../../uis/MentionInput';
+import { renderMentions } from '../../../../../utils/mentionUtils';
 
 interface CommentsProps {
   postId: Id<'posts'>;
@@ -20,9 +22,9 @@ export default function Comments({ postId }: CommentsProps) {
   const { t, i18n } = useTranslation();
   const { isAuthenticated, requireAuth } = useAuthStore();
   const [comment, setComment] = useState('');
+  const [mentionedUsers, setMentionedUsers] = useState<Id<'users'>[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDeleteCommentModal, setShowDeleteCommentModal] = useState<Id<'comments'> | null>(null);
-  const commentInputRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
   // 댓글과 현재 사용자 가져오기
@@ -49,9 +51,17 @@ export default function Comments({ postId }: CommentsProps) {
     }
   };
 
+  // Handle comment input change from MentionInput
+  const handleCommentChange = (value: string, mentions: Id<'users'>[]) => {
+    setComment(value);
+    setMentionedUsers(mentions);
+  };
+
   // 댓글 제출 핸들러
-  const handleSubmitComment = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmitComment = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
 
     if (!isAuthenticated) {
       requireAuth();
@@ -65,8 +75,13 @@ export default function Comments({ postId }: CommentsProps) {
     // Use void operator to explicitly ignore the Promise
     void (async () => {
       try {
-        await addComment({ postId, content: comment.trim() });
+        await addComment({ 
+          postId, 
+          content: comment.trim(),
+          mentionedUsers: mentionedUsers.length > 0 ? mentionedUsers : undefined
+        });
         setComment('');
+        setMentionedUsers([]);
       } catch (error) {
         devConsole.error('Error adding comment:', error);
       } finally {
@@ -92,6 +107,11 @@ export default function Comments({ postId }: CommentsProps) {
   const handleUserClick = (userId: Id<'users'>, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    void navigate(`/user/${userId}`);
+  };
+
+  // 멘션 클릭 핸들러
+  const handleMentionClick = (userId: Id<'users'>, _displayName: string) => {
     void navigate(`/user/${userId}`);
   };
   
@@ -141,13 +161,14 @@ export default function Comments({ postId }: CommentsProps) {
       {isAuthenticated ? (
         <form onSubmit={handleSubmitComment} className="mb-8">
           <div className="border border-border dark:border-gray-700 rounded-md">
-            <textarea
-              ref={commentInputRef}
+            <MentionInput
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={handleCommentChange}
+              onSubmit={handleSubmitComment}
               placeholder={t('comments.writePlaceholder')}
-              className="w-full p-3 min-h-[100px] bg-transparent border-0 focus:ring-0 resize-none"
+              className='p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:focus:ring-primary/30'
               disabled={isSubmitting}
+              rows={4}
             />
             <div className={cn(
               "flex justify-end p-2 border-t border-border",
@@ -185,7 +206,10 @@ export default function Comments({ postId }: CommentsProps) {
       {/* 댓글 목록 */}
       <div className="space-y-6">
         {comments.length > 0 ? (
-          comments.map((comment) => {
+          comments
+            .slice()
+            .sort((a, b) => b._creationTime - a._creationTime)
+            .map((comment) => {
             // 댓글 작성자 정보 가져오기 - lookup 객체 사용
             const commentAuthor = comment.authorId
               ? authorLookup[comment.authorId.toString()]
@@ -287,7 +311,9 @@ export default function Comments({ postId }: CommentsProps) {
                 {/* 댓글 내용 - Also adjusted margin for consistency */}
                 <div className="ml-11 mb-2"> {/* Increased from ml-10 to ml-11 to match new avatar spacing */}
                   <p className="text-foreground dark:text-gray-200 whitespace-pre-wrap break-words text-sm">
-                    {comment.content}
+                    {renderMentions(comment.content, {
+                      onMentionClick: handleMentionClick
+                    })}
                   </p>
                 </div>
               </div>

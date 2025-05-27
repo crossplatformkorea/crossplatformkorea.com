@@ -1,4 +1,4 @@
-"use node";
+'use node';
 
 import { action, internalAction, ActionCtx } from '../_generated/server';
 import { internal } from '../_generated/api';
@@ -15,11 +15,7 @@ const vapidDetails = {
 
 // 웹 푸시 설정
 if (vapidDetails.publicKey && vapidDetails.privateKey) {
-  webpush.setVapidDetails(
-    vapidDetails.subject,
-    vapidDetails.publicKey,
-    vapidDetails.privateKey
-  );
+  webpush.setVapidDetails(vapidDetails.subject, vapidDetails.publicKey, vapidDetails.privateKey);
 }
 
 // 특정 사용자에게 푸시 알림 전송
@@ -39,9 +35,12 @@ export const sendPushNotification = internalAction({
   handler: async (ctx, args) => {
     try {
       // 해당 사용자의 활성 푸시 구독들 조회
-      const subscriptions = await ctx.runQuery(internal.notifications.query.getActivePushSubscriptions, {
-        userId: args.userId,
-      });
+      const subscriptions = await ctx.runQuery(
+        internal.notifications.query.getActivePushSubscriptions,
+        {
+          userId: args.userId,
+        },
+      );
 
       if (subscriptions.length === 0) {
         return {
@@ -62,7 +61,8 @@ export const sendPushNotification = internalAction({
           url: args.url || '/',
           ...args.data,
         },
-      });      const results = await Promise.allSettled(
+      });
+      const results = await Promise.allSettled(
         subscriptions.map(async (subscription: any) => {
           const pushSubscription = {
             endpoint: subscription.endpoint,
@@ -73,7 +73,7 @@ export const sendPushNotification = internalAction({
           };
 
           return webpush.sendNotification(pushSubscription, payload);
-        })
+        }),
       );
 
       const errors: string[] = [];
@@ -84,7 +84,7 @@ export const sendPushNotification = internalAction({
           sentCount++;
         } else {
           errors.push(`Subscription ${index}: ${result.reason?.message || 'Unknown error'}`);
-          
+
           // 410 Gone 에러인 경우 구독을 비활성화
           if (result.reason?.statusCode === 410) {
             void ctx.runMutation(internal.notifications.mutation.deactivateSubscription, {
@@ -118,6 +118,7 @@ export const sendNotificationWithPush = internalAction({
       v.literal('COMMENT_ON_POST'),
       v.literal('LIKE_ON_SHOWCASE'),
       v.literal('LIKE_ON_POST'),
+      v.literal('MENTIONED'),
     ),
     postId: v.optional(v.id('posts')),
     showcaseId: v.optional(v.id('showcases')),
@@ -137,7 +138,11 @@ export const sendNotificationWithPush = internalAction({
       sentCount: v.number(),
       errors: v.array(v.string()),
     }),
-  }),  handler: async (ctx, args): Promise<{
+  }),
+  handler: async (
+    ctx,
+    args,
+  ): Promise<{
     notificationId: any;
     pushResult: {
       success: boolean;
@@ -146,35 +151,41 @@ export const sendNotificationWithPush = internalAction({
     };
   }> => {
     // 1. 데이터베이스에 알림 생성
-    const notificationId: any = await ctx.runMutation(internal.notifications.mutation.createNotification, args);
+    const notificationId: any = await ctx.runMutation(
+      internal.notifications.mutation.createNotification,
+      args,
+    );
 
     // 2. 메시지 생성 (getNotificationMessages를 사용하여 적절한 제목과 메시지 생성)
     const { getNotificationMessages } = await import('../utils');
-    const { title, message } = getNotificationMessages(
-      args.type as any,
-      args.locale || 'en',
-      {
-        commenterName: args.commenterName,
-        likerName: args.likerName,
-        postTitle: args.postTitle,
-        showcaseTitle: args.showcaseTitle,
-      }
-    );
+    const { title, message } = getNotificationMessages(args.type as any, args.locale || 'en', {
+      commenterName: args.commenterName,
+      likerName: args.likerName,
+      postTitle: args.postTitle,
+      showcaseTitle: args.showcaseTitle,
+    });
 
     // 3. 푸시 알림 전송
-    const pushResult: any = await ctx.runAction(internal.notifications.action.sendPushNotification, {
-      userId: args.userId,
-      title: title,
-      message: message,
-      data: {
-        notificationId,
-        type: args.type,
-        postId: args.postId,
-        showcaseId: args.showcaseId,
-        commentId: args.commentId,
+    const pushResult: any = await ctx.runAction(
+      internal.notifications.action.sendPushNotification,
+      {
+        userId: args.userId,
+        title: title,
+        message: message,
+        data: {
+          notificationId,
+          type: args.type,
+          postId: args.postId,
+          showcaseId: args.showcaseId,
+          commentId: args.commentId,
+        },
+        url: args.postId
+          ? `/post/${args.postId}`
+          : args.showcaseId
+            ? `/showcase/${args.showcaseId}`
+            : '/',
       },
-      url: args.postId ? `/post/${args.postId}` : args.showcaseId ? `/showcase/${args.showcaseId}` : '/',
-    });
+    );
 
     return {
       notificationId,
@@ -196,7 +207,7 @@ export const sendTestPush = action({
   }),
   handler: async (
     ctx: ActionCtx,
-    args: { title?: string; message?: string }
+    args: { title?: string; message?: string },
   ): Promise<{
     success: boolean;
     sentCount: number;
