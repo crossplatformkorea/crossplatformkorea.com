@@ -3,9 +3,12 @@ import { Suspense, lazy } from 'react';
 import { AppLayout } from './layout';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
+import PostsPage from './community/Post/posts';
 import { useMetaTags } from '../../hooks/useMetaTags';
 import DevPanel from '../DevPanel';
 import AppLoading from '../AppLoading';
+import PostDetailsPage from './community/Post/post-details';
+import SummaryPage from './community/Summary';
 
 // Lazy load pages for better performance
 const CommunityPage = lazy(() => import('./community'));
@@ -57,7 +60,9 @@ export default function AppRoutes() {
                 <Route path="/showcase" element={<ShowcasePage />} />
                 <Route path="/notifications" element={<NotificationsPage />} />
                 <Route path="/feature-request" element={<FeatureRequestsPage />} />
-                <Route path="/*" element={<CommunityPage />} />
+                <Route path="/posts" element={<PostsPage />} />
+                <Route path="/post/:postId" element={<PostDetailsPage />} />
+                <Route path="/" element={<SummaryPage />} />
               </Routes>
             </div>
           </div>
