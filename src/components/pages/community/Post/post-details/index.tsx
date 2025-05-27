@@ -18,6 +18,8 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/uis/Button';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { YouTubeEmbed } from '@/components/uis/YouTubeEmbed';
+import { extractYouTubeVideoId } from '@/utils/youtube';
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
@@ -88,10 +90,12 @@ export default function PostDetailsPage() {
 
   const isAuthor = isAuthenticated && user && post?.authorId === user._id;
 
-  const formattedDate = post ? formatDistanceToNow(new Date(post._creationTime), {
-    addSuffix: true,
-    locale: i18n.language === 'ko' ? ko : undefined,
-  }) : '';
+  const formattedDate = post
+    ? formatDistanceToNow(new Date(post._creationTime), {
+        addSuffix: true,
+        locale: i18n.language === 'ko' ? ko : undefined,
+      })
+    : '';
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -214,11 +218,40 @@ export default function PostDetailsPage() {
             )}
           >
             {/* Replace dangerouslySetInnerHTML with ReactMarkdown */}
-            <div
-              className="prose prose-lg max-w-none"
-              style={{ wordBreak: 'break-word' }}
-            >
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{post.content || ''}</ReactMarkdown>
+            <div className="prose prose-lg max-w-none" style={{ wordBreak: 'break-word' }}>
+              <ReactMarkdown
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  // Custom component for links to detect and embed YouTube videos
+                  a: ({ href, children, ...props }) => {
+                    if (href) {
+                      const videoId = extractYouTubeVideoId(href);
+                      if (videoId) {
+                        return (
+                          <div className="my-4">
+                            <YouTubeEmbed videoId={videoId} />
+                          </div>
+                        );
+                      }
+                    }
+
+                    // Regular link
+                    return (
+                      <a
+                        href={href}
+                        {...props}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {children}
+                      </a>
+                    );
+                  },
+                }}
+              >
+                {post.content || ''}
+              </ReactMarkdown>
             </div>
           </div>
 
