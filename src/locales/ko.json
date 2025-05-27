@@ -129,7 +129,9 @@
     "signOutPrompt": "로그아웃하시겠습니까?",
     "signingOut": "로그아웃 중...",
     "signOut": "로그아웃",
-    "returnToHome": "홈으로 돌아가기"
+    "returnToHome": "홈으로 돌아가기",
+    "signInWithGithub": "GitHub로 로그인",
+    "signingInWithGithub": "GitHub로 로그인 중..."
   },
   "posts": {
     "title": "게시물",

@@ -533,7 +533,7 @@ export default function PostWriteModal({
         insertTextAtCursor(markdownUrl + '\n');
       }
     }
-  };  // Helper function to insert text at cursor position
+  }; // Helper function to insert text at cursor position
   const insertTextAtCursor = (text: string) => {
     // Choose the appropriate ref based on screen size
     const targetRef = window.innerWidth >= 768 ? contentRefDesktop : contentRef;
@@ -600,33 +600,39 @@ export default function PostWriteModal({
         role="dialog"
       >
         {/* Modal header */}
-        <div className={cn(
-          // Layout & Positioning
-          'flex items-center justify-between',
-          // Spacing & Borders
-          'p-4 border-b',
-          // Theme-specific styling
-          'dark:border-gray-700/70',
-        )}>
+        <div
+          className={cn(
+            // Layout & Positioning
+            'flex items-center justify-between',
+            // Spacing & Borders
+            'p-4 border-b',
+            // Theme-specific styling
+            'dark:border-gray-700/70',
+          )}
+        >
           <h2 className="text-xl font-semibold">
             {isEditMode ? t('postWrite.editPost') : t('postWrite.writeNewPost')}
           </h2>
 
-          <div className={cn(
-            // Layout
-            'flex items-center gap-2',
-          )}>
+          <div
+            className={cn(
+              // Layout
+              'flex items-center gap-2',
+            )}
+          >
             {/* View toggle for mobile */}
-            <div className={cn(
-              // Responsive & Layout
-              'md:hidden flex items-center gap-2',
-              // Background & Visual
-              'bg-muted/50 rounded-md',
-              // Overflow handling
-              'overflow-hidden',
-            )}>
+            <div
+              className={cn(
+                // Responsive & Layout
+                'md:hidden flex items-center gap-2',
+                // Background & Visual
+                'bg-muted/50 rounded-md',
+                // Overflow handling
+                'overflow-hidden',
+              )}
+            >
               <Button
-                variant={!isPreviewMode ? "default" : "ghost"}
+                variant={!isPreviewMode ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setIsPreviewMode(false)}
                 className={cn(
@@ -638,7 +644,7 @@ export default function PostWriteModal({
                 {t('postWrite.edit')}
               </Button>
               <Button
-                variant={isPreviewMode ? "default" : "ghost"}
+                variant={isPreviewMode ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setIsPreviewMode(true)}
                 className={cn(
@@ -717,20 +723,27 @@ export default function PostWriteModal({
         </div>
 
         {/* Post metadata inputs */}
-        <div className={cn(
-          // Spacing & Borders
-          'p-4 border-b',
-        )}>
-          <div className={cn(
-            // Layout & Responsive
-            'grid grid-cols-1 md:grid-cols-2 gap-4',
-          )}>
+        <div
+          className={cn(
+            // Spacing & Borders
+            'p-4 border-b',
+          )}
+        >
+          <div
+            className={cn(
+              // Layout & Responsive
+              'grid grid-cols-1 md:grid-cols-2 gap-4',
+            )}
+          >
             {/* Title input */}
             <div>
-              <label htmlFor="post-title" className={cn(
-                // Layout & Typography
-                'block text-sm font-medium mb-1',
-              )}>
+              <label
+                htmlFor="post-title"
+                className={cn(
+                  // Layout & Typography
+                  'block text-sm font-medium mb-1',
+                )}
+              >
                 {t('postWrite.titleLabel')} <span className="text-red-500">*</span>
               </label>
               <input
@@ -746,7 +759,7 @@ export default function PostWriteModal({
                   // Visual & Borders
                   'border border-border rounded-md',
                   // Focus States
-                  'focus:outline-none focus:ring-2 focus:ring-primary/30',
+                  'focus:outline-none focus:ring-1 focus:ring-primary/40', // Use ring-1 for thinner border
                   // Theme Support
                   'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
                 )}
@@ -754,34 +767,52 @@ export default function PostWriteModal({
             </div>
 
             {/* Category selection */}
-            <div>
-              <label htmlFor="post-category" className={cn(
-                // Layout & Typography
-                'block text-sm font-medium mb-1',
-              )}>
-                {t('postWrite.categoryLabel')}
-              </label>
-              <select
-                id="post-category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+            <div className="relative">
+              <label
+                htmlFor="post-category"
                 className={cn(
-                  // Layout & Sizing
-                  'w-full px-3 pr-8 py-2', // Added pr-8 for extra right padding
-                  // Visual & Borders
-                  'border border-border rounded-md',
-                  // Focus States
-                  'focus:outline-none focus:ring-2 focus:ring-primary/30',
-                  // Theme Support
-                  'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
+                  // Layout & Typography
+                  'block text-sm font-medium mb-1',
                 )}
               >
-                {categories?.map((cat) => (
-                  <option key={cat.key} value={cat.key}>
-                    {t(`postCategories.${cat.key}.name`)}
-                  </option>
-                ))}
-              </select>
+                {t('postWrite.categoryLabel')}
+              </label>
+              <div className="relative">
+                <select
+                  id="post-category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className={cn(
+                    // Layout & Sizing
+                    'w-full pl-2 pr-8 py-2', // Use pr-8, caret will be custom
+                    // Visual & Borders
+                    'border border-border rounded-md',
+                    // Focus States
+                    'focus:outline-none focus:ring-1 focus:ring-primary/40',
+                    // Theme Support
+                    'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
+                    // Remove default browser arrow for consistency
+                    'appearance-none',
+                  )}
+                >
+                  {categories?.map((cat) => (
+                    <option key={cat.key} value={cat.key}>
+                      {t(`postCategories.${cat.key}.name`)}
+                    </option>
+                  ))}
+                </select>
+                {/* Custom caret icon */}
+                <svg
+                  className="pointer-events-none absolute right-3 inset-y-0 my-auto w-4 h-4 text-muted-foreground"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
             </div>
           </div>
 
@@ -789,29 +820,37 @@ export default function PostWriteModal({
         </div>
 
         {/* Main content area */}
-        <div className={cn(
-          // Layout & Overflow
-          'flex-1 flex overflow-hidden',
-        )}>
+        <div
+          className={cn(
+            // Layout & Overflow
+            'flex-1 flex overflow-hidden',
+          )}
+        >
           {/* Mobile view - single pane with toggle */}
-          <div className={cn(
-            // Responsive & Layout
-            'md:hidden w-full flex flex-col',
-          )}>
+          <div
+            className={cn(
+              // Responsive & Layout
+              'md:hidden w-full flex flex-col',
+            )}
+          >
             {!isPreviewMode ? (
-              <div className={cn(
-                // Layout
-                'flex-1 flex flex-col',
-              )}>
+              <div
+                className={cn(
+                  // Layout
+                  'flex-1 flex flex-col',
+                )}
+              >
                 {/* Formatting toolbar - always visible at top */}
-                <div className={cn(
-                  // Layout & Sizing
-                  'p-2 flex items-center gap-2 min-h-[52px]',
-                  // Background & Borders
-                  'bg-background border-b',
-                  // Overflow & Visual Effects
-                  'overflow-x-auto shadow-sm',
-                )}>
+                <div
+                  className={cn(
+                    // Layout & Sizing
+                    'p-2 flex items-center gap-2 min-h-[52px]',
+                    // Background & Borders
+                    'bg-background border-b',
+                    // Overflow & Visual Effects
+                    'overflow-x-auto shadow-sm',
+                  )}
+                >
                   <Button
                     variant="ghost"
                     size="sm"
@@ -859,7 +898,11 @@ export default function PostWriteModal({
                     title={t('postWrite.image')}
                     disabled={isUploading}
                   >
-                    {isUploading ? <Loader2 size={16} className="animate-spin" /> : <Image size={16} />}
+                    {isUploading ? (
+                      <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                      <Image size={16} />
+                    )}
                   </Button>
                   <Button
                     variant="ghost"
@@ -896,7 +939,7 @@ export default function PostWriteModal({
                       void (async () => {
                         const files = e.target.files;
                         if (!files) return;
-                        
+
                         for (const file of Array.from(files)) {
                           const imageHtml = await uploadFile(file);
                           if (imageHtml) {
@@ -908,12 +951,14 @@ export default function PostWriteModal({
                     }}
                   />
                 </div>
-                
+
                 {/* === MOBILE INPUT AREA === */}
-                <div className={cn(
-                  // Layout & Overflow
-                  'flex-1 flex flex-col overflow-hidden',
-                )}>
+                <div
+                  className={cn(
+                    // Layout & Overflow
+                    'flex-1 flex flex-col overflow-hidden',
+                  )}
+                >
                   <textarea
                     ref={contentRef}
                     value={content}
@@ -938,16 +983,20 @@ export default function PostWriteModal({
               </div>
             ) : (
               /* === MOBILE PREVIEW AREA === */
-              <div className={cn(
-                // Layout & Overflow
-                'flex-1 p-4 overflow-y-auto overflow-x-hidden',
-              )}>
-                <div className={cn(
-                  // Typography & Styling
-                  'prose prose-sm max-w-none text-sm break-words',
-                  // Theme Support
-                  'dark:prose-invert',
-                )}>
+              <div
+                className={cn(
+                  // Layout & Overflow
+                  'flex-1 p-4 overflow-y-auto overflow-x-hidden',
+                )}
+              >
+                <div
+                  className={cn(
+                    // Typography & Styling
+                    'prose prose-sm max-w-none text-sm break-words',
+                    // Theme Support
+                    'dark:prose-invert',
+                  )}
+                >
                   <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
                 </div>
               </div>
@@ -955,24 +1004,30 @@ export default function PostWriteModal({
           </div>
 
           {/* === DESKTOP VIEW - SPLIT PANE === */}
-          <div className={cn(
-            // Responsive & Layout
-            'hidden md:flex w-full',
-          )}>
+          <div
+            className={cn(
+              // Responsive & Layout
+              'hidden md:flex w-full',
+            )}
+          >
             {/* === DESKTOP EDITOR PANE === */}
-            <div className={cn(
-              // Layout & Borders
-              'w-1/2 flex flex-col border-r',
-            )}>
+            <div
+              className={cn(
+                // Layout & Borders
+                'w-1/2 flex flex-col border-r',
+              )}
+            >
               {/* === DESKTOP FORMATTING TOOLBAR === */}
-              <div className={cn(
-                // Layout & Sizing
-                'p-2 flex items-center gap-2 min-h-[52px]',
-                // Background & Borders
-                'bg-background border-b',
-                // Overflow & Visual Effects
-                'overflow-x-auto shadow-sm',
-              )}>
+              <div
+                className={cn(
+                  // Layout & Sizing
+                  'p-2 flex items-center gap-2 min-h-[52px]',
+                  // Background & Borders
+                  'bg-background border-b',
+                  // Overflow & Visual Effects
+                  'overflow-x-auto shadow-sm',
+                )}
+              >
                 <Button
                   variant="ghost"
                   size="sm"
@@ -1008,7 +1063,11 @@ export default function PostWriteModal({
                   title={t('postWrite.image')}
                   disabled={isUploading}
                 >
-                  {isUploading ? <Loader2 size={16} className="animate-spin" /> : <Image size={16} />}
+                  {isUploading ? (
+                    <Loader2 size={16} className="animate-spin" />
+                  ) : (
+                    <Image size={16} />
+                  )}
                 </Button>
                 <Button
                   variant="ghost"
@@ -1039,7 +1098,7 @@ export default function PostWriteModal({
                     void (async () => {
                       const files = e.target.files;
                       if (!files) return;
-                      
+
                       for (const file of Array.from(files)) {
                         const imageHtml = await uploadFile(file);
                         if (imageHtml) {
@@ -1051,12 +1110,14 @@ export default function PostWriteModal({
                   }}
                 />
               </div>
-              
+
               {/* Content textarea container with overflow and padding to prevent toolbar overlap */}
-              <div className={cn(
-                // Layout & Overflow
-                'flex-1 overflow-hidden',
-              )}>
+              <div
+                className={cn(
+                  // Layout & Overflow
+                  'flex-1 overflow-hidden',
+                )}
+              >
                 <textarea
                   ref={contentRefDesktop}
                   value={content}
@@ -1081,34 +1142,46 @@ export default function PostWriteModal({
             </div>
 
             {/* === DESKTOP PREVIEW PANE === */}
-            <div className={cn(
-              // Layout
-              'w-1/2 flex flex-col',
-            )}>
+            <div
+              className={cn(
+                // Layout
+                'w-1/2 flex flex-col',
+              )}
+            >
               {/* === DESKTOP PREVIEW HEADER === */}
-              <div className={cn(
-                // Position & Layout
-                'sticky top-0 z-10 p-2 flex items-center min-h-[52px]',
-                // Background & Borders
-                'bg-background border-b',
-              )}>
+              <div
+                className={cn(
+                  // Position & Layout
+                  'sticky top-0 z-10 p-2 flex items-center min-h-[52px]',
+                  // Background & Borders
+                  'bg-background border-b',
+                )}
+              >
                 <Eye size={16} className="mr-2" />
-                <span className={cn(
-                  // Typography
-                  'text-sm font-medium',
-                )}>{t('postWrite.preview')}</span>
+                <span
+                  className={cn(
+                    // Typography
+                    'text-sm font-medium',
+                  )}
+                >
+                  {t('postWrite.preview')}
+                </span>
               </div>
               {/* === DESKTOP PREVIEW CONTENT === */}
-              <div className={cn(
-                // Layout & Overflow
-                'flex-1 pb-4 px-4 overflow-y-auto overflow-x-hidden',
-              )}>
-                <div className={cn(
-                  // Typography & Styling
-                  'prose prose-sm max-w-none text-sm',
-                  // Theme Support
-                  'dark:prose-invert',
-                )}>
+              <div
+                className={cn(
+                  // Layout & Overflow
+                  'flex-1 pb-4 px-4 overflow-y-auto overflow-x-hidden',
+                )}
+              >
+                <div
+                  className={cn(
+                    // Typography & Styling
+                    'prose prose-sm max-w-none text-sm',
+                    // Theme Support
+                    'dark:prose-invert',
+                  )}
+                >
                   <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
                 </div>
               </div>
@@ -1118,36 +1191,44 @@ export default function PostWriteModal({
 
         {/* === ERROR MESSAGE === */}
         {error && (
-          <div className={cn(
-            // Layout & Spacing
-            'px-4 py-2 flex items-center gap-2',
-            // Background & Visual
-            'bg-destructive/10 border-l-4 border-destructive',
-            // Typography
-            'text-destructive text-sm',
-          )}>
+          <div
+            className={cn(
+              // Layout & Spacing
+              'px-4 py-2 flex items-center gap-2',
+              // Background & Visual
+              'bg-destructive/10 border-l-4 border-destructive',
+              // Typography
+              'text-destructive text-sm',
+            )}
+          >
             <AlertCircle size={16} />
             {error}
           </div>
         )}
 
         {/* === FOOTER WITH SUBMIT BUTTON === */}
-        <div className={cn(
-          // Layout & Spacing
-          'p-4',
-          // Background & Borders
-          'bg-background border-t',
-        )}>
+        <div
+          className={cn(
+            // Layout & Spacing
+            'p-4',
+            // Background & Borders
+            'bg-background border-t',
+          )}
+        >
           {/* Tags input moved here */}
-          <div className={cn(
-            // Spacing & Margin
-            'mb-4',
-          )}>
+          <div
+            className={cn(
+              // Spacing & Margin
+              'mb-4',
+            )}
+          >
             {/* Label removed */}
-            <div className={cn(
-              // Layout & Spacing
-              'flex flex-wrap gap-2 mb-2',
-            )}>
+            <div
+              className={cn(
+                // Layout & Spacing
+                'flex flex-wrap gap-2 mb-2',
+              )}
+            >
               {tags.map((tag) => (
                 <span
                   key={tag}
@@ -1175,10 +1256,12 @@ export default function PostWriteModal({
                 </span>
               ))}
             </div>
-            <div className={cn(
-              // Layout with standard gap between elements
-              'flex gap-2 items-center',
-            )}>
+            <div
+              className={cn(
+                // Layout with standard gap between elements
+                'flex gap-2 items-center',
+              )}
+            >
               <input
                 id="post-tags"
                 type="text"
@@ -1214,14 +1297,18 @@ export default function PostWriteModal({
             </div>
           </div>
 
-          <div className={cn(
-            // Layout
-            'flex justify-between items-center',
-          )}>
-            <div className={cn(
-              // Typography
-              'text-sm text-muted-foreground',
-            )}>
+          <div
+            className={cn(
+              // Layout
+              'flex justify-between items-center',
+            )}
+          >
+            <div
+              className={cn(
+                // Typography
+                'text-sm text-muted-foreground',
+              )}
+            >
               {isUploading && (
                 <span className="flex items-center gap-2">
                   <Loader2 size={16} className="animate-spin" />
@@ -1229,13 +1316,9 @@ export default function PostWriteModal({
                 </span>
               )}
             </div>
-            
+
             <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={handleClose}
-                disabled={isSubmitting}
-              >
+              <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
                 {t('common.cancel')}
               </Button>
               <Button
@@ -1248,8 +1331,10 @@ export default function PostWriteModal({
                     <Loader2 size={16} className="animate-spin mr-2" />
                     {isEditMode ? t('postWrite.updatePost') : t('postWrite.publishPost')}
                   </>
+                ) : isEditMode ? (
+                  t('postWrite.updatePost')
                 ) : (
-                  isEditMode ? t('postWrite.updatePost') : t('postWrite.publishPost')
+                  t('postWrite.publishPost')
                 )}
               </Button>
             </div>

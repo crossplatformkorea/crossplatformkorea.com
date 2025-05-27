@@ -10,15 +10,21 @@ export default function SignIn() {
   // Loading animation component
   const LoadingAnimation = () => (
     <div className="flex flex-col items-center justify-center space-y-4">
-      <div className="relative w-12 h-12 sm:w-16 sm:h-16"> {/* Smaller on mobile */}
+      <div className="relative w-12 h-12 sm:w-16 sm:h-16">
+        {' '}
+        {/* Smaller on mobile */}
         {/* Film reel animation */}
         <div className="absolute inset-0 rounded-full border-4 border-primary/30 animate-pulse"></div>
         <div className="absolute inset-2 rounded-full border-2 border-dashed border-primary/50 animate-spin-slow"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-primary animate-ping"></div> {/* Smaller on mobile */}
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-primary animate-ping"></div>{' '}
+          {/* Smaller on mobile */}
         </div>
       </div>
-      <p className="text-sm sm:text-base text-muted-foreground animate-pulse">{t('common.loading')}</p> {/* Smaller text on mobile */}
+      <p className="text-sm sm:text-base text-muted-foreground animate-pulse">
+        {t('common.loading')}
+      </p>{' '}
+      {/* Smaller text on mobile */}
     </div>
   );
 
@@ -33,20 +39,17 @@ export default function SignIn() {
       <div className="absolute -top-20 -left-20 w-48 h-48 sm:w-64 sm:h-64 opacity-20 rounded-full bg-primary/30 blur-3xl pointer-events-none"></div>
       <div className="absolute top-1/4 -right-32 w-64 h-64 sm:w-96 sm:h-96 opacity-20 rounded-full bg-primary/20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
-
       {/* Movie reel decoration - top right - Hide on small screens */}
       <div className="hidden sm:block absolute top-20 right-10 w-32 h-32 opacity-10 pointer-events-none">
         <div className="w-full h-full rounded-full border-4 border-primary/40 flex items-center justify-center">
           <div className="w-3/4 h-3/4 rounded-full border-dashed border-2 border-primary/60 animate-spin-slow"></div>
         </div>
       </div>
-
       {/* Movie ticket decoration - bottom left - Hide on small screens */}
       <div className="hidden sm:block absolute bottom-10 left-10 w-40 h-20 opacity-20 pointer-events-none">
         {/* Placeholder for movie ticket image */}
         <div className="w-full h-full rounded-lg border-2 border-primary/50 rotate-12 bg-primary/5"></div>
       </div>
-
       <div
         className={cn(
           // Base layout
@@ -81,11 +84,18 @@ export default function SignIn() {
             <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-32 sm:w-40 h-32 sm:h-40 bg-primary/10 blur-2xl"></div>
 
             {/* Logo image - replacing placeholder */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mt-2 sm:mt-4 flex items-center justify-center"> {/* Smaller on mobile */}
-              <img src="/assets/logo.png" alt={t('common.appName')} className="w-12 sm:w-16 h-auto" /> {/* Smaller on mobile */}
+            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mt-2 sm:mt-4 flex items-center justify-center">
+              {' '}
+              {/* Smaller on mobile */}
+              <img
+                src="/assets/logo.png"
+                alt={t('common.appName')}
+                className="w-12 sm:w-16 h-auto"
+              />{' '}
+              {/* Smaller on mobile */}
             </div>
 
-            <div className="overflow-y-auto max-h-[60vh] sm:max-h-[50vh] py-1 px-1"> {/* Taller on mobile */}
+            <div className="py-1 px-1">
               {isLoading ? <LoadingAnimation /> : isAuthenticated ? <SignOut /> : <SigningIn />}
             </div>
           </div>
@@ -96,8 +106,8 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-
-      <div className="h-3 sm:h-4 w-full bg-gradient-to-r from-primary/5 via-primary/20 to-primary/5"></div> {/* Smaller on mobile */}
+      <div className="h-3 sm:h-4 w-full bg-gradient-to-r from-primary/5 via-primary/20 to-primary/5"></div>{' '}
+      {/* Smaller on mobile */}
     </div>
   );
 }

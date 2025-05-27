@@ -131,7 +131,9 @@
     "signOut": "ログアウト",
     "returnToHome": "ホームに戻る",
     "loginToAccess": "サインインして始める",
-    "signIn": "サインイン"
+    "signIn": "サインイン",
+    "signInWithGithub": "GitHubでログイン",
+    "signingInWithGithub": "GitHubでログイン中..."
   },
   "posts": {
     "title": "投稿",

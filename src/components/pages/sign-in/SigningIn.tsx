@@ -15,6 +15,8 @@ export default function SigningIn() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGitHubLoading, setIsGitHubLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [codeFocused, setCodeFocused] = useState(false);
 
   const { signIn } = useAuthActions();
   const navigate = useNavigate();
@@ -123,7 +125,13 @@ export default function SigningIn() {
         >
           <div className="space-y-4 rounded-md">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="email"
+                className={cn(
+                  'block text-sm mb-1 transition-all',
+                  emailFocused ? 'font-bold' : 'font-medium'
+                )}
+              >
                 {t('signIn.emailLabel')}
               </label>
               <input
@@ -132,6 +140,8 @@ export default function SigningIn() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onFocus={() => setEmailFocused(true)}
+                onBlur={() => setEmailFocused(false)}
                 autoComplete="email"
                 required
                 className={cn(
@@ -168,7 +178,7 @@ export default function SigningIn() {
               type="submit"
               disabled={isLoading}
               variant="auth"
-              className="w-full py-3"
+              className="w-full h-12 rounded-lg"
             >
               {isLoading ? t('signIn.sendingCode') : t('signIn.signInWithEmail')}
             </Button>
@@ -194,10 +204,10 @@ export default function SigningIn() {
             }}
             disabled={isGitHubLoading}
             variant="secondary"
-            className="w-full py-3 px-4 bg-gray-800 text-white hover:bg-gray-700"
+            className="w-full h-12 rounded-lg"
           >
             <SiGithub size={20} />
-            <span>{isGitHubLoading ? 'Signing in with GitHub...' : 'Sign in with GitHub'}</span>
+            <span>{isGitHubLoading ? t('signIn.signingInWithGithub') : t('signIn.signInWithGithub')}</span>
           </Button>
         </div>
 
@@ -224,7 +234,13 @@ export default function SigningIn() {
       >
         <div className="space-y-4 rounded-md">
           <div>
-            <label htmlFor="code" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="code"
+              className={cn(
+                'block text-sm mb-1 transition-all',
+                codeFocused ? 'font-bold' : 'font-medium'
+              )}
+            >
               {t('signIn.verificationCodeLabel')}
             </label>
             <input
@@ -233,6 +249,8 @@ export default function SigningIn() {
               type="text"
               value={code}
               onChange={(e) => setCode(e.target.value)}
+              onFocus={() => setCodeFocused(true)}
+              onBlur={() => setCodeFocused(false)}
               pattern="[0-9]{8}"
               required
               className={cn(
@@ -270,7 +288,7 @@ export default function SigningIn() {
             type="submit"
             disabled={isLoading}
             variant="auth"
-            className="w-full py-3"
+            className="w-full h-12 rounded-lg"
           >
             {isLoading ? t('signIn.verifying') : t('signIn.verifyCode')}
           </Button>
@@ -279,7 +297,7 @@ export default function SigningIn() {
             type="button"
             onClick={() => setIsCodeSent(false)}
             variant="ghost"
-            className="w-full py-3"
+            className="w-full h-12 rounded-lg"
           >
             {t('signIn.back')}
           </Button>
