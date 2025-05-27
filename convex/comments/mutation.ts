@@ -71,6 +71,14 @@ export const addComment = mutation({
       }
     }
 
+    // 게시물의 댓글 수 증가
+    const post = await ctx.db.get(args.postId);
+    if (post) {
+      await ctx.db.patch(args.postId, {
+        commentCount: (post.commentCount || 0) + 1,
+      });
+    }
+
     return commentId;
   },
 });
@@ -108,16 +116,17 @@ export const deleteComment = mutation({
       throw new Error('Not authorized to delete this comment');
     }
 
+    // 댓글 삭제
+    await ctx.db.delete(args.commentId);
+
     // 게시물의 댓글 수 감소
     const post = await ctx.db.get(comment.postId);
-    if (post && post.commentCount) {
-      await ctx.db.patch(post._id, {
-        commentCount: Math.max(0, post.commentCount - 1),
+    if (post) {
+      await ctx.db.patch(comment.postId, {
+        commentCount: Math.max((post.commentCount || 1) - 1, 0),
       });
     }
 
-    // 댓글 삭제
-    await ctx.db.delete(args.commentId);
     return true;
   },
 });
