@@ -13,6 +13,7 @@ export const getUserNotifications = query({
       v.object({
         _id: v.id('notifications'),
         _creationTime: v.number(),
+        userId: v.id('users'),
         type: v.union(
           v.literal('COMMENT_ON_POST'),
           v.literal('LIKE_ON_SHOWCASE'),

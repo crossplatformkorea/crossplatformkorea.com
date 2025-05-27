@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Bell, Trash2, Check, CheckCheck } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../../convex/_generated/api';
 import { useConvexAuth } from 'convex/react';
 import { cn } from '../../lib/utils';
@@ -15,7 +16,7 @@ const formatTimeAgo = (timestamp: number) => {
   const locale = getLocale();
   const locales = { en: enUS, ko, ja };
   const currentLocale = locales[locale] || enUS;
-  
+
   return formatDistanceToNow(new Date(timestamp), {
     addSuffix: true,
     locale: currentLocale,
@@ -24,6 +25,7 @@ const formatTimeAgo = (timestamp: number) => {
 
 export default function NotificationsPage() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+  const navigate = useNavigate();
   const [selectedNotifications, setSelectedNotifications] = useState<Set<Id<'notifications'>>>(
     new Set(),
   );
@@ -79,9 +81,23 @@ export default function NotificationsPage() {
     );
   }
 
-  const handleNotificationClick = async (notificationId: Id<'notifications'>, isRead: boolean) => {
+  const handleNotificationClick = async (
+    notificationId: Id<'notifications'>,
+    isRead: boolean,
+    notification: any,
+  ) => {
+    // Mark as read if not already read
     if (!isRead) {
       await markAsRead({ notificationId });
+    }
+
+    // Navigate to appropriate page based on notification type
+    if (notification.postId) {
+      // Navigate to post details
+      void navigate(`/post/${notification.postId}`);
+    } else if (notification.showcaseId) {
+      // Navigate to showcase details
+      void navigate(`/showcase/${notification.showcaseId}`);
     }
   };
 
@@ -105,7 +121,7 @@ export default function NotificationsPage() {
 
   const handleSelectAll = () => {
     if (!notifications?.page) return;
-    
+
     if (selectedNotifications.size === notifications.page.length) {
       setSelectedNotifications(new Set());
     } else {
@@ -123,7 +139,7 @@ export default function NotificationsPage() {
   const unreadNotifications = notifications?.page?.filter((n) => !n.isRead) || [];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div>
       <div className="max-w-2xl mx-auto">
         {/* 헤더 */}
         <div className="flex items-center justify-between mb-6">
@@ -142,9 +158,7 @@ export default function NotificationsPage() {
         {notifications?.page && notifications.page.length > 0 && (
           <div className="bg-muted/30 rounded-lg p-4 mb-6">
             <div className="flex items-center justify-between text-sm">
-              <span>
-                {t('notifications.totalCount', { count: notifications.page.length })}
-              </span>
+              <span>{t('notifications.totalCount', { count: notifications.page.length })}</span>
               <span className="text-muted-foreground">
                 {t('notifications.unreadCount', { count: unreadNotifications.length })}
               </span>
@@ -203,7 +217,13 @@ export default function NotificationsPage() {
                     />
                     <div
                       className="flex-1 min-w-0 cursor-pointer"
-                      onClick={() => void handleNotificationClick(notification._id, notification.isRead)}
+                      onClick={() =>
+                        void handleNotificationClick(
+                          notification._id,
+                          notification.isRead,
+                          notification,
+                        )
+                      }
                     >
                       <div className="flex items-center gap-2 mb-2">
                         <p className="font-medium text-foreground">{notification.title}</p>
@@ -211,7 +231,8 @@ export default function NotificationsPage() {
                           <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
                         )}
                       </div>
-                      <p className="text-muted-foreground mb-3">{notification.message}</p>                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <p className="text-muted-foreground mb-3">{notification.message}</p>{' '}
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{formatTimeAgo(notification._creationTime)}</span>
                         {notification.triggeredBy && (
                           <>
@@ -226,8 +247,10 @@ export default function NotificationsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => void handleNotificationClick(notification._id, false)}
-                          className="p-1"
+                          onClick={() =>
+                            void handleNotificationClick(notification._id, false, notification)
+                          }
+                          className="p-1 w-8 h-8 rounded-full"
                           title={t('notifications.markAsRead')}
                         >
                           <Check size={16} />
@@ -237,7 +260,7 @@ export default function NotificationsPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => void handleDeleteNotification(notification._id)}
-                        className="p-1 text-destructive hover:text-destructive"
+                        className="p-1 text-destructive hover:text-destructive w-8 h-8 rounded-full"
                         title={t('notifications.delete')}
                       >
                         <Trash2 size={16} />
@@ -259,9 +282,12 @@ export default function NotificationsPage() {
         {/* 더 보기 */}
         {notifications && !notifications.isDone && (
           <div className="mt-8 text-center">
-            <Button variant="outline" onClick={() => {
-              // TODO: Load more notifications
-            }}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                // TODO: Load more notifications
+              }}
+            >
               {t('common.loadMore')}
             </Button>
           </div>

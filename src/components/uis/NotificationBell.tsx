@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Bell, X } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
-import { Id } from '../../../convex/_generated/dataModel';
 import { useConvexAuth } from 'convex/react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { Button } from '../uis/Button';
 import { t } from '../../lib/i18n';
@@ -15,7 +15,7 @@ const formatTimeAgo = (timestamp: number) => {
   const locale = getLocale();
   const locales = { en: enUS, ko, ja };
   const currentLocale = locales[locale] || enUS;
-  
+
   return formatDistanceToNow(new Date(timestamp), {
     addSuffix: true,
     locale: currentLocale,
@@ -24,6 +24,7 @@ const formatTimeAgo = (timestamp: number) => {
 
 export default function NotificationBell() {
   const { isAuthenticated } = useConvexAuth();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +33,7 @@ export default function NotificationBell() {
     api.notifications.query.getUnreadCount,
     isAuthenticated ? {} : 'skip',
   );
-  
+
   const recentNotifications = useQuery(
     api.notifications.query.getRecentNotifications,
     isAuthenticated ? { limit: 5 } : 'skip',
@@ -40,7 +41,6 @@ export default function NotificationBell() {
 
   // 알림 읽음 처리 뮤테이션
   const markAsRead = useMutation(api.notifications.mutation.markAsRead);
-  const markAllAsRead = useMutation(api.notifications.mutation.markAllAsRead);
 
   // 클릭 외부 감지
   useEffect(() => {
@@ -62,14 +62,23 @@ export default function NotificationBell() {
   const handleBellClick = () => {
     setIsOpen(!isOpen);
   };
-  const handleNotificationClick = async (notificationId: Id<'notifications'>, isRead: boolean) => {
-    if (!isRead) {
-      await markAsRead({ notificationId });
+  const handleNotificationClick = async (notification: any) => {
+    // Mark as read if not already read
+    if (!notification.isRead) {
+      await markAsRead({ notificationId: notification._id });
     }
-  };
 
-  const handleMarkAllAsRead = async () => {
-    await markAllAsRead({});
+    // Navigate to appropriate page based on notification type
+    if (notification.postId) {
+      // Navigate to post details
+      void navigate(`/post/${notification.postId}`);
+    } else if (notification.showcaseId) {
+      // Navigate to showcase details (assuming showcase route exists)
+      void navigate(`/showcase/${notification.showcaseId}`);
+    }
+
+    // Close the dropdown
+    setIsOpen(false);
   };
 
   return (
@@ -95,23 +104,28 @@ export default function NotificationBell() {
         <div className="absolute right-0 mt-2 w-80 bg-background border border-border rounded-lg shadow-lg z-50">
           {/* 헤더 */}
           <div className="flex items-center justify-between p-4 border-b border-border">
-            <h3 className="font-semibold text-lg">{t('notifications.title')}</h3>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                void navigate('/notifications');
+              }}
+              className="flex-1 text-left hover:text-foreground transition-colors cursor-pointer"
+            >
+              <h3 className="font-semibold text-lg">
+                {t('notifications.title')}
+                {recentNotifications && recentNotifications.length > 0 && (
+                  <span className="text-sm text-muted-foreground ml-2">
+                    ({recentNotifications.length})
+                  </span>
+                )}
+              </h3>
+            </button>
             <div className="flex items-center gap-2">
-              {unreadCount && unreadCount > 0 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => void handleMarkAllAsRead()}
-                  className="text-xs"
-                >
-                  {t('notifications.markAllAsRead')}
-                </Button>
-              )}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(false)}
-                className="p-1"
+                className="p-1 w-8 h-8 rounded-md"
               >
                 <X size={16} />
               </Button>
@@ -129,16 +143,15 @@ export default function NotificationBell() {
                       'p-4 hover:bg-muted/50 cursor-pointer transition-colors',
                       !notification.isRead && 'bg-primary/5',
                     )}
-                    onClick={() => void handleNotificationClick(notification._id, notification.isRead)}
+                    onClick={() => void handleNotificationClick(notification)}
                   >
                     <div className="flex items-start gap-3">
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm text-foreground">
-                          {notification.title}
-                        </p>
+                        <p className="font-medium text-sm text-foreground">{notification.title}</p>
                         <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                           {notification.message}
-                        </p>                        <div className="flex items-center gap-2 mt-2">
+                        </p>{' '}
+                        <div className="flex items-center gap-2 mt-2">
                           <span className="text-xs text-muted-foreground">
                             {formatTimeAgo(notification._creationTime)}
                           </span>
@@ -163,23 +176,6 @@ export default function NotificationBell() {
               </div>
             )}
           </div>
-
-          {/* 모든 알림 보기 링크 */}
-          {recentNotifications && recentNotifications.length > 0 && (
-            <div className="p-4 border-t border-border">
-              <Button
-                variant="ghost"
-                className="w-full text-center"
-                onClick={() => {
-                  setIsOpen(false);
-                  // TODO: 알림 페이지로 이동
-                  window.location.href = '/notifications';
-                }}
-              >
-                {t('notifications.viewAll')}
-              </Button>
-            </div>
-          )}
         </div>
       )}
     </div>
