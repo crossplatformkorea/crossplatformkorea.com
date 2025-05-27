@@ -246,3 +246,43 @@ export const deactivateSubscription = internalMutation({
     return null;
   },
 });
+
+// 특정 엔티티와 관련된 모든 알림 삭제하는 내부 함수
+export const deleteNotificationsByEntity = internalMutation({
+  args: {
+    entityType: v.union(
+      v.literal('postId'),
+      v.literal('commentId'),
+      v.literal('showcaseId')
+    ),
+    entityId: v.union(
+      v.id('posts'),
+      v.id('comments'),
+      v.id('showcases')
+    ),
+  },
+  returns: v.number(),
+  handler: async (ctx, args) => {
+    // 해당 엔티티와 관련된 모든 알림 찾기
+    const associatedNotifications = await ctx.db
+      .query('notifications')
+      .filter((q) => q.eq(q.field(args.entityType), args.entityId))
+      .collect();
+
+    console.log(`Found ${associatedNotifications.length} notifications to delete for ${args.entityType} ${args.entityId}`);
+
+    let deletedCount = 0;
+    // 찾은 모든 알림 삭제
+    for (const notification of associatedNotifications) {
+      try {
+        await ctx.db.delete(notification._id);
+        deletedCount++;
+        console.log(`Deleted notification: ${notification._id}`);
+      } catch (err) {
+        console.error(`Error deleting notification ${notification._id}:`, err);
+      }
+    }
+
+    return deletedCount;
+  },
+});

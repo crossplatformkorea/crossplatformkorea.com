@@ -344,6 +344,12 @@ export const deletePost = mutation({
 
     for (const comment of associatedComments) {
       try {
+        // 각 댓글과 관련된 알림 삭제
+        await ctx.runMutation(internal.notifications.mutation.deleteNotificationsByEntity, {
+          entityType: 'commentId',
+          entityId: comment._id,
+        });
+
         await ctx.db.delete(comment._id);
         console.log(`Deleted comment: ${comment._id}`);
       } catch (err) {
@@ -351,6 +357,12 @@ export const deletePost = mutation({
         // Continue with other comments even if one fails
       }
     }
+
+    // 게시글과 관련된 모든 알림 삭제 - 공통 함수 사용
+    await ctx.runMutation(internal.notifications.mutation.deleteNotificationsByEntity, {
+      entityType: 'postId',
+      entityId: args.postId,
+    });
 
     // Finally, delete the post itself
     await ctx.db.delete(args.postId);

@@ -212,3 +212,47 @@ export const toggleLike = mutation({
     }
   },
 });
+
+// 댓글 삭제
+export const deleteComment = mutation({
+  args: {
+    commentId: v.id('comments'),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error('Authentication required');
+    }
+
+    // 댓글 확인
+    const comment = await ctx.db.get(args.commentId);
+    if (!comment) {
+      throw new Error('Comment not found');
+    }
+
+    // 작성자 본인인지 확인
+    if (comment.authorId !== userId) {
+      throw new Error('Not authorized to delete this comment');
+    }
+
+    // 댓글과 관련된 모든 알림 삭제 - 공통 함수 사용
+    await ctx.runMutation(internal.notifications.mutation.deleteNotificationsByEntity, {
+      entityType: 'commentId',
+      entityId: args.commentId,
+    });
+
+    // 댓글 삭제
+    await ctx.db.delete(args.commentId);
+
+    // 게시물의 댓글 수 감소
+    const post = await ctx.db.get(comment.postId);
+    if (post) {
+      await ctx.db.patch(comment.postId, {
+        commentCount: Math.max((post.commentCount || 1) - 1, 0),
+      });
+    }
+
+    return true;
+  },
+});

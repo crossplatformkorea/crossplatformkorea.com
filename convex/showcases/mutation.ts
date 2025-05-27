@@ -181,6 +181,12 @@ export const deleteShowcase = mutation({
       throw new Error('쇼케이스 삭제 권한이 없습니다');
     }
 
+    // 쇼케이스와 관련된 모든 알림 삭제 - 공통 함수 사용
+    await ctx.runMutation(internal.notifications.mutation.deleteNotificationsByEntity, {
+      entityType: 'showcaseId',
+      entityId: args.showcaseId,
+    });
+
     // 쇼케이스 삭제
     await ctx.db.delete(args.showcaseId);
 
@@ -233,7 +239,7 @@ export const toggleLike = mutation({
           .query('userProfiles')
           .withIndex('by_user', (q) => q.eq('userId', userId))
           .unique();
-        
+
         const likerName = likerProfile?.displayName || 'Someone';
 
         // 쇼케이스 작성자의 언어 설정 조회
@@ -241,7 +247,7 @@ export const toggleLike = mutation({
           .query('userProfiles')
           .withIndex('by_user', (q) => q.eq('userId', showcase.userId))
           .unique();
-        
+
         const authorLocale = authorProfile?.locale || 'en';
 
         // LIKE_ON_SHOWCASE 알림 생성
