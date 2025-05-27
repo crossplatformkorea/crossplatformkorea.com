@@ -2,6 +2,7 @@ import { v } from 'convex/values';
 import { query, internalQuery } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { paginationOptsValidator } from 'convex/server';
+import { getNotificationTypeValidator } from '../utils';
 
 // 사용자의 알림 목록 조회 (페이지네이션)
 export const getUserNotifications = query({
@@ -14,12 +15,7 @@ export const getUserNotifications = query({
         _id: v.id('notifications'),
         _creationTime: v.number(),
         userId: v.id('users'),
-        type: v.union(
-          v.literal('COMMENT_ON_POST'),
-          v.literal('LIKE_ON_SHOWCASE'),
-          v.literal('LIKE_ON_POST'),
-          v.literal('MENTIONED'),
-        ),
+        type: getNotificationTypeValidator(),
         title: v.string(),
         message: v.string(),
         postId: v.optional(v.id('posts')),
@@ -35,15 +31,19 @@ export const getUserNotifications = query({
           avatarUrl: v.optional(v.string()),
         }),
         // 관련 포스트/showcase 정보 (있는 경우)
-        relatedPost: v.optional(v.object({
-          _id: v.id('posts'),
-          title: v.string(),
-        })),
-        relatedShowcase: v.optional(v.object({
-          _id: v.id('showcases'),
-          title: v.string(),
-        })),
-      })
+        relatedPost: v.optional(
+          v.object({
+            _id: v.id('posts'),
+            title: v.string(),
+          }),
+        ),
+        relatedShowcase: v.optional(
+          v.object({
+            _id: v.id('showcases'),
+            title: v.string(),
+          }),
+        ),
+      }),
     ),
     isDone: v.boolean(),
     continueCursor: v.string(),
@@ -67,7 +67,7 @@ export const getUserNotifications = query({
         const triggeredByProfile = await ctx.db
           .query('userProfiles')
           .withIndex('by_user', (q) => q.eq('userId', notification.triggeredById))
-          .unique();        // 관련 포스트 정보 조회
+          .unique(); // 관련 포스트 정보 조회
         let relatedPost = undefined;
         if (notification.postId) {
           const post = await ctx.db.get(notification.postId);
@@ -101,7 +101,7 @@ export const getUserNotifications = query({
           relatedPost,
           relatedShowcase,
         };
-      })
+      }),
     );
 
     return {
@@ -124,9 +124,7 @@ export const getUnreadCount = query({
 
     const unreadNotifications = await ctx.db
       .query('notifications')
-      .withIndex('by_userId_isRead', (q) => 
-        q.eq('userId', userId).eq('isRead', false)
-      )
+      .withIndex('by_userId_isRead', (q) => q.eq('userId', userId).eq('isRead', false))
       .collect();
 
     return unreadNotifications.length;
@@ -140,12 +138,7 @@ export const getRecentUnreadNotifications = query({
     v.object({
       _id: v.id('notifications'),
       _creationTime: v.number(),
-      type: v.union(
-        v.literal('COMMENT_ON_POST'),
-        v.literal('LIKE_ON_SHOWCASE'),
-        v.literal('LIKE_ON_POST'),
-        v.literal('MENTIONED'),
-      ),
+      type: getNotificationTypeValidator(),
       title: v.string(),
       message: v.string(),
       postId: v.optional(v.id('posts')),
@@ -155,7 +148,7 @@ export const getRecentUnreadNotifications = query({
         displayName: v.string(),
         avatarUrl: v.optional(v.string()),
       }),
-    })
+    }),
   ),
   handler: async (ctx, _args) => {
     const userId = await getAuthUserId(ctx);
@@ -165,9 +158,7 @@ export const getRecentUnreadNotifications = query({
 
     const notifications = await ctx.db
       .query('notifications')
-      .withIndex('by_userId_isRead', (q) => 
-        q.eq('userId', userId).eq('isRead', false)
-      )
+      .withIndex('by_userId_isRead', (q) => q.eq('userId', userId).eq('isRead', false))
       .order('desc')
       .take(5);
 
@@ -193,7 +184,7 @@ export const getRecentUnreadNotifications = query({
             avatarUrl: triggeredByProfile?.avatarUrl,
           },
         };
-      })
+      }),
     );
 
     return enrichedNotifications;
@@ -209,12 +200,7 @@ export const getRecentNotifications = query({
     v.object({
       _id: v.id('notifications'),
       _creationTime: v.number(),
-      type: v.union(
-        v.literal('COMMENT_ON_POST'),
-        v.literal('LIKE_ON_SHOWCASE'),
-        v.literal('LIKE_ON_POST'),
-        v.literal('MENTIONED'),
-      ),
+      type: getNotificationTypeValidator(),
       title: v.string(),
       message: v.string(),
       postId: v.optional(v.id('posts')),
@@ -225,7 +211,7 @@ export const getRecentNotifications = query({
         name: v.string(),
         avatarUrl: v.optional(v.string()),
       }),
-    })
+    }),
   ),
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -263,7 +249,7 @@ export const getRecentNotifications = query({
             avatarUrl: triggeredByProfile?.avatarUrl,
           },
         };
-      })
+      }),
     );
 
     return enrichedNotifications;
@@ -275,13 +261,15 @@ export const getActivePushSubscriptions = internalQuery({
   args: {
     userId: v.id('users'),
   },
-  returns: v.array(v.object({
-    _id: v.id('pushSubscriptions'),
-    endpoint: v.string(),
-    p256dh: v.string(),
-    auth: v.string(),
-    userAgent: v.optional(v.string()),
-  })),
+  returns: v.array(
+    v.object({
+      _id: v.id('pushSubscriptions'),
+      endpoint: v.string(),
+      p256dh: v.string(),
+      auth: v.string(),
+      userAgent: v.optional(v.string()),
+    }),
+  ),
   handler: async (ctx, args) => {
     const subscriptions = await ctx.db
       .query('pushSubscriptions')
@@ -289,7 +277,7 @@ export const getActivePushSubscriptions = internalQuery({
       .filter((q) => q.eq(q.field('isActive'), true))
       .collect();
 
-    return subscriptions.map(sub => ({
+    return subscriptions.map((sub) => ({
       _id: sub._id,
       endpoint: sub.endpoint,
       p256dh: sub.p256dh,

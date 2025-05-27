@@ -66,12 +66,13 @@ export const createPost = mutation({
 
           const userLocale = mentionedUserProfile?.locale || 'ko';
 
-          await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
+          // scheduler와 action 사용 대신 직접 createNotification 호출
+          await ctx.runMutation(internal.notifications.mutation.createNotification, {
             userId: mentionedUserId,
             type: 'MENTIONED',
             postId: postId,
             triggeredById: userId,
-            commenterName: mentionerName,
+            mentionerName: mentionerName,
             postTitle: args.title,
             locale: userLocale,
           });
@@ -461,6 +462,7 @@ export const toggleLike = mutation({
       // User hasn't liked the post, so like it
       const likeCount = (post.likeCount || 0) + 1;
       await ctx.db.patch(args.postId, {
+        // 수정: 타입 단언 사용
         likedBy: [...likedBy, userId as Id<'users'>],
         likeCount: likeCount,
       });
@@ -475,15 +477,23 @@ export const toggleLike = mutation({
 
         const likerName = likerProfile?.displayName || 'Someone';
 
-        // 알림 생성 및 푸시 알림 전송
-        await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
+        // 포스트 작성자의 언어 설정 조회
+        const authorProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', post.authorId!))
+          .unique();
+
+        const authorLocale = authorProfile?.locale || 'en';
+
+        // LIKE_ON_POST 알림 생성
+        await ctx.runMutation(internal.notifications.mutation.createNotification, {
           userId: post.authorId,
           type: 'LIKE_ON_POST',
           postId: args.postId,
           triggeredById: userId,
           likerName: likerName,
           postTitle: post.title,
-          locale: 'en', // 기본값으로 영어 사용
+          locale: authorLocale,
         });
       }
 
@@ -523,6 +533,37 @@ export const addComment = mutation({
     await ctx.db.patch(args.postId, {
       commentCount: currentCommentCount + 1,
     });
+
+    // 포스트 작성자에게 댓글 알림 생성 (자신의 포스트가 아닌 경우)
+    if (post.authorId && post.authorId !== userId) {
+      // 댓글 작성자 정보 가져오기
+      const commenterProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', userId))
+        .unique();
+
+      const commenterName = commenterProfile?.displayName || 'Someone';
+
+      // 포스트 작성자의 언어 설정 가져오기
+      const authorProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', post.authorId!))
+        .unique();
+
+      const authorLocale = authorProfile?.locale || 'en';
+
+      // COMMENT_ON_POST 알림 생성
+      await ctx.runMutation(internal.notifications.mutation.createNotification, {
+        userId: post.authorId,
+        type: 'COMMENT_ON_POST',
+        postId: args.postId,
+        commentId: commentId,
+        triggeredById: userId,
+        commenterName: commenterName,
+        postTitle: post.title,
+        locale: authorLocale,
+      });
+    }
 
     return commentId;
   },
@@ -577,7 +618,6 @@ export const deleteComment = mutation({
     // Get the associated post
     const post = await ctx.db.get(comment.postId);
     if (post) {
-      // Decrement comment count on the post (ensure it doesn't go below 0)
       const currentCommentCount = Math.max(0, (post.commentCount || 1) - 1);
       await ctx.db.patch(post._id, {
         commentCount: currentCommentCount,

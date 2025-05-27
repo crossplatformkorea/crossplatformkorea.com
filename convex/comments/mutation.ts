@@ -2,6 +2,7 @@ import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
+import { internal } from '../_generated/api';
 
 // 댓글 추가
 export const addComment = mutation({
@@ -52,82 +53,82 @@ export const addComment = mutation({
       updatedAt: new Date().toISOString(),
     });
 
+    const post = await ctx.db.get(args.postId);
+
+    if (post) {
+      // 게시물의 댓글 수 증가
+      await ctx.db.patch(args.postId, {
+        commentCount: (post.commentCount || 0) + 1,
+      });
+
+      // 게시물 작성자에게 댓글 알림 생성 (자신의 게시물이 아닌 경우에만)
+      if (post.authorId && post.authorId !== userId) {
+        // 댓글 작성자 정보 가져오기
+        const commenterProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', userId))
+          .unique();
+
+        const commenterName = commenterProfile?.displayName || 'Someone';
+
+        // 게시물 작성자의 언어 설정 가져오기
+        const authorProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', post.authorId!))
+          .unique();
+
+        const authorLocale = authorProfile?.locale || 'en';
+
+        // COMMENT_ON_POST 알림 생성
+        await ctx.runMutation(internal.notifications.mutation.createNotification, {
+          userId: post.authorId,
+          type: 'COMMENT_ON_POST',
+          postId: args.postId,
+          commentId: commentId,
+          triggeredById: userId,
+          commenterName: commenterName,
+          postTitle: post.title,
+          locale: authorLocale,
+        });
+      }
+    }
+
     // 멘션된 사용자들에게 알림 생성
     if (finalMentionedUsers.length > 0) {
+      // 댓글 작성자 정보 가져오기
+      const mentionerProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', userId))
+        .unique();
+
+      const mentionerName = mentionerProfile?.displayName || 'Someone';
+
       for (const mentionedUserId of finalMentionedUsers) {
         // 자기 자신에게는 알림을 보내지 않음
         if (mentionedUserId !== userId) {
-          await ctx.db.insert('notifications', {
+          // 멘션된 사용자의 언어 설정 가져오기
+          const mentionedUserProfile = await ctx.db
+            .query('userProfiles')
+            .withIndex('by_user', (q) => q.eq('userId', mentionedUserId))
+            .unique();
+
+          const userLocale = mentionedUserProfile?.locale || 'en';
+
+          // MENTIONED 알림 생성
+          await ctx.runMutation(internal.notifications.mutation.createNotification, {
             userId: mentionedUserId,
-            type: 'MENTIONED' as const,
-            title: 'You were mentioned in a comment',
-            message: `You were mentioned in a comment by ${await getUserDisplayName(ctx, userId)}`,
+            type: 'MENTIONED',
             postId: args.postId,
-            commentId,
+            commentId: commentId,
             triggeredById: userId,
-            isRead: false,
+            mentionerName: mentionerName,
+            locale: userLocale,
           });
         }
       }
     }
 
-    // 게시물의 댓글 수 증가
-    const post = await ctx.db.get(args.postId);
-    if (post) {
-      await ctx.db.patch(args.postId, {
-        commentCount: (post.commentCount || 0) + 1,
-      });
-    }
-
     return commentId;
-  },
-});
-
-// 헬퍼 함수: 사용자 표시 이름 가져오기
-async function getUserDisplayName(ctx: any, userId: Id<'users'>): Promise<string> {
-  const userProfile = await ctx.db
-    .query('userProfiles')
-    .filter((q: any) => q.eq(q.field('userId'), userId))
-    .first();
-
-  return userProfile?.displayName || 'Unknown User';
-}
-
-// 댓글 삭제
-export const deleteComment = mutation({
-  args: {
-    commentId: v.id('comments'),
-  },
-  returns: v.boolean(),
-  handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error('Authentication required');
-    }
-
-    // 댓글 확인
-    const comment = await ctx.db.get(args.commentId);
-    if (!comment) {
-      throw new Error('Comment not found');
-    }
-
-    // 작성자 본인인지 확인
-    if (comment.authorId !== userId) {
-      throw new Error('Not authorized to delete this comment');
-    }
-
-    // 댓글 삭제
-    await ctx.db.delete(args.commentId);
-
-    // 게시물의 댓글 수 감소
-    const post = await ctx.db.get(comment.postId);
-    if (post) {
-      await ctx.db.patch(comment.postId, {
-        commentCount: Math.max((post.commentCount || 1) - 1, 0),
-      });
-    }
-
-    return true;
   },
 });
 
@@ -165,9 +166,48 @@ export const toggleLike = mutation({
       // 아직 좋아요를 누르지 않았다면, 좋아요 추가
       const likeCount = (comment.likeCount || 0) + 1;
       await ctx.db.patch(args.commentId, {
+        // 수정: 타입 단언 사용
         likedBy: [...likedBy, userId as Id<'users'>],
         likeCount: likeCount,
       });
+
+      // 댓글 작성자에게 좋아요 알림 생성 (자신의 댓글이 아닌 경우에만)
+      if (comment.authorId && comment.authorId !== userId) {
+        // 좋아요 누른 사용자 정보 가져오기
+        const likerProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', userId))
+          .unique();
+
+        const likerName = likerProfile?.displayName || 'Someone';
+
+        // 댓글 작성자의 언어 설정 가져오기
+        const commentAuthorProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', comment.authorId))
+          .unique();
+
+        const authorLocale = commentAuthorProfile?.locale || 'en';
+
+        // 댓글 내용 자르기 (알림에 표시할 용도)
+        const truncatedContent =
+          comment.content?.length > 100
+            ? comment.content.substring(0, 100) + '...'
+            : comment.content;
+
+        // LIKE_ON_COMMENT 알림 생성
+        await ctx.runMutation(internal.notifications.mutation.createNotification, {
+          userId: comment.authorId,
+          type: 'LIKE_ON_COMMENT',
+          postId: comment.postId,
+          commentId: args.commentId,
+          triggeredById: userId,
+          likerName: likerName,
+          commentContent: truncatedContent,
+          locale: authorLocale,
+        });
+      }
+
       return true; // 댓글에 좋아요가 추가되었음을 나타내기 위해 true 반환
     }
   },

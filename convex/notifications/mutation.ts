@@ -5,18 +5,14 @@ import {
   getNotificationMessages,
   type NotificationType,
   type NotificationMessageParams,
+  getNotificationTypeValidator,
 } from '../utils';
 
 // 알림 생성 (내부 함수) - 다국어 지원
 export const createNotification = internalMutation({
   args: {
     userId: v.id('users'),
-    type: v.union(
-      v.literal('COMMENT_ON_POST'),
-      v.literal('LIKE_ON_SHOWCASE'),
-      v.literal('LIKE_ON_POST'),
-      v.literal('MENTIONED'),
-    ),
+    type: getNotificationTypeValidator(),
     postId: v.optional(v.id('posts')),
     showcaseId: v.optional(v.id('showcases')),
     commentId: v.optional(v.id('comments')),
@@ -27,6 +23,7 @@ export const createNotification = internalMutation({
     mentionerName: v.optional(v.string()),
     postTitle: v.optional(v.string()),
     showcaseTitle: v.optional(v.string()),
+    commentContent: v.optional(v.string()), // 댓글 내용 추가
     locale: v.optional(v.string()),
   },
   returns: v.id('notifications'),
@@ -40,9 +37,10 @@ export const createNotification = internalMutation({
     const params: NotificationMessageParams = {
       commenterName: args.commenterName,
       likerName: args.likerName,
-      mentionerName: args.mentionerName, // 멘션한 사람 이름 추가
+      mentionerName: args.mentionerName,
       postTitle: args.postTitle,
       showcaseTitle: args.showcaseTitle,
+      commentContent: args.commentContent,
     };
 
     const { title, message } = getNotificationMessages(

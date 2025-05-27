@@ -1,6 +1,7 @@
 import { defineSchema, defineTable } from 'convex/server';
 import { authTables } from '@convex-dev/auth/server';
 import { v } from 'convex/values';
+import { getNotificationTypeValidator } from './utils';
 
 export default defineSchema({
   ...authTables,
@@ -98,21 +99,16 @@ export default defineSchema({
     likeCount: v.optional(v.number()), // 좋아요 수 필드 추가
     likedBy: v.optional(v.array(v.id('users'))), // 좋아요 누른 사용자 ID 배열 추가
   })
-    .index("by_category", ["category"])
-    .index("by_userId", ["userId"])
-    .searchIndex("search", {
-      searchField: "title",
-      filterFields: ["category"]
+    .index('by_category', ['category'])
+    .index('by_userId', ['userId'])
+    .searchIndex('search', {
+      searchField: 'title',
+      filterFields: ['category'],
     }),
   // 알림 테이블 추가
   notifications: defineTable({
     userId: v.id('users'), // 알림을 받을 사용자
-    type: v.union(
-      v.literal('COMMENT_ON_POST'), // 내 포스트에 댓글
-      v.literal('LIKE_ON_SHOWCASE'), // 내 showcase에 좋아요
-      v.literal('LIKE_ON_POST'), // 내 포스트에 좋아요 (선택사항)
-      v.literal('MENTIONED'), // 멘션 알림 타입 추가
-    ),
+    type: getNotificationTypeValidator(),
     title: v.string(), // 알림 제목
     message: v.string(), // 알림 메시지
     // 관련 리소스 ID (optional - 알림 유형에 따라 다름)
@@ -127,7 +123,7 @@ export default defineSchema({
     .index('by_userId', ['userId'])
     .index('by_userId_isRead', ['userId', 'isRead'])
     .index('by_type', ['type']),
-  
+
   // 푸시 노티피케이션 구독 테이블
   pushSubscriptions: defineTable({
     userId: v.id('users'), // 구독한 사용자

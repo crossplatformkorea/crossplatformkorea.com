@@ -221,7 +221,8 @@ export const toggleLike = mutation({
     } else {
       // 좋아요 추가
       await ctx.db.patch(args.showcaseId, {
-        likedBy: [...likedBy, userId],
+        // 수정: 타입 단언 사용
+        likedBy: [...likedBy, userId as Id<'users'>],
         likeCount: likeCount + 1,
       });
 
@@ -235,15 +236,23 @@ export const toggleLike = mutation({
         
         const likerName = likerProfile?.displayName || 'Someone';
 
-        // 알림 생성 및 푸시 알림 전송
-        await ctx.scheduler.runAfter(0, internal.notifications.action.sendNotificationWithPush, {
+        // 쇼케이스 작성자의 언어 설정 조회
+        const authorProfile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', showcase.userId))
+          .unique();
+        
+        const authorLocale = authorProfile?.locale || 'en';
+
+        // LIKE_ON_SHOWCASE 알림 생성
+        await ctx.runMutation(internal.notifications.mutation.createNotification, {
           userId: showcase.userId,
           type: 'LIKE_ON_SHOWCASE',
           showcaseId: args.showcaseId,
           triggeredById: userId,
           likerName: likerName,
           showcaseTitle: showcase.title,
-          locale: 'en', // 기본값으로 영어 사용
+          locale: authorLocale,
         });
       }
 

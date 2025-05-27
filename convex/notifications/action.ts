@@ -5,6 +5,7 @@ import { internal } from '../_generated/api';
 import { v } from 'convex/values';
 import webpush from 'web-push';
 import { getAuthUserId } from '@convex-dev/auth/server';
+import { getNotificationTypeValidator } from '../utils';
 
 // VAPID 키 설정 (환경 변수에서 가져오기)
 const vapidDetails = {
@@ -114,12 +115,7 @@ export const sendPushNotification = internalAction({
 export const sendNotificationWithPush = internalAction({
   args: {
     userId: v.id('users'),
-    type: v.union(
-      v.literal('COMMENT_ON_POST'),
-      v.literal('LIKE_ON_SHOWCASE'),
-      v.literal('LIKE_ON_POST'),
-      v.literal('MENTIONED'),
-    ),
+    type: getNotificationTypeValidator(),
     postId: v.optional(v.id('posts')),
     showcaseId: v.optional(v.id('showcases')),
     commentId: v.optional(v.id('comments')),
@@ -129,6 +125,7 @@ export const sendNotificationWithPush = internalAction({
     likerName: v.optional(v.string()),
     postTitle: v.optional(v.string()),
     showcaseTitle: v.optional(v.string()),
+    commentContent: v.optional(v.string()),
     locale: v.optional(v.string()),
   },
   returns: v.object({
@@ -163,6 +160,7 @@ export const sendNotificationWithPush = internalAction({
       likerName: args.likerName,
       postTitle: args.postTitle,
       showcaseTitle: args.showcaseTitle,
+      commentContent: args.commentContent, // 댓글 내용 파라미터 추가
     });
 
     // 3. 푸시 알림 전송
