@@ -93,7 +93,14 @@ export default function NotificationBell() {
       >
         <Bell size={20} />
         {unreadCount && unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          <span
+            className={cn(
+              'absolute -top-1 -right-1',
+              'bg-red-500 text-white text-xs',
+              'rounded-full w-5 h-5',
+              'flex items-center justify-center',
+            )}
+          >
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
@@ -101,15 +108,27 @@ export default function NotificationBell() {
 
       {/* 알림 드롭다운 */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-background border border-border rounded-lg shadow-lg z-50">
+        <div
+          className={cn(
+            'fixed sm:absolute',
+            'left-1/2 sm:left-auto right-auto sm:right-0',
+            'top-16 sm:top-auto',
+            'transform -translate-x-1/2 sm:translate-x-0',
+            'mt-2 w-[calc(100vw-2rem)] max-w-sm sm:w-80',
+            'bg-background border border-border rounded-lg shadow-lg z-50',
+          )}
+        >
           {/* 헤더 */}
-          <div className="flex items-center justify-between p-4 border-b border-border">
+          <div className={cn('flex items-center justify-between p-4', 'border-b border-border')}>
             <button
               onClick={() => {
                 setIsOpen(false);
                 void navigate('/notifications');
               }}
-              className="flex-1 text-left hover:text-foreground transition-colors cursor-pointer"
+              className={cn(
+                'flex-1 text-left',
+                'hover:text-foreground transition-colors cursor-pointer',
+              )}
             >
               <h3 className="font-semibold text-lg">
                 {t('notifications.title')}
@@ -150,7 +169,7 @@ export default function NotificationBell() {
                         <p className="font-medium text-sm text-foreground">{notification.title}</p>
                         <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                           {notification.message}
-                        </p>{' '}
+                        </p>
                         <div className="flex items-center gap-2 mt-2">
                           <span className="text-xs text-muted-foreground">
                             {formatTimeAgo(notification._creationTime)}
@@ -163,14 +182,16 @@ export default function NotificationBell() {
                         </div>
                       </div>
                       {!notification.isRead && (
-                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-1" />
+                        <div
+                          className={cn('w-2 h-2 bg-primary rounded-full', 'flex-shrink-0 mt-1')}
+                        />
                       )}
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center text-muted-foreground">
+              <div className={cn('p-8 text-center text-muted-foreground')}>
                 <Bell size={48} className="mx-auto mb-4 opacity-30" />
                 <p>{t('notifications.noNotifications')}</p>
               </div>
