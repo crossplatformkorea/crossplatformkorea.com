@@ -16,7 +16,7 @@ interface MentionInputProps {
   maxLength?: number;
 }
 
-const MentionInput: React.FC<MentionInputProps> = ({
+const CommentInput: React.FC<MentionInputProps> = ({
   value,
   onChange,
   onSubmit,
@@ -190,4 +190,4 @@ const MentionInput: React.FC<MentionInputProps> = ({
   );
 };
 
-export default MentionInput;
+export default CommentInput;

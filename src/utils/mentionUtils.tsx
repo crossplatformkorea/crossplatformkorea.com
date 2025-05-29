@@ -101,3 +101,113 @@ export function renderMentions(
     );
   });
 }
+
+// Enhanced function to render both mentions and links
+export const renderMentionsAndLinks = (
+  content: string,
+  options: {
+    onMentionClick?: (userId: Id<'users'>, displayName: string) => void;
+  } = {},
+) => {
+  if (!content) return content;
+
+  // URL regex pattern to match various URL formats
+  const urlRegex = /(https?:\/\/[^\s<>"{}|\\^`[\]]+)/gi;
+  
+  // Mention regex pattern
+  const mentionRegex = /@\[([^\]]+)\]\(([^)]+)\)/g;
+
+  let lastIndex = 0;
+  const elements: React.ReactNode[] = [];
+  let elementKey = 0;
+
+  // Find all matches for both mentions and URLs
+  const allMatches: Array<{
+    type: 'mention' | 'url';
+    match: RegExpMatchArray;
+    index: number;
+  }> = [];
+
+  // Find mention matches
+  let mentionMatch;
+  while ((mentionMatch = mentionRegex.exec(content)) !== null) {
+    if (mentionMatch.index !== undefined) {
+      allMatches.push({
+        type: 'mention',
+        match: mentionMatch,
+        index: mentionMatch.index,
+      });
+    }
+  }
+
+  // Find URL matches
+  let urlMatch;
+  while ((urlMatch = urlRegex.exec(content)) !== null) {
+    if (urlMatch.index !== undefined) {
+      allMatches.push({
+        type: 'url',
+        match: urlMatch,
+        index: urlMatch.index,
+      });
+    }
+  }
+
+  // Sort matches by their position in the string
+  allMatches.sort((a, b) => a.index - b.index);
+
+  // Process each match
+  allMatches.forEach(({ type, match, index }) => {
+    const matchEnd = index + match[0].length;
+
+    // Add text before this match
+    if (index > lastIndex) {
+      const textBefore = content.slice(lastIndex, index);
+      if (textBefore) {
+        elements.push(textBefore);
+      }
+    }
+
+    // Add the processed match
+    if (type === 'mention') {
+      const displayName = match[1];
+      const userId = match[2] as Id<'users'>;
+      
+      elements.push(
+        <button
+          key={`mention-${elementKey++}`}
+          onClick={() => options.onMentionClick?.(userId, displayName)}
+          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium cursor-pointer bg-transparent border-none p-0 underline"
+        >
+          @{displayName}
+        </button>,
+      );
+    } else if (type === 'url') {
+      const url = match[0];
+      
+      elements.push(
+        <a
+          key={`url-${elementKey++}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline break-all"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {url}
+        </a>,
+      );
+    }
+
+    lastIndex = matchEnd;
+  });
+
+  // Add remaining text after the last match
+  if (lastIndex < content.length) {
+    const remainingText = content.slice(lastIndex);
+    if (remainingText) {
+      elements.push(remainingText);
+    }
+  }
+
+  return elements.length > 0 ? elements : content;
+};

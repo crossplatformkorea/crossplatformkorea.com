@@ -12,7 +12,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { Button } from '../../../../uis/Button';
 import { useNavigate } from 'react-router-dom';
 import CommentInput from '../../../../uis/CommentInput';
-import { renderMentions } from '../../../../../utils/mentionUtils';
+import { renderMentionsAndLinks } from '../../../../../utils/mentionUtils';
 
 interface CommentsProps {
   postId: Id<'posts'>;
@@ -324,7 +324,7 @@ export default function Comments({ postId }: CommentsProps) {
                     {' '}
                     {/* Increased from ml-10 to ml-11 to match new avatar spacing */}
                     <p className="text-foreground dark:text-gray-200 whitespace-pre-wrap break-words text-sm">
-                      {renderMentions(comment.content, {
+                      {renderMentionsAndLinks(comment.content, {
                         onMentionClick: handleMentionClick,
                       })}
                     </p>
