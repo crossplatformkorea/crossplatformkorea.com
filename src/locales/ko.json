@@ -289,6 +289,7 @@
     "title": "댓글",
     "writePlaceholder": "댓글을 작성하세요...",
     "submit": "등록",
+    "shortcuts": "Cmd/Ctrl + Enter로 등록",
     "loginRequired": "댓글을 작성하려면 로그인하세요",
     "noComments": "아직 댓글이 없습니다. 첫 댓글을 작성해보세요!",
     "deleteCommentTitle": "댓글 삭제",

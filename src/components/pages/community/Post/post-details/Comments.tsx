@@ -11,7 +11,7 @@ import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '../../../../uis/Button';
 import { useNavigate } from 'react-router-dom';
-import MentionInput from '../../../../uis/MentionInput';
+import CommentInput from '../../../../uis/CommentInput';
 import { renderMentions } from '../../../../../utils/mentionUtils';
 
 interface CommentsProps {
@@ -161,7 +161,7 @@ export default function Comments({ postId }: CommentsProps) {
       {isAuthenticated ? (
         <form onSubmit={handleSubmitComment} className="mb-8">
           <div className="border border-border dark:border-gray-700 rounded-md">
-            <MentionInput
+            <CommentInput
               value={comment}
               onChange={handleCommentChange}
               onSubmit={handleSubmitComment}
@@ -169,14 +169,18 @@ export default function Comments({ postId }: CommentsProps) {
               className="p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 dark:focus:ring-primary/30"
               disabled={isSubmitting}
               rows={4}
+              maxLength={3000}
             />
             <div
               className={cn(
-                'flex justify-end p-2 border-t border-border',
+                'flex justify-between items-center p-2 border-t border-border',
                 'dark:border-gray-700',
                 'bg-muted/20 dark:bg-gray-800/50',
               )}
             >
+              <span className="text-xs text-muted-foreground">
+                {t('comments.shortcuts')}
+              </span>
               <Button
                 type="submit"
                 disabled={isSubmitting || !comment.trim()}

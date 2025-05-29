@@ -13,6 +13,7 @@ interface MentionInputProps {
   disabled?: boolean;
   className?: string;
   rows?: number;
+  maxLength?: number;
 }
 
 const MentionInput: React.FC<MentionInputProps> = ({
@@ -23,17 +24,58 @@ const MentionInput: React.FC<MentionInputProps> = ({
   disabled = false,
   className,
   rows = 3,
+  maxLength = 3000,
 }) => {
   // Fetch all users for mentions
   const users = useQuery(api.users.query.getAllUsersForMention);
 
   const handleChange = useCallback(
     (event: any, newValue: string, newPlainTextValue: string, mentions: any[]) => {
+      // Apply character limit with automatic truncation
+      let processedValue = newValue;
+      if (maxLength && newPlainTextValue.length > maxLength) {
+        // Find the last complete word to avoid cutting mentions in the middle
+        const truncatedPlainText = newPlainTextValue.substring(0, maxLength);
+        const lastSpaceIndex = truncatedPlainText.lastIndexOf(' ');
+        const truncateLength = lastSpaceIndex > maxLength * 0.8 ? lastSpaceIndex : maxLength;
+        
+        // Count characters in the value with markup and truncate accordingly
+        let plainCharCount = 0;
+        let truncatedValue = '';
+        
+        for (let i = 0; i < newValue.length && plainCharCount < truncateLength; i++) {
+          const char = newValue[i];
+          truncatedValue += char;
+          
+          // Skip counting characters inside mention markup
+          if (char === '@' && newValue.substring(i).match(/^@\[.*?\]\(.*?\)/)) {
+            const markupMatch = newValue.substring(i).match(/^@\[([^\]]+)\]\([^)]+\)/);
+            if (markupMatch) {
+              const displayLength = markupMatch[1].length + 1; // +1 for the @
+              if (plainCharCount + displayLength <= truncateLength) {
+                truncatedValue += newValue.substring(i + 1, i + markupMatch[0].length);
+                i += markupMatch[0].length - 1;
+                plainCharCount += displayLength;
+              } else {
+                truncatedValue = truncatedValue.substring(0, truncatedValue.length - 1);
+                break;
+              }
+            } else {
+              plainCharCount++;
+            }
+          } else {
+            plainCharCount++;
+          }
+        }
+        
+        processedValue = truncatedValue;
+      }
+      
       // Extract mentioned user IDs
       const mentionedUserIds: Id<'users'>[] = mentions.map((mention) => mention.id as Id<'users'>);
-      onChange(newValue, mentionedUserIds);
+      onChange(processedValue, mentionedUserIds);
     },
-    [onChange],
+    [onChange, maxLength],
   );
 
   const handleKeyDown = useCallback(
@@ -44,12 +86,9 @@ const MentionInput: React.FC<MentionInputProps> = ({
       }
     },
     [onSubmit],
-  );
-
-  // Transform users data for react-mentions
+  );  // Transform users data for react-mentions
   const userData = useMemo(() => {
     if (!users) return [];
-
     return users.map((user) => ({
       id: user._id,
       display: user.displayName || 'Anonymous',
@@ -66,6 +105,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
       control: {
         fontFamily: 'inherit',
         minHeight: rows * 24,
+        maxHeight: rows * 24 * 3, // Allow up to 3x the initial height
+        overflowY: 'auto' as const, // Enable scrolling
       },
       highlighter: {
         display: 'none',
@@ -79,6 +120,8 @@ const MentionInput: React.FC<MentionInputProps> = ({
         lineHeight: 'inherit',
         fontFamily: 'inherit',
         resize: 'none' as const,
+        maxHeight: 'inherit',
+        overflowY: 'auto' as const, // Enable scrolling for input
       },
     },
   };

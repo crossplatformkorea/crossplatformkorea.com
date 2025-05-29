@@ -308,6 +308,7 @@
     "title": "Comments",
     "writePlaceholder": "Write a comment...",
     "submit": "Submit",
+    "shortcuts": "Cmd/Ctrl + Enter to submit",
     "loginRequired": "Please sign in to post comments",
     "noComments": "No comments yet. Be the first to comment!",
     "deleteCommentTitle": "Delete Comment",
