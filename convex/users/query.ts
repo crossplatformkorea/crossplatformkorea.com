@@ -198,9 +198,12 @@ export const getUserStats = query({
   },
 });
 
-// 사용자 목록을 가져오는 쿼리 - userProfiles에서 가져오도록 수정
+// 사용자 맨션용 목록 쿼리: 검색어와 최대 개수 지원
 export const getAllUsersForMention = query({
-  args: {},
+  args: {
+    search: v.optional(v.string()),
+    limit: v.optional(v.number()),
+  },
   returns: v.array(
     v.object({
       _id: v.id('users'),
@@ -208,8 +211,19 @@ export const getAllUsersForMention = query({
       avatarUrl: v.optional(v.string()),
     }),
   ),
-  handler: async (ctx) => {
-    const userProfiles = await ctx.db.query('userProfiles').collect();
+  handler: async (ctx, args) => {
+    const { search, limit } = args;
+    let userProfiles = await ctx.db.query('userProfiles').collect();
+
+    if (search && search.trim() !== '') {
+      const lower = search.trim().toLowerCase();
+      userProfiles = userProfiles.filter((profile) =>
+        (profile.displayName || '').toLowerCase().includes(lower),
+      );
+    }
+
+    const max = typeof limit === 'number' ? limit : 4;
+    userProfiles = userProfiles.slice(0, max);
 
     return userProfiles.map((profile) => ({
       _id: profile.userId,
@@ -241,10 +255,10 @@ export const getProfileByDisplayName = query({
   handler: async (ctx, args) => {
     // Convert search term to lowercase for case-insensitive search
     const searchDisplayName = args.displayName.toLowerCase();
-    
+
     // Get all userProfiles and filter by case-insensitive displayName match
     const userProfiles = await ctx.db.query('userProfiles').collect();
-    const profile = userProfiles.find(p => p.displayName?.toLowerCase() === searchDisplayName);
+    const profile = userProfiles.find((p) => p.displayName?.toLowerCase() === searchDisplayName);
 
     if (!profile) {
       return null;

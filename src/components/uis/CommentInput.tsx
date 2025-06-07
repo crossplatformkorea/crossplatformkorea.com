@@ -26,8 +26,8 @@ const CommentInput: React.FC<MentionInputProps> = ({
   rows = 3,
   maxLength = 3000,
 }) => {
-  // Fetch all users for mentions
-  const users = useQuery(api.users.query.getAllUsersForMention);
+  // Fetch all users for mentions (limit 4명 기본)
+  const users = useQuery(api.users.query.getAllUsersForMention, { limit: 4 });
 
   const handleChange = useCallback(
     (event: any, newValue: string, newPlainTextValue: string, mentions: any[]) => {
@@ -38,15 +38,15 @@ const CommentInput: React.FC<MentionInputProps> = ({
         const truncatedPlainText = newPlainTextValue.substring(0, maxLength);
         const lastSpaceIndex = truncatedPlainText.lastIndexOf(' ');
         const truncateLength = lastSpaceIndex > maxLength * 0.8 ? lastSpaceIndex : maxLength;
-        
+
         // Count characters in the value with markup and truncate accordingly
         let plainCharCount = 0;
         let truncatedValue = '';
-        
+
         for (let i = 0; i < newValue.length && plainCharCount < truncateLength; i++) {
           const char = newValue[i];
           truncatedValue += char;
-          
+
           // Skip counting characters inside mention markup
           if (char === '@' && newValue.substring(i).match(/^@\[.*?\]\(.*?\)/)) {
             const markupMatch = newValue.substring(i).match(/^@\[([^\]]+)\]\([^)]+\)/);
@@ -67,10 +67,10 @@ const CommentInput: React.FC<MentionInputProps> = ({
             plainCharCount++;
           }
         }
-        
+
         processedValue = truncatedValue;
       }
-      
+
       // Extract mentioned user IDs
       const mentionedUserIds: Id<'users'>[] = mentions.map((mention) => mention.id as Id<'users'>);
       onChange(processedValue, mentionedUserIds);
@@ -86,13 +86,28 @@ const CommentInput: React.FC<MentionInputProps> = ({
       }
     },
     [onSubmit],
-  );  // Transform users data for react-mentions
+  ); // Transform users data for react-mentions
+  // Mentions 검색어에 맞는 유저 최대 4명만 보여주기
   const userData = useMemo(() => {
     if (!users) return [];
-    return users.map((user) => ({
-      id: user._id,
-      display: user.displayName || 'Anonymous',
-    }));
+    return (search: string) => {
+      if (!search) {
+        // 검색어 없으면 상위 4명만
+        return users.slice(0, 4).map((user) => ({
+          id: user._id,
+          display: user.displayName || 'Anonymous',
+        }));
+      }
+      // 검색어가 있으면 displayName에 포함되는 유저 최대 4명만
+      const lower = search.toLowerCase();
+      return users
+        .filter((user) => (user.displayName || '').toLowerCase().includes(lower))
+        .slice(0, 4)
+        .map((user) => ({
+          id: user._id,
+          display: user.displayName || 'Anonymous',
+        }));
+    };
   }, [users]);
 
   // Minimal inline styles - let CSS handle most styling
@@ -153,6 +168,7 @@ const CommentInput: React.FC<MentionInputProps> = ({
           markup="@[__display__](__id__)"
           displayTransform={(id, display) => `@${display}`}
           style={mentionStyles}
+          // react-mentions가 data를 함수로 받으면 (search, callback) 형태로 호출함
           renderSuggestion={(suggestion, search, highlightedDisplay, index, focused) => (
             <div
               className={cn(
@@ -165,8 +181,8 @@ const CommentInput: React.FC<MentionInputProps> = ({
                 // Focused state styles
                 focused && [
                   'bg-blue-50 border-l-blue-500 text-blue-900',
-                  'dark:bg-blue-950/50 dark:text-blue-100 dark:border-l-blue-400'
-                ]
+                  'dark:bg-blue-950/50 dark:text-blue-100 dark:border-l-blue-400',
+                ],
               )}
             >
               {/* GitHub-style avatar */}
