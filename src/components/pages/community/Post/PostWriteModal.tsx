@@ -485,26 +485,33 @@ export default function PostWriteModal({
     }
   };
 
-  // Handle paste event for images
+  // Handle paste event for images and auto-link conversion
   const handlePaste = async (e: React.ClipboardEvent) => {
-    const items = e.clipboardData?.items;
-    if (!items) return;
+    const clipboardData = e.clipboardData;
+    if (!clipboardData) return;
 
+    // Handle image paste first
+    const items = clipboardData.items;
     for (let i = 0; i < items.length; i++) {
       if (items[i].type.indexOf('image') !== -1) {
-        // Prevent the default paste behavior for images
         e.preventDefault();
-
         const file = items[i].getAsFile();
         if (!file) continue;
 
         const markdownUrl = await uploadFile(file);
         if (!markdownUrl) continue;
 
-        // Insert the markdown at cursor position
         insertTextAtCursor(markdownUrl);
-        break;
+        return;
       }
+    }
+
+    // Handle text paste with auto-link conversion
+    const pastedText = clipboardData.getData('text');
+    if (pastedText && isValidHttpUrl(pastedText.trim())) {
+      e.preventDefault();
+      const markdownLink = `[${pastedText.trim()}](${pastedText.trim()})`;
+      insertTextAtCursor(markdownLink);
     }
   };
 
@@ -558,6 +565,16 @@ export default function PostWriteModal({
 
   // Calculate number of lines in content
   const contentLineCount = content.split('\n').length;
+
+  // Auto-link detection utility for clipboard paste
+  const isValidHttpUrl = (string: string): boolean => {
+    try {
+      const url = new URL(string);
+      return (url.protocol === 'http:' || url.protocol === 'https:') && url.hostname.length > 0;
+    } catch {
+      return false;
+    }
+  };
 
   // Don't render anything if modal is closed and not in closing animation
   if (!isOpen && !isClosing) {
