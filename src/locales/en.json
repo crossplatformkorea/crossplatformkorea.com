@@ -498,5 +498,41 @@
     "title": "Cross-Platform Korea",
     "description": "Korean Cross-Platform Developer Community",
     "keywords": "cross-platform, developer, community, React Native, Flutter, PWA, mobile development"
+  },
+  "chat": {
+    "title": "ChatGPT",
+    "inputPlaceholder": "Type your message...",
+    "send": "Send",
+    "sending": "Sending...",
+    "newChat": "New Chat",
+    "conversations": "Conversations",
+    "noConversations": "No conversations yet",
+    "typeMessage": "Type your message...",
+    "configureApiKey": "Configure API key to start chatting",
+    "apiKey": {
+      "title": "API Key",
+      "label": "OpenAI API Key",
+      "description": "Enter your OpenAI API key to start chatting",
+      "placeholder": "Enter your OpenAI API key",
+      "save": "Save API Key",
+      "missing": "Please configure your OpenAI API key first",
+      "sessionNotice": "⚠️ API key is stored in your database and is encrypted for security.",
+      "configure": "Configure"
+    },
+    "errors": {
+      "failedToSend": "Failed to send message",
+      "failedToCreate": "Failed to create conversation",
+      "noApiKey": "No API key configured",
+      "invalidResponse": "Invalid response from server",
+      "invalidApiKey": "Invalid OpenAI API key. Please check your API key and try again.",
+      "rateLimitExceeded": "OpenAI API rate limit exceeded. Please try again later.",
+      "insufficientCredits": "Insufficient OpenAI credits. Please add credits to your account.",
+      "invalidApiKeyFormat": "Invalid API key format. API key should start with 'sk-'"
+    },
+    "messages": {
+      "user": "You",
+      "assistant": "Assistant",
+      "streaming": "Generating response..."
+    }
   }
 }

@@ -8,14 +8,12 @@
  * @module
  */
 
-import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
-} from "convex/server";
 import type * as ResendOTP from "../ResendOTP.js";
 import type * as auth from "../auth.js";
 import type * as categories_query from "../categories/query.js";
+import type * as chats_action from "../chats/action.js";
+import type * as chats_mutation from "../chats/mutation.js";
+import type * as chats_query from "../chats/query.js";
 import type * as comments_mutation from "../comments/mutation.js";
 import type * as comments_query from "../comments/query.js";
 import type * as constants from "../constants.js";
@@ -38,6 +36,12 @@ import type * as utils_mentions from "../utils/mentions.js";
 import type * as utils from "../utils.js";
 import type * as validators from "../validators.js";
 
+import type {
+  ApiFromModules,
+  FilterApi,
+  FunctionReference,
+} from "convex/server";
+
 /**
  * A utility for referencing Convex functions in your app's API.
  *
@@ -50,6 +54,9 @@ declare const fullApi: ApiFromModules<{
   ResendOTP: typeof ResendOTP;
   auth: typeof auth;
   "categories/query": typeof categories_query;
+  "chats/action": typeof chats_action;
+  "chats/mutation": typeof chats_mutation;
+  "chats/query": typeof chats_query;
   "comments/mutation": typeof comments_mutation;
   "comments/query": typeof comments_query;
   constants: typeof constants;
@@ -72,11 +79,51 @@ declare const fullApi: ApiFromModules<{
   utils: typeof utils;
   validators: typeof validators;
 }>;
+declare const fullApiWithMounts: typeof fullApi;
+
 export declare const api: FilterApi<
-  typeof fullApi,
+  typeof fullApiWithMounts,
   FunctionReference<any, "public">
 >;
 export declare const internal: FilterApi<
-  typeof fullApi,
+  typeof fullApiWithMounts,
   FunctionReference<any, "internal">
 >;
+
+export declare const components: {
+  persistentTextStreaming: {
+    lib: {
+      addChunk: FunctionReference<
+        "mutation",
+        "internal",
+        { final: boolean; streamId: string; text: string },
+        any
+      >;
+      createStream: FunctionReference<"mutation", "internal", {}, any>;
+      getStreamStatus: FunctionReference<
+        "query",
+        "internal",
+        { streamId: string },
+        "pending" | "streaming" | "done" | "error" | "timeout"
+      >;
+      getStreamText: FunctionReference<
+        "query",
+        "internal",
+        { streamId: string },
+        {
+          status: "pending" | "streaming" | "done" | "error" | "timeout";
+          text: string;
+        }
+      >;
+      setStreamStatus: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          status: "pending" | "streaming" | "done" | "error" | "timeout";
+          streamId: string;
+        },
+        any
+      >;
+    };
+  };
+};

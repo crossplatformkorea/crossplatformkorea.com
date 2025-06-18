@@ -18,11 +18,13 @@ const UserProfilePage = lazy(() => import('./user'));
 const FeatureRequestsPage = lazy(() => import('./feature-requests'));
 const ShowcasePage = lazy(() => import('./showcase'));
 const NotificationsPage = lazy(() => import('./notifications'));
+const ChatGptPage = lazy(() => import('./chatgpt'));
 
 // This component only handles routing
 export default function AppRoutes() {
   const location = useLocation();
   const isSignInPage = location.pathname === '/sign-in';
+  const isChatGptPage = location.pathname === '/chatgpt';
 
   // Apply default meta tags for home page
   useMetaTags();
@@ -42,6 +44,13 @@ export default function AppRoutes() {
               }
             />
           </Routes>
+        ) : isChatGptPage ? (
+          // ChatGPT page takes full screen without container styles
+          <div className="h-full w-full">
+            <Routes>
+              <Route path="/chatgpt" element={<ChatGptPage />} />
+            </Routes>
+          </div>
         ) : (
           // Apply the container styles to all other pages
           <div
