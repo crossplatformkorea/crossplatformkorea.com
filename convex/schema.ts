@@ -138,4 +138,27 @@ export default defineSchema({
     .index('by_userId', ['userId'])
     .index('by_userId_endpoint', ['userId', 'endpoint'])
     .index('by_endpoint', ['endpoint']),
+
+  // ChatGPT 관련 테이블들
+  conversations: defineTable({
+    title: v.string(),
+    userId: v.id('users'),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  }).index('by_user', ['userId']),
+
+  messages: defineTable({
+    conversationId: v.id('conversations'),
+    role: v.union(v.literal('user'), v.literal('assistant')),
+    content: v.string(),
+    streamId: v.optional(v.string()),
+    isStreaming: v.optional(v.boolean()),
+    createdAt: v.string(),
+  }).index('by_conversation', ['conversationId']),
+
+  apiKeys: defineTable({
+    userId: v.id('users'),
+    encryptedKey: v.string(),
+    createdAt: v.string(),
+  }).index('by_user', ['userId']),
 });

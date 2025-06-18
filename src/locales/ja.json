@@ -500,5 +500,41 @@
     "title": "クロスプラットフォームコリア",
     "description": "韓国クロスプラットフォーム開発者コミュニティ",
     "keywords": "クロスプラットフォーム, 開発者, コミュニティ, React Native, Flutter, PWA, モバイル開発"
+  },
+  "chat": {
+    "title": "ChatGPT",
+    "inputPlaceholder": "メッセージを入力してください...",
+    "send": "送信",
+    "sending": "送信中...",
+    "newChat": "新しいチャット",
+    "conversations": "会話リスト",
+    "noConversations": "まだ会話はありません",
+    "typeMessage": "メッセージを入力してください...",
+    "configureApiKey": "チャットを開始するにはAPIキーを設定してください",
+    "apiKey": {
+      "title": "APIキー",
+      "label": "OpenAI APIキー",
+      "description": "チャットを開始するにはOpenAI APIキーを入力してください",
+      "placeholder": "OpenAI APIキーを入力してください",
+      "save": "APIキーを保存",
+      "missing": "まずOpenAI APIキーを設定してください",
+      "sessionNotice": "⚠️ APIキーはデータベースに保存され、セキュリティのため暗号化されます。",
+      "configure": "設定"
+    },
+    "errors": {
+      "failedToSend": "メッセージの送信に失敗しました",
+      "failedToCreate": "会話の作成に失敗しました",
+      "noApiKey": "APIキーが設定されていません",
+      "invalidResponse": "サーバーから無効な応答を受信しました",
+      "invalidApiKey": "無効なOpenAI APIキーです",
+      "rateLimitExceeded": "OpenAI APIのレート制限を超過しました",
+      "insufficientCredits": "OpenAIクレジットが不足しています",
+      "invalidApiKeyFormat": "APIキーは'sk-'で始まる必要があります"
+    },
+    "messages": {
+      "user": "ユーザー",
+      "assistant": "AIアシスタント",
+      "streaming": "応答生成中..."
+    }
   }
 }

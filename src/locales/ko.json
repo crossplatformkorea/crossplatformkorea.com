@@ -498,5 +498,41 @@
     "title": "크로스플랫폼 코리아",
     "description": "한국 크로스플랫폼 개발자 커뮤니티",
     "keywords": "크로스플랫폼, 개발자, 커뮤니티, React Native, Flutter, PWA, 모바일 개발"
+  },
+  "chat": {
+    "title": "ChatGPT",
+    "inputPlaceholder": "메시지를 입력하세요...",
+    "send": "전송",
+    "sending": "전송 중...",
+    "newChat": "새 채팅",
+    "conversations": "대화 목록",
+    "noConversations": "아직 대화가 없습니다",
+    "typeMessage": "메시지를 입력하세요...",
+    "configureApiKey": "채팅을 시작하려면 API 키를 설정하세요",
+    "apiKey": {
+      "title": "API 키",
+      "label": "OpenAI API 키",
+      "description": "채팅을 시작하려면 OpenAI API 키를 입력하세요",
+      "placeholder": "OpenAI API 키를 입력하세요",
+      "save": "API 키 저장",
+      "missing": "먼저 OpenAI API 키를 설정해주세요",
+      "sessionNotice": "⚠️ API 키는 데이터베이스에 저장되며 보안을 위해 암호화됩니다.",
+      "configure": "설정"
+    },
+    "errors": {
+      "failedToSend": "메시지 전송에 실패했습니다",
+      "failedToCreate": "대화 생성에 실패했습니다",
+      "noApiKey": "API 키가 설정되지 않았습니다",
+      "invalidResponse": "서버로부터 잘못된 응답을 받았습니다",
+      "invalidApiKey": "유효하지 않은 OpenAI API 키입니다",
+      "rateLimitExceeded": "요청 한도를 초과했습니다",
+      "insufficientCredits": "크레딧이 부족합니다",
+      "invalidApiKeyFormat": "API 키는 'sk-'로 시작해야 합니다"
+    },
+    "messages": {
+      "user": "사용자",
+      "assistant": "AI 어시스턴트",
+      "streaming": "응답 생성 중..."
+    }
   }
 }

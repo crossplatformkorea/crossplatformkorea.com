@@ -8,10 +8,12 @@ export default function App() {
   useMetaTags();
 
   return (
-    <Router>
-      <AuthProvider>
-        <AppLayout />
-      </AuthProvider>
-    </Router>
+    <div className="h-full">
+      <Router>
+        <AuthProvider>
+          <AppLayout />
+        </AuthProvider>
+      </Router>
+    </div>
   );
 }

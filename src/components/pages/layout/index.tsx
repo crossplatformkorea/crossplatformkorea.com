@@ -73,7 +73,13 @@ export function AppLayout({ children }: AppLayoutProps) {
       setIsTransitioning(false);
     }, 300); // Match this to your transition duration
 
-    setIsSidebarOpen(!isSidebarOpen);
+    const newSidebarState = !isSidebarOpen;
+    setIsSidebarOpen(newSidebarState);
+    
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('sidebarStateChange', {
+      detail: { isOpen: newSidebarState }
+    }));
   };
 
   if (isLoading) {
@@ -81,12 +87,12 @@ export function AppLayout({ children }: AppLayoutProps) {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       {/* Header at the top level with sidebar toggle */}
       <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Main content with sidebar */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden min-h-0">
         {/* Desktop Sidebar: Pushes content, hidden on mobile */}
         <div className="hidden md:block">
           <div
@@ -134,7 +140,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
 
         {/* Main content area */}
-        <main className="flex flex-col flex-1 w-full">{children}</main>
+        <main className="flex flex-col flex-1 w-full h-full overflow-hidden">{children}</main>
       </div>
     </div>
   );

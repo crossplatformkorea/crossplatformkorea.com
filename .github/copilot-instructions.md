@@ -623,7 +623,7 @@ export const generateResponse = internalAction({
     const context = await ctx.runQuery(internal.index.loadContext, {
       channelId: args.channelId,
     });
-    const response = await openai.chat.completions.create({
+    const response = await openai.chats.completions.create({
       model: 'gpt-4o',
       messages: context,
     });
