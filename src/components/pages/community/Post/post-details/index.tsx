@@ -274,7 +274,7 @@ export default function PostDetailsPage() {
                   },
                   // Ensure other elements don't interfere with link rendering
                   p: ({ children, ...props }) => (
-                    <p className="mb-4 leading-relaxed" {...props}>
+                    <p className="mb-3 leading-relaxed" {...props}>
                       {children}
                     </p>
                   ),
@@ -299,6 +299,44 @@ export default function PostDetailsPage() {
                       </pre>
                     );
                   },
+                  // Fix list spacing and formatting
+                  ul: ({ children, ...props }) => (
+                    <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children, ...props }) => (
+                    <ol className="pl-6 mb-4" style={{ listStyleType: 'decimal', listStylePosition: 'outside' }} {...props}>
+                      {children}
+                    </ol>
+                  ),
+                  li: ({ children, ...props }) => (
+                    <li className="mb-1" style={{ display: 'list-item' }} {...props}>
+                      {children}
+                    </li>
+                  ),
+                  // Handle headers
+                  h1: ({ children, ...props }) => (
+                    <h1 className="text-2xl font-bold mt-6 mb-4" {...props}>
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children, ...props }) => (
+                    <h2 className="text-xl font-bold mt-5 mb-3" {...props}>
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children, ...props }) => (
+                    <h3 className="text-lg font-bold mt-4 mb-2" {...props}>
+                      {children}
+                    </h3>
+                  ),
+                  // Handle blockquotes
+                  blockquote: ({ children, ...props }) => (
+                    <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-4 italic text-gray-700 dark:text-gray-300" {...props}>
+                      {children}
+                    </blockquote>
+                  ),
                 }}
               >
                 {post.content || ''}

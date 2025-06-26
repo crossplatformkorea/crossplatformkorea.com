@@ -1015,7 +1015,29 @@ export default function PostWriteModal({
                     'dark:prose-invert',
                   )}
                 >
-                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
+                  <ReactMarkdown 
+                    rehypePlugins={[rehypeRaw]}
+                    components={{
+                      // Fix list spacing and formatting
+                      ul: ({ children, ...props }) => (
+                        <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children, ...props }) => (
+                        <ol className="pl-6 mb-4" style={{ listStyleType: 'decimal', listStylePosition: 'outside' }} {...props}>
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children, ...props }) => (
+                        <li className="mb-1" style={{ display: 'list-item' }} {...props}>
+                          {children}
+                        </li>
+                      ),
+                    }}
+                  >
+                    {content}
+                  </ReactMarkdown>
                 </div>
               </div>
             )}
@@ -1200,7 +1222,29 @@ export default function PostWriteModal({
                     'dark:prose-invert',
                   )}
                 >
-                  <ReactMarkdown rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
+                  <ReactMarkdown 
+                    rehypePlugins={[rehypeRaw]}
+                    components={{
+                      // Fix list spacing and formatting
+                      ul: ({ children, ...props }) => (
+                        <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children, ...props }) => (
+                        <ol className="pl-6 mb-4" style={{ listStyleType: 'decimal', listStylePosition: 'outside' }} {...props}>
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children, ...props }) => (
+                        <li className="mb-1" style={{ display: 'list-item' }} {...props}>
+                          {children}
+                        </li>
+                      ),
+                    }}
+                  >
+                    {content}
+                  </ReactMarkdown>
                 </div>
               </div>
             </div>
