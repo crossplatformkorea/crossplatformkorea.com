@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/uis/Button';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 import { YouTubeEmbed } from '@/components/uis/YouTubeEmbed';
 import { extractYouTubeVideoId } from '@/utils/youtube';
 
@@ -233,6 +234,7 @@ export default function PostDetailsPage() {
             <div className="prose prose-lg max-w-none" style={{ wordBreak: 'break-word' }}>
               <ReactMarkdown
                 rehypePlugins={[rehypeRaw]}
+                remarkPlugins={[remarkGfm]}
                 components={{
                   // Custom component for links to detect and embed YouTube videos
                   a: ({ href, children, ...props }) => {
@@ -242,22 +244,59 @@ export default function PostDetailsPage() {
                         return (
                           <div className="my-4">
                             <YouTubeEmbed videoId={videoId} />
+                            {/* Also show the original link */}
+                            <a
+                              href={href}
+                              {...props}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline text-sm mt-2 block"
+                            >
+                              {href}
+                            </a>
                           </div>
                         );
                       }
                     }
 
-                    // Regular link
+                    // Regular link - ensure all links are properly wrapped
                     return (
                       <a
                         href={href}
                         {...props}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:underline"
+                        className="text-primary hover:underline break-words"
                       >
                         {children}
                       </a>
+                    );
+                  },
+                  // Ensure other elements don't interfere with link rendering
+                  p: ({ children, ...props }) => (
+                    <p className="mb-4 leading-relaxed" {...props}>
+                      {children}
+                    </p>
+                  ),
+                  // Handle inline code that might contain URLs
+                  code: ({ children, className, ...props }) => {
+                    const isInline = !className?.includes('language-');
+                    if (isInline) {
+                      return (
+                        <code
+                          className="bg-muted px-1 py-0.5 rounded text-sm font-mono"
+                          {...props}
+                        >
+                          {children}
+                        </code>
+                      );
+                    }
+                    return (
+                      <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
+                        <code className="text-sm font-mono" {...props}>
+                          {children}
+                        </code>
+                      </pre>
                     );
                   },
                 }}
