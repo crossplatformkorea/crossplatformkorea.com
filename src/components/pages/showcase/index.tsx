@@ -226,35 +226,37 @@ export default function ShowcasePage() {
       ) : (
         <>
           {/* Pinterest-style masonry layout with JavaScript positioning */}
-          <MasonryGrid
-            className="w-full"
-            columnGap={24}
-            rowGap={24}
-            breakpoints={{
-              sm: 1,
-              md: 2,
-              lg: 3,
-              xl: 3,
-            }}
-          >
-            {showcases.map((showcase) => (
-              <ShowcaseItem
-                key={showcase._id}
-                showcase={{
-                  ...showcase,
-                  categoryName: categories.find((c) => c.key === showcase.category)
-                    ? translate(`showcaseCategories.${showcase.category}.name`, {
-                        defaultValue:
-                          categories.find((c) => c.key === showcase.category)?.name ||
-                          showcase.category,
-                      })
-                    : showcase.category,
-                }}
-                isEditable={user ? user._id === showcase.userId : false}
-                onEditClick={() => handleEditShowcase(showcase)}
-              />
-            ))}
-          </MasonryGrid>
+          <div className="relative">
+            <MasonryGrid
+              className="w-full"
+              columnGap={24}
+              rowGap={24}
+              breakpoints={{
+                sm: 1,
+                md: 2,
+                lg: 3,
+                xl: 3,
+              }}
+            >
+              {showcases.map((showcase) => (
+                <ShowcaseItem
+                  key={showcase._id}
+                  showcase={{
+                    ...showcase,
+                    categoryName: categories.find((c) => c.key === showcase.category)
+                      ? translate(`showcaseCategories.${showcase.category}.name`, {
+                          defaultValue:
+                            categories.find((c) => c.key === showcase.category)?.name ||
+                            showcase.category,
+                        })
+                      : showcase.category,
+                  }}
+                  isEditable={user ? user._id === showcase.userId : false}
+                  onEditClick={() => handleEditShowcase(showcase)}
+                />
+              ))}
+            </MasonryGrid>
+          </div>
 
           {/* 더 보기 버튼 */}
           {!isDone && (

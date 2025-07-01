@@ -27,8 +27,8 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
   },
 }) => {
   const [columns, setColumns] = useState(1);
+  const [isReady, setIsReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // 화면 크기에 따른 컬럼 수 계산
   const calculateColumns = useCallback(() => {
@@ -39,83 +39,131 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
     return breakpoints.sm;
   }, [breakpoints]);
 
-  // Masonry 레이아웃 적용
+  // 진짜 Pinterest 스타일 Masonry 레이아웃
   const applyMasonryLayout = useCallback(() => {
     if (!containerRef.current) return;
 
     const container = containerRef.current;
-    const items = itemRefs.current.filter(Boolean) as HTMLDivElement[];
-    
+    const items = Array.from(container.children) as HTMLElement[];
+
     if (items.length === 0) return;
+
+    // 컨테이너를 relative positioning으로 설정
+    container.style.position = 'relative';
+    container.style.display = 'block';
 
     // 컨테이너 너비 계산
     const containerWidth = container.offsetWidth;
     const itemWidth = (containerWidth - (columns - 1) * columnGap) / columns;
-    
+
     // 각 컬럼의 현재 높이 추적
     const columnHeights = new Array(columns).fill(0);
-    
-    items.forEach((item, _index) => {
+
+    // 모든 아이템을 순차적으로 배치
+    items.forEach((item) => {
+      // 아이템을 absolute positioning으로 설정
+      item.style.position = 'absolute';
+      item.style.width = `${itemWidth}px`;
+
+      // 강제 리플로우로 정확한 높이 계산
+      void item.offsetHeight;
+
       // 가장 높이가 낮은 컬럼 찾기
       const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
-      
-      // 아이템 위치 설정
+
+      // 위치 계산 및 설정
       const x = shortestColumnIndex * (itemWidth + columnGap);
       const y = columnHeights[shortestColumnIndex];
-      
-      item.style.position = 'absolute';
+
       item.style.left = `${x}px`;
       item.style.top = `${y}px`;
-      item.style.width = `${itemWidth}px`;
-      
-      // 해당 컬럼 높이 업데이트
-      columnHeights[shortestColumnIndex] += item.offsetHeight + rowGap;
+
+      // 컬럼 높이 업데이트 (실제 렌더링된 높이 사용)
+      const itemHeight = item.offsetHeight;
+      columnHeights[shortestColumnIndex] += itemHeight + rowGap;
     });
-    
-    // 컨테이너 높이 설정
-    const maxHeight = Math.max(...columnHeights) - rowGap;
-    container.style.height = `${maxHeight}px`;
+
+    // 컨테이너 높이를 가장 높은 컬럼에 맞춤
+    const containerHeight = Math.max(...columnHeights) - rowGap;
+    container.style.height = `${Math.max(containerHeight, 0)}px`;
+
+    setIsReady(true);
   }, [columns, columnGap, rowGap]);
+
+  // 이미지 로드 완료 대기
+  const waitForImages = useCallback((): Promise<void> => {
+    if (!containerRef.current) return Promise.resolve();
+
+    const images = containerRef.current.querySelectorAll('img');
+    if (images.length === 0) return Promise.resolve();
+
+    return Promise.all(
+      Array.from(images).map((img) => {
+        if (img.complete) return Promise.resolve();
+
+        return new Promise<void>((resolve) => {
+          const handleLoad = () => {
+            img.removeEventListener('load', handleLoad);
+            img.removeEventListener('error', handleLoad);
+            resolve();
+          };
+
+          img.addEventListener('load', handleLoad);
+          img.addEventListener('error', handleLoad);
+        });
+      }),
+    ).then(() => {});
+  }, []);
+
+  // 초기화
+  useEffect(() => {
+    const initialize = async () => {
+      setIsReady(false);
+      await waitForImages();
+
+      // 이미지 로드 후 여러 번 레이아웃 적용으로 안정성 확보
+      setTimeout(() => applyMasonryLayout(), 50);
+      setTimeout(() => applyMasonryLayout(), 150);
+      setTimeout(() => applyMasonryLayout(), 300);
+    };
+
+    void initialize();
+  }, [children, waitForImages, applyMasonryLayout]);
 
   // 리사이즈 이벤트 핸들러
   useEffect(() => {
     const handleResize = () => {
       const newColumns = calculateColumns();
-      if (newColumns !== columns) {
-        setColumns(newColumns);
-      }
+      setColumns(newColumns);
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [columns, calculateColumns]);
+  }, [calculateColumns]);
 
-  // 레이아웃 적용
+  // 컬럼 수 변경 시 레이아웃 재계산
   useEffect(() => {
-    const timer = setTimeout(() => {
-      applyMasonryLayout();
-    }, 100); // 렌더링 완료 후 레이아웃 적용
+    if (isReady) {
+      const timer = setTimeout(() => {
+        applyMasonryLayout();
+      }, 50);
 
-    return () => clearTimeout(timer);
-  }, [children, applyMasonryLayout]);
+      return () => clearTimeout(timer);
+    }
+  }, [columns, applyMasonryLayout, isReady]);
 
   return (
     <div
       ref={containerRef}
-      className={cn('relative w-full', className)}
+      className={cn('w-full', className)}
+      style={{
+        minHeight: isReady ? undefined : '400px',
+        opacity: isReady ? 1 : 0.3,
+        transition: 'opacity 0.5s ease-in-out',
+      }}
     >
-      {children.map((child, index) => (
-        <div
-          key={child.key || index}
-          ref={(el) => {
-            itemRefs.current[index] = el;
-          }}
-          style={{ position: 'absolute' }}
-        >
-          {child}
-        </div>
-      ))}
+      {children}
     </div>
   );
 };
