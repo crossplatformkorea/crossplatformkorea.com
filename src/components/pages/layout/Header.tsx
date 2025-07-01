@@ -34,14 +34,6 @@ export function Header({
     }
   }, [setSelectedSection, selectedSection, location.pathname]);
 
-  const handleNavigation = (path: string) => {
-    // When navigating to home, set Posts as selected
-    if (path === '/' && setSelectedSection) {
-      setSelectedSection('Posts');
-    }
-    void navigate(path);
-  };
-
   const [currentLocale, setCurrentLocale] = useState<'en' | 'ko' | 'ja'>(getLocale());
   const [langMenuOpen, setLangMenuOpen] = useState(false);
 
@@ -105,20 +97,21 @@ export function Header({
       <div className="flex items-center gap-1 sm:gap-3">
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex items-center gap-4 mr-2">
-          {' '}
           <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavigation('/');
-            }}
+            href="http://hyo.dev/joinCPK"
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
-              'font-medium text-sm px-3 py-2 rounded-md transition-colors',
+              'font-medium text-sm px-3 py-2 rounded-md transition-colors flex items-center gap-2',
               'bg-primary/10 text-primary',
               'dark:bg-primary/10 dark:text-white',
             )}
           >
-            {t('common.navCommunity')}
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5.042 15.165a2.528 2.528 0 0 0 2.5 2.5c1.61 0 2.906-1.66 2.906-3.257 0-1.597-1.296-3.257-2.906-3.257a2.528 2.528 0 0 0-2.5 2.5v1.514zM18.958 8.835a2.528 2.528 0 0 0-2.5-2.5c-1.61 0-2.906 1.66-2.906 3.257 0 1.597 1.296 3.257 2.906 3.257a2.528 2.528 0 0 0 2.5-2.5V8.835z" />
+              <path d="M7.375 5.5a2.375 2.375 0 0 0-2.375 2.375v8.25A2.375 2.375 0 0 0 7.375 18.5h1.25A2.375 2.375 0 0 0 11 16.125v-8.25A2.375 2.375 0 0 0 8.625 5.5h-1.25zm8.25 0a2.375 2.375 0 0 0-2.375 2.375v8.25a2.375 2.375 0 0 0 2.375 2.375h1.25A2.375 2.375 0 0 0 19.25 16.125v-8.25A2.375 2.375 0 0 0 16.875 5.5h-1.25z" />
+            </svg>
+            Slack
           </a>
         </nav>{' '}
         {/* Auth & Language Controls */}
@@ -219,7 +212,6 @@ export function Header({
           </a>
         </div>
       </div>
-
       {/* Apply the styles using standard CSS classes instead of jsx prop */}
       <style
         dangerouslySetInnerHTML={{
