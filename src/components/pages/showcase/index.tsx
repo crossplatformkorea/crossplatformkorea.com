@@ -229,8 +229,8 @@ export default function ShowcasePage() {
           <div className="relative">
             <MasonryGrid
               className="w-full"
-              columnGap={24}
-              rowGap={24}
+              columnGap={20}
+              rowGap={16}
               breakpoints={{
                 sm: 1,
                 md: 2,

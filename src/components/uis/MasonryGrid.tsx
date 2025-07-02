@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface MasonryGridProps {
-  children: React.ReactElement[];
+  children: React.ReactNode;
   className?: string;
   columnGap?: number;
   rowGap?: number;
@@ -18,7 +18,7 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
   children,
   className = '',
   columnGap = 24,
-  rowGap = 24,
+  rowGap = 12,
   breakpoints = {
     sm: 1,
     md: 2,
@@ -117,14 +117,22 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
 
   // 초기화
   useEffect(() => {
-    const initialize = async () => {
+    // 즉시 한 번 레이아웃을 적용 (이미지 없이도)
+    const quickLayout = () => {
       setIsReady(false);
+      applyMasonryLayout();
+    };
+    
+    // 동기적으로 즉시 한번 실행
+    quickLayout();
+    
+    // 이미지 처리는 비동기로
+    const initialize = async () => {
       await waitForImages();
-
-      // 이미지 로드 후 여러 번 레이아웃 적용으로 안정성 확보
+      
+      // 이미지 로드 후 재적용
+      setTimeout(() => applyMasonryLayout(), 10);
       setTimeout(() => applyMasonryLayout(), 50);
-      setTimeout(() => applyMasonryLayout(), 150);
-      setTimeout(() => applyMasonryLayout(), 300);
     };
 
     void initialize();
@@ -142,14 +150,11 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [calculateColumns]);
 
-  // 컬럼 수 변경 시 레이아웃 재계산
+  // 컬럼 수 변경 시 레이아웃 재적용
   useEffect(() => {
     if (isReady) {
-      const timer = setTimeout(() => {
-        applyMasonryLayout();
-      }, 50);
-
-      return () => clearTimeout(timer);
+      setIsReady(false);
+      setTimeout(() => applyMasonryLayout(), 50);
     }
   }, [columns, applyMasonryLayout, isReady]);
 
@@ -158,9 +163,9 @@ const MasonryGrid: React.FC<MasonryGridProps> = ({
       ref={containerRef}
       className={cn('w-full', className)}
       style={{
-        minHeight: isReady ? undefined : '400px',
-        opacity: isReady ? 1 : 0.3,
-        transition: 'opacity 0.5s ease-in-out',
+        minHeight: '0px', // minHeight 제거하여 자연스러운 레이아웃
+        opacity: isReady ? 1 : 0.95,
+        transition: isReady ? 'opacity 0.1s ease-in-out' : 'none',
       }}
     >
       {children}
