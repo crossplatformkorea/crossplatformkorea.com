@@ -81,39 +81,46 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
     <Link
       to={`/post/${post._id}`}
       className={cn(
-        'block transition-all duration-200 overflow-hidden rounded-md shadow-sm border',
-        'bg-background/60 hover:bg-background',
-        'border-border/10 dark:border-border/15',
-        'dark:bg-gray-800/40 dark:hover:bg-gray-800/60 dark:shadow-md dark:shadow-black/5',
-        'hover:shadow',
+        'block transition-all duration-300 overflow-hidden rounded-xl shadow-sm border group',
+        'bg-background/80 hover:bg-background',
+        'border-border/20 dark:border-border/25',
+        'dark:bg-gray-800/50 dark:hover:bg-gray-800/70 dark:shadow-md dark:shadow-black/5',
+        'hover:shadow-lg hover:border-border/40 hover:scale-[1.01]',
+        'transform-gpu w-full', // 세로 리스트에 적합한 스타일
       )}
     >
       {/* Main content area */}
-      <div className="p-4 pb-3">
+      <div className="p-5 pb-4">
         {/* Title area with category badge */}
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-lg font-medium line-clamp-2 flex-1 mr-2">{post.title}</h3>
+        <div className="flex items-start justify-between mb-3">
+          <h3 className="text-xl font-semibold line-clamp-2 flex-1 mr-3 group-hover:text-primary transition-colors">
+            {post.title}
+          </h3>
           <CategoryBadge category={post.category} />
         </div>
 
         {/* Tags */}
         {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {post.tags.slice(0, 3).map((tag, index) => (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.tags.slice(0, 4).map((tag, index) => (
               <span
                 key={index}
                 className={cn(
-                  'px-2 py-0.5 text-xs rounded-full border-[0.5px]',
+                  'px-3 py-1 text-xs rounded-full border transition-all duration-200',
                   'bg-primary/10 text-primary border-primary/20',
                   'dark:bg-primary/20 dark:text-white dark:border-primary/30',
+                  'hover:bg-primary/20 hover:scale-105 transform-gpu',
                 )}
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                }}
               >
                 {tag}
               </span>
             ))}
-            {post.tags.length > 3 && (
-              <span className="text-xs text-muted-foreground dark:text-gray-300 px-1">
-                +{post.tags.length - 3}
+            {post.tags.length > 4 && (
+              <span className="text-xs text-muted-foreground dark:text-gray-300 px-2 py-1">
+                +{post.tags.length - 4}
               </span>
             )}
           </div>
@@ -121,8 +128,8 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
 
         {/* Content preview - Render markdown without clickable links to avoid nested <a> tags */}
         {post.content && (
-          <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-3 overflow-hidden">
-            <div className="line-clamp-2 prose prose-sm dark:prose-invert max-w-none">
+          <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-4 overflow-hidden">
+            <div className="prose prose-sm dark:prose-invert max-w-none line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
               <ReactMarkdown
                 rehypePlugins={[rehypeRaw]}
                 components={{
@@ -149,8 +156,9 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
       {/* Footer with stats and metadata */}
       <div
         className={cn(
-          'px-4 py-3 flex items-center justify-between',
-          'bg-muted/5 dark:bg-gray-800/70',
+          'px-5 py-4 flex items-center justify-between',
+          'bg-muted/5 dark:bg-gray-800/70 border-t border-border/10',
+          'group-hover:bg-muted/10 transition-colors duration-300',
         )}
       >
         {/* Left side - author and date */}

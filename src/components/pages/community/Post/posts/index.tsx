@@ -99,11 +99,42 @@ const Posts = memo(function PostsPage() {
     }
 
     return (
-      <div className="space-y-5">
-        {posts.map((post) => (
-          <PostListItem key={post._id} post={post} isEventsCategory={isEventsCategory} />
-        ))}
-      </div>
+      <>
+        <style>
+          {`
+            @keyframes slideInUpBlock {
+              0% {
+                opacity: 0;
+                transform: translateY(32px) scale(0.95);
+              }
+              50% {
+                transform: translateY(-4px) scale(1.02);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+              }
+            }
+            
+            .post-item-animate {
+              animation: slideInUpBlock 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            }
+          `}
+        </style>
+        <div className="space-y-6">
+          {posts.map((post, index) => (
+            <div
+              key={post._id}
+              className="opacity-0 translate-y-8 post-item-animate"
+              style={{
+                animationDelay: `${index * 150}ms`,
+              }}
+            >
+              <PostListItem post={post} isEventsCategory={isEventsCategory} />
+            </div>
+          ))}
+        </div>
+      </>
     );
   }
 
