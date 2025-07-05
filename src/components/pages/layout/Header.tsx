@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { getLocale, setLocale, t } from '@/lib/i18n';
 import { ThemeToggle } from '../../ThemeToggle';
 import NotificationBell from '../../uis/NotificationBell';
+import { SiSlack } from '@icons-pack/react-simple-icons';
 
 export interface HeaderProps {
   isSidebarOpen: boolean;
@@ -107,10 +108,7 @@ export function Header({
               'dark:bg-primary/10 dark:text-white',
             )}
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M5.042 15.165a2.528 2.528 0 0 0 2.5 2.5c1.61 0 2.906-1.66 2.906-3.257 0-1.597-1.296-3.257-2.906-3.257a2.528 2.528 0 0 0-2.5 2.5v1.514zM18.958 8.835a2.528 2.528 0 0 0-2.5-2.5c-1.61 0-2.906 1.66-2.906 3.257 0 1.597 1.296 3.257 2.906 3.257a2.528 2.528 0 0 0 2.5-2.5V8.835z" />
-              <path d="M7.375 5.5a2.375 2.375 0 0 0-2.375 2.375v8.25A2.375 2.375 0 0 0 7.375 18.5h1.25A2.375 2.375 0 0 0 11 16.125v-8.25A2.375 2.375 0 0 0 8.625 5.5h-1.25zm8.25 0a2.375 2.375 0 0 0-2.375 2.375v8.25a2.375 2.375 0 0 0 2.375 2.375h1.25A2.375 2.375 0 0 0 19.25 16.125v-8.25A2.375 2.375 0 0 0 16.875 5.5h-1.25z" />
-            </svg>
+            <SiSlack className="w-4 h-4" />
             Slack
           </a>
         </nav>{' '}
