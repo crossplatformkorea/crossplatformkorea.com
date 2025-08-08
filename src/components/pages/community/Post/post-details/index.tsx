@@ -21,6 +21,9 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import { YouTubeEmbed } from '@/components/uis/YouTubeEmbed';
 import { extractYouTubeVideoId } from '@/utils/youtube';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
@@ -278,9 +281,14 @@ export default function PostDetailsPage() {
                       {children}
                     </p>
                   ),
-                  // Handle inline code that might contain URLs
-                  code: ({ children, className, ...props }) => {
+                  // Handle code blocks with syntax highlighting
+                  code: ({ children, className, ...props }: any) => {
+                    const match = /language-(\w+)/.exec(className || '');
+                    const language = match ? match[1] : '';
+                    const isDarkMode = document.documentElement.classList.contains('dark');
                     const isInline = !className?.includes('language-');
+                    
+                    // For inline code
                     if (isInline) {
                       return (
                         <code
@@ -291,13 +299,38 @@ export default function PostDetailsPage() {
                         </code>
                       );
                     }
+                    
+                    // For code blocks with syntax highlighting
                     return (
-                      <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
-                        <code className="text-sm font-mono" {...props}>
-                          {children}
-                        </code>
-                      </pre>
+                      <div className="relative my-4">
+                        {language && (
+                          <div className="absolute top-2 right-2 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded z-10">
+                            {language}
+                          </div>
+                        )}
+                        <SyntaxHighlighter
+                          language={language || 'text'}
+                          style={isDarkMode ? vscDarkPlus : vs}
+                          customStyle={{
+                            margin: 0,
+                            padding: '1rem',
+                            paddingTop: language ? '2rem' : '1rem',
+                            borderRadius: '0.5rem',
+                            fontSize: '0.875rem',
+                            lineHeight: '1.5',
+                            backgroundColor: isDarkMode ? '#1e1e1e' : '#f6f8fa',
+                          }}
+                          showLineNumbers={false}
+                          wrapLongLines={true}
+                        >
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      </div>
                     );
+                  },
+                  // Override pre to not wrap code blocks
+                  pre: ({ children }) => {
+                    return <>{children}</>;
                   },
                   // Fix list spacing and formatting
                   ul: ({ children, ...props }) => (
