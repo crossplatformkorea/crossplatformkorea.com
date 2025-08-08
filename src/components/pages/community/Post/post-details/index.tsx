@@ -332,6 +332,45 @@ export default function PostDetailsPage() {
                   pre: ({ children }) => {
                     return <>{children}</>;
                   },
+                  // Table styling
+                  table: ({ children, ...props }) => (
+                    <div className="my-6 overflow-x-auto border border-border">
+                      <table className="min-w-full divide-y divide-border" {...props}>
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  thead: ({ children, ...props }) => (
+                    <thead className="bg-muted/50 dark:bg-gray-800/50" {...props}>
+                      {children}
+                    </thead>
+                  ),
+                  tbody: ({ children, ...props }) => (
+                    <tbody className="divide-y divide-border bg-background" {...props}>
+                      {children}
+                    </tbody>
+                  ),
+                  th: ({ children, ...props }) => (
+                    <th 
+                      className="px-4 py-3 text-left text-sm font-semibold text-foreground border-r last:border-r-0 border-border/50"
+                      {...props}
+                    >
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children, ...props }) => (
+                    <td 
+                      className="px-4 py-3 text-sm text-foreground border-r last:border-r-0 border-border/30"
+                      {...props}
+                    >
+                      {children}
+                    </td>
+                  ),
+                  tr: ({ children, ...props }) => (
+                    <tr className="hover:bg-muted/20 dark:hover:bg-gray-800/30 transition-colors" {...props}>
+                      {children}
+                    </tr>
+                  ),
                   // Fix list spacing and formatting
                   ul: ({ children, ...props }) => (
                     <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
