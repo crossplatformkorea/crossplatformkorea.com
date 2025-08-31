@@ -236,3 +236,38 @@ export const hasLikedShowcase = query({
     return showcase.likedBy.some((id) => id === userId);
   },
 });
+
+// 쇼케이스에 좋아요를 누른 사용자들 목록 가져오기
+export const getShowcaseLikedUsers = query({
+  args: { showcaseId: v.id('showcases') },
+  returns: v.array(v.object({
+    userId: v.id('users'),
+    displayName: v.string(),
+    avatarUrl: v.optional(v.string()),
+  })),
+  handler: async (ctx, args) => {
+    const showcase = await ctx.db.get(args.showcaseId);
+    if (!showcase || !showcase.likedBy || showcase.likedBy.length === 0) {
+      return [];
+    }
+
+    // Get user profiles for all users who liked this showcase
+    const likedUsers = [];
+    for (const userId of showcase.likedBy) {
+      const userProfile = await ctx.db
+        .query('userProfiles')
+        .withIndex('by_user', (q) => q.eq('userId', userId))
+        .first();
+      
+      if (userProfile) {
+        likedUsers.push({
+          userId: userId,
+          displayName: userProfile.displayName || 'Unknown User',
+          avatarUrl: userProfile.avatarUrl,
+        });
+      }
+    }
+
+    return likedUsers;
+  },
+});

@@ -7,6 +7,7 @@ import { Button } from './Button';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
+import LikedUsersList from './LikedUsersList';
 
 interface LikeButtonProps {
   postId: Id<'posts'> | Id<'showcases'>;
@@ -73,30 +74,37 @@ export default function LikeButton({
   };
 
   return (
-    <Button
-      onClick={() => void handleToggleLike()}
-      variant="ghost"
-      size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'default'}
-      className={cn(
-        'flex items-center gap-1.5 rounded-full transition-colors h-auto',
-        hasLiked
-          ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40'
-          : 'bg-muted hover:bg-muted/80 text-muted-foreground',
-        sizeStyles[size],
-        className
-      )}
-      aria-label={hasLiked ? t('posts.unlike') : t('posts.like')}
-      title={hasLiked ? t('posts.unlike') : t('posts.like')}
-    >
-      <Heart
-        size={iconSize[size]}
+    <div className="flex items-center gap-2">
+      <Button
+        onClick={() => void handleToggleLike()}
+        variant="ghost"
+        size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'default'}
         className={cn(
-          'transition-transform',
-          hasLiked ? 'fill-red-500 text-red-500' : 'fill-transparent',
-          hasLiked && 'scale-110'
+          'flex items-center gap-1.5 rounded-full transition-colors h-auto',
+          hasLiked
+            ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40'
+            : 'bg-muted hover:bg-muted/80 text-muted-foreground',
+          sizeStyles[size],
+          className
         )}
-      />
-      {showCount && <span className="font-medium">{likeCount ?? 0}</span>}
-    </Button>
+        aria-label={hasLiked ? t('posts.unlike') : t('posts.like')}
+        title={hasLiked ? t('posts.unlike') : t('posts.like')}
+      >
+        <Heart
+          size={iconSize[size]}
+          className={cn(
+            'transition-transform',
+            hasLiked ? 'fill-red-500 text-red-500' : 'fill-transparent',
+            hasLiked && 'scale-110'
+          )}
+        />
+        {showCount && <span className="font-medium">{likeCount ?? 0}</span>}
+      </Button>
+      
+      {/* Show liked users list only for showcases and when there are likes */}
+      {type === 'showcases' && likeCount && likeCount > 0 && (
+        <LikedUsersList showcaseId={postId as Id<'showcases'>} />
+      )}
+    </div>
   );
 }

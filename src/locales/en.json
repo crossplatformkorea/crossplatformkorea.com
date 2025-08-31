@@ -51,6 +51,12 @@
       "displayNameTaken": "This display name is already taken. Please choose another one.",
       "notFound": "Profile not found"
     },
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.",
+      "goHome": "Go Home",
+      "suggestion": "You can try navigating back or go to the home page to find what you're looking for."
+    },
     "auth": {
       "required": "Authentication required",
       "loginRequired": "Please sign in to continue"
