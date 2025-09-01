@@ -9,6 +9,7 @@ import { Button } from '@/components/uis/Button';
 import PostListItem from '../community/Post/posts/PostListItem';
 import ProfileHeader from './ProfileHeader';
 import UserSkeleton from './UserSkeleton';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function UserProfilePage() {
   const { displayName } = useParams<{ displayName: string }>();
@@ -40,6 +41,69 @@ export default function UserProfilePage() {
     api.posts.query.getPostsByAuthor,
     user && user !== null ? { authorId: user.userId, limit: 10 } : 'skip', // Use userId instead of _id
   );
+
+  // SEO optimization for user profile pages
+  useMetaTags(
+    user
+      ? {
+          title: `${user.displayName || 'User'} | Cross-Platform Korea`,
+          description:
+            user.description ||
+            `${user.displayName}'s profile on Cross-Platform Korea - ${user.organization || ''}`.trim(),
+          keywords: user.tags
+            ? `${user.tags.join(', ')}, cross-platform, korea, developer, profile`
+            : 'cross-platform, korea, developer, profile',
+          ogTitle: `${user.displayName || 'User'} | Cross-Platform Korea`,
+          ogDescription:
+            user.description || `${user.displayName}'s profile on Cross-Platform Korea`,
+          ogImage: user.avatarUrl || '/og-preview.jpg',
+          twitterTitle: `${user.displayName || 'User'} | Cross-Platform Korea`,
+          twitterDescription: user.description || `${user.displayName}'s profile`,
+        }
+      : undefined,
+  );
+
+  // Add JSON-LD structured data for user profiles
+  useEffect(() => {
+    if (user) {
+      const structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: user.displayName || 'Anonymous',
+        description: user.description,
+        url: window.location.href,
+        image: user.avatarUrl,
+        worksFor: user.organization
+          ? {
+              '@type': 'Organization',
+              name: user.organization,
+            }
+          : undefined,
+        sameAs: [user.socialLinks].filter(Boolean),
+      };
+
+      // Remove existing structured data script if any
+      const existingScript = document.querySelector('script[data-type="person-ld-json"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      // Add new structured data script
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-type', 'person-ld-json');
+      script.text = JSON.stringify(structuredData);
+      document.head.appendChild(script);
+
+      // Cleanup on unmount
+      return () => {
+        const scriptToRemove = document.querySelector('script[data-type="person-ld-json"]');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
+    }
+  }, [user]);
 
   // Loading state
   if (user === undefined) {

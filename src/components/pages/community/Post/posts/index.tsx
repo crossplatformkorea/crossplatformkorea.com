@@ -70,8 +70,23 @@ const Posts = memo(function PostsPage() {
     paginationOpts,
   });
 
+  // SEO optimization with category-specific meta tags
   useMetaTags({
-    title: `${t('common.sidePosts')} - ${t('meta.title')}`,
+    title: category 
+      ? `${translate(`categories.${category.key}`)} | Cross-Platform Korea 커뮤니티`
+      : `${translate('common.sidePosts')} | Cross-Platform Korea`,
+    description: category
+      ? `Cross-Platform Korea ${translate(`categories.${category.key}`)} 게시판 - 크로스플랫폼 개발자들의 지식 공유와 토론`
+      : 'Cross-Platform Korea 커뮤니티 게시판 - React Native, Flutter, Expo 등 크로스플랫폼 개발 관련 최신 정보와 토론',
+    keywords: category
+      ? `${translate(`categories.${category.key}`)}, cross-platform, korea, 개발자, 커뮤니티, React Native, Flutter, Expo`
+      : 'cross-platform, korea, 개발자, 커뮤니티, React Native, Flutter, Expo, 게시판',
+    ogTitle: category
+      ? `${translate(`categories.${category.key}`)} | Cross-Platform Korea`
+      : `게시판 | Cross-Platform Korea`,
+    ogDescription: category
+      ? `Cross-Platform Korea ${translate(`categories.${category.key}`)} 게시판`
+      : 'Cross-Platform Korea 커뮤니티 게시판',
   });
 
   // Update pagination state when result changes

@@ -4,7 +4,9 @@
       "Bash(npm run tsc:*)",
       "Bash(npm run lint)",
       "Bash(bun run lint:*)",
-      "Bash(git add:*)"
+      "Bash(bun run:*)",
+      "Bash(git add:*)",
+      "Bash(git rebase:*)"
     ],
     "deny": [],
     "ask": []

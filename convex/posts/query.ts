@@ -22,6 +22,24 @@ const postObjectValidator = v.object({
   commentCount: v.optional(v.number()), // 댓글 수 validator 추가
 });
 
+// Get all posts for sitemap generation
+export const getAllPostsForSitemap = query({
+  args: {},
+  handler: async (ctx) => {
+    // Fetch all posts, but only return necessary fields for sitemap
+    const posts = await ctx.db
+      .query('posts')
+      .order('desc')
+      .collect();
+    
+    return posts.map(post => ({
+      _id: post._id,
+      _creationTime: post._creationTime,
+      updatedAt: post.updatedAt,
+    }));
+  },
+});
+
 // Check if user has liked a post
 export const hasLiked = query({
   args: { postId: v.id('posts') },

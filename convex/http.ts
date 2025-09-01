@@ -1,6 +1,7 @@
 import { httpRouter } from 'convex/server';
 import { auth } from './auth';
 import { chatStream } from './chats/action';
+import { registerSitemapRoutes } from './sitemap';
 
 const http = httpRouter();
 
@@ -20,5 +21,8 @@ http.route({
 
 // Add auth routes
 auth.addHttpRoutes(http);
+
+// Add sitemap routes
+registerSitemapRoutes(http);
 
 export default http;

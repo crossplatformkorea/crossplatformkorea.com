@@ -3,6 +3,24 @@ import { query } from '../_generated/server';
 import { v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
 
+// Get all users for sitemap generation
+export const getAllUsersForSitemap = query({
+  args: {},
+  handler: async (ctx) => {
+    // Fetch all user profiles that have displayName
+    const profiles = await ctx.db
+      .query('userProfiles')
+      .filter((q) => q.neq(q.field('displayName'), undefined))
+      .collect();
+    
+    return profiles.map(profile => ({
+      _id: profile._id,
+      _creationTime: profile._creationTime,
+      displayName: profile.displayName,
+    }));
+  },
+});
+
 // Replace getUser with currentUser
 export const currentUser = query({
   args: {},

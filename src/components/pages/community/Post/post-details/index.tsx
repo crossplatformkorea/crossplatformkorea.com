@@ -24,6 +24,7 @@ import { extractYouTubeVideoId } from '@/utils/youtube';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
@@ -110,6 +111,88 @@ export default function PostDetailsPage() {
         locale: i18n.language === 'ko' ? ko : undefined,
       })
     : '';
+
+  // SEO optimization with meta tags
+  useMetaTags(post ? {
+    title: `${post.title} | Cross-Platform Korea`,
+    description: post.content ? post.content.substring(0, 160) : `${post.title} - Cross-Platform Korea 커뮤니티`,
+    keywords: post.tags ? `${post.tags.join(', ')}, ${post.category}, cross-platform, korea, 개발자, 커뮤니티` : `${post.category}, cross-platform, korea, 개발자, 커뮤니티`,
+    ogTitle: post.title,
+    ogDescription: post.content ? post.content.substring(0, 160) : `${post.title} - Cross-Platform Korea 커뮤니티`,
+    ogImage: '/og-preview.jpg',
+    twitterTitle: post.title,
+    twitterDescription: post.content ? post.content.substring(0, 160) : `${post.title} - Cross-Platform Korea 커뮤니티`,
+  } : undefined);
+
+  // Add JSON-LD structured data for SEO
+  useEffect(() => {
+    if (post && author) {
+      const structuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: post.content ? post.content.substring(0, 160) : post.title,
+        author: {
+          '@type': 'Person',
+          name: author.name || author.displayName || 'Anonymous',
+        },
+        datePublished: new Date(post._creationTime).toISOString(),
+        dateModified: post.updatedAt ? new Date(post.updatedAt).toISOString() : new Date(post._creationTime).toISOString(),
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': window.location.href,
+        },
+        image: `${window.location.origin}/og-preview.jpg`,
+        publisher: {
+          '@type': 'Organization',
+          name: 'Cross-Platform Korea',
+          logo: {
+            '@type': 'ImageObject',
+            url: `${window.location.origin}/assets/favicon.png`,
+          }
+        },
+        articleSection: post.category,
+        keywords: post.tags ? post.tags.join(', ') : post.category,
+        interactionStatistic: [
+          {
+            '@type': 'InteractionCounter',
+            interactionType: 'https://schema.org/LikeAction',
+            userInteractionCount: post.likeCount || 0,
+          },
+          {
+            '@type': 'InteractionCounter',
+            interactionType: 'https://schema.org/CommentAction',
+            userInteractionCount: post.commentCount || 0,
+          },
+          {
+            '@type': 'InteractionCounter',
+            interactionType: 'https://schema.org/ViewAction',
+            userInteractionCount: post.viewCount || 0,
+          }
+        ],
+      };
+
+      // Remove existing structured data script if any
+      const existingScript = document.querySelector('script[type="application/ld+json"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      // Add new structured data script
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(structuredData);
+      document.head.appendChild(script);
+
+      // Cleanup on unmount
+      return () => {
+        const scriptToRemove = document.querySelector('script[type="application/ld+json"]');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
+    }
+  }, [post, author]);
 
   return (
     <div className="max-w-5xl mx-auto">
