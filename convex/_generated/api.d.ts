@@ -30,6 +30,7 @@ import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
 import type * as showcases_mutation from "../showcases/mutation.js";
 import type * as showcases_query from "../showcases/query.js";
+import type * as sitemap from "../sitemap.js";
 import type * as users_mutation from "../users/mutation.js";
 import type * as users_query from "../users/query.js";
 import type * as utils_mentions from "../utils/mentions.js";
@@ -73,6 +74,7 @@ declare const fullApi: ApiFromModules<{
   "posts/query": typeof posts_query;
   "showcases/mutation": typeof showcases_mutation;
   "showcases/query": typeof showcases_query;
+  sitemap: typeof sitemap;
   "users/mutation": typeof users_mutation;
   "users/query": typeof users_query;
   "utils/mentions": typeof utils_mentions;

@@ -24,6 +24,8 @@ export default defineSchema({
     commentCount: v.optional(v.number()), // 댓글 수 필드 추가
     // 멘션 필드 추가
     mentions: v.optional(v.array(v.id('users'))), // 멘션된 사용자들
+    // 대표 썸네일 URL
+    thumbnail: v.optional(v.string()),
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts

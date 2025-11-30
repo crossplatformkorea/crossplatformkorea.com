@@ -16,6 +16,7 @@ export const createPost = mutation({
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
     storageIds: v.optional(v.array(v.id('_storage'))), // 업로드된 이미지 ID 목록 추가
+    thumbnail: v.optional(v.string()), // 대표 썸네일 URL (선택 안하면 첫 이미지로 자동 설정)
   },
   returns: v.id('posts'),
   handler: async (ctx, args) => {
@@ -33,6 +34,10 @@ export const createPost = mutation({
     const mentionedDisplayNames = extractMentions(args.content);
     const mentionedUserIds = await resolveMentions(ctx, mentionedDisplayNames);
 
+    // 썸네일 결정: 사용자가 선택한 것 또는 첫 번째 이미지
+    const contentImages = extractImageUrlsFromContent(args.content);
+    const thumbnail = args.thumbnail || (contentImages.length > 0 ? contentImages[0] : undefined);
+
     // Create the post
     const postId = await ctx.db.insert('posts', {
       category, // Use validated category
@@ -44,6 +49,7 @@ export const createPost = mutation({
       endDate: args.endDate,
       authorId: userId as Id<'users'>,
       mentions: mentionedUserIds.length > 0 ? mentionedUserIds : undefined,
+      thumbnail,
     });
 
     // 멘션 알림 생성
@@ -158,6 +164,7 @@ export const updatePost = mutation({
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
     storageIds: v.optional(v.array(v.id('_storage'))), // 업로드된 이미지 ID 목록 추가
+    thumbnail: v.optional(v.string()), // 대표 썸네일 URL
   },
   returns: v.boolean(),
   handler: async (ctx, args) => {
@@ -194,6 +201,14 @@ export const updatePost = mutation({
     if (args.tags !== undefined) updateData.tags = args.tags;
     if (args.startDate !== undefined) updateData.startDate = args.startDate;
     if (args.endDate !== undefined) updateData.endDate = args.endDate;
+
+    // 썸네일 업데이트: 명시적으로 전달된 경우 사용, 아니면 content가 변경되었을 때 첫 이미지로 자동 설정
+    if (args.thumbnail !== undefined) {
+      updateData.thumbnail = args.thumbnail;
+    } else if (args.content !== undefined) {
+      const contentImages = extractImageUrlsFromContent(args.content);
+      updateData.thumbnail = contentImages.length > 0 ? contentImages[0] : undefined;
+    }
 
     // Update the post first
     await ctx.db.patch(args.postId, updateData);

@@ -300,7 +300,9 @@
     "link": "Link",
     "image": "Image",
     "bulletList": "Bullet List",
-    "numberedList": "Numbered List"
+    "numberedList": "Numbered List",
+    "changeThumbnail": "Change Thumbnail",
+    "selectThumbnail": "Select Thumbnail"
   },
   "summary": {
     "welcome": "Welcome to Cross-Platform Korea",

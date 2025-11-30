@@ -20,6 +20,7 @@ const postObjectValidator = v.object({
   likedBy: v.optional(v.array(v.id('users'))),
   viewCount: v.optional(v.number()),
   commentCount: v.optional(v.number()), // 댓글 수 validator 추가
+  thumbnail: v.optional(v.string()), // 대표 썸네일 URL
 });
 
 // Get all posts for sitemap generation
@@ -180,6 +181,7 @@ export const getPostsByAuthor = query({
       viewCount: v.optional(v.number()),
       updatedAt: v.optional(v.string()), // Add this missing field
       likedBy: v.optional(v.array(v.id('users'))), // Add this missing field
+      thumbnail: v.optional(v.string()), // 대표 썸네일 URL
     }),
   ),
   handler: async (ctx, args) => {

@@ -14,6 +14,7 @@ interface Post {
   category: string;
   updatedAt: string;
   tags?: string[];
+  thumbnail?: string;
 }
 
 interface PostListItemProps {
@@ -23,8 +24,13 @@ interface PostListItemProps {
 export default function SummaryPostItem({ post }: PostListItemProps) {
   const { i18n, t } = useTranslation(); // 확인: t가 이미 추가되어 있어야 함
 
-  // Strip HTML from content for preview
-  const plainContent = post.content.replace(/<[^>]*>?/gm, '').substring(0, 120) + '...';
+  // Strip all HTML tags from content for preview
+  const plainContent = (() => {
+    const withoutHtml = post.content.replace(/<[^>]*>/g, '').trim();
+    return withoutHtml.length > 120
+      ? withoutHtml.substring(0, 120) + '...'
+      : withoutHtml;
+  })();
 
   return (
     <Link to={`/post/${post._id}`} className="group relative block h-full">
@@ -51,14 +57,33 @@ export default function SummaryPostItem({ post }: PostListItemProps) {
         </div>
 
         <div className="px-5 flex-grow">
-          <h3 className={cn(
-            "font-medium text-lg mb-2 line-clamp-2 text-foreground/90 transition-colors",
-            "group-hover:text-primary/90"
-          )}>
-            {post.title}
-          </h3>
+          <div className="flex gap-3">
+            {/* Left side: Title and Content */}
+            <div className="flex-1 min-w-0">
+              <h3 className={cn(
+                "font-medium text-lg mb-2 line-clamp-2 text-foreground/90 transition-colors",
+                "group-hover:text-primary/90"
+              )}>
+                {post.title}
+              </h3>
 
-          <p className="text-sm text-muted-foreground/80 line-clamp-3 mb-3">{plainContent}</p>
+              <p className="text-sm text-muted-foreground/80 line-clamp-3 mb-3">{plainContent}</p>
+            </div>
+
+            {/* Right side: Thumbnail */}
+            {post.thumbnail && (
+              <div className="flex-shrink-0">
+                <img
+                  src={post.thumbnail}
+                  alt=""
+                  className={cn(
+                    'w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg',
+                    'transition-transform duration-300 group-hover:scale-105',
+                  )}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Footer */}

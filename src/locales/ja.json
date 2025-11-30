@@ -283,7 +283,9 @@
     "link": "リンク",
     "image": "画像",
     "bulletList": "箇条書き",
-    "numberedList": "番号付きリスト"
+    "numberedList": "番号付きリスト",
+    "changeThumbnail": "サムネイル変更",
+    "selectThumbnail": "代表画像を選択"
   },
   "summary": {
     "welcome": "クロスプラットフォーム・コリアへようこそ",

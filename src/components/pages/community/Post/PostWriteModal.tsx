@@ -11,6 +11,9 @@ import {
   Eye,
   Edit,
   Loader2,
+  MoreVertical,
+  ImageIcon,
+  Check,
 } from 'lucide-react';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +39,22 @@ interface PostWriteProps {
   defaultTitle?: string;
   defaultContent?: string;
   defaultTags?: string[];
+  defaultThumbnail?: string;
+}
+
+// 컨텐츠에서 이미지 URL 추출하는 헬퍼 함수
+function extractImageUrlsFromContent(content: string): string[] {
+  const urls: string[] = [];
+  const urlRegex = /<img[^>]+src="([^"]+)"[^>]*>/g;
+  let match;
+
+  while ((match = urlRegex.exec(content)) !== null) {
+    if (match[1]) {
+      urls.push(match[1]);
+    }
+  }
+
+  return urls;
 }
 
 export default function PostWriteModal({
@@ -47,6 +66,7 @@ export default function PostWriteModal({
   defaultTitle = '',
   defaultContent = '',
   defaultTags = [],
+  defaultThumbnail = '',
 }: PostWriteProps) {
   const { t } = useTranslation();
   const { isAuthenticated, requireAuth } = useAuthStore(); // Correctly destructure requireAuth
@@ -63,6 +83,15 @@ export default function PostWriteModal({
   const [category, setCategory] = useState(defaultCategory || DEFAULT_CATEGORY);
   const [tags, setTags] = useState<string[]>(defaultTags);
   const [tagInput, setTagInput] = useState('');
+  const [selectedThumbnail, setSelectedThumbnail] = useState(defaultThumbnail);
+  const [showThumbnailMenu, setShowThumbnailMenu] = useState(false);
+  const thumbnailMenuRef = useRef<HTMLDivElement>(null);
+
+  // 컨텐츠에서 이미지 URL 목록 추출
+  const contentImages = extractImageUrlsFromContent(content);
+
+  // 현재 선택된 썸네일 또는 기본 첫 번째 이미지
+  const currentThumbnail = selectedThumbnail || (contentImages.length > 0 ? contentImages[0] : null);
 
   // State for view mode (especially for mobile)
   const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -139,11 +168,12 @@ export default function PostWriteModal({
       setTitle(defaultTitle);
       setContent(defaultContent);
       setTags(defaultTags || []);
+      setSelectedThumbnail(defaultThumbnail || '');
       if (defaultCategory) {
         setCategory(defaultCategory);
       }
     }
-  }, [isOpen, isEditMode, defaultTitle, defaultContent, defaultTags, defaultCategory]);
+  }, [isOpen, isEditMode, defaultTitle, defaultContent, defaultTags, defaultCategory, defaultThumbnail]);
 
   // Reset all form data function
   const resetFormData = useCallback(() => {
@@ -153,6 +183,7 @@ export default function PostWriteModal({
       setContent('');
       setCategory(defaultCategory || 'GENERAL');
       setTags([]);
+      setSelectedThumbnail('');
     }
     setTagInput('');
     setError(null);
@@ -331,6 +362,23 @@ export default function PostWriteModal({
     }
   }, [defaultCategory]);
 
+  // Close thumbnail menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (thumbnailMenuRef.current && !thumbnailMenuRef.current.contains(event.target as Node)) {
+        setShowThumbnailMenu(false);
+      }
+    };
+
+    if (showThumbnailMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showThumbnailMenu]);
+
   // Close modal when Escape key is pressed
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
@@ -367,6 +415,9 @@ export default function PostWriteModal({
     setError(null);
 
     try {
+      // 썸네일 결정: 선택된 것이 없으면 첫 번째 이미지 사용
+      const thumbnailToSave = selectedThumbnail || (contentImages.length > 0 ? contentImages[0] : undefined);
+
       if (isEditMode && postId) {
         // 수정 모드: updatePost 호출
         await updatePostMutation({
@@ -376,6 +427,7 @@ export default function PostWriteModal({
           category,
           tags,
           storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
+          thumbnail: thumbnailToSave,
         });
       } else {
         // 생성 모드: createPost 호출
@@ -385,6 +437,7 @@ export default function PostWriteModal({
           category,
           tags,
           storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
+          thumbnail: thumbnailToSave,
         });
       }
 
@@ -628,9 +681,91 @@ export default function PostWriteModal({
             'dark:border-gray-700/70',
           )}
         >
-          <h2 className="text-xl font-semibold">
-            {isEditMode ? t('postWrite.editPost') : t('postWrite.writeNewPost')}
-          </h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-semibold">
+              {isEditMode ? t('postWrite.editPost') : t('postWrite.writeNewPost')}
+            </h2>
+
+            {/* Thumbnail preview with options - only show when there are images in content */}
+            {contentImages.length > 0 && (
+              <div className="relative" ref={thumbnailMenuRef}>
+                <div className="relative group">
+                  {currentThumbnail ? (
+                    <img
+                      src={currentThumbnail}
+                      alt="Thumbnail preview"
+                      className="w-10 h-10 object-cover rounded-lg border border-border"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 bg-muted rounded-lg border border-border flex items-center justify-center">
+                      <ImageIcon size={16} className="text-muted-foreground" />
+                    </div>
+                  )}
+                  {/* Options button overlay */}
+                  <button
+                    type="button"
+                    onClick={() => setShowThumbnailMenu(!showThumbnailMenu)}
+                    className={cn(
+                      'absolute -top-1 -right-1 w-5 h-5 rounded-full',
+                      'bg-background border border-border shadow-sm',
+                      'flex items-center justify-center',
+                      'hover:bg-muted transition-colors',
+                    )}
+                    title={t('postWrite.changeThumbnail', '썸네일 변경')}
+                  >
+                    <MoreVertical size={12} />
+                  </button>
+                </div>
+
+                {/* Dropdown menu */}
+                {showThumbnailMenu && (
+                  <div
+                    className={cn(
+                      'absolute top-full left-0 mt-2 z-50',
+                      'bg-background border border-border rounded-lg shadow-lg',
+                      'p-2 min-w-[200px]',
+                    )}
+                  >
+                    <p className="text-xs text-muted-foreground px-2 pb-2 border-b border-border mb-2">
+                      {t('postWrite.selectThumbnail', '대표 이미지 선택')}
+                    </p>
+                    <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
+                      {contentImages.map((imageUrl, index) => {
+                        const isSelected = selectedThumbnail === imageUrl || (!selectedThumbnail && index === 0);
+                        return (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => {
+                              setSelectedThumbnail(imageUrl);
+                              setShowThumbnailMenu(false);
+                            }}
+                            className={cn(
+                              'relative w-14 h-14 rounded-lg overflow-hidden border-2 transition-all',
+                              isSelected
+                                ? 'border-primary ring-2 ring-primary/30'
+                                : 'border-border hover:border-primary/50',
+                            )}
+                          >
+                            <img
+                              src={imageUrl}
+                              alt={`Option ${index + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                            {isSelected && (
+                              <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                                <Check size={16} className="text-primary" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           <div
             className={cn(

@@ -70,11 +70,15 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const likeCount = post.likeCount || 0;
   const author = authorQuery || null;
 
-  // Process content for preview - Using a different approach to preserve Markdown
+  // Process content for preview - Remove all HTML tags and limit length
   const contentForPreview = post.content
-    ? post.content.length > 300
-      ? post.content.substring(0, 300) + '...'
-      : post.content
+    ? (() => {
+        // 모든 HTML 태그 제거
+        const withoutHtml = post.content.replace(/<[^>]*>/g, '').trim();
+        return withoutHtml.length > 300
+          ? withoutHtml.substring(0, 300) + '...'
+          : withoutHtml;
+      })()
     : '';
 
   return (
@@ -91,63 +95,83 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
     >
       {/* Main content area */}
       <div className="p-5 pb-4">
-        {/* Title area with category badge */}
-        <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-semibold line-clamp-2 flex-1 mr-3 group-hover:text-primary transition-colors">
-            {post.title}
-          </h3>
-          <CategoryBadge category={post.category} />
-        </div>
+        {/* Content wrapper with thumbnail on right (Medium style) */}
+        <div className="flex gap-4">
+          {/* Left side: Title, Tags, Content */}
+          <div className="flex-1 min-w-0">
+            {/* Title */}
+            <h3 className="text-xl font-semibold line-clamp-2 mb-3 group-hover:text-primary transition-colors">
+              {post.title}
+            </h3>
 
-        {/* Tags */}
-        {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.slice(0, 4).map((tag, index) => (
-              <span
-                key={index}
-                className={cn(
-                  'px-3 py-1 text-xs rounded-full border transition-all duration-200',
-                  'bg-primary/10 text-primary border-primary/20',
-                  'dark:bg-primary/20 dark:text-white dark:border-primary/30',
-                  'hover:bg-primary/20 hover:scale-105 transform-gpu',
+            {/* Tags */}
+            {post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {post.tags.slice(0, 4).map((tag, index) => (
+                  <span
+                    key={index}
+                    className={cn(
+                      'px-3 py-1 text-xs rounded-full border transition-all duration-200',
+                      'bg-primary/10 text-primary border-primary/20',
+                      'dark:bg-primary/20 dark:text-white dark:border-primary/30',
+                      'hover:bg-primary/20 hover:scale-105 transform-gpu',
+                    )}
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+                {post.tags.length > 4 && (
+                  <span className="text-xs text-muted-foreground dark:text-gray-300 px-2 py-1">
+                    +{post.tags.length - 4}
+                  </span>
                 )}
-                style={{
-                  animationDelay: `${index * 50}ms`,
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-            {post.tags.length > 4 && (
-              <span className="text-xs text-muted-foreground dark:text-gray-300 px-2 py-1">
-                +{post.tags.length - 4}
-              </span>
+              </div>
+            )}
+
+            {/* Content preview - Render markdown without clickable links to avoid nested <a> tags */}
+            {contentForPreview && (
+              <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-4 overflow-hidden">
+                <div className="prose prose-sm dark:prose-invert max-w-none line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+                  <ReactMarkdown
+                    rehypePlugins={[rehypeRaw]}
+                    components={{
+                      // Convert links to plain text to avoid nested <a> tags
+                      a: ({ children, href }) => (
+                        <span className="text-primary font-medium">
+                          {children} {href && <span className="text-muted-foreground">({href})</span>}
+                        </span>
+                      ),
+                      // Ensure other interactive elements don't create nested links
+                      button: ({ children }) => <span>{children}</span>,
+                      // Hide images in content preview since we show thumbnail separately
+                      img: () => null,
+                    }}
+                  >
+                    {contentForPreview}
+                  </ReactMarkdown>
+                </div>
+              </div>
             )}
           </div>
-        )}
 
-        {/* Content preview - Render markdown without clickable links to avoid nested <a> tags */}
-        {post.content && (
-          <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-4 overflow-hidden">
-            <div className="prose prose-sm dark:prose-invert max-w-none line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
-              <ReactMarkdown
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  // Convert links to plain text to avoid nested <a> tags
-                  a: ({ children, href }) => (
-                    <span className="text-primary font-medium">
-                      {children} {href && <span className="text-muted-foreground">({href})</span>}
-                    </span>
-                  ),
-                  // Ensure other interactive elements don't create nested links
-                  button: ({ children }) => <span>{children}</span>,
-                }}
-              >
-                {contentForPreview}
-              </ReactMarkdown>
-            </div>
+          {/* Right side: Category badge + Thumbnail (Medium style) */}
+          <div className="flex-shrink-0 flex flex-col items-end gap-3">
+            <CategoryBadge category={post.category} />
+            {post.thumbnail && (
+              <img
+                src={post.thumbnail}
+                alt=""
+                className={cn(
+                  'w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 object-cover rounded-lg',
+                  'transition-transform duration-300 group-hover:scale-105',
+                )}
+              />
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Subtle divider between content and metadata - Improved visibility for dark mode */}

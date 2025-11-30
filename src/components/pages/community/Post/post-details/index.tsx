@@ -525,6 +525,7 @@ export default function PostDetailsPage() {
           defaultContent={post.content}
           defaultCategory={post.category}
           defaultTags={post.tags}
+          defaultThumbnail={post.thumbnail}
         />
       )}
 
