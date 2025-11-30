@@ -26,6 +26,7 @@ import type * as http from "../http.js";
 import type * as notifications_action from "../notifications/action.js";
 import type * as notifications_mutation from "../notifications/mutation.js";
 import type * as notifications_query from "../notifications/query.js";
+import type * as posts_action from "../posts/action.js";
 import type * as posts_mutation from "../posts/mutation.js";
 import type * as posts_query from "../posts/query.js";
 import type * as showcases_mutation from "../showcases/mutation.js";
@@ -70,6 +71,7 @@ declare const fullApi: ApiFromModules<{
   "notifications/action": typeof notifications_action;
   "notifications/mutation": typeof notifications_mutation;
   "notifications/query": typeof notifications_query;
+  "posts/action": typeof posts_action;
   "posts/mutation": typeof posts_mutation;
   "posts/query": typeof posts_query;
   "showcases/mutation": typeof showcases_mutation;

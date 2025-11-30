@@ -5,6 +5,7 @@ import { Id } from '../_generated/dataModel';
 import { DEFAULT_CATEGORY } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
+import { CATEGORIES } from '../constants';
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -133,6 +134,23 @@ export const createPost = mutation({
         }
       }
     }
+
+    // Slack 알림 전송 (비동기로 실행)
+    const authorProfile = await ctx.db
+      .query('userProfiles')
+      .withIndex('by_user', (q) => q.eq('userId', userId))
+      .unique();
+    const authorName = authorProfile?.displayName || 'Anonymous';
+    const categoryInfo = CATEGORIES.find((c) => c.key === category);
+    const categoryName = categoryInfo?.key || category;
+
+    await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
+      postId,
+      title: args.title,
+      content: args.content,
+      category: categoryName,
+      authorName,
+    });
 
     return postId;
   },
