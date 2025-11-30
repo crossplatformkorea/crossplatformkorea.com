@@ -13,7 +13,6 @@ export const sendSlackNotification = internalAction({
     title: v.string(),
     content: v.string(),
     category: v.string(),
-    authorName: v.string(),
   },
   returns: v.object({
     success: v.boolean(),
@@ -52,15 +51,6 @@ export const sendSlackNotification = internalAction({
               {
                 type: 'mrkdwn',
                 text: `*카테고리:*\n${args.category}`,
-              },
-            ],
-          },
-          {
-            type: 'section',
-            fields: [
-              {
-                type: 'mrkdwn',
-                text: `*작성자:*\n${args.authorName}`,
               },
             ],
           },
