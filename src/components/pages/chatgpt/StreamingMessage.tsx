@@ -2,7 +2,16 @@ import { useState } from 'react';
 import { useStream } from '@convex-dev/persistent-text-streaming/react';
 import { StreamId } from '@convex-dev/persistent-text-streaming';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 import { Copy, Check } from 'lucide-react';
+
+// 마크다운 bold/italic을 HTML로 전처리 (HTML과 마크다운이 섞여있을 때 파싱 문제 해결)
+function preprocessMarkdown(content: string): string {
+  let processed = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  processed = processed.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+  return processed;
+}
 import { Message } from './types';
 import { api } from '../../../../convex/_generated/api';
 import { Button } from '@/components/uis/Button';
@@ -65,6 +74,8 @@ export function StreamingMessage({ message }: { message: Message }) {
         style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
       >
         <ReactMarkdown
+          rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
           components={{
             // Links
             a: ({ href, children, ...props }) => (
@@ -166,9 +177,18 @@ export function StreamingMessage({ message }: { message: Message }) {
                 {children}
               </h3>
             ),
+            // Blockquote
+            blockquote: ({ children, ...props }) => (
+              <blockquote
+                className="border-l-4 border-primary/50 pl-4 my-4 italic text-gray-700 dark:text-gray-200"
+                {...props}
+              >
+                {children}
+              </blockquote>
+            ),
           }}
         >
-          {displayText}
+          {preprocessMarkdown(displayText)}
         </ReactMarkdown>
         {isActive && (
           <span className="inline-block w-2 h-5 bg-current opacity-75 animate-pulse ml-1" />

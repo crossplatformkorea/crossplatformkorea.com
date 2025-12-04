@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 import { Copy, Check } from 'lucide-react';
+
+// 마크다운 bold/italic을 HTML로 전처리 (HTML과 마크다운이 섞여있을 때 파싱 문제 해결)
+function preprocessMarkdown(content: string): string {
+  let processed = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  processed = processed.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+  return processed;
+}
 import { cn } from '@/lib/utils';
 import { t } from '@/lib/i18n';
 import { StreamingMessage } from './StreamingMessage';
@@ -12,7 +21,7 @@ export function MessageList({ messages }: { messages: Message[] }) {
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const handleCopyMessage = async (content: string, messageId: string) => {
@@ -47,24 +56,32 @@ export function MessageList({ messages }: { messages: Message[] }) {
             key={message._id}
             className={cn(
               'flex w-full',
-              message.role === "user" ? "justify-end" : "justify-start",
-              'animate-fade-in'
+              message.role === 'user' ? 'justify-end' : 'justify-start',
+              'animate-fade-in',
             )}
           >
-            <div className={cn(
-              'flex gap-3 max-w-[calc(100%-2rem)] min-w-0',
-              message.role === "user" ? "flex-row-reverse" : ""
-            )}>
+            <div
+              className={cn(
+                'flex gap-3 max-w-[calc(100%-2rem)] min-w-0',
+                message.role === 'user' ? 'flex-row-reverse' : '',
+              )}
+            >
               {/* Avatar */}
-              <div className={cn(
-                'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
-                message.role === "user"
-                  ? "bg-gray-300 dark:bg-zinc-600"
-                  : "bg-gray-600 dark:bg-zinc-700"
-              )}>
-                {message.role === "user" ? (
-                  <svg className="w-4 h-4 text-gray-700 dark:text-zinc-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              <div
+                className={cn(
+                  'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
+                  message.role === 'user'
+                    ? 'bg-gray-300 dark:bg-zinc-600'
+                    : 'bg-gray-600 dark:bg-zinc-700',
+                )}
+              >
+                {message.role === 'user' ? (
+                  <svg
+                    className="w-4 h-4 text-gray-700 dark:text-zinc-300"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                   </svg>
                 ) : (
                   <span className="text-white font-bold text-xs">AI</span>
@@ -72,15 +89,17 @@ export function MessageList({ messages }: { messages: Message[] }) {
               </div>
 
               {/* Message content */}
-              <div className={cn(
-                'relative group',
-                'p-4 rounded-2xl min-w-0 flex-1 max-w-full',
-                message.role === "user"
-                  ? "bg-gray-700 dark:bg-zinc-700 text-white"
-                  : "bg-gray-100 dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 border border-gray-200 dark:border-zinc-700"
-              )}>
+              <div
+                className={cn(
+                  'relative group',
+                  'p-4 rounded-2xl min-w-0 flex-1 max-w-full',
+                  message.role === 'user'
+                    ? 'bg-gray-700 dark:bg-zinc-700 text-white'
+                    : 'bg-gray-100 dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 border border-gray-200 dark:border-zinc-700',
+                )}
+              >
                 {/* Copy button for assistant messages */}
-                {message.role === "assistant" && message.content && (
+                {message.role === 'assistant' && message.content && (
                   <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="ghost"
@@ -98,11 +117,16 @@ export function MessageList({ messages }: { messages: Message[] }) {
                   </div>
                 )}
 
-                {message.role === "assistant" && message.streamId ? (
+                {message.role === 'assistant' && message.streamId ? (
                   <StreamingMessage message={message} />
-                ) : message.role === "assistant" ? (
-                  <div className="max-w-none text-sm overflow-hidden" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-                    <ReactMarkdown 
+                ) : message.role === 'assistant' ? (
+                  <div
+                    className="max-w-none text-sm overflow-hidden"
+                    style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
+                  >
+                    <ReactMarkdown
+                      rehypePlugins={[rehypeRaw]}
+                      remarkPlugins={[remarkGfm]}
                       components={{
                         // Links
                         a: ({ href, children, ...props }) => (
@@ -121,19 +145,28 @@ export function MessageList({ messages }: { messages: Message[] }) {
                           const isInline = !className?.includes('language-');
                           if (isInline) {
                             return (
-                              <code className="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-900 dark:text-gray-300 border border-gray-300 dark:border-gray-600 break-all" {...props}>
+                              <code
+                                className="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-gray-900 dark:text-gray-300 border border-gray-300 dark:border-gray-600 break-all"
+                                {...props}
+                              >
                                 {children}
                               </code>
                             );
                           }
                           return (
-                            <code className="text-sm font-mono text-gray-100 dark:text-gray-300" {...props}>
+                            <code
+                              className="text-sm font-mono text-gray-100 dark:text-gray-300"
+                              {...props}
+                            >
                               {children}
                             </code>
                           );
                         },
                         pre: ({ children, ...props }) => (
-                          <pre className="bg-gray-900 dark:bg-black text-gray-100 dark:text-gray-300 p-4 rounded-lg my-4 overflow-x-auto border border-gray-300 dark:border-gray-700 max-w-full" {...props}>
+                          <pre
+                            className="bg-gray-900 dark:bg-black text-gray-100 dark:text-gray-300 p-4 rounded-lg my-4 overflow-x-auto border border-gray-300 dark:border-gray-700 max-w-full"
+                            {...props}
+                          >
                             {children}
                           </pre>
                         ),
@@ -198,9 +231,18 @@ export function MessageList({ messages }: { messages: Message[] }) {
                             {children}
                           </h3>
                         ),
+                        // Blockquote
+                        blockquote: ({ children, ...props }) => (
+                          <blockquote
+                            className="border-l-4 border-primary/50 pl-4 my-4 italic text-gray-700 dark:text-gray-200"
+                            {...props}
+                          >
+                            {children}
+                          </blockquote>
+                        ),
                       }}
                     >
-                      {message.content}
+                      {preprocessMarkdown(message.content)}
                     </ReactMarkdown>
                   </div>
                 ) : (

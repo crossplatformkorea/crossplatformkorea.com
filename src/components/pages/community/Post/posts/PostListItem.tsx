@@ -13,6 +13,7 @@ import { Button } from '../../../../uis/Button';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 import { createUserProfileLink } from '@/lib/utils';
 
 // Import Post type from Convex data model
@@ -75,9 +76,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
     ? (() => {
         // 모든 HTML 태그 제거
         const withoutHtml = post.content.replace(/<[^>]*>/g, '').trim();
-        return withoutHtml.length > 300
-          ? withoutHtml.substring(0, 300) + '...'
-          : withoutHtml;
+        return withoutHtml.length > 300 ? withoutHtml.substring(0, 300) + '...' : withoutHtml;
       })()
     : '';
 
@@ -137,17 +136,25 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
                 <div className="prose prose-sm dark:prose-invert max-w-none line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
                   <ReactMarkdown
                     rehypePlugins={[rehypeRaw]}
+                    remarkPlugins={[remarkGfm]}
                     components={{
                       // Convert links to plain text to avoid nested <a> tags
                       a: ({ children, href }) => (
                         <span className="text-primary font-medium">
-                          {children} {href && <span className="text-muted-foreground">({href})</span>}
+                          {children}{' '}
+                          {href && <span className="text-muted-foreground">({href})</span>}
                         </span>
                       ),
                       // Ensure other interactive elements don't create nested links
                       button: ({ children }) => <span>{children}</span>,
                       // Hide images in content preview since we show thumbnail separately
                       img: () => null,
+                      // Blockquote with proper dark mode text color
+                      blockquote: ({ children }) => (
+                        <span className="text-foreground dark:text-gray-100 italic">
+                          {children}
+                        </span>
+                      ),
                     }}
                   >
                     {contentForPreview}

@@ -26,6 +26,16 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useMetaTags } from '@/hooks/useMetaTags';
 
+// 마크다운 bold/italic을 HTML로 전처리 (HTML과 마크다운이 섞여있을 때 파싱 문제 해결)
+function preprocessMarkdown(content: string): string {
+  // **text** → <strong>text</strong> (bold)
+  // 링크나 다른 요소와 섞여있어도 동작하도록
+  let processed = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // *text* → <em>text</em> (italic) - 단, ** 안의 *는 제외
+  processed = processed.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+  return processed;
+}
+
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
   const { postId } = useParams();
@@ -113,16 +123,28 @@ export default function PostDetailsPage() {
     : '';
 
   // SEO optimization with meta tags
-  useMetaTags(post ? {
-    title: `${post.title} | Cross-Platform Korea`,
-    description: post.content ? post.content.substring(0, 160) : `${post.title} - Cross-Platform Korea 커뮤니티`,
-    keywords: post.tags ? `${post.tags.join(', ')}, ${post.category}, cross-platform, korea, 개발자, 커뮤니티` : `${post.category}, cross-platform, korea, 개발자, 커뮤니티`,
-    ogTitle: post.title,
-    ogDescription: post.content ? post.content.substring(0, 160) : `${post.title} - Cross-Platform Korea 커뮤니티`,
-    ogImage: '/og-preview.jpg',
-    twitterTitle: post.title,
-    twitterDescription: post.content ? post.content.substring(0, 160) : `${post.title} - Cross-Platform Korea 커뮤니티`,
-  } : undefined);
+  useMetaTags(
+    post
+      ? {
+          title: `${post.title} | Cross-Platform Korea`,
+          description: post.content
+            ? post.content.substring(0, 160)
+            : `${post.title} - Cross-Platform Korea 커뮤니티`,
+          keywords: post.tags
+            ? `${post.tags.join(', ')}, ${post.category}, cross-platform, korea, 개발자, 커뮤니티`
+            : `${post.category}, cross-platform, korea, 개발자, 커뮤니티`,
+          ogTitle: post.title,
+          ogDescription: post.content
+            ? post.content.substring(0, 160)
+            : `${post.title} - Cross-Platform Korea 커뮤니티`,
+          ogImage: '/og-preview.jpg',
+          twitterTitle: post.title,
+          twitterDescription: post.content
+            ? post.content.substring(0, 160)
+            : `${post.title} - Cross-Platform Korea 커뮤니티`,
+        }
+      : undefined,
+  );
 
   // Add JSON-LD structured data for SEO
   useEffect(() => {
@@ -137,7 +159,9 @@ export default function PostDetailsPage() {
           name: author.name || author.displayName || 'Anonymous',
         },
         datePublished: new Date(post._creationTime).toISOString(),
-        dateModified: post.updatedAt ? new Date(post.updatedAt).toISOString() : new Date(post._creationTime).toISOString(),
+        dateModified: post.updatedAt
+          ? new Date(post.updatedAt).toISOString()
+          : new Date(post._creationTime).toISOString(),
         mainEntityOfPage: {
           '@type': 'WebPage',
           '@id': window.location.href,
@@ -149,7 +173,7 @@ export default function PostDetailsPage() {
           logo: {
             '@type': 'ImageObject',
             url: `${window.location.origin}/assets/favicon.png`,
-          }
+          },
         },
         articleSection: post.category,
         keywords: post.tags ? post.tags.join(', ') : post.category,
@@ -168,7 +192,7 @@ export default function PostDetailsPage() {
             '@type': 'InteractionCounter',
             interactionType: 'https://schema.org/ViewAction',
             userInteractionCount: post.viewCount || 0,
-          }
+          },
         ],
       };
 
@@ -370,19 +394,16 @@ export default function PostDetailsPage() {
                     const language = match ? match[1] : '';
                     const isDarkMode = document.documentElement.classList.contains('dark');
                     const isInline = !className?.includes('language-');
-                    
+
                     // For inline code
                     if (isInline) {
                       return (
-                        <code
-                          className="bg-muted px-1 py-0.5 rounded text-sm font-mono"
-                          {...props}
-                        >
+                        <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono" {...props}>
                           {children}
                         </code>
                       );
                     }
-                    
+
                     // For code blocks with syntax highlighting
                     return (
                       <div className="relative my-4">
@@ -434,7 +455,7 @@ export default function PostDetailsPage() {
                     </tbody>
                   ),
                   th: ({ children, ...props }) => (
-                    <th 
+                    <th
                       className="px-4 py-3 text-left text-sm font-semibold text-foreground border-r last:border-r-0 border-border/50"
                       {...props}
                     >
@@ -442,7 +463,7 @@ export default function PostDetailsPage() {
                     </th>
                   ),
                   td: ({ children, ...props }) => (
-                    <td 
+                    <td
                       className="px-4 py-3 text-sm text-foreground border-r last:border-r-0 border-border/30"
                       {...props}
                     >
@@ -450,18 +471,29 @@ export default function PostDetailsPage() {
                     </td>
                   ),
                   tr: ({ children, ...props }) => (
-                    <tr className="hover:bg-muted/20 dark:hover:bg-gray-800/30 transition-colors" {...props}>
+                    <tr
+                      className="hover:bg-muted/20 dark:hover:bg-gray-800/30 transition-colors"
+                      {...props}
+                    >
                       {children}
                     </tr>
                   ),
                   // Fix list spacing and formatting
                   ul: ({ children, ...props }) => (
-                    <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
+                    <ul
+                      className="pl-6 mb-4"
+                      style={{ listStyleType: 'disc', listStylePosition: 'outside' }}
+                      {...props}
+                    >
                       {children}
                     </ul>
                   ),
                   ol: ({ children, ...props }) => (
-                    <ol className="pl-6 mb-4" style={{ listStyleType: 'decimal', listStylePosition: 'outside' }} {...props}>
+                    <ol
+                      className="pl-6 mb-4"
+                      style={{ listStyleType: 'decimal', listStylePosition: 'outside' }}
+                      {...props}
+                    >
                       {children}
                     </ol>
                   ),
@@ -488,13 +520,16 @@ export default function PostDetailsPage() {
                   ),
                   // Handle blockquotes
                   blockquote: ({ children, ...props }) => (
-                    <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-4 italic text-gray-700 dark:text-gray-300" {...props}>
+                    <blockquote
+                      className="border-l-4 border-primary/50 pl-4 my-4 italic !text-gray-700 dark:!text-gray-400"
+                      {...props}
+                    >
                       {children}
                     </blockquote>
                   ),
                 }}
               >
-                {post.content || ''}
+                {preprocessMarkdown(post.content || '')}
               </ReactMarkdown>
             </div>
           </div>
