@@ -142,6 +142,14 @@ export const createPost = mutation({
       category,
     });
 
+    // Discord 알림 전송 (비동기로 실행)
+    await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
+      postId,
+      title: args.title,
+      content: args.content,
+      category,
+    });
+
     return postId;
   },
 });
