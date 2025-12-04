@@ -45,10 +45,21 @@ interface PostWriteProps {
 // 컨텐츠에서 이미지 URL 추출하는 헬퍼 함수
 function extractImageUrlsFromContent(content: string): string[] {
   const urls: string[] = [];
-  const urlRegex = /<img[^>]+src="([^"]+)"[^>]*>/g;
+
+  // HTML <img> 태그에서 추출
+  const htmlImgRegex = /<img[^>]+src="([^"]+)"[^>]*>/g;
   let match;
 
-  while ((match = urlRegex.exec(content)) !== null) {
+  while ((match = htmlImgRegex.exec(content)) !== null) {
+    if (match[1]) {
+      urls.push(match[1]);
+    }
+  }
+
+  // 마크다운 이미지 문법 ![alt](url)에서 추출
+  const markdownImgRegex = /!\[[^\]]*\]\(([^)]+)\)/g;
+
+  while ((match = markdownImgRegex.exec(content)) !== null) {
     if (match[1]) {
       urls.push(match[1]);
     }
