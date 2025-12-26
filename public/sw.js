@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cpk-v1';
+const CACHE_NAME = 'cpk-v2';
 const STATIC_CACHE_URLS = [
   '/',
   '/showcases',
