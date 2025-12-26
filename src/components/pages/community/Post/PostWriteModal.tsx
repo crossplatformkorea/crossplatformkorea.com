@@ -426,8 +426,12 @@ export default function PostWriteModal({
     setError(null);
 
     try {
-      // 썸네일 결정: 선택된 것이 없으면 첫 번째 이미지 사용
-      const thumbnailToSave = selectedThumbnail || (contentImages.length > 0 ? contentImages[0] : undefined);
+      // 썸네일 결정: 현재 콘텐츠에 있는 이미지만 유효
+      // 선택된 썸네일이 콘텐츠에 없으면 무시 (유튜브 삭제 등의 경우)
+      const isSelectedThumbnailValid = selectedThumbnail && contentImages.includes(selectedThumbnail);
+      const thumbnailToSave = isSelectedThumbnailValid
+        ? selectedThumbnail
+        : (contentImages.length > 0 ? contentImages[0] : undefined);
 
       if (isEditMode && postId) {
         // 수정 모드: updatePost 호출

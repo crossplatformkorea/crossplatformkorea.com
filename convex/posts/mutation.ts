@@ -263,6 +263,9 @@ export const updatePost = mutation({
 
     if (args.category !== undefined) updateData.category = args.category;
     if (args.title !== undefined) updateData.title = args.title;
+    // 썸네일 삭제 여부를 추적
+    let shouldClearThumbnail = false;
+
     if (args.content !== undefined) {
       updateData.content = args.content;
 
@@ -272,7 +275,13 @@ export const updatePost = mutation({
       updateData.mentions = mentionedUserIds.length > 0 ? mentionedUserIds : undefined;
 
       // 썸네일 자동 추출
-      updateData.thumbnail = extractThumbnailFromContent(args.content);
+      const extractedThumbnail = extractThumbnailFromContent(args.content);
+      if (extractedThumbnail) {
+        updateData.thumbnail = extractedThumbnail;
+      } else {
+        // 썸네일이 추출되지 않으면 기존 썸네일 삭제 필요
+        shouldClearThumbnail = true;
+      }
     } else if (!post.thumbnail && post.content) {
       // 콘텐츠 변경 없어도 썸네일이 없으면 기존 콘텐츠에서 추출 시도
       const extractedThumbnail = extractThumbnailFromContent(post.content);
@@ -284,16 +293,21 @@ export const updatePost = mutation({
     if (args.startDate !== undefined) updateData.startDate = args.startDate;
     if (args.endDate !== undefined) updateData.endDate = args.endDate;
 
-    // 썸네일 업데이트: 명시적으로 전달된 경우 사용, 아니면 content가 변경되었을 때 첫 이미지로 자동 설정
+    // 썸네일 업데이트: 명시적으로 전달된 경우에만 덮어쓰기 (위에서 이미 자동 추출됨)
     if (args.thumbnail !== undefined) {
       updateData.thumbnail = args.thumbnail;
-    } else if (args.content !== undefined) {
-      const contentImages = extractImageUrlsFromContent(args.content);
-      updateData.thumbnail = contentImages.length > 0 ? contentImages[0] : undefined;
+      shouldClearThumbnail = false; // 명시적으로 전달된 경우 삭제하지 않음
     }
 
     // Update the post first
     await ctx.db.patch(args.postId, updateData);
+
+    // 썸네일 삭제가 필요한 경우 빈 문자열로 설정 (undefined는 JSON 직렬화에서 제거됨)
+    console.log('shouldClearThumbnail:', shouldClearThumbnail, 'post.thumbnail:', post.thumbnail);
+    if (shouldClearThumbnail) {
+      console.log('Clearing thumbnail for post:', args.postId);
+      await ctx.db.patch(args.postId, { thumbnail: '' });
+    }
 
     // Handle file synchronization when content is updated
     if (args.content !== undefined) {
