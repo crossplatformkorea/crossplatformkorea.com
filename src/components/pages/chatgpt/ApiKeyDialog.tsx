@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Key } from 'lucide-react';
 import { Button } from '@/components/uis/Button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/uis/Dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/uis/Dialog';
 import { t } from '@/lib/i18n';
 
 interface ApiKeyDialogProps {
@@ -65,6 +65,9 @@ export function ApiKeyDialog({
             <Key size={20} />
             {t('chat.apiKey.title')}
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            {t('chat.apiKey.description')}
+          </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
           <div>

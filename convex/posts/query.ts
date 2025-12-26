@@ -16,11 +16,12 @@ const postObjectValidator = v.object({
   startDate: v.optional(v.string()),
   endDate: v.optional(v.string()),
   authorId: v.optional(v.id('users')),
+  thumbnail: v.optional(v.string()), // 썸네일 URL
   likeCount: v.optional(v.number()),
   likedBy: v.optional(v.array(v.id('users'))),
   viewCount: v.optional(v.number()),
   commentCount: v.optional(v.number()), // 댓글 수 validator 추가
-  thumbnail: v.optional(v.string()), // 대표 썸네일 URL
+  mentions: v.optional(v.array(v.id('users'))), // 멘션된 사용자들
 });
 
 // Get all posts for sitemap generation
@@ -175,13 +176,16 @@ export const getPostsByAuthor = query({
       content: v.string(),
       category: v.string(),
       tags: v.array(v.string()),
-      authorId: v.optional(v.id('users')), // Also update this to match
+      authorId: v.optional(v.id('users')),
+      thumbnail: v.optional(v.string()),
       commentCount: v.optional(v.number()),
       likeCount: v.optional(v.number()),
       viewCount: v.optional(v.number()),
-      updatedAt: v.optional(v.string()), // Add this missing field
-      likedBy: v.optional(v.array(v.id('users'))), // Add this missing field
-      thumbnail: v.optional(v.string()), // 대표 썸네일 URL
+      updatedAt: v.optional(v.string()),
+      likedBy: v.optional(v.array(v.id('users'))),
+      startDate: v.optional(v.string()),
+      endDate: v.optional(v.string()),
+      mentions: v.optional(v.array(v.id('users'))),
     }),
   ),
   handler: async (ctx, args) => {

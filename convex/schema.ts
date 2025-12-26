@@ -17,6 +17,7 @@ export default defineSchema({
     startDate: v.optional(v.string()),
     endDate: v.optional(v.string()),
     authorId: v.optional(v.id('users')), // Add author reference
+    thumbnail: v.optional(v.string()), // 썸네일 이미지 URL
     // 통계 필드 모음
     likeCount: v.optional(v.number()),
     likedBy: v.optional(v.array(v.id('users'))),
@@ -24,8 +25,6 @@ export default defineSchema({
     commentCount: v.optional(v.number()), // 댓글 수 필드 추가
     // 멘션 필드 추가
     mentions: v.optional(v.array(v.id('users'))), // 멘션된 사용자들
-    // 대표 썸네일 URL
-    thumbnail: v.optional(v.string()),
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts

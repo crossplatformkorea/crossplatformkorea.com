@@ -34,9 +34,8 @@ export const createPost = mutation({
     const mentionedDisplayNames = extractMentions(args.content);
     const mentionedUserIds = await resolveMentions(ctx, mentionedDisplayNames);
 
-    // 썸네일 결정: 사용자가 선택한 것 또는 첫 번째 이미지
-    const contentImages = extractImageUrlsFromContent(args.content);
-    const thumbnail = args.thumbnail || (contentImages.length > 0 ? contentImages[0] : undefined);
+    // 썸네일 결정: 사용자가 선택한 것 또는 자동 추출 (유튜브 > 첫 번째 이미지)
+    const thumbnail = args.thumbnail || extractThumbnailFromContent(args.content);
 
     // Create the post
     const postId = await ctx.db.insert('posts', {
@@ -180,6 +179,53 @@ function extractImageUrlsFromContent(content: string): string[] {
   return urls;
 }
 
+// 유튜브 비디오 ID 추출 헬퍼 함수
+function extractYoutubeVideoId(content: string): string | null {
+  // YouTube URL 패턴들
+  const patterns = [
+    // youtube.com/watch?v=VIDEO_ID
+    /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+    // youtu.be/VIDEO_ID
+    /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+    // youtube.com/embed/VIDEO_ID
+    /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+    // youtube-nocookie.com/embed/VIDEO_ID
+    /(?:youtube-nocookie\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = content.match(pattern);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+
+  return null;
+}
+
+// 컨텐츠에서 썸네일 추출 (유튜브 또는 첫 번째 이미지)
+function extractThumbnailFromContent(content: string): string | undefined {
+  // 1. 유튜브 비디오 ID가 있으면 유튜브 썸네일 사용
+  const youtubeVideoId = extractYoutubeVideoId(content);
+  if (youtubeVideoId) {
+    return `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
+  }
+
+  // 2. 첫 번째 이미지 URL 추출
+  const imageUrls = extractImageUrlsFromContent(content);
+  if (imageUrls.length > 0) {
+    return imageUrls[0];
+  }
+
+  // 3. 마크다운 이미지 문법에서 추출 ![alt](url)
+  const markdownImageMatch = content.match(/!\[[^\]]*\]\(([^)]+)\)/);
+  if (markdownImageMatch && markdownImageMatch[1]) {
+    return markdownImageMatch[1];
+  }
+
+  return undefined;
+}
+
 // Update an existing post
 export const updatePost = mutation({
   args: {
@@ -224,6 +270,15 @@ export const updatePost = mutation({
       const mentionedDisplayNames = extractMentions(args.content);
       const mentionedUserIds = await resolveMentions(ctx, mentionedDisplayNames);
       updateData.mentions = mentionedUserIds.length > 0 ? mentionedUserIds : undefined;
+
+      // 썸네일 자동 추출
+      updateData.thumbnail = extractThumbnailFromContent(args.content);
+    } else if (!post.thumbnail && post.content) {
+      // 콘텐츠 변경 없어도 썸네일이 없으면 기존 콘텐츠에서 추출 시도
+      const extractedThumbnail = extractThumbnailFromContent(post.content);
+      if (extractedThumbnail) {
+        updateData.thumbnail = extractedThumbnail;
+      }
     }
     if (args.tags !== undefined) updateData.tags = args.tags;
     if (args.startDate !== undefined) updateData.startDate = args.startDate;

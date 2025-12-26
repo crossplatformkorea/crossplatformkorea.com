@@ -101,7 +101,8 @@ export default function FeatureRequestsPage() {
   const [showForm, setShowForm] = useState(false);
 
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleDateString(t('common.localeDate') || 'en-US', {
+    const locale = typeof navigator !== 'undefined' ? navigator.language : 'en-US';
+    return new Date(timestamp).toLocaleDateString(locale, {
       year: 'numeric',
       month: 'short',
       day: 'numeric',

@@ -13,7 +13,6 @@ import { Button } from '../../../../uis/Button';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
 import { createUserProfileLink } from '@/lib/utils';
 
 // Import Post type from Convex data model
@@ -71,14 +70,21 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
   const likeCount = post.likeCount || 0;
   const author = authorQuery || null;
 
-  // Process content for preview - Remove all HTML tags and limit length
-  const contentForPreview = post.content
-    ? (() => {
-        // 모든 HTML 태그 제거
-        const withoutHtml = post.content.replace(/<[^>]*>/g, '').trim();
-        return withoutHtml.length > 300 ? withoutHtml.substring(0, 300) + '...' : withoutHtml;
-      })()
-    : '';
+  // Process content for preview - strip images, iframes, and limit length
+  const contentForPreview = (() => {
+    if (!post.content) return '';
+    const stripped = post.content
+      // Remove img tags
+      .replace(/<img[^>]*>/gi, '')
+      // Remove iframe tags
+      .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+      // Remove markdown images ![alt](url)
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+      // Clean up extra whitespace
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+    return stripped.length > 300 ? stripped.substring(0, 300) + '...' : stripped;
+  })();
 
   return (
     <Link
@@ -92,92 +98,92 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
         'transform-gpu w-full', // 세로 리스트에 적합한 스타일
       )}
     >
-      {/* Main content area */}
-      <div className="p-5 pb-4">
-        {/* Content wrapper with thumbnail on right (Medium style) */}
-        <div className="flex gap-4">
-          {/* Left side: Title, Tags, Content */}
-          <div className="flex-1 min-w-0">
-            {/* Title */}
-            <h3 className="text-xl font-semibold line-clamp-2 mb-3 group-hover:text-primary transition-colors">
-              {post.title}
-            </h3>
-
-            {/* Tags */}
-            {post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {post.tags.slice(0, 4).map((tag, index) => (
-                  <span
-                    key={index}
-                    className={cn(
-                      'px-3 py-1 text-xs rounded-full border transition-all duration-200',
-                      'bg-primary/10 text-primary border-primary/20',
-                      'dark:bg-primary/20 dark:text-white dark:border-primary/30',
-                      'hover:bg-primary/20 hover:scale-105 transform-gpu',
-                    )}
-                    style={{
-                      animationDelay: `${index * 50}ms`,
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-                {post.tags.length > 4 && (
-                  <span className="text-xs text-muted-foreground dark:text-gray-300 px-2 py-1">
-                    +{post.tags.length - 4}
-                  </span>
-                )}
-              </div>
-            )}
-
-            {/* Content preview - Render markdown without clickable links to avoid nested <a> tags */}
-            {contentForPreview && (
-              <div className="text-sm text-muted-foreground dark:text-gray-300/80 mb-4 overflow-hidden">
-                <div className="prose prose-sm dark:prose-invert max-w-none line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
-                  <ReactMarkdown
-                    rehypePlugins={[rehypeRaw]}
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      // Convert links to plain text to avoid nested <a> tags
-                      a: ({ children, href }) => (
-                        <span className="text-primary font-medium">
-                          {children}{' '}
-                          {href && <span className="text-muted-foreground">({href})</span>}
-                        </span>
-                      ),
-                      // Ensure other interactive elements don't create nested links
-                      button: ({ children }) => <span>{children}</span>,
-                      // Hide images in content preview since we show thumbnail separately
-                      img: () => null,
-                      // Blockquote with proper dark mode text color
-                      blockquote: ({ children }) => (
-                        <span className="text-foreground dark:text-gray-100 italic">
-                          {children}
-                        </span>
-                      ),
-                    }}
-                  >
-                    {contentForPreview}
-                  </ReactMarkdown>
-                </div>
-              </div>
-            )}
+      {/* Thumbnail + Main content area */}
+      <div className={cn('flex', post.thumbnail ? 'flex-row items-center' : 'flex-col')}>
+        {/* Thumbnail */}
+        {post.thumbnail && (
+          <div className="flex-shrink-0 w-32 h-24 sm:w-44 sm:h-28 m-4 mr-0 rounded-lg overflow-hidden bg-muted/30">
+            <img
+              src={post.thumbnail}
+              alt={post.title}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              loading="lazy"
+            />
           </div>
+        )}
 
-          {/* Right side: Category badge + Thumbnail (Medium style) */}
-          <div className="flex-shrink-0 flex flex-col items-end gap-3">
-            <CategoryBadge category={post.category} />
-            {post.thumbnail && (
-              <img
-                src={post.thumbnail}
-                alt=""
+        {/* Main content area */}
+        <div className={cn('flex-1 p-5 pb-4', post.thumbnail && 'min-w-0 py-4')}>
+        {/* Title area with category badge */}
+        <div className={cn('flex items-start justify-between', post.thumbnail ? 'mb-2' : 'mb-3')}>
+          <h3 className={cn(
+            'font-semibold flex-1 mr-3 group-hover:text-primary transition-colors',
+            post.thumbnail ? 'text-base sm:text-lg line-clamp-2' : 'text-xl line-clamp-2'
+          )}>
+            {post.title}
+          </h3>
+          <CategoryBadge category={post.category} />
+        </div>
+
+        {/* Tags - hide when thumbnail exists for cleaner look */}
+        {post.tags.length > 0 && !post.thumbnail && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.tags.slice(0, 4).map((tag, index) => (
+              <span
+                key={index}
                 className={cn(
-                  'w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 object-cover rounded-lg',
-                  'transition-transform duration-300 group-hover:scale-105',
+                  'px-3 py-1 text-xs rounded-full border transition-all duration-200',
+                  'bg-primary/10 text-primary border-primary/20',
+                  'dark:bg-primary/20 dark:text-white dark:border-primary/30',
+                  'hover:bg-primary/20 hover:scale-105 transform-gpu',
                 )}
-              />
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+            {post.tags.length > 4 && (
+              <span className="text-xs text-muted-foreground dark:text-gray-300 px-2 py-1">
+                +{post.tags.length - 4}
+              </span>
             )}
           </div>
+        )}
+
+        {/* Content preview - shorter when thumbnail exists */}
+        {post.content && (
+          <div className={cn(
+            'text-sm text-muted-foreground dark:text-gray-300/80 overflow-hidden',
+            post.thumbnail ? 'mb-0' : 'mb-4'
+          )}>
+            <div className={cn(
+              'prose prose-sm dark:prose-invert max-w-none transition-all duration-300',
+              post.thumbnail ? 'line-clamp-2' : 'line-clamp-3 group-hover:line-clamp-none'
+            )}>
+              <ReactMarkdown
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  // Convert links to plain text to avoid nested <a> tags
+                  a: ({ children, href }) => (
+                    <span className="text-primary font-medium">
+                      {children} {href && <span className="text-muted-foreground">({href})</span>}
+                    </span>
+                  ),
+                  // Ensure other interactive elements don't create nested links
+                  button: ({ children }) => <span>{children}</span>,
+                  // Hide images in preview - thumbnail is shown separately
+                  img: () => null,
+                  // Hide iframes (YouTube embeds, etc.) in preview
+                  iframe: () => null,
+                }}
+              >
+                {contentForPreview}
+              </ReactMarkdown>
+            </div>
+          </div>
+        )}
         </div>
       </div>
 
