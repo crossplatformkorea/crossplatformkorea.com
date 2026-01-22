@@ -99,7 +99,7 @@ export function Header({
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex items-center gap-4 mr-2">
           <a
-            href="https://discord.gg/SPXHsby9"
+            href="https://discord.gg/XN53mmA9"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
