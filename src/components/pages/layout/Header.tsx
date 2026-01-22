@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { getLocale, setLocale, t } from '@/lib/i18n';
 import { ThemeToggle } from '../../ThemeToggle';
 import NotificationBell from '../../uis/NotificationBell';
-import { SiSlack } from '@icons-pack/react-simple-icons';
+import { SiDiscord } from '@icons-pack/react-simple-icons';
 
 export interface HeaderProps {
   isSidebarOpen: boolean;
@@ -99,7 +99,7 @@ export function Header({
         {/* Desktop Navigation */}
         <nav className="hidden sm:flex items-center gap-4 mr-2">
           <a
-            href="http://hyo.dev/joinCPK"
+            href="https://discord.gg/SPXHsby9"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -108,8 +108,8 @@ export function Header({
               'dark:bg-primary/10 dark:text-white',
             )}
           >
-            <SiSlack className="w-4 h-4" />
-            Slack
+            <SiDiscord className="w-4 h-4" />
+            Discord
           </a>
         </nav>{' '}
         {/* Auth & Language Controls */}
