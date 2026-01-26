@@ -5,6 +5,7 @@ import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
 import { t } from 'i18next';
 import { toast } from 'sonner';
+import { Trash2 } from 'lucide-react';
 import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
@@ -278,13 +279,13 @@ export default function FeatureRequestDetailPage() {
         {isOwner && (
           <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
             {!showDeleteConfirm ? (
-              <Button
-                variant="outline"
+              <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
+                className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                title={t('featureRequest.deleteButton')}
               >
-                {t('featureRequest.deleteButton')}
-              </Button>
+                <Trash2 className="w-5 h-5" />
+              </button>
             ) : (
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -377,9 +378,10 @@ export default function FeatureRequestDetailPage() {
                     {currentUser && comment.authorId === currentUser._id && (
                       <button
                         onClick={() => void handleDeleteComment(comment._id)}
-                        className="mt-2 text-xs text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
+                        className="mt-2 p-1 rounded text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                        title={t('common.delete')}
                       >
-                        {t('common.delete')}
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     )}
                   </div>
