@@ -7,6 +7,7 @@
       "submitting": "제출 중..."
     },
     "cancel": "취소",
+    "deleting": "삭제 중...",
     "loading": "로딩 중...",
     "loadMore": "더 많은 게시물 보기",
     "appName": "크로스플랫폼 코리아",
@@ -247,7 +248,11 @@
       "descriptionTooShort": "설명은 10자 이상이어야 합니다.",
       "serverError": "서버 오류: {{message}}",
       "failedToSubmit": "기능 요청을 제출하지 못했습니다."
-    }
+    },
+    "deleteButton": "삭제",
+    "deleteConfirm": "정말 삭제하시겠습니까?",
+    "deleteSuccess": "기능 요청이 삭제되었습니다.",
+    "deleteFailed": "삭제에 실패했습니다."
   },
   "postWrite": {
     "writeNewPost": "새 글 작성",

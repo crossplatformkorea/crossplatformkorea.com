@@ -7,6 +7,7 @@
       "submitting": "送信中..."
     },
     "cancel": "キャンセル",
+    "deleting": "削除中...",
     "loading": "ローディング中...",
     "appName": "クロスプラットフォームコリア",
     "sideFeatureRequests": "機能リクエスト",
@@ -249,7 +250,11 @@
       "descriptionTooShort": "説明は10文字以上である必要があります。",
       "serverError": "サーバーエラー: {{message}}",
       "failedToSubmit": "機能リクエストの送信に失敗しました。"
-    }
+    },
+    "deleteButton": "削除",
+    "deleteConfirm": "本当に削除しますか？",
+    "deleteSuccess": "機能リクエストが削除されました。",
+    "deleteFailed": "削除に失敗しました。"
   },
   "postWrite": {
     "writeNewPost": "新規投稿",

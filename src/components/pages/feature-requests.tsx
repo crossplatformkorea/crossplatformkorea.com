@@ -1,12 +1,34 @@
 import { useCallback, useState, ChangeEvent } from 'react';
-import { useMutation, usePaginatedQuery } from 'convex/react';
+import { useMutation, usePaginatedQuery, useQuery } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
 import { t } from 'i18next';
+import { toast } from 'sonner';
 import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { cn, devConsole } from '@/lib/utils';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/uis/Dialog';
+
+type FeatureRequest = {
+  _id: Id<'featureRequests'>;
+  _creationTime: number;
+  title: string;
+  description: string;
+  votes: number;
+  status: string;
+  userId: Id<'users'>;
+  userEmail?: string;
+  voterIds?: Id<'users'>[];
+  deletedAt?: number;
+};
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
 type StatusBadgeProps = { status: StatusType };
@@ -57,27 +79,20 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
   );
 };
 
-// Icon for upvote
-const UpvoteIcon = ({ voted }: { voted?: boolean }) => (
+// Chevron up icon for upvote
+const ChevronUpIcon = ({ voted }: { voted?: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={cn(
-      'h-5 w-5',
-      voted
-        ? 'text-primary fill-primary/20'
-        : 'text-gray-500 dark:text-gray-400 group-hover:text-primary',
+      'h-4 w-4',
+      voted ? 'text-primary' : 'text-gray-400 dark:text-gray-500',
     )}
     viewBox="0 0 20 20"
     fill="currentColor"
   >
     <path
       fillRule="evenodd"
-      d="M10 3.293l-6.354 6.353.708.708L10 4.707l5.646 5.647.708-.708L10 3.293z"
-      clipRule="evenodd"
-    />
-    <path
-      fillRule="evenodd"
-      d="M10 5a.75.75 0 01.75.75v10.5a.75.75 0 01-1.5 0V5.75A.75.75 0 0110 5z"
+      d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
       clipRule="evenodd"
     />
   </svg>
@@ -93,12 +108,17 @@ export default function FeatureRequestsPage() {
   } = usePaginatedQuery(api.featureRequests.query.getAll, {}, { initialNumItems: 10 });
   const addFeatureRequest = useMutation(api.featureRequests.mutation.add);
   const voteForFeature = useMutation(api.featureRequests.mutation.vote);
+  const deleteFeatureRequest = useMutation(api.featureRequests.mutation.deleteFeatureRequest);
+  const currentUser = useQuery(api.users.query.currentUser);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState<FeatureRequest | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const formatDate = (timestamp: number) => {
     const locale = typeof navigator !== 'undefined' ? navigator.language : 'en-US';
@@ -165,6 +185,37 @@ export default function FeatureRequestsPage() {
     }
   };
 
+  const handleOpenDetail = (request: FeatureRequest) => {
+    setSelectedRequest(request);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedRequest(null);
+    setShowDeleteConfirm(false);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedRequest) return;
+    setIsDeleting(true);
+    try {
+      await deleteFeatureRequest({ id: selectedRequest._id });
+      toast.success(t('featureRequest.deleteSuccess'));
+      handleCloseDetail();
+    } catch (err) {
+      devConsole.error('Failed to delete:', err);
+      toast.error(t('featureRequest.deleteFailed'));
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const isOwner = selectedRequest && currentUser && selectedRequest.userId === currentUser._id;
+
+  const hasVoted = (request: FeatureRequest) => {
+    if (!currentUser) return false;
+    return request.voterIds?.includes(currentUser._id) ?? false;
+  };
+
   // Icon for the request feature button
   const PlusIcon = () => (
     <svg
@@ -197,47 +248,42 @@ export default function FeatureRequestsPage() {
   );
 
   return (
-    <div>
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-8 mb-10">
-        <div className="mb-6 sm:mb-0 w-full sm:w-auto sm:max-w-[70%] pr-4">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+    <div className="max-w-4xl mx-auto">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
             {t('featureRequest.title')}
           </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400 max-w-full break-words leading-relaxed">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             {t('featureRequest.description')}
           </p>
         </div>
-        <div className="sm:ml-auto">
-          <Button
-            onClick={handleRequestFeatureToggle}
-            size="lg"
-            variant={showForm ? 'outline' : 'default'}
-            className="shrink-0 shadow-md hover:shadow-lg transition-all duration-300 ease-in-out flex items-center whitespace-nowrap"
-          >
-            {showForm ? <CancelIcon /> : <PlusIcon />}
-            {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
-          </Button>
-        </div>
+        <Button
+          onClick={handleRequestFeatureToggle}
+          variant={showForm ? 'outline' : 'default'}
+          className="shrink-0 flex items-center gap-2"
+        >
+          {showForm ? <CancelIcon /> : <PlusIcon />}
+          {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
+        </Button>
       </header>
 
-      {/* Wrapper div for transition */}
+      {/* Form Section */}
       <div
         className={cn(
           'overflow-hidden transition-all duration-300 ease-in-out',
-          showForm
-            ? 'max-h-[1000px] opacity-100 mb-12' // Adjust max-h if your form can be taller
-            : 'max-h-0 opacity-0 mb-0', // Collapses the div and its margin when hidden
+          showForm ? 'max-h-[600px] opacity-100 mb-6' : 'max-h-0 opacity-0 mb-0',
         )}
       >
-        <section className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+        <section className="bg-white dark:bg-gray-800/50 rounded-xl p-5 border border-gray-200 dark:border-gray-700/50">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             {t('featureRequest.formTitle')}
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="title"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
               >
                 {t('featureRequest.titleLabel')} <span className="text-red-500">*</span>
               </label>
@@ -249,16 +295,16 @@ export default function FeatureRequestsPage() {
                 placeholder={t('featureRequest.titlePlaceholder')}
                 required
                 className={cn(
-                  'w-full px-4 py-2.5 border border-gray-300 rounded-md shadow-sm sm:text-sm',
-                  'dark:border-gray-600 dark:bg-gray-700 dark:text-white',
-                  'focus:ring-primary focus:border-primary',
+                  'w-full px-3 py-2 border border-gray-300 rounded-lg text-sm',
+                  'dark:border-gray-600 dark:bg-gray-700/50 dark:text-white',
+                  'focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all',
                 )}
               />
             </div>
             <div>
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
               >
                 {t('featureRequest.descriptionLabel')} <span className="text-red-500">*</span>
               </label>
@@ -266,27 +312,19 @@ export default function FeatureRequestsPage() {
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                rows={5}
+                rows={4}
                 placeholder={t('featureRequest.descriptionPlaceholder')}
                 required
-                className="sm:text-sm" // Assuming Textarea component accepts className
+                className="text-sm"
               />
             </div>
             {error && (
-              <div className="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
-                <div className="flex">
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-red-700 dark:text-red-300">{error}</p>
-                  </div>
-                </div>
+              <div className="rounded-lg bg-red-50 dark:bg-red-900/20 p-3">
+                <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
               </div>
             )}
-            <div className="flex justify-end pt-2">
-              <Button
-                type="submit"
-                disabled={isSubmitting || !title.trim() || !description.trim()}
-                size="lg"
-              >
+            <div className="flex justify-end">
+              <Button type="submit" disabled={isSubmitting || !title.trim() || !description.trim()}>
                 {isSubmitting
                   ? t('featureRequest.submittingButton')
                   : t('featureRequest.submitButton')}
@@ -298,18 +336,18 @@ export default function FeatureRequestsPage() {
 
       <main>
         {status === 'LoadingFirstPage' && (
-          <div className="text-center py-16">
-            <div className="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+          <div className="text-center py-12">
+            <div className="inline-block w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mb-3"></div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {t('featureRequest.loading')}
             </p>
           </div>
         )}
 
         {!featureRequests || (featureRequests.length === 0 && status !== 'LoadingFirstPage') ? (
-          <div className="text-center py-16 bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-200 dark:border-gray-700 p-8">
+          <div className="text-center py-12 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700/50">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-10 w-10 text-gray-300 dark:text-gray-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -319,73 +357,79 @@ export default function FeatureRequestsPage() {
                 vectorEffect="non-scaling-stroke"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                strokeWidth={1.5}
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
               />
             </svg>
-            <h3 className="mt-2 text-xl font-medium text-gray-900 dark:text-white">
+            <h3 className="mt-3 text-base font-medium text-gray-900 dark:text-white">
               {t('featureRequest.noRequestsTitle')}
             </h3>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
               {t('featureRequest.noRequests')}
             </p>
             {!showForm && (
-              <div className="mt-6">
-                <Button onClick={handleRequestFeatureToggle} variant="outline">
+              <div className="mt-4">
+                <Button onClick={handleRequestFeatureToggle} variant="outline" size="sm">
                   {t('featureRequest.beTheFirst')}
                 </Button>
               </div>
             )}
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-3">
             {featureRequests.map((request) => (
               <article
                 key={request._id}
+                onClick={() => handleOpenDetail(request as FeatureRequest)}
                 className={cn(
-                  'bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700',
-                  'hover:shadow-xl transition-shadow duration-300 ease-in-out',
+                  'bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700/50',
+                  'hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200',
+                  'group cursor-pointer',
                 )}
               >
-                <div className="p-5 sm:p-6 flex gap-4 sm:gap-6">
-                  <div className="flex flex-col items-center pt-1 shrink-0">
-                    <Button
-                      onClick={() => void handleVote(request._id)}
-                      variant="ghost"
+                <div className="p-4 flex items-center gap-4">
+                  {/* Vote Button - Canny style */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      void handleVote(request._id);
+                    }}
+                    className={cn(
+                      'flex flex-col items-center justify-center min-w-[48px] h-14 rounded-lg',
+                      'border transition-all duration-200',
+                      hasVoted(request as FeatureRequest)
+                        ? 'border-primary bg-primary/10 dark:bg-primary/20'
+                        : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10',
+                    )}
+                    aria-label={t('featureRequest.voteAriaLabel')}
+                  >
+                    <ChevronUpIcon voted={hasVoted(request as FeatureRequest)} />
+                    <span
                       className={cn(
-                        'p-2.5 border border-gray-300 dark:border-gray-600',
-                        'hover:border-primary dark:hover:border-primary',
-                        'bg-gray-50 dark:bg-gray-700/50',
-                        'hover:bg-primary/5 dark:hover:bg-primary/10',
-                        'flex flex-col items-center w-[60px]',
+                        'text-sm font-bold',
+                        hasVoted(request as FeatureRequest)
+                          ? 'text-primary'
+                          : 'text-gray-700 dark:text-gray-200',
                       )}
-                      aria-label={t('featureRequest.voteAriaLabel')}
                     >
-                      <UpvoteIcon />
-                      <span className="mt-1 text-sm font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">
-                        {request.votes}
-                      </span>
-                    </Button>
-                  </div>
+                      {request.votes}
+                    </span>
+                  </button>
 
+                  {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-col sm:flex-row justify-between sm:items-start mb-2">
-                      <h2
-                        className={cn(
-                          'text-lg sm:text-xl font-semibold text-gray-900 dark:text-white cursor-pointer transition-colors',
-                          'hover:text-primary dark:hover:text-primary',
-                        )}
-                      >
-                        {request.title}
-                      </h2>
-                      <div className="mt-2 sm:mt-0 sm:ml-4 shrink-0">
-                        <StatusBadge status={request.status as StatusType} />
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <h2 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors truncate">
+                          {request.title}
+                        </h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1 mt-0.5">
+                          {request.description}
+                        </p>
                       </div>
+                      <StatusBadge status={request.status as StatusType} />
                     </div>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3 mb-3">
-                      {request.description}
-                    </p>
-                    <div className="text-xs text-gray-500 dark:text-gray-500">
+                    <div className="text-xs text-gray-400 dark:text-gray-500 mt-2">
                       {t('featureRequest.requestedOn')}{' '}
                       <time dateTime={new Date(request._creationTime).toISOString()}>
                         {formatDate(request._creationTime)}
@@ -413,6 +457,103 @@ export default function FeatureRequestsPage() {
           </div>
         )}
       </main>
+
+      {/* Detail Modal */}
+      <Dialog open={!!selectedRequest} onOpenChange={(open) => !open && handleCloseDetail()}>
+        <DialogContent className="sm:max-w-lg">
+          {selectedRequest && (
+            <>
+              <DialogHeader>
+                <div className="flex items-start justify-between gap-4">
+                  <DialogTitle className="text-xl font-bold pr-8">
+                    {selectedRequest.title}
+                  </DialogTitle>
+                </div>
+                <div className="flex items-center gap-3 mt-2">
+                  <StatusBadge status={selectedRequest.status as StatusType} />
+                  <span className="text-xs text-gray-400 dark:text-gray-500">
+                    {t('featureRequest.requestedOn')} {formatDate(selectedRequest._creationTime)}
+                  </span>
+                </div>
+              </DialogHeader>
+
+              <div className="mt-4">
+                <DialogDescription className="text-sm text-gray-600 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
+                  {selectedRequest.description}
+                </DialogDescription>
+
+                <div className="mt-6 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        void handleVote(selectedRequest._id);
+                      }}
+                      className={cn(
+                        'flex items-center gap-2 px-4 py-2 rounded-lg',
+                        'border transition-all duration-200',
+                        hasVoted(selectedRequest)
+                          ? 'border-primary bg-primary/10 dark:bg-primary/20'
+                          : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10',
+                      )}
+                    >
+                      <ChevronUpIcon voted={hasVoted(selectedRequest)} />
+                      <span
+                        className={cn(
+                          'text-sm font-bold',
+                          hasVoted(selectedRequest)
+                            ? 'text-primary'
+                            : 'text-gray-700 dark:text-gray-200',
+                        )}
+                      >
+                        {selectedRequest.votes}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {t('featureRequest.votes')}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {isOwner && (
+                <DialogFooter className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
+                  {!showDeleteConfirm ? (
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowDeleteConfirm(true)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
+                    >
+                      {t('featureRequest.deleteButton')}
+                    </Button>
+                  ) : (
+                    <div className="flex items-center gap-2 w-full">
+                      <span className="text-sm text-gray-600 dark:text-gray-400 flex-1">
+                        {t('featureRequest.deleteConfirm')}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowDeleteConfirm(false)}
+                      >
+                        {t('common.cancel')}
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => void handleDelete()}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? t('common.deleting') : t('common.delete')}
+                      </Button>
+                    </div>
+                  )}
+                </DialogFooter>
+              )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -7,6 +7,7 @@
       "submitting": "Submitting..."
     },
     "cancel": "Cancel",
+    "deleting": "Deleting...",
     "loading": "Loading...",
     "loadMore": "Load more posts",
     "appName": "Cross-Platform Korea",
@@ -266,7 +267,11 @@
       "descriptionTooShort": "Description must be at least 10 characters long.",
       "serverError": "Server error: {{message}}",
       "failedToSubmit": "Failed to submit feature request."
-    }
+    },
+    "deleteButton": "Delete",
+    "deleteConfirm": "Are you sure you want to delete?",
+    "deleteSuccess": "Feature request deleted successfully.",
+    "deleteFailed": "Failed to delete feature request."
   },
   "postWrite": {
     "writeNewPost": "Write New Post",

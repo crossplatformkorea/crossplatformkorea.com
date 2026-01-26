@@ -63,7 +63,7 @@ export const add = mutation({
   },
 });
 
-// Vote on a feature request
+// Vote/Unvote on a feature request (toggle)
 export const vote = mutation({
   args: { id: v.id("featureRequests") },
   handler: async (ctx, args) => {
@@ -83,19 +83,24 @@ export const vote = mutation({
       throw new Error("Feature request not found");
     }
 
-    // Check if user has already voted
     const voterIds = request.voterIds || [];
-    if (voterIds.includes(userId)) {
-      throw new Error("You have already voted for this feature");
+    const hasVoted = voterIds.includes(userId);
+
+    if (hasVoted) {
+      // Unvote: Remove user from voters and decrement count
+      await ctx.db.patch(id, {
+        votes: Math.max(0, request.votes - 1),
+        voterIds: voterIds.filter((vid) => vid !== userId),
+      });
+      return { success: true, voted: false };
+    } else {
+      // Vote: Add user to voters and increment count
+      await ctx.db.patch(id, {
+        votes: request.votes + 1,
+        voterIds: [...voterIds, userId],
+      });
+      return { success: true, voted: true };
     }
-
-    // Increment vote count and add user to voters
-    await ctx.db.patch(id, {
-      votes: request.votes + 1,
-      voterIds: [...voterIds, userId],
-    });
-
-    return { success: true };
   },
 });
 
