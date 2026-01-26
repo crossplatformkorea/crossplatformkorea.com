@@ -365,32 +365,32 @@ export default function FeatureRequestsPage() {
                 )}
               >
                 <div className="p-4 flex items-center gap-4">
-                  {/* Vote Button - Canny style */}
+                  {/* Vote Button */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      void handleVote(request._id);
+                      const isOwner = currentUser && request.userId === currentUser._id;
+                      if (!isOwner) void handleVote(request._id);
                     }}
+                    disabled={currentUser && request.userId === currentUser._id}
                     className={cn(
-                      'flex flex-col items-center justify-center min-w-[48px] h-14 rounded-lg',
-                      'border transition-all duration-200',
-                      hasVoted(request as FeatureRequest)
-                        ? 'border-primary bg-primary/10 dark:bg-primary/20'
-                        : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10',
+                      'flex flex-col items-center justify-center min-w-[40px] py-1.5 rounded-lg',
+                      'border border-gray-200 dark:border-gray-700 transition-colors duration-200',
+                      currentUser && request.userId === currentUser._id
+                        ? 'text-primary border-primary/30 bg-primary/5 cursor-default'
+                        : hasVoted(request as FeatureRequest)
+                          ? 'text-primary border-primary/30 bg-primary/5'
+                          : 'text-gray-400 dark:text-gray-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5',
                     )}
                     aria-label={t('featureRequest.voteAriaLabel')}
                   >
-                    <ChevronUpIcon voted={hasVoted(request as FeatureRequest)} />
-                    <span
-                      className={cn(
-                        'text-sm font-bold',
+                    <ChevronUpIcon
+                      voted={
+                        (currentUser && request.userId === currentUser._id) ||
                         hasVoted(request as FeatureRequest)
-                          ? 'text-primary'
-                          : 'text-gray-700 dark:text-gray-200',
-                      )}
-                    >
-                      {request.votes}
-                    </span>
+                      }
+                    />
+                    <span className="text-sm font-semibold">{request.votes}</span>
                   </button>
 
                   {/* Content */}

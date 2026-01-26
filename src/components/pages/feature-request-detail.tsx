@@ -234,24 +234,18 @@ export default function FeatureRequestDetailPage() {
         <div className="flex items-start gap-4">
           {/* Vote button */}
           <button
-            onClick={() => void handleVote()}
+            onClick={() => !isOwner && void handleVote()}
+            disabled={isOwner}
             className={cn(
-              'flex flex-col items-center justify-center min-w-[56px] h-16 rounded-lg shrink-0',
-              'border transition-all duration-200',
-              hasVoted()
-                ? 'border-primary bg-primary/10 dark:bg-primary/20'
-                : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10',
+              'flex flex-col items-center justify-center min-w-[48px] py-2 rounded-lg shrink-0',
+              'border border-gray-200 dark:border-gray-700 transition-colors duration-200',
+              isOwner || hasVoted()
+                ? 'text-primary border-primary/30 bg-primary/5 cursor-default'
+                : 'text-gray-400 dark:text-gray-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5',
             )}
           >
-            <ChevronUpIcon voted={hasVoted()} />
-            <span
-              className={cn(
-                'text-base font-bold',
-                hasVoted() ? 'text-primary' : 'text-gray-700 dark:text-gray-200',
-              )}
-            >
-              {featureRequest.votes}
-            </span>
+            <ChevronUpIcon voted={isOwner || hasVoted()} />
+            <span className="text-sm font-semibold">{featureRequest.votes}</span>
           </button>
 
           {/* Title and status */}
@@ -260,7 +254,36 @@ export default function FeatureRequestDetailPage() {
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">
                 {featureRequest.title}
               </h1>
-              <StatusBadge status={featureRequest.status as StatusType} />
+              <div className="flex items-center gap-2">
+                <StatusBadge status={featureRequest.status as StatusType} />
+                {isOwner && !showDeleteConfirm && (
+                  <button
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="p-1 rounded text-gray-300 hover:text-red-400 dark:text-gray-600 dark:hover:text-red-400 transition-colors"
+                    title={t('featureRequest.deleteButton')}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+                {isOwner && showDeleteConfirm && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {t('featureRequest.deleteConfirm')}
+                    </span>
+                    <Button variant="outline" size="sm" onClick={() => setShowDeleteConfirm(false)}>
+                      {t('common.cancel')}
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => void handleDelete()}
+                      disabled={isDeleting}
+                    >
+                      {isDeleting ? t('common.deleting') : t('common.delete')}
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="text-xs text-gray-400 dark:text-gray-500 mt-2">
               {t('featureRequest.requestedOn')} {formatDate(featureRequest._creationTime)}
@@ -274,38 +297,6 @@ export default function FeatureRequestDetailPage() {
             {featureRequest.description}
           </p>
         </div>
-
-        {/* Delete button for owner */}
-        {isOwner && (
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-            {!showDeleteConfirm ? (
-              <button
-                onClick={() => setShowDeleteConfirm(true)}
-                className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                title={t('featureRequest.deleteButton')}
-              >
-                <Trash2 className="w-5 h-5" />
-              </button>
-            ) : (
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {t('featureRequest.deleteConfirm')}
-                </span>
-                <Button variant="outline" size="sm" onClick={() => setShowDeleteConfirm(false)}>
-                  {t('common.cancel')}
-                </Button>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => void handleDelete()}
-                  disabled={isDeleting}
-                >
-                  {isDeleting ? t('common.deleting') : t('common.delete')}
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
       </article>
 
       {/* Comments section */}
@@ -366,24 +357,25 @@ export default function FeatureRequestDetailPage() {
                       <span className="text-sm font-medium text-gray-900 dark:text-white">
                         {comment.author?.displayName || t('user.anonymousUser')}
                       </span>
-                      <span className="text-xs text-gray-400 dark:text-gray-500">
-                        {formatDate(comment._creationTime)}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400 dark:text-gray-500">
+                          {formatDate(comment._creationTime)}
+                        </span>
+                        {/* Delete button for comment author - subtle */}
+                        {currentUser && comment.authorId === currentUser._id && (
+                          <button
+                            onClick={() => void handleDeleteComment(comment._id)}
+                            className="p-1 rounded text-gray-300 hover:text-red-400 dark:text-gray-600 dark:hover:text-red-400 transition-colors"
+                            title={t('common.delete')}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
                       {comment.content}
                     </p>
-
-                    {/* Delete button for comment author */}
-                    {currentUser && comment.authorId === currentUser._id && (
-                      <button
-                        onClick={() => void handleDeleteComment(comment._id)}
-                        className="mt-2 p-1 rounded text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                        title={t('common.delete')}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>

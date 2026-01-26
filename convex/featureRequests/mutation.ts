@@ -87,8 +87,13 @@ export const vote = mutation({
 
     const voterIds = request.voterIds || [];
     const hasVoted = voterIds.includes(userId);
+    const isAuthor = request.userId === userId;
 
     if (hasVoted) {
+      // Author cannot unvote their own feature request
+      if (isAuthor) {
+        return { success: false, voted: true };
+      }
       // Unvote: Remove user from voters and decrement count
       await ctx.db.patch(id, {
         votes: Math.max(0, request.votes - 1),
