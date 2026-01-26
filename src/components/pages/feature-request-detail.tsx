@@ -146,7 +146,7 @@ export default function FeatureRequestDetailPage() {
     try {
       await deleteFeatureRequest({ id: featureRequestId as Id<'featureRequests'> });
       toast.success(t('featureRequest.deleteSuccess'));
-      navigate('/feature-request');
+      void navigate('/feature-request');
     } catch (err) {
       devConsole.error('Failed to delete:', err);
       toast.error(t('featureRequest.deleteFailed'));

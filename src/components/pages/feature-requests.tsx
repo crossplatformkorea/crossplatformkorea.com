@@ -185,7 +185,7 @@ export default function FeatureRequestsPage() {
   };
 
   const handleNavigateToDetail = (id: Id<'featureRequests'>) => {
-    navigate(`/feature-request/${id}`);
+    void navigate(`/feature-request/${id}`);
   };
 
   const hasVoted = (request: FeatureRequest) => {
