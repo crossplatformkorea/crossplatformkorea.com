@@ -75,12 +75,14 @@ export const createNotification = internalMutation({
     postId: v.optional(v.id('posts')),
     showcaseId: v.optional(v.id('showcases')),
     commentId: v.optional(v.id('comments')),
+    featureRequestId: v.optional(v.id('featureRequests')),
     triggeredById: v.id('users'),
     commenterName: v.optional(v.string()),
     likerName: v.optional(v.string()),
     mentionerName: v.optional(v.string()),
     postTitle: v.optional(v.string()),
     showcaseTitle: v.optional(v.string()),
+    featureRequestTitle: v.optional(v.string()),
     commentContent: v.optional(v.string()),
     locale: v.optional(v.string()),
   },
@@ -141,6 +143,7 @@ export const createNotification = internalMutation({
       mentionerName: args.mentionerName,
       postTitle: args.postTitle,
       showcaseTitle: args.showcaseTitle,
+      featureRequestTitle: args.featureRequestTitle,
       commentContent: args.commentContent,
     };
 
@@ -159,6 +162,7 @@ export const createNotification = internalMutation({
       postId: args.postId,
       commentId: args.commentId,
       showcaseId: args.showcaseId,
+      featureRequestId: args.featureRequestId,
       triggeredById: args.triggeredById,
       isRead: false,
       updatedAt: Date.now(), // 생성 시점에도 updatedAt 필드 설정

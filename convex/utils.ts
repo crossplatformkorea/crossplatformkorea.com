@@ -3,6 +3,7 @@ import { v } from 'convex/values';
 
 export type NotificationType =
   | 'COMMENT_ON_POST'
+  | 'COMMENT_ON_FEATURE_REQUEST'
   | 'LIKE_ON_SHOWCASE'
   | 'LIKE_ON_POST'
   | 'MENTIONED'
@@ -12,6 +13,7 @@ export type NotificationType =
 export const getNotificationTypeValidator = () => {
   return v.union(
     v.literal('COMMENT_ON_POST'),
+    v.literal('COMMENT_ON_FEATURE_REQUEST'),
     v.literal('LIKE_ON_SHOWCASE'),
     v.literal('LIKE_ON_POST'),
     v.literal('MENTIONED'),
@@ -24,6 +26,7 @@ export interface NotificationMessageParams {
   likerName?: string;
   postTitle?: string;
   showcaseTitle?: string;
+  featureRequestTitle?: string; // 기능 요청 제목
   mentionerName?: string; // 멘션한 사람 이름
   commentContent?: string; // 댓글 내용 (LIKE_ON_COMMENT에 사용)
 }
@@ -42,6 +45,10 @@ export function getNotificationMessages(
       COMMENT_ON_POST: {
         title: 'New Comment',
         message: `${params.commenterName} commented on your post "${params.postTitle}"`,
+      },
+      COMMENT_ON_FEATURE_REQUEST: {
+        title: 'New Comment on Feature Request',
+        message: `${params.commenterName} commented on your feature request "${params.featureRequestTitle}"`,
       },
       LIKE_ON_SHOWCASE: {
         title: 'New Like',
@@ -67,6 +74,10 @@ export function getNotificationMessages(
         title: '새 댓글',
         message: `${params.commenterName}님이 회원님의 게시글 "${params.postTitle}"에 댓글을 달았습니다`,
       },
+      COMMENT_ON_FEATURE_REQUEST: {
+        title: '기능 요청에 새 댓글',
+        message: `${params.commenterName}님이 회원님의 기능 요청 "${params.featureRequestTitle}"에 댓글을 달았습니다`,
+      },
       LIKE_ON_SHOWCASE: {
         title: '새 좋아요',
         message: `${params.likerName}님이 회원님의 쇼케이스 "${params.showcaseTitle}"를 좋아합니다`,
@@ -90,6 +101,10 @@ export function getNotificationMessages(
       COMMENT_ON_POST: {
         title: '新しいコメント',
         message: `${params.commenterName}さんがあなたの投稿「${params.postTitle}」にコメントしました`,
+      },
+      COMMENT_ON_FEATURE_REQUEST: {
+        title: '機能リクエストへの新しいコメント',
+        message: `${params.commenterName}さんがあなたの機能リクエスト「${params.featureRequestTitle}」にコメントしました`,
       },
       LIKE_ON_SHOWCASE: {
         title: '新しいいいね',

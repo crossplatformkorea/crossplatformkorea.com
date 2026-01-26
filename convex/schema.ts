@@ -126,6 +126,7 @@ export default defineSchema({
     postId: v.optional(v.id('posts')), // 포스트 관련 알림일 때
     showcaseId: v.optional(v.id('showcases')), // showcase 관련 알림일 때
     commentId: v.optional(v.id('comments')), // 댓글 관련 알림일 때
+    featureRequestId: v.optional(v.id('featureRequests')), // 기능 요청 관련 알림일 때
     // 알림을 발생시킨 사용자 (내가 아닌 다른 사용자)
     triggeredById: v.id('users'),
     isRead: v.boolean(), // 읽음 여부

@@ -1,6 +1,8 @@
 import { mutation } from "../_generated/server";
 import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { internal } from "../_generated/api";
+import { Id } from "../_generated/dataModel";
 
 // Add a new feature request
 export const add = mutation({
@@ -174,6 +176,37 @@ export const addComment = mutation({
     await ctx.db.patch(args.featureRequestId, {
       commentCount: (featureRequest.commentCount || 0) + 1,
     });
+
+    // 기능 요청 작성자에게 댓글 알림 생성 (자신의 기능 요청이 아닌 경우에만)
+    const featureRequestAuthorId = featureRequest.userId as Id<"users">;
+    if (featureRequestAuthorId && featureRequestAuthorId !== userId) {
+      // 댓글 작성자 정보 가져오기
+      const commenterProfile = await ctx.db
+        .query("userProfiles")
+        .withIndex("by_user", (q) => q.eq("userId", userId))
+        .unique();
+
+      const commenterName = commenterProfile?.displayName || "Someone";
+
+      // 기능 요청 작성자의 언어 설정 가져오기
+      const authorProfile = await ctx.db
+        .query("userProfiles")
+        .withIndex("by_user", (q) => q.eq("userId", featureRequestAuthorId))
+        .unique();
+
+      const authorLocale = authorProfile?.locale || "en";
+
+      // COMMENT_ON_FEATURE_REQUEST 알림 생성
+      await ctx.runMutation(internal.notifications.mutation.createNotification, {
+        userId: featureRequestAuthorId,
+        type: "COMMENT_ON_FEATURE_REQUEST",
+        featureRequestId: args.featureRequestId,
+        triggeredById: userId,
+        commenterName: commenterName,
+        featureRequestTitle: featureRequest.title,
+        locale: authorLocale,
+      });
+    }
 
     return { id: commentId, success: true };
   },
