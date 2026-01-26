@@ -252,7 +252,19 @@
     "deleteButton": "삭제",
     "deleteConfirm": "정말 삭제하시겠습니까?",
     "deleteSuccess": "기능 요청이 삭제되었습니다.",
-    "deleteFailed": "삭제에 실패했습니다."
+    "deleteFailed": "삭제에 실패했습니다.",
+    "comments": "댓글",
+    "commentPlaceholder": "댓글을 작성해주세요...",
+    "addComment": "댓글 등록",
+    "submittingComment": "등록 중...",
+    "commentAdded": "댓글이 등록되었습니다.",
+    "commentFailed": "댓글 등록에 실패했습니다.",
+    "commentDeleted": "댓글이 삭제되었습니다.",
+    "commentDeleteFailed": "댓글 삭제에 실패했습니다.",
+    "noComments": "아직 댓글이 없습니다. 첫 댓글을 작성해보세요!",
+    "backToList": "목록으로 돌아가기",
+    "notFound": "기능 요청을 찾을 수 없습니다",
+    "notFoundDescription": "요청하신 기능 요청이 존재하지 않거나 삭제되었습니다."
   },
   "postWrite": {
     "writeNewPost": "새 글 작성",

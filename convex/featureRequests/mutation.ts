@@ -137,3 +137,80 @@ export const deleteFeatureRequest = mutation({
     return true;
   },
 });
+
+// Add a comment to a feature request
+export const addComment = mutation({
+  args: {
+    featureRequestId: v.id("featureRequests"),
+    content: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+
+    if (!userId) {
+      throw new Error("You must be logged in to add a comment");
+    }
+
+    // Check if feature request exists
+    const featureRequest = await ctx.db.get(args.featureRequestId);
+    if (!featureRequest || featureRequest.deletedAt) {
+      throw new Error("Feature request not found");
+    }
+
+    // Validate content
+    if (args.content.trim().length < 1) {
+      throw new Error("Comment cannot be empty");
+    }
+
+    // Create comment
+    const commentId = await ctx.db.insert("featureRequestComments", {
+      featureRequestId: args.featureRequestId,
+      authorId: userId,
+      content: args.content.trim(),
+      updatedAt: new Date().toISOString(),
+    });
+
+    // Update comment count
+    await ctx.db.patch(args.featureRequestId, {
+      commentCount: (featureRequest.commentCount || 0) + 1,
+    });
+
+    return { id: commentId, success: true };
+  },
+});
+
+// Delete a comment
+export const deleteComment = mutation({
+  args: { commentId: v.id("featureRequestComments") },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+
+    if (!userId) {
+      throw new Error("You must be logged in to delete a comment");
+    }
+
+    const comment = await ctx.db.get(args.commentId);
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    // Check if user is the author
+    if (comment.authorId !== userId) {
+      throw new Error("You can only delete your own comments");
+    }
+
+    // Delete comment
+    await ctx.db.delete(args.commentId);
+
+    // Update comment count
+    const featureRequest = await ctx.db.get(comment.featureRequestId);
+    if (featureRequest) {
+      await ctx.db.patch(comment.featureRequestId, {
+        commentCount: Math.max(0, (featureRequest.commentCount || 1) - 1),
+      });
+    }
+
+    return true;
+  },
+});

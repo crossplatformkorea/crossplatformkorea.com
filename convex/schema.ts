@@ -58,7 +58,17 @@ export default defineSchema({
     userEmail: v.optional(v.string()), // Optional user identification
     voterIds: v.array(v.string()),
     deletedAt: v.optional(v.number()), // Add deletedAt field for soft deletion
+    commentCount: v.optional(v.number()), // 댓글 수 필드 추가
   }).index('by_votes', ['votes']),
+  // 기능 요청 댓글 테이블
+  featureRequestComments: defineTable({
+    featureRequestId: v.id('featureRequests'),
+    authorId: v.id('users'),
+    content: v.string(),
+    updatedAt: v.optional(v.string()),
+  })
+    .index('by_featureRequest', ['featureRequestId'])
+    .index('by_author', ['authorId']),
   files: defineTable({
     storageId: v.id('_storage'),
     fileName: v.string(),

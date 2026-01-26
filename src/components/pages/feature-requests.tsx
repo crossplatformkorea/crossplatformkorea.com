@@ -1,4 +1,5 @@
 import { useCallback, useState, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, usePaginatedQuery, useQuery } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
@@ -8,14 +9,6 @@ import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { cn, devConsole } from '@/lib/utils';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/uis/Dialog';
 
 type FeatureRequest = {
   _id: Id<'featureRequests'>;
@@ -28,6 +21,7 @@ type FeatureRequest = {
   userEmail?: string;
   voterIds?: Id<'users'>[];
   deletedAt?: number;
+  commentCount?: number;
 };
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
@@ -83,10 +77,7 @@ const StatusBadge = ({ status }: StatusBadgeProps) => {
 const ChevronUpIcon = ({ voted }: { voted?: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className={cn(
-      'h-4 w-4',
-      voted ? 'text-primary' : 'text-gray-400 dark:text-gray-500',
-    )}
+    className={cn('h-4 w-4', voted ? 'text-primary' : 'text-gray-400 dark:text-gray-500')}
     viewBox="0 0 20 20"
     fill="currentColor"
   >
@@ -98,8 +89,25 @@ const ChevronUpIcon = ({ voted }: { voted?: boolean }) => (
   </svg>
 );
 
+// Comment icon
+const CommentIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-4 w-4 text-gray-400 dark:text-gray-500"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
 export default function FeatureRequestsPage() {
   useAuthGuard(); // Ensures user is authenticated for this page
+  const navigate = useNavigate();
 
   const {
     results: featureRequests,
@@ -108,7 +116,6 @@ export default function FeatureRequestsPage() {
   } = usePaginatedQuery(api.featureRequests.query.getAll, {}, { initialNumItems: 10 });
   const addFeatureRequest = useMutation(api.featureRequests.mutation.add);
   const voteForFeature = useMutation(api.featureRequests.mutation.vote);
-  const deleteFeatureRequest = useMutation(api.featureRequests.mutation.deleteFeatureRequest);
   const currentUser = useQuery(api.users.query.currentUser);
 
   const [title, setTitle] = useState('');
@@ -116,9 +123,6 @@ export default function FeatureRequestsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState<FeatureRequest | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const formatDate = (timestamp: number) => {
     const locale = typeof navigator !== 'undefined' ? navigator.language : 'en-US';
@@ -146,14 +150,12 @@ export default function FeatureRequestsPage() {
       setTitle('');
       setDescription('');
       setShowForm(false);
-      // Consider using a toast notification library like sonner for success messages
-      window.alert(t('featureRequest.successMessage'));
+      toast.success(t('featureRequest.successMessage'));
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit');
       setError(errorMessage);
       devConsole.error('Error submitting feature request:', err);
-      // Consider using a toast for errors too
     } finally {
       setIsSubmitting(false);
     }
@@ -170,46 +172,21 @@ export default function FeatureRequestsPage() {
   const handleVote = async (id: Id<'featureRequests'>) => {
     try {
       await voteForFeature({ id });
-      // Optionally, provide feedback to the user (e.g., optimistic update or toast)
     } catch (err) {
       devConsole.error('Failed to vote:', err);
-      // Optionally show an error toast
     }
   };
 
   const handleRequestFeatureToggle = () => {
     setShowForm(!showForm);
     if (!showForm) {
-      // Reset error when opening form
       setError(null);
     }
   };
 
-  const handleOpenDetail = (request: FeatureRequest) => {
-    setSelectedRequest(request);
+  const handleNavigateToDetail = (id: Id<'featureRequests'>) => {
+    navigate(`/feature-request/${id}`);
   };
-
-  const handleCloseDetail = () => {
-    setSelectedRequest(null);
-    setShowDeleteConfirm(false);
-  };
-
-  const handleDelete = async () => {
-    if (!selectedRequest) return;
-    setIsDeleting(true);
-    try {
-      await deleteFeatureRequest({ id: selectedRequest._id });
-      toast.success(t('featureRequest.deleteSuccess'));
-      handleCloseDetail();
-    } catch (err) {
-      devConsole.error('Failed to delete:', err);
-      toast.error(t('featureRequest.deleteFailed'));
-    } finally {
-      setIsDeleting(false);
-    }
-  };
-
-  const isOwner = selectedRequest && currentUser && selectedRequest.userId === currentUser._id;
 
   const hasVoted = (request: FeatureRequest) => {
     if (!currentUser) return false;
@@ -380,7 +357,7 @@ export default function FeatureRequestsPage() {
             {featureRequests.map((request) => (
               <article
                 key={request._id}
-                onClick={() => handleOpenDetail(request as FeatureRequest)}
+                onClick={() => handleNavigateToDetail(request._id)}
                 className={cn(
                   'bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700/50',
                   'hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200',
@@ -429,11 +406,16 @@ export default function FeatureRequestsPage() {
                       </div>
                       <StatusBadge status={request.status as StatusType} />
                     </div>
-                    <div className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-                      {t('featureRequest.requestedOn')}{' '}
+                    <div className="flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500 mt-2">
                       <time dateTime={new Date(request._creationTime).toISOString()}>
                         {formatDate(request._creationTime)}
                       </time>
+                      {(request.commentCount ?? 0) > 0 && (
+                        <span className="flex items-center gap-1">
+                          <CommentIcon />
+                          {request.commentCount}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -457,103 +439,6 @@ export default function FeatureRequestsPage() {
           </div>
         )}
       </main>
-
-      {/* Detail Modal */}
-      <Dialog open={!!selectedRequest} onOpenChange={(open) => !open && handleCloseDetail()}>
-        <DialogContent className="sm:max-w-lg">
-          {selectedRequest && (
-            <>
-              <DialogHeader>
-                <div className="flex items-start justify-between gap-4">
-                  <DialogTitle className="text-xl font-bold pr-8">
-                    {selectedRequest.title}
-                  </DialogTitle>
-                </div>
-                <div className="flex items-center gap-3 mt-2">
-                  <StatusBadge status={selectedRequest.status as StatusType} />
-                  <span className="text-xs text-gray-400 dark:text-gray-500">
-                    {t('featureRequest.requestedOn')} {formatDate(selectedRequest._creationTime)}
-                  </span>
-                </div>
-              </DialogHeader>
-
-              <div className="mt-4">
-                <DialogDescription className="text-sm text-gray-600 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
-                  {selectedRequest.description}
-                </DialogDescription>
-
-                <div className="mt-6 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        void handleVote(selectedRequest._id);
-                      }}
-                      className={cn(
-                        'flex items-center gap-2 px-4 py-2 rounded-lg',
-                        'border transition-all duration-200',
-                        hasVoted(selectedRequest)
-                          ? 'border-primary bg-primary/10 dark:bg-primary/20'
-                          : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10',
-                      )}
-                    >
-                      <ChevronUpIcon voted={hasVoted(selectedRequest)} />
-                      <span
-                        className={cn(
-                          'text-sm font-bold',
-                          hasVoted(selectedRequest)
-                            ? 'text-primary'
-                            : 'text-gray-700 dark:text-gray-200',
-                        )}
-                      >
-                        {selectedRequest.votes}
-                      </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {t('featureRequest.votes')}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {isOwner && (
-                <DialogFooter className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
-                  {!showDeleteConfirm ? (
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowDeleteConfirm(true)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
-                    >
-                      {t('featureRequest.deleteButton')}
-                    </Button>
-                  ) : (
-                    <div className="flex items-center gap-2 w-full">
-                      <span className="text-sm text-gray-600 dark:text-gray-400 flex-1">
-                        {t('featureRequest.deleteConfirm')}
-                      </span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setShowDeleteConfirm(false)}
-                      >
-                        {t('common.cancel')}
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => void handleDelete()}
-                        disabled={isDeleting}
-                      >
-                        {isDeleting ? t('common.deleting') : t('common.delete')}
-                      </Button>
-                    </div>
-                  )}
-                </DialogFooter>
-              )}
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

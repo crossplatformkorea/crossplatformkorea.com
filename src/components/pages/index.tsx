@@ -16,6 +16,7 @@ const SignInPage = lazy(() => import('./sign-in'));
 const ProfilePage = lazy(() => import('./profile'));
 const UserProfilePage = lazy(() => import('./user'));
 const FeatureRequestsPage = lazy(() => import('./feature-requests'));
+const FeatureRequestDetailPage = lazy(() => import('./feature-request-detail'));
 const ShowcasePage = lazy(() => import('./showcase'));
 const NotificationsPage = lazy(() => import('./notifications'));
 const ChatGptPage = lazy(() => import('./chatgpt'));
@@ -68,6 +69,10 @@ export default function AppRoutes() {
                 <Route path="/showcase" element={<ShowcasePage />} />
                 <Route path="/notifications" element={<NotificationsPage />} />
                 <Route path="/feature-request" element={<FeatureRequestsPage />} />
+                <Route
+                  path="/feature-request/:featureRequestId"
+                  element={<FeatureRequestDetailPage />}
+                />
                 <Route path="/posts" element={<PostsPage />} />
                 <Route path="/post/:postId" element={<PostDetailsPage />} />
                 <Route path="/" element={<SummaryPage />} />

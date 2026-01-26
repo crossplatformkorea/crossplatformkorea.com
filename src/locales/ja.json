@@ -254,7 +254,19 @@
     "deleteButton": "削除",
     "deleteConfirm": "本当に削除しますか？",
     "deleteSuccess": "機能リクエストが削除されました。",
-    "deleteFailed": "削除に失敗しました。"
+    "deleteFailed": "削除に失敗しました。",
+    "comments": "コメント",
+    "commentPlaceholder": "コメントを書いてください...",
+    "addComment": "コメント追加",
+    "submittingComment": "送信中...",
+    "commentAdded": "コメントが追加されました。",
+    "commentFailed": "コメントの追加に失敗しました。",
+    "commentDeleted": "コメントが削除されました。",
+    "commentDeleteFailed": "コメントの削除に失敗しました。",
+    "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
+    "backToList": "一覧に戻る",
+    "notFound": "機能リクエストが見つかりません",
+    "notFoundDescription": "お探しの機能リクエストは存在しないか、削除されています。"
   },
   "postWrite": {
     "writeNewPost": "新規投稿",

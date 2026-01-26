@@ -271,7 +271,19 @@
     "deleteButton": "Delete",
     "deleteConfirm": "Are you sure you want to delete?",
     "deleteSuccess": "Feature request deleted successfully.",
-    "deleteFailed": "Failed to delete feature request."
+    "deleteFailed": "Failed to delete feature request.",
+    "comments": "Comments",
+    "commentPlaceholder": "Write a comment...",
+    "addComment": "Add Comment",
+    "submittingComment": "Submitting...",
+    "commentAdded": "Comment added successfully.",
+    "commentFailed": "Failed to add comment.",
+    "commentDeleted": "Comment deleted successfully.",
+    "commentDeleteFailed": "Failed to delete comment.",
+    "noComments": "No comments yet. Be the first to comment!",
+    "backToList": "Back to list",
+    "notFound": "Feature request not found",
+    "notFoundDescription": "The feature request you're looking for doesn't exist or has been deleted."
   },
   "postWrite": {
     "writeNewPost": "Write New Post",
