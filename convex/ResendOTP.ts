@@ -30,7 +30,7 @@ const emailTemplates: Record<
   ko: {
     subject: "크로스플랫폼 코리아 이메일 인증 안내",
     text: (token: string) =>
-      `안녕하세요 크로스플랫퐄 코리아에요,\n\n인증 코드: ${token}\n\n위 코드를 앱에 입력하여 로그인 절차를 완료해 주세요.`,
+      `안녕하세요 크로스플랫폼 코리아에요,\n\n인증 코드: ${token}\n\n위 코드를 앱에 입력하여 로그인 절차를 완료해 주세요.`,
   },
   ja: {
     subject: "メール認証のご案内",
