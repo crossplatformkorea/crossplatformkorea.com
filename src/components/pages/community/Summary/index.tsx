@@ -9,10 +9,20 @@ import UserStats from './UserStats';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function SummaryPage() {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuthStore();
+
+  useMetaTags({
+    title: '크로스플랫폼 코리아 — 한국 크로스플랫폼 개발자 커뮤니티',
+    description:
+      'React Native, Flutter, Kotlin Multiplatform, Tauri, Electron 등 크로스플랫폼 개발 소식 · Q&A · 쇼케이스를 공유하는 한국어 개발자 커뮤니티.',
+    canonical: '/',
+    ogUrl: '/',
+    ogType: 'website',
+  });
   const recentPosts = useQuery(api.posts.query.getRecentPosts, { limit: 6 });
   const userIdentity = useQuery(api.users.query.currentUser);
 

@@ -18,6 +18,7 @@ export default defineSchema({
     endDate: v.optional(v.string()),
     authorId: v.optional(v.id('users')), // Add author reference
     thumbnail: v.optional(v.string()), // 썸네일 이미지 URL
+    slug: v.optional(v.string()), // SEO-friendly URL slug, unique per post
     // 통계 필드 모음
     likeCount: v.optional(v.number()),
     likedBy: v.optional(v.array(v.id('users'))),
@@ -28,7 +29,8 @@ export default defineSchema({
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
-    .index('by_author', ['authorId']),
+    .index('by_author', ['authorId'])
+    .index('by_slug', ['slug']),
   userProfiles: defineTable({
     userId: v.id('users'),
     email: v.string(),

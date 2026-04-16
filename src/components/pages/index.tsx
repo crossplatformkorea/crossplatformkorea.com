@@ -74,7 +74,7 @@ export default function AppRoutes() {
                   element={<FeatureRequestDetailPage />}
                 />
                 <Route path="/posts" element={<PostsPage />} />
-                <Route path="/post/:postId" element={<PostDetailsPage />} />
+                <Route path="/post/:slugOrId" element={<PostDetailsPage />} />
                 <Route path="/" element={<SummaryPage />} />
                 {/* @로 시작하는 모든 경로를 UserProfilePage로 라우팅 */}
                 <Route path="/:displayName" element={<UserProfilePage />} />

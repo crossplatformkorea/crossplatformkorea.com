@@ -9,8 +9,6 @@ export default defineConfig({
     react(),
     sitemapPlugin({
       hostname: 'https://crossplatformkorea.com',
-      changefreq: 'weekly',
-      priority: 0.7,
     })
   ],
   publicDir: "public",

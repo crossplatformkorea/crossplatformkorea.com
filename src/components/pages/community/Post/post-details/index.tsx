@@ -6,7 +6,6 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import PostDetailsSkeleton from './PostDetailsSkeleton';
 import { useTranslation } from 'react-i18next';
-import { Id } from '../../../../../../convex/_generated/dataModel';
 import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-react';
 import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
@@ -25,6 +24,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useMetaTags } from '@/hooks/useMetaTags';
+import {
+  buildBlogPosting,
+  buildBreadcrumbs,
+  buildFaqPage,
+  buildVideoObject,
+} from '@/lib/jsonLd';
+import { getCategoryByKey } from '../../../../../../convex/constants';
 
 // 마크다운 bold/italic을 HTML로 전처리 (HTML과 마크다운이 섞여있을 때 파싱 문제 해결)
 function preprocessMarkdown(content: string): string {
@@ -38,7 +44,9 @@ function preprocessMarkdown(content: string): string {
 
 export default function PostDetailsPage() {
   const { isAuthenticated, requireAuth } = useAuthStore();
-  const { postId } = useParams();
+  // Route is `/post/:slugOrId` — accepts either the human-readable slug or a
+  // legacy Convex ID. `getBySlugOrId` resolves both.
+  const { slugOrId } = useParams();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const user = useQuery(api.users.query.currentUser);
@@ -54,19 +62,30 @@ export default function PostDetailsPage() {
   const commentsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!postId) {
+    if (!slugOrId) {
       void navigate(-1);
     }
-  }, [postId, navigate]);
+  }, [slugOrId, navigate]);
 
-  const post = useQuery(api.posts.query.getById, postId ? { id: postId as Id<'posts'> } : 'skip');
+  const post = useQuery(api.posts.query.getBySlugOrId, slugOrId ? { slugOrId } : 'skip');
+
+  // If the user hit a legacy /post/{convexId} URL, redirect to the canonical
+  // slug URL so search engines see only one canonical form.
+  useEffect(() => {
+    if (post && slugOrId && post.slug && slugOrId !== post.slug) {
+      void navigate(`/post/${post.slug}`, { replace: true });
+    }
+  }, [post, slugOrId, navigate]);
 
   useEffect(() => {
-    if (post && postId && !viewIncremented) {
-      void incrementViewCount({ postId: postId as Id<'posts'> });
-      setViewIncremented(true);
-    }
-  }, [post, postId, incrementViewCount, viewIncremented]);
+    if (!post || viewIncremented) return;
+    // Skip the increment when we're about to redirect from a legacy ID URL
+    // to the canonical slug URL. The component will remount under the slug
+    // path and fire the increment there, so incrementing now would double-count.
+    if (post.slug && slugOrId !== post.slug) return;
+    void incrementViewCount({ postId: post._id });
+    setViewIncremented(true);
+  }, [post, slugOrId, incrementViewCount, viewIncremented]);
 
   const author = useQuery(
     api.users.query.getProfile,
@@ -122,101 +141,138 @@ export default function PostDetailsPage() {
       })
     : '';
 
+  // Plain-text excerpt stripped of markdown syntax — reused for description,
+  // OG description, and JSON-LD. Cap at 160 chars, which is the common meta
+  // description limit that also works well as an AI answer-engine snippet.
+  const plainExcerpt = post?.content
+    ? post.content
+        .replace(/```[\s\S]*?```/g, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        // strip list markers at line start (e.g. `- item`, `* item`, `+ item`)
+        // so they don't appear as "- item" in the snippet
+        .replace(/^\s*[-*+]\s+/gm, '')
+        // strip remaining markdown punctuation — keep `-` so hyphenated words
+        // like "cross-platform" stay readable in search/social snippets
+        .replace(/[#*_>`~]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 160)
+    : '';
+
+  const publishedIso = post ? new Date(post._creationTime).toISOString() : undefined;
+  const modifiedIso = post
+    ? new Date(post.updatedAt || post._creationTime).toISOString()
+    : undefined;
+
+  const canonicalPath = post ? `/post/${post.slug || post._id}` : undefined;
+  const canonicalUrl =
+    typeof window !== 'undefined' && canonicalPath
+      ? `${window.location.origin}${canonicalPath}`
+      : canonicalPath;
+
+  // Pick the best OG image: per-post thumbnail when available, otherwise the
+  // site-wide fallback. YouTube posts get a YouTube thumbnail for free via
+  // `extractThumbnailFromContent` during creation.
+  const ogImage = post?.thumbnail || '/og-preview.jpg';
+
   // SEO optimization with meta tags
   useMetaTags(
     post
       ? {
           title: `${post.title} | Cross-Platform Korea`,
-          description: post.content
-            ? post.content.substring(0, 160)
-            : `${post.title} - Cross-Platform Korea 커뮤니티`,
+          description:
+            plainExcerpt || `${post.title} - Cross-Platform Korea 커뮤니티`,
           keywords: post.tags
             ? `${post.tags.join(', ')}, ${post.category}, cross-platform, korea, 개발자, 커뮤니티`
             : `${post.category}, cross-platform, korea, 개발자, 커뮤니티`,
           ogTitle: post.title,
-          ogDescription: post.content
-            ? post.content.substring(0, 160)
-            : `${post.title} - Cross-Platform Korea 커뮤니티`,
-          ogImage: '/og-preview.jpg',
+          ogDescription:
+            plainExcerpt || `${post.title} - Cross-Platform Korea 커뮤니티`,
+          ogImage,
+          ogUrl: canonicalPath,
+          ogType: 'article',
           twitterTitle: post.title,
-          twitterDescription: post.content
-            ? post.content.substring(0, 160)
-            : `${post.title} - Cross-Platform Korea 커뮤니티`,
+          twitterDescription:
+            plainExcerpt || `${post.title} - Cross-Platform Korea 커뮤니티`,
+          twitterImage: ogImage,
+          canonical: canonicalPath,
+          author: author?.name || author?.displayName || undefined,
+          publishedTime: publishedIso,
+          modifiedTime: modifiedIso,
+          articleSection: post.category,
+          articleTags: post.tags,
         }
       : undefined,
   );
 
-  // Add JSON-LD structured data for SEO
+  // Inject per-type JSON-LD blocks. Each block uses a unique `data-schema` id
+  // so we can cleanly replace/remove them independently across navigations.
   useEffect(() => {
-    if (post && author) {
-      const structuredData = {
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: post.title,
-        description: post.content ? post.content.substring(0, 160) : post.title,
-        author: {
-          '@type': 'Person',
-          name: author.name || author.displayName || 'Anonymous',
-        },
-        datePublished: new Date(post._creationTime).toISOString(),
-        dateModified: post.updatedAt
-          ? new Date(post.updatedAt).toISOString()
-          : new Date(post._creationTime).toISOString(),
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': window.location.href,
-        },
-        image: `${window.location.origin}/og-preview.jpg`,
-        publisher: {
-          '@type': 'Organization',
-          name: 'Cross-Platform Korea',
-          logo: {
-            '@type': 'ImageObject',
-            url: `${window.location.origin}/assets/favicon.png`,
-          },
-        },
-        articleSection: post.category,
-        keywords: post.tags ? post.tags.join(', ') : post.category,
-        interactionStatistic: [
-          {
-            '@type': 'InteractionCounter',
-            interactionType: 'https://schema.org/LikeAction',
-            userInteractionCount: post.likeCount || 0,
-          },
-          {
-            '@type': 'InteractionCounter',
-            interactionType: 'https://schema.org/CommentAction',
-            userInteractionCount: post.commentCount || 0,
-          },
-          {
-            '@type': 'InteractionCounter',
-            interactionType: 'https://schema.org/ViewAction',
-            userInteractionCount: post.viewCount || 0,
-          },
-        ],
-      };
+    if (!post || !author || !canonicalUrl || !publishedIso || !modifiedIso) return;
 
-      // Remove existing structured data script if any
-      const existingScript = document.querySelector('script[type="application/ld+json"]');
-      if (existingScript) {
-        existingScript.remove();
+    const categoryLabel = getCategoryByKey(post.category)?.key || post.category;
+
+    const blogPosting = buildBlogPosting({
+      title: post.title,
+      description: plainExcerpt || post.title,
+      url: canonicalUrl,
+      image: post.thumbnail,
+      datePublished: publishedIso,
+      dateModified: modifiedIso,
+      author: {
+        name: author.name || author.displayName || 'Anonymous',
+        url: author.displayName
+          ? `https://crossplatformkorea.com/@${encodeURIComponent(author.displayName)}`
+          : undefined,
+      },
+      category: post.category,
+      tags: post.tags,
+      likeCount: post.likeCount,
+      commentCount: post.commentCount,
+      viewCount: post.viewCount,
+    });
+
+    const breadcrumbs = buildBreadcrumbs({
+      categoryLabel,
+      postTitle: post.title,
+      postUrl: canonicalUrl,
+    });
+
+    const faqPage = buildFaqPage(post.content || '');
+    const videoObject = buildVideoObject({
+      content: post.content || '',
+      postTitle: post.title,
+      description: plainExcerpt || post.title,
+      datePublished: publishedIso,
+    });
+
+    const blocks: { id: string; data: unknown }[] = [
+      { id: 'blog-posting', data: blogPosting },
+      { id: 'breadcrumbs', data: breadcrumbs },
+    ];
+    if (faqPage) blocks.push({ id: 'faq-page', data: faqPage });
+    if (videoObject) blocks.push({ id: 'video-object', data: videoObject });
+
+    for (const block of blocks) {
+      const selector = `script[data-schema="${block.id}"]`;
+      let script = document.querySelector<HTMLScriptElement>(selector);
+      if (!script) {
+        script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.dataset.schema = block.id;
+        document.head.appendChild(script);
       }
-
-      // Add new structured data script
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.text = JSON.stringify(structuredData);
-      document.head.appendChild(script);
-
-      // Cleanup on unmount
-      return () => {
-        const scriptToRemove = document.querySelector('script[type="application/ld+json"]');
-        if (scriptToRemove) {
-          scriptToRemove.remove();
-        }
-      };
+      script.text = JSON.stringify(block.data);
     }
-  }, [post, author]);
+
+    return () => {
+      document
+        .querySelectorAll('script[data-schema]')
+        .forEach((el) => el.remove());
+    };
+  }, [post, author, canonicalUrl, publishedIso, modifiedIso, plainExcerpt]);
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -231,10 +287,10 @@ export default function PostDetailsPage() {
       </Button>
 
       {/* Show loading state while waiting for post data */}
-      {!postId ? null : !post ? (
+      {!slugOrId ? null : !post ? (
         <PostDetailsSkeleton /> // AppLoading 대신 PostDetailsSkeleton 사용
       ) : (
-        <>
+        <article itemScope itemType="https://schema.org/BlogPosting">
           {/* Post header section with visual depth */}
           <div className="mb-8 bg-muted/5 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
             <div className="p-6 border-b border-border/10">
@@ -546,7 +602,7 @@ export default function PostDetailsPage() {
               {post && <Comments postId={post._id} />}
             </div>
           </div>
-        </>
+        </article>
       )}
 
       {/* 수정 및 삭제 모달은 로딩 상태와 관계없이 항상 조건부 렌더링 */}

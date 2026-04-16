@@ -17,6 +17,7 @@ const postObjectValidator = v.object({
   endDate: v.optional(v.string()),
   authorId: v.optional(v.id('users')),
   thumbnail: v.optional(v.string()), // 썸네일 URL
+  slug: v.optional(v.string()), // SEO-friendly URL slug
   likeCount: v.optional(v.number()),
   likedBy: v.optional(v.array(v.id('users'))),
   viewCount: v.optional(v.number()),
@@ -38,6 +39,7 @@ export const getAllPostsForSitemap = query({
       _id: post._id,
       _creationTime: post._creationTime,
       updatedAt: post.updatedAt,
+      slug: post.slug,
     }));
   },
 });
@@ -125,6 +127,37 @@ export const getById = query({
     if (!post) return null;
 
     return post;
+  },
+});
+
+// Get a single post by slug, falling back to Convex ID for legacy URLs.
+// The route accepts `/post/:slugOrId` so this one query covers both.
+export const getBySlugOrId = query({
+  args: { slugOrId: v.string() },
+  returns: v.union(postObjectValidator, v.null()),
+  handler: async (ctx, args) => {
+    // Try slug lookup first (the common, SEO-friendly path). Convex indexes
+    // are not uniqueness-constrained at the DB level, so use a duplicate-
+    // tolerant `.take(2)` instead of `.unique()` — returning the first match
+    // keeps the page functional and logs the anomaly for follow-up.
+    const bySlug = await ctx.db
+      .query('posts')
+      .withIndex('by_slug', (q) => q.eq('slug', args.slugOrId))
+      .take(2);
+
+    if (bySlug.length > 1) {
+      console.error(`Duplicate posts found for slug: ${args.slugOrId}`);
+    }
+    if (bySlug.length >= 1) return bySlug[0];
+
+    // Fall back to treating the param as a Convex document ID. Validate the
+    // format before calling `db.get` to avoid the runtime error Convex raises
+    // on malformed IDs.
+    const normalizedId = ctx.db.normalizeId('posts', args.slugOrId);
+    if (!normalizedId) return null;
+
+    const byId = await ctx.db.get(normalizedId);
+    return byId ?? null;
   },
 });
 
