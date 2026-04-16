@@ -7,8 +7,11 @@
  * - Lowercases latin chars, collapses whitespace and punctuation to a single
  *   dash, and trims dashes at the ends.
  * - Caps length at 80 visible chars to keep URLs short.
- * - Appends a base-36 timestamp suffix to guarantee uniqueness without an
- *   expensive collision check.
+ * - Appends a base-36 timestamp + random suffix. In Convex, `Date.now()`
+ *   returns the same value for the entire mutation, so two posts generated in
+ *   the same batch (e.g. `backfillSlugs`) would collide on the timestamp
+ *   alone. The random segment makes that practically impossible and keeps the
+ *   slug unique even under concurrent writes.
  */
 export function generateSlug(title: string): string {
   const base = title
@@ -22,6 +25,8 @@ export function generateSlug(title: string): string {
     .replace(/^-+|-+$/g, '')
     .slice(0, 80);
 
-  const suffix = Date.now().toString(36);
+  const timestamp = Date.now().toString(36);
+  const random = Math.random().toString(36).slice(2, 8);
+  const suffix = `${timestamp}${random}`;
   return base ? `${base}-${suffix}` : suffix;
 }

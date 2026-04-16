@@ -329,22 +329,48 @@ export const updatePostFromScript = internalMutation({
 
 // Backfill slugs for all posts that don't have one. Run once after deploying
 // the slug field. Idempotent — safe to re-run.
+//
+// Processes a single page per invocation so we stay within Convex's mutation
+// limits on large tables. Returns the next cursor so the caller can loop:
+//   let cursor = null;
+//   while (!done) {
+//     const r = await convex.mutation(api.posts.mutation.backfillSlugs, { cursor });
+//     cursor = r.nextCursor;
+//     done = r.isDone;
+//   }
 export const backfillSlugs = internalMutation({
-  args: {},
+  args: {
+    cursor: v.optional(v.union(v.string(), v.null())),
+    batchSize: v.optional(v.number()),
+  },
   returns: v.object({
-    total: v.number(),
+    scanned: v.number(),
     updated: v.number(),
+    nextCursor: v.union(v.string(), v.null()),
+    isDone: v.boolean(),
   }),
-  handler: async (ctx) => {
-    const posts = await ctx.db.query('posts').collect();
+  handler: async (ctx, args) => {
+    const page = await ctx.db
+      .query('posts')
+      .paginate({
+        cursor: args.cursor ?? null,
+        numItems: args.batchSize ?? 100,
+      });
+
     let updated = 0;
-    for (const post of posts) {
+    for (const post of page.page) {
       if (!post.slug) {
         await ctx.db.patch(post._id, { slug: generateSlug(post.title) });
         updated++;
       }
     }
-    return { total: posts.length, updated };
+
+    return {
+      scanned: page.page.length,
+      updated,
+      nextCursor: page.continueCursor,
+      isDone: page.isDone,
+    };
   },
 });
 

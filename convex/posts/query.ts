@@ -136,13 +136,19 @@ export const getBySlugOrId = query({
   args: { slugOrId: v.string() },
   returns: v.union(postObjectValidator, v.null()),
   handler: async (ctx, args) => {
-    // Try slug lookup first (the common, SEO-friendly path).
+    // Try slug lookup first (the common, SEO-friendly path). Convex indexes
+    // are not uniqueness-constrained at the DB level, so use a duplicate-
+    // tolerant `.take(2)` instead of `.unique()` — returning the first match
+    // keeps the page functional and logs the anomaly for follow-up.
     const bySlug = await ctx.db
       .query('posts')
       .withIndex('by_slug', (q) => q.eq('slug', args.slugOrId))
-      .unique();
+      .take(2);
 
-    if (bySlug) return bySlug;
+    if (bySlug.length > 1) {
+      console.error(`Duplicate posts found for slug: ${args.slugOrId}`);
+    }
+    if (bySlug.length >= 1) return bySlug[0];
 
     // Fall back to treating the param as a Convex document ID. Validate the
     // format before calling `db.get` to avoid the runtime error Convex raises

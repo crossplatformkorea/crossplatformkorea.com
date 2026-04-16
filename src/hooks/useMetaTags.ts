@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+const DEFAULT_OG_IMAGE = '/og-preview.jpg';
+const DEFAULT_SITE_AUTHOR = 'Cross-Platform Korea';
+
 interface MetaTagsConfig {
   title?: string;
   description?: string;
@@ -43,25 +46,32 @@ export function useMetaTags(config?: MetaTagsConfig) {
     const keywords = config?.keywords || t('meta.keywords');
     updateMetaTag('keywords', keywords);
 
-    if (config?.author) {
-      updateMetaTag('author', config.author);
-    }
+    // Always set author so SPA navigations don't leave a previous page's
+    // author on screens that don't specify one (e.g. home page after viewing
+    // a post).
+    updateMetaTag('author', config?.author || DEFAULT_SITE_AUTHOR);
 
     updateMetaTag('robots', config?.noindex ? 'noindex, nofollow' : 'index, follow');
 
-    // Open Graph
+    // Open Graph — always set image and URL to site defaults if not provided
+    // so stale values from the previous route never bleed through.
     updateMetaTag('og:title', config?.ogTitle || title);
     updateMetaTag('og:description', config?.ogDescription || description);
     updateMetaTag('og:locale', i18n.language);
     updateMetaTag('og:type', config?.ogType || 'website');
     updateMetaTag('og:site_name', t('common.appName'));
 
-    if (config?.ogImage) {
-      updateMetaTag('og:image', absoluteUrl(config.ogImage));
-      updateMetaTag('og:image:alt', config.ogTitle || title);
-    }
-    if (config?.ogUrl) {
-      updateMetaTag('og:url', absoluteUrl(config.ogUrl));
+    const ogImage = config?.ogImage || DEFAULT_OG_IMAGE;
+    updateMetaTag('og:image', absoluteUrl(ogImage));
+    updateMetaTag('og:image:alt', config?.ogTitle || title);
+
+    const ogUrl =
+      config?.ogUrl ??
+      (typeof window !== 'undefined'
+        ? `${window.location.origin}${window.location.pathname}`
+        : undefined);
+    if (ogUrl) {
+      updateMetaTag('og:url', absoluteUrl(ogUrl));
     }
 
     if (config?.ogType === 'article') {
@@ -86,16 +96,18 @@ export function useMetaTags(config?: MetaTagsConfig) {
       replaceAllMetaTags('article:tag', []);
     }
 
-    // Twitter Card
+    // Twitter Card — always set image so a previous page's image isn't left
+    // behind on routes that don't supply one.
     updateMetaTag('twitter:card', 'summary_large_image');
     updateMetaTag('twitter:title', config?.twitterTitle || config?.ogTitle || title);
     updateMetaTag(
       'twitter:description',
       config?.twitterDescription || config?.ogDescription || description,
     );
-    if (config?.twitterImage || config?.ogImage) {
-      updateMetaTag('twitter:image', absoluteUrl((config?.twitterImage || config?.ogImage)!));
-    }
+    updateMetaTag(
+      'twitter:image',
+      absoluteUrl(config?.twitterImage || config?.ogImage || DEFAULT_OG_IMAGE),
+    );
 
     // Canonical link
     updateCanonical(config?.canonical);
@@ -112,8 +124,12 @@ function absoluteUrl(url: string): string {
 }
 
 function updateMetaTag(name: string, content: string) {
-  const isProperty =
-    name.startsWith('og:') || name.startsWith('twitter:') || name.startsWith('article:');
+  // Open Graph and `article:*` tags use `property=`. Twitter Card tags use
+  // `name=` (matching the `index.html` baseline and the Twitter/X spec), so
+  // they must be excluded here — otherwise we'd fail to update the existing
+  // `name="twitter:*"` tags and instead append duplicate `property="twitter:*"`
+  // tags every navigation.
+  const isProperty = name.startsWith('og:') || name.startsWith('article:');
   const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
 
   let metaTag = document.querySelector<HTMLMetaElement>(selector);
@@ -132,8 +148,12 @@ function updateMetaTag(name: string, content: string) {
 }
 
 function removeMetaTag(name: string) {
-  const isProperty =
-    name.startsWith('og:') || name.startsWith('twitter:') || name.startsWith('article:');
+  // Open Graph and `article:*` tags use `property=`. Twitter Card tags use
+  // `name=` (matching the `index.html` baseline and the Twitter/X spec), so
+  // they must be excluded here — otherwise we'd fail to update the existing
+  // `name="twitter:*"` tags and instead append duplicate `property="twitter:*"`
+  // tags every navigation.
+  const isProperty = name.startsWith('og:') || name.startsWith('article:');
   const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
   document.querySelectorAll(selector).forEach((el) => el.remove());
 }

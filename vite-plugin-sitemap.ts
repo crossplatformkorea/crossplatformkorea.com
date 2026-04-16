@@ -34,10 +34,16 @@ function formatEntry(hostname: string, entry: SitemapEntry): string {
 
 export function sitemapPlugin(options: SitemapOptions): Plugin {
   const { hostname, exclude = [] } = options;
+  let resolvedOutDir = 'dist';
 
   return {
     name: 'vite-plugin-sitemap',
     apply: 'build',
+    configResolved(config) {
+      // Respect a custom `build.outDir` so the sitemap lands wherever Vite
+      // is actually emitting the bundle.
+      resolvedOutDir = config.build.outDir;
+    },
     async writeBundle() {
       const nowIso = new Date().toISOString();
 
@@ -82,17 +88,18 @@ export function sitemapPlugin(options: SitemapOptions): Plugin {
 ${allEntries.map((e) => formatEntry(hostname, e)).join('\n')}
 </urlset>`;
 
-      // Write to public/ (so next dev server reflects it) AND dist/ (because
-      // Vite already copied public → dist BEFORE writeBundle runs, so writing
-      // only to public/ would leave the deployed sitemap stale).
-      const publicDir = path.resolve(process.cwd(), 'public');
-      const distDir = path.resolve(process.cwd(), 'dist');
-      fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
-      if (fs.existsSync(distDir)) {
-        fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap);
+      // Write only to the resolved build output directory. We deliberately
+      // avoid writing back into the source tree (`public/`) so builds don't
+      // produce a tracked file diff on every run.
+      const outDir = path.isAbsolute(resolvedOutDir)
+        ? resolvedOutDir
+        : path.resolve(process.cwd(), resolvedOutDir);
+      if (!fs.existsSync(outDir)) {
+        fs.mkdirSync(outDir, { recursive: true });
       }
+      fs.writeFileSync(path.join(outDir, 'sitemap.xml'), sitemap);
 
-      console.log(`✅ Sitemap written with ${allEntries.length} URLs`);
+      console.log(`✅ Sitemap written to ${outDir} with ${allEntries.length} URLs`);
     },
   };
 }

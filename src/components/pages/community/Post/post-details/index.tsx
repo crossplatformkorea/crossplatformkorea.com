@@ -78,11 +78,14 @@ export default function PostDetailsPage() {
   }, [post, slugOrId, navigate]);
 
   useEffect(() => {
-    if (post && !viewIncremented) {
-      void incrementViewCount({ postId: post._id });
-      setViewIncremented(true);
-    }
-  }, [post, incrementViewCount, viewIncremented]);
+    if (!post || viewIncremented) return;
+    // Skip the increment when we're about to redirect from a legacy ID URL
+    // to the canonical slug URL. The component will remount under the slug
+    // path and fire the increment there, so incrementing now would double-count.
+    if (post.slug && slugOrId !== post.slug) return;
+    void incrementViewCount({ postId: post._id });
+    setViewIncremented(true);
+  }, [post, slugOrId, incrementViewCount, viewIncremented]);
 
   const author = useQuery(
     api.users.query.getProfile,
@@ -147,7 +150,12 @@ export default function PostDetailsPage() {
         .replace(/<[^>]*>/g, '')
         .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
         .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-        .replace(/[#*_>`~-]+/g, ' ')
+        // strip list markers at line start (e.g. `- item`, `* item`, `+ item`)
+        // so they don't appear as "- item" in the snippet
+        .replace(/^\s*[-*+]\s+/gm, '')
+        // strip remaining markdown punctuation — keep `-` so hyphenated words
+        // like "cross-platform" stay readable in search/social snippets
+        .replace(/[#*_>`~]+/g, ' ')
         .replace(/\s+/g, ' ')
         .trim()
         .slice(0, 160)
