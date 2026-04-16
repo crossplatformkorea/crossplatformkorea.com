@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { sitemapPlugin } from "./vite-plugin-sitemap";
+import { rssPlugin } from "./vite-plugin-rss";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,7 +10,12 @@ export default defineConfig({
     react(),
     sitemapPlugin({
       hostname: 'https://crossplatformkorea.com',
-    })
+    }),
+    rssPlugin({
+      hostname: 'https://crossplatformkorea.com',
+      title: 'Cross-Platform Korea',
+      description: '한국 크로스플랫폼 개발자 커뮤니티 — React Native, Flutter, Kotlin Multiplatform, Tauri, Electron 등 최신 소식과 심층 해설.',
+    }),
   ],
   publicDir: "public",
   resolve: {

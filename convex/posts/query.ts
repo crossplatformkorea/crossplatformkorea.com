@@ -34,13 +34,55 @@ export const getAllPostsForSitemap = query({
       .query('posts')
       .order('desc')
       .collect();
-    
+
     return posts.map(post => ({
       _id: post._id,
       _creationTime: post._creationTime,
       updatedAt: post.updatedAt,
       slug: post.slug,
     }));
+  },
+});
+
+// Get recent posts with fields needed for RSS feed generation. Returns the
+// top N posts (default 30) in descending creation order. Author displayName
+// is resolved server-side so the feed generator doesn't need a second round
+// trip per post.
+export const getRecentPostsForRss = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, args) => {
+    const limit = args.limit ?? 30;
+    const posts = await ctx.db
+      .query('posts')
+      .withIndex('by_creation_time')
+      .order('desc')
+      .take(limit);
+
+    const results = [];
+    for (const post of posts) {
+      let authorName: string | undefined;
+      if (post.authorId) {
+        const profile = await ctx.db
+          .query('userProfiles')
+          .withIndex('by_user', (q) => q.eq('userId', post.authorId!))
+          .unique();
+        authorName = profile?.displayName || profile?.name || undefined;
+      }
+
+      results.push({
+        _id: post._id,
+        _creationTime: post._creationTime,
+        title: post.title,
+        content: post.content,
+        category: post.category,
+        tags: post.tags,
+        slug: post.slug,
+        thumbnail: post.thumbnail,
+        updatedAt: post.updatedAt,
+        authorName,
+      });
+    }
+    return results;
   },
 });
 
