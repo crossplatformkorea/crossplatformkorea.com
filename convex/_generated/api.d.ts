@@ -35,6 +35,7 @@ import type * as sitemap from "../sitemap.js";
 import type * as users_mutation from "../users/mutation.js";
 import type * as users_query from "../users/query.js";
 import type * as utils_mentions from "../utils/mentions.js";
+import type * as utils_slug from "../utils/slug.js";
 import type * as utils from "../utils.js";
 import type * as validators from "../validators.js";
 
@@ -80,6 +81,7 @@ declare const fullApi: ApiFromModules<{
   "users/mutation": typeof users_mutation;
   "users/query": typeof users_query;
   "utils/mentions": typeof utils_mentions;
+  "utils/slug": typeof utils_slug;
   utils: typeof utils;
   validators: typeof validators;
 }>;

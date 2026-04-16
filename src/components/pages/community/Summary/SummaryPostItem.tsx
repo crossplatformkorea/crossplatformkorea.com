@@ -15,6 +15,7 @@ interface Post {
   updatedAt: string;
   tags?: string[];
   thumbnail?: string;
+  slug?: string;
 }
 
 interface PostListItemProps {
@@ -33,7 +34,7 @@ export default function SummaryPostItem({ post }: PostListItemProps) {
   })();
 
   return (
-    <Link to={`/post/${post._id}`} className="group relative block h-full">
+    <Link to={`/post/${post.slug || post._id}`} className="group relative block h-full">
       {/* 훨씬 더 연한 호버 효과 */}
       <div className={cn(
         "absolute -inset-px rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 blur-[1px] transition-all duration-300",

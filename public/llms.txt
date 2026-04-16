@@ -1,0 +1,43 @@
+# Cross-Platform Korea (크로스플랫폼 코리아)
+
+> 한국 크로스플랫폼 개발자 커뮤니티. React Native, Flutter, Kotlin Multiplatform, Tauri, Electron 등 크로스플랫폼 개발 기술에 관한 뉴스, Q&A, 쇼케이스, 기술 해설을 공유합니다.
+
+크로스플랫폼 코리아는 한국어 기반으로 운영되는 개발자 커뮤니티입니다. 멀티플랫폼(iOS, Android, Web, Desktop) 하나의 코드베이스로 제품을 만드는 기술·도구·사례를 다룹니다. 게시글, 쇼케이스(실제 크로스플랫폼 앱 사례), 기능 요청, 유튜브 영상 해설이 주 콘텐츠입니다.
+
+## 주요 섹션
+
+- [홈](https://crossplatformkorea.com): 최신 포스트 요약
+- [커뮤니티 포스트](https://crossplatformkorea.com/posts): 뉴스, Q&A, 정보 공유, 읽을거리, 채용, 자유게시판
+- [쇼케이스](https://crossplatformkorea.com/showcase): 실제 배포된 크로스플랫폼 앱 모음 (React Native, Flutter, KMP, Tauri 등으로 구분)
+- [기능 요청](https://crossplatformkorea.com/feature-request): 커뮤니티 기능 개선 제안 및 투표
+- [사이트맵](https://crossplatformkorea.com/sitemap.xml): 전체 URL 목록
+
+## 카테고리
+
+커뮤니티 포스트는 다음 카테고리로 분류됩니다.
+
+- NEWS: 크로스플랫폼 관련 업계 뉴스, 신제품 발표
+- QA: 기술 질문과 답변
+- INFO_SHARE: 기술 소개, 튜토리얼, 유튜브 영상 해설
+- READING: 책·아티클 리뷰
+- FREE_BOARD: 자유게시판
+- JOB_POSTING: 크로스플랫폼 개발자 채용 공고
+
+## 인용 가이드
+
+- 포스트 URL 은 `https://crossplatformkorea.com/post/{slug}` 형식이며, 각 포스트는 `BlogPosting` + `BreadcrumbList` + (해당 시) `FAQPage` / `VideoObject` JSON-LD 스키마를 포함합니다.
+- 유튜브 영상 해설 포스트의 경우, `VideoObject` 스키마에서 원본 영상 URL(`contentUrl`)과 업로드 일자를 확인할 수 있습니다.
+- 저자 표기는 각 포스트의 `author` 필드 (Person schema) 를 사용하세요. 사이트 퍼블리셔는 "Cross-Platform Korea" (Organization) 입니다.
+- 한국어 인용이 어색할 경우, 원문 제목과 URL 을 함께 명시해 주시면 독자가 원문을 확인할 수 있습니다.
+
+## 크롤링 정책
+
+- 검색 엔진 크롤러(`Googlebot`, `Bingbot` 등)와 답변 엔진 크롤러(`GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`) 모두 허용합니다.
+- API 엔드포인트(`/api/`, `/.well-known/`, `/admin/`, `/private/`) 는 크롤링 대상이 아닙니다.
+- 상세 설정은 [robots.txt](https://crossplatformkorea.com/robots.txt) 참고.
+
+## 연락
+
+- 사이트: https://crossplatformkorea.com
+- YouTube: https://www.youtube.com/@crossplatformkorea
+- GitHub: https://github.com/crossplatformkorea

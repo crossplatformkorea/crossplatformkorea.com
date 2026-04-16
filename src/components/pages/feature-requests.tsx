@@ -9,6 +9,7 @@ import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { cn, devConsole } from '@/lib/utils';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 type FeatureRequest = {
   _id: Id<'featureRequests'>;
@@ -108,6 +109,15 @@ const CommentIcon = () => (
 export default function FeatureRequestsPage() {
   useAuthGuard(); // Ensures user is authenticated for this page
   const navigate = useNavigate();
+
+  useMetaTags({
+    title: '기능 요청 | Cross-Platform Korea',
+    description:
+      '크로스플랫폼 코리아에 원하는 기능을 제안하고 투표해보세요. 커뮤니티가 직접 다음 기능의 우선순위를 정합니다.',
+    canonical: '/feature-request',
+    ogUrl: '/feature-request',
+    ogType: 'website',
+  });
 
   const {
     results: featureRequests,

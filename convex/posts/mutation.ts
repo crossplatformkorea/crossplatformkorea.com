@@ -1,10 +1,11 @@
 import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
-import { mutation } from '../_generated/server';
+import { mutation, internalMutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
 import { DEFAULT_CATEGORY } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
+import { generateSlug } from '../utils/slug';
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -37,6 +38,8 @@ export const createPost = mutation({
     // 썸네일 결정: 사용자가 선택한 것 또는 자동 추출 (유튜브 > 첫 번째 이미지)
     const thumbnail = args.thumbnail || extractThumbnailFromContent(args.content);
 
+    const slug = generateSlug(args.title);
+
     // Create the post
     const postId = await ctx.db.insert('posts', {
       category, // Use validated category
@@ -49,6 +52,7 @@ export const createPost = mutation({
       authorId: userId as Id<'users'>,
       mentions: mentionedUserIds.length > 0 ? mentionedUserIds : undefined,
       thumbnail,
+      slug,
     });
 
     // 멘션 알림 생성
@@ -226,6 +230,124 @@ function extractThumbnailFromContent(content: string): string | undefined {
   return undefined;
 }
 
+// Script-only: create a post on behalf of a user identified by email.
+// Used by the /post-blog Claude skill to automate YouTube → blog publishing.
+export const createPostFromScript = internalMutation({
+  args: {
+    authorEmail: v.string(),
+    category: v.string(),
+    title: v.string(),
+    content: v.string(),
+    tags: v.array(v.string()),
+    thumbnail: v.optional(v.string()),
+  },
+  returns: v.id('posts'),
+  handler: async (ctx, args) => {
+    const profile = await ctx.db
+      .query('userProfiles')
+      .withIndex('by_email', (q) => q.eq('email', args.authorEmail))
+      .unique();
+
+    if (!profile) {
+      throw new Error(`No user profile found for email: ${args.authorEmail}`);
+    }
+
+    const authorId = profile.userId;
+    const now = new Date().toISOString();
+    const category = args.category || DEFAULT_CATEGORY;
+    const thumbnail = args.thumbnail || extractThumbnailFromContent(args.content);
+    const slug = generateSlug(args.title);
+
+    const postId = await ctx.db.insert('posts', {
+      category,
+      title: args.title,
+      content: args.content,
+      tags: args.tags,
+      updatedAt: now,
+      authorId,
+      thumbnail,
+      slug,
+    });
+
+    await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
+      postId,
+      title: args.title,
+      content: args.content,
+      category,
+    });
+
+    await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
+      postId,
+      title: args.title,
+      content: args.content,
+      category,
+    });
+
+    return postId;
+  },
+});
+
+// Script-only: update a post's content/title/tags/thumbnail without auth.
+// Used by the /post-blog Claude skill to fix up automated posts.
+export const updatePostFromScript = internalMutation({
+  args: {
+    postId: v.id('posts'),
+    title: v.optional(v.string()),
+    content: v.optional(v.string()),
+    tags: v.optional(v.array(v.string())),
+    category: v.optional(v.string()),
+    thumbnail: v.optional(v.string()),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const post = await ctx.db.get(args.postId);
+    if (!post) {
+      throw new Error(`Post not found: ${args.postId}`);
+    }
+
+    const updateData: Record<string, unknown> = {
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (args.title !== undefined) updateData.title = args.title;
+    if (args.content !== undefined) updateData.content = args.content;
+    if (args.tags !== undefined) updateData.tags = args.tags;
+    if (args.category !== undefined) updateData.category = args.category;
+    if (args.thumbnail !== undefined) updateData.thumbnail = args.thumbnail;
+
+    // Backfill slug if the post doesn't have one yet. Never overwrite an
+    // existing slug on update — keeping URLs stable matters more than having
+    // the slug match a renamed title.
+    if (!post.slug) {
+      updateData.slug = generateSlug(args.title ?? post.title);
+    }
+
+    await ctx.db.patch(args.postId, updateData);
+    return true;
+  },
+});
+
+// Backfill slugs for all posts that don't have one. Run once after deploying
+// the slug field. Idempotent — safe to re-run.
+export const backfillSlugs = internalMutation({
+  args: {},
+  returns: v.object({
+    total: v.number(),
+    updated: v.number(),
+  }),
+  handler: async (ctx) => {
+    const posts = await ctx.db.query('posts').collect();
+    let updated = 0;
+    for (const post of posts) {
+      if (!post.slug) {
+        await ctx.db.patch(post._id, { slug: generateSlug(post.title) });
+        updated++;
+      }
+    }
+    return { total: posts.length, updated };
+  },
+});
+
 // Update an existing post
 export const updatePost = mutation({
   args: {
@@ -263,6 +385,14 @@ export const updatePost = mutation({
 
     if (args.category !== undefined) updateData.category = args.category;
     if (args.title !== undefined) updateData.title = args.title;
+
+    // Backfill slug for legacy posts that were created before the slug field
+    // existed. Never overwrite an existing slug — URL stability matters more
+    // than matching a renamed title.
+    if (!post.slug) {
+      updateData.slug = generateSlug(args.title ?? post.title);
+    }
+
     // 썸네일 삭제 여부를 추적
     let shouldClearThumbnail = false;
 

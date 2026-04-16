@@ -41,11 +41,12 @@ export const registerSitemapRoutes = (http: HttpRouter) => {
         sitemap += `  </url>\n`;
       }
       
-      // Add all posts
+      // Add all posts — prefer SEO-friendly slug over Convex ID when available
       if (posts) {
         for (const post of posts) {
+          const pathSegment = post.slug || post._id;
           sitemap += `  <url>\n`;
-          sitemap += `    <loc>${hostname}/post/${post._id}</loc>\n`;
+          sitemap += `    <loc>${hostname}/post/${pathSegment}</loc>\n`;
           sitemap += `    <lastmod>${new Date(post.updatedAt || post._creationTime).toISOString()}</lastmod>\n`;
           sitemap += `    <changefreq>weekly</changefreq>\n`;
           sitemap += `    <priority>0.7</priority>\n`;

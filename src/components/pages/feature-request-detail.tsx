@@ -10,6 +10,7 @@ import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { cn, devConsole } from '@/lib/utils';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 type StatusType = 'requested' | 'planned' | 'in-progress' | 'completed';
 
@@ -109,6 +110,20 @@ export default function FeatureRequestDetailPage() {
   const deleteFeatureRequest = useMutation(api.featureRequests.mutation.deleteFeatureRequest);
   const addComment = useMutation(api.featureRequests.mutation.addComment);
   const deleteComment = useMutation(api.featureRequests.mutation.deleteComment);
+
+  useMetaTags(
+    featureRequest
+      ? {
+          title: `${featureRequest.title} | 기능 요청 | Cross-Platform Korea`,
+          description:
+            featureRequest.description?.slice(0, 160) ||
+            `${featureRequest.title} - 크로스플랫폼 코리아 기능 요청`,
+          canonical: `/feature-request/${featureRequest._id}`,
+          ogUrl: `/feature-request/${featureRequest._id}`,
+          ogType: 'article',
+        }
+      : undefined,
+  );
 
   const [commentContent, setCommentContent] = useState('');
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);

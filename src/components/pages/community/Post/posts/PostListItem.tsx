@@ -88,7 +88,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
 
   return (
     <Link
-      to={`/post/${post._id}`}
+      to={`/post/${post.slug || post._id}`}
       className={cn(
         'block transition-all duration-300 overflow-hidden rounded-xl shadow-sm border group',
         'bg-background/80 hover:bg-background',
