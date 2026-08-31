@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useStream } from '@convex-dev/persistent-text-streaming/react';
 import { StreamId } from '@convex-dev/persistent-text-streaming';
 import ReactMarkdown from 'react-markdown';
@@ -18,19 +18,30 @@ import { Button } from '@/components/uis/Button';
 
 export function StreamingMessage({ message }: { message: Message }) {
   const [copied, setCopied] = useState(false);
+  const [canDriveStream, setCanDriveStream] = useState(!import.meta.env.DEV);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
+    // The package's same-stream guard cannot restart a fetch aborted by the
+    // development-only StrictMode effect replay. Wait until that replay ends.
+    const timer = window.setTimeout(() => setCanDriveStream(true), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   // Convex site URL for HTTP actions - convert .cloud to .site
   const convexApiUrl = import.meta.env.VITE_CONVEX_URL;
   const convexSiteUrl =
     convexApiUrl?.replace('.convex.cloud', '.convex.site') || window.location.origin;
+  const streamUrl = useMemo(() => new URL(`${convexSiteUrl}/chat-stream`), [convexSiteUrl]);
 
   // For newly created streaming messages, this component should drive the stream
   const isDriven = message.isStreaming === true;
 
   const { text, status } = useStream(
     api.chats.query.getChatBody,
-    new URL(`${convexSiteUrl}/chat-stream`),
-    isDriven, // Drive the stream if the message is actively streaming
+    streamUrl,
+    isDriven && canDriveStream, // Drive after the StrictMode replay is complete
     message.streamId as StreamId,
   );
 
