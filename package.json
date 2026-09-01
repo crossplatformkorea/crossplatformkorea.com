@@ -22,7 +22,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@auth/core": "0.39.0",
+    "@auth/core": "0.41.3",
     "@convex-dev/auth": "0.0.86",
     "@convex-dev/persistent-text-streaming": "0.3.3",
     "convex": "1.45.0",
