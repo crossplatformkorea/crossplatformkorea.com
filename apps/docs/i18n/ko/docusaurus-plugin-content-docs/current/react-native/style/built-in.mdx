@@ -1,0 +1,110 @@
+---
+id: built-in
+title: 내장 스타일링
+sidebar_label: 내장 스타일링
+description: 애플리케이션을 개발할 때, 모바일이나 웹에 관계없이 사용자에게 어떻게 보이고 느껴지는지가 중요합니다.
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+애플리케이션을 개발할 때, 모바일이나 웹에 관계없이 사용자에게 어떻게 보이고 느껴지는지가 중요합니다. 이러한 외관과 느낌은 "스타일링"을 통해 달성됩니다. 스타일은 색상, 크기, 위치 등의 대표 속성을 가지며 앱의 다양한 부분(또는 컴포넌트)이 어떻게 표현되는지 결정합니다.
+
+현재 **React Native**는 주로 모바일 앱 개발로 알려져 있습니다. JavaScript와 React를 사용하여 iOS와 Android 양쪽 모두에 대한 앱을 만들 수 있습니다. 그러나 **React Native Web**과 같은 도구를 사용하면 동일한 코드베이스로 웹 애플리케이션도 만들 수 있습니다. 그러므로 본질적으로 한 번 작성하여 모바일과 웹 모두에 배포하는 이점을 얻을 수 있습니다.
+
+## 스타일 적용하기
+
+1. **필요한 모듈 불러오기**:
+먼저 `StyleSheet`을 React Native에서 가져옵니다. 이 모듈은 구 organized styles을 생성하는 데 필수적입니다.
+   ```tsx
+   import { StyleSheet } from 'react-native';
+   ```
+
+2. **스타일 정의하기**:
+`StyleSheet.create` 메소드를 사용하여 스타일을 정의합니다. 각 스타일은 이름을 가지며, 각 스타일 내에서 컴포넌트의 모양을 결정하는 속성을 설정합니다.
+   ```tsx
+   const styles = StyleSheet.create({
+     container: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       backgroundColor: '#F5FCFF',
+     },
+     text: {
+       fontSize: 20,
+       textAlign: 'center',
+       margin: 10,
+     }
+   });
+   ```
+
+3. **스타일 적용하기**:
+   정의한 스타일을 React Native 컴포넌트에 적용합니다.
+   ```tsx
+   import React from 'react';
+   import { View, Text } from 'react-native';
+
+   export default function App() {
+     return (
+       <View style={styles.container}>
+         <Text style={styles.text}>Hello, React Native!</Text>
+       </View>
+     );
+   }
+   ```
+
+### Flexbox 이해하기
+
+React Native는 레이아웃을 위해 `flexbox` 레이아웃 시스템을 채택하고 있습니다. Flexbox는 복잡한 레이아웃을 쉽게 디자인할 수 있는 강력한 도구입니다. 기본 개념은 컨테이너와 아이템의 유연성을 제어하여 다양한 화면 크기와 방향에 대응하는 레이아웃을 만드는 것입니다.
+
+- **flexDirection**: 주 축을 설정합니다. `row` 또는 `column`으로 설정할 수 있습니다.
+- **justifyContent**: 주 축의 정렬 방식을 결정합니다. 예를 들면, `center`, `space-between`, `flex-start` 등이 있습니다.
+- **alignItems**: 교차 축의 정렬 방식을 결정합니다. 예를 들면, `center`, `flex-start`, `flex-end` 등이 있습니다.
+
+이 외에도 많은 속성이 있지만, 이것만으로도 대부분의 레이아웃 요구 사항을 충족시킬 수 있습니다.
+
+Flexbox는 리엑트 네이티브 스타일을 다루는데 있어서 가장 중요한 개념입니다. Flexbox에 대한 자세한 내용은 [여기](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)에서 확인할 수 있습니다.
+또한, 저희가 제공하는 아래 영상도 참고하시면 좋습니다.
+
+<div class="video-container" style={{marginBottom: 8}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/07ioPW-VKd4?si=-mku-ztYHU2siXJx" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+### 주의 사항
+
+- **Camel Case**: React Native는 속성 이름에 camelCase를 사용합니다. 예를 들면,
+
+ `background-color` 대신 `backgroundColor`와 같이 표기합니다.
+
+## 인라인 스타일
+
+React Native에서는 `StyleSheet` 외에도 인라인 스타일을 지원합니다. 이 방법은 컴포넌트 내에서 직접 스타일 속성을 정의하여 사용합니다. 빠른 스타일링이나 변화를 시험할 때 유용하나, 큰 프로젝트나 반복적으로 사용되는 스타일의 경우 `StyleSheet` 사용이 권장됩니다.
+
+예시:
+
+```tsx
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>
+        인라인 스타일 예시입니다!
+      </Text>
+    </View>
+  );
+}
+```
+
+위의 예시에서 `View`와 `Text` 컴포넌트의 `style` 속성에 직접 객체 형태로 스타일 속성을 정의하여 사용하였습니다. 이렇게 직접 스타일을 정의하는 방법을 인라인 스타일이라고 합니다.
+이 방식은 빠른 스타일링이나 변화를 시험할 때 유용하지만, 큰 프로젝트나 반복적으로 사용되는 스타일의 경우 `StyleSheet` 사용이 권장됩니다.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

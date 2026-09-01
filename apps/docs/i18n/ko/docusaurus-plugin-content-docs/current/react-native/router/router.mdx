@@ -1,0 +1,105 @@
+---
+id: router
+title: 라우터
+sidebar_label: 라우터
+sidebar_position: 1
+description: 리액트 네이티브에서는 라우터나 네비게이션 관리를 위해 여러 패키지가 있습니다.
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+리액트 네이티브에서는 라우터나 네비게이션 관리를 위해 여러 패키지가 있습니다. 그 중 가장 대표적인 라이브러리는 `React Navigation`과 `React Native Navigation`입니다.
+
+## 1. React Navigation
+
+[React Navigation](https://reactnavigation.org)은 리액트 네이티브에서 가장 인기 있는 네비게이션 라이브러리 중 하나입니다.
+
+### 장점
+- 자바스크립트로 구현되어 있어, 다양한 플랫폼에서의 호환성이 좋습니다.
+- 커스터마이징이 쉽습니다.
+- 커뮤니티 지원이 활발합니다.
+
+### 설치
+
+```bash
+npm install @react-navigation/native
+```
+
+Stack, Tab, Drawer 등 다양한 네비게이터 타입이 있습니다. 그 중 StackNavigator 예제:
+
+```bash
+npm install @react-navigation/stack
+```
+
+### 사용법
+
+```tsx
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+## 2. React Native Navigation
+
+[React Native Navigation](https://wix.github.io/react-native-navigation/)은 Wix에 의해 제작된 네이티브 모듈을 기반으로 하는 라우터 라이브러리입니다.
+
+### 장점
+- 네이티브 모듈 기반이므로 성능이 좋습니다.
+- 네이티브 UI 컴포넌트를 사용하여 렌더링하기 때문에 더 매끄러운 애니메이션이 가능합니다.
+
+### 설치
+
+```bash
+npm install react-native-navigation
+```
+
+그 후 네이티브 모듈을 연결합니다.
+
+### 사용법
+
+```tsx
+import { Navigation } from 'react-native-navigation';
+
+Navigation.registerComponent('Home', () => HomeScreen);
+Navigation.registerComponent('Details', () => DetailsScreen);
+
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'Home'
+            }
+          }
+        ]
+      }
+    }
+  });
+});
+```
+
+두 라이브러리 모두 각각의 장단점이 있으므로 프로젝트의 요구 사항과 선호도에 따라 적절한 라이브러리를 선택하는 것이 좋습니다.
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

@@ -1,0 +1,104 @@
+---
+id: router
+title: Router
+sidebar_label: Router
+sidebar_position: 1
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+In React Native, there are several packages for managing routing and navigation. The most prominent among them are `React Navigation` and `React Native Navigation`.
+
+## 1. React Navigation
+
+[React Navigation](https://reactnavigation.org) is among the most popular navigation libraries in React Native.
+
+### Advantages
+- Implemented in JavaScript, ensuring good compatibility across various platforms.
+- Easy customization.
+- Active community support.
+
+### Installation
+
+```bash
+npm install @react-navigation/native
+```
+
+There are various navigator types such as Stack, Tab, Drawer. Here's an example of StackNavigator:
+
+```bash
+npm install @react-navigation/stack
+```
+
+### Usage
+
+```tsx
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+## 2. React Native Navigation
+
+[React Native Navigation](https://wix.github.io/react-native-navigation/) is a router library based on native modules and developed by Wix.
+
+### Advantages
+- Since it's based on native modules, it offers better performance.
+- Utilizes native UI components for rendering, enabling smoother animations.
+
+### Installation
+
+```bash
+npm install react-native-navigation
+```
+
+Then, connect the native module.
+
+### Usage
+
+```tsx
+import { Navigation } from 'react-native-navigation';
+
+Navigation.registerComponent('Home', () => HomeScreen);
+Navigation.registerComponent('Details', () => DetailsScreen);
+
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'Home'
+            }
+          }
+        ]
+      }
+    }
+  });
+});
+```
+
+Both libraries have their own sets of advantages and disadvantages. It's essential to choose the appropriate library based on the project requirements and preferences.
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>

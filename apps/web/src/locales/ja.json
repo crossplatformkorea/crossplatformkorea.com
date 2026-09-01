@@ -1,0 +1,570 @@
+{
+  "common": {
+    "buttons": {
+      "save": "保存",
+      "saving": "保存中...",
+      "cancel": "キャンセル",
+      "submitting": "送信中..."
+    },
+    "cancel": "キャンセル",
+    "deleting": "削除中...",
+    "loading": "ローディング中...",
+    "appName": "クロスプラットフォームコリア",
+    "sideFeatureRequests": "機能リクエスト",
+    "signIn": "ログイン",
+    "remove": "削除",
+    "delete": "削除",
+    "authRequired": "すべての機能を利用するにはログインしてください",
+    "close": "閉じる",
+    "dismiss": "閉じる",
+    "sidePosts": "投稿",
+    "navCommunity": "コミュニティ",
+    "navDoc": "ドキュメント",
+    "all": "すべて",
+    "loadMore": "もっと見る",
+    "viewAll": "すべて見る",
+    "loginToAccess": "サインインして始める",
+    "back": "戻る",
+    "loginToWrite": "ログインして投稿",
+    "add": "追加",
+    "time": {
+      "hours": "{{count}}時間",
+      "hour": "1時間",
+      "minutes": "{{count}}分",
+      "minute": "1分",
+      "seconds": "{{count}}秒",
+      "second": "1秒",
+      "now": "今",
+      "ago": "前",
+      "in": "後"
+    }
+  },
+  "errors": {
+    "general": "エラーが発生しました。もう一度お試しください。",
+    "titleRequired": "タイトルは必須です",
+    "contentRequired": "コンテンツは必須です",
+    "postCreationFailed": "投稿の作成に失敗しました。もう一度お試しください。",
+    "imageUploadFailed": "画像のアップロードに失敗しました。もう一度お試しください。",
+    "onlyImagesAllowed": "画像ファイルのみアップロードできます。",
+    "fileTooLarge": "ファイルサイズが{{size}}の制限を超えています。",
+    "profile": {
+      "displayNameRequired": "表示名は必須です",
+      "displayNameTaken": "この表示名は既に使用されています。別の名前を選択してください。",
+      "notFound": "プロフィールが見つかりません"
+    },
+    "notFound": {
+      "title": "ページが見つかりません",
+      "description": "お探しのページが存在しません。ページが移動または削除された可能性があります。または、間違ったURLを入力された可能性があります。",
+      "goHome": "ホームへ戻る",
+      "suggestion": "戻るボタンを押すか、ホームページに移動してお探しのコンテンツを見つけてください。"
+    },
+    "auth": {
+      "required": "認証が必要です",
+      "loginRequired": "ログインが必要です"
+    },
+    "username": {
+      "required": "ユーザー名は必須です",
+      "tooShort": "ユーザー名は1文字以上である必要があります",
+      "tooLong": "ユーザー名は最大39文字まで使用できます",
+      "invalidCharacters": "ユーザー名は英数字とハイフンのみ使用できます",
+      "cannotStartOrEndWithHyphen": "ユーザー名はハイフンで始まったり終わったりできません",
+      "consecutiveHyphens": "ユーザー名に連続するハイフンは使用できません",
+      "onlyHyphens": "ユーザー名をハイフンのみで構成することはできません",
+      "reserved": "このユーザー名は予約語のため使用できません"
+    },
+    "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "editProfile": "プロフィール編集",
+    "saveProfile": "プロフィール保存",
+    "personalInfo": "個人情報",
+    "buttons": {
+      "signOut": "ログアウト",
+      "removeImage": "画像を削除"
+    },
+    "sections": {
+      "details": "プロフィール詳細"
+    },
+    "fields": {
+      "displayName": {
+        "label": "表示名",
+        "placeholder": "表示名を入力してください",
+        "hint": "ユーザー名は英数字とハイフンのみ使用できます (1-39文字)"
+      },
+      "realName": {
+        "label": "本名"
+      },
+      "organization": {
+        "label": "所属",
+        "placeholder": "会社 / 学校 / 団体"
+      },
+      "socialLinks": {
+        "label": "ソーシャルメディアリンク",
+        "placeholder": "ソーシャルメディアURL {{num}}",
+        "addMore": "ソーシャルメディアリンクを追加 ({{count}}/{{max}})"
+      },
+      "tags": {
+        "label": "タグ",
+        "placeholder": "Flutter, Frontend (Enterまたはコンマで追加)",
+        "help": "Enterまたはコンマでタグを追加"
+      },
+      "lookingFor": {
+        "label": "つながりたい人",
+        "placeholder": "どのような人とつながりたいですか？"
+      },
+      "description": {
+        "label": "自己紹介",
+        "placeholder": "簡単な自己紹介を書いてください"
+      },
+      "expectations": {
+        "label": "期待すること",
+        "placeholder": "コミュニティに何を期待していますか？"
+      }
+    },
+    "messages": {
+      "saveSuccess": "プロフィールが正常に保存されました！"
+    },
+    "viewEdit": "プロフィール編集",
+    "stats": {
+      "posts": "投稿",
+      "likes": "もらったいいね",
+      "comments": "もらったコメント"
+    }
+  },
+  "signIn": {
+    "verifyEmailTitle": "メール確認",
+    "verifyEmailMessage": "メールで送信された確認コードを確認してください。",
+    "alreadySignedInTitle": "既にログインしています",
+    "alreadySignedInMessage": "ログアウトするか、アプリの使用を続けることができます。",
+    "title": "ログイン",
+    "signInMessage": "メールアドレスを入力すると、確認コードを送信します。安全なログインのためにメールでOTPコードを送信します。",
+    "emailLabel": "メールアドレス",
+    "emailPlaceholder": "メールアドレスを入力",
+    "sendingCode": "コード送信中...",
+    "signInWithEmail": "メールでログイン",
+    "verificationCodeLabel": "確認コード",
+    "verificationCodePlaceholder": "8桁のコードを入力",
+    "verifying": "確認中...",
+    "verifyCode": "コードを確認",
+    "back": "戻る",
+    "signOutPrompt": "ログアウトしますか？",
+    "signingOut": "ログアウト中...",
+    "signOut": "ログアウト",
+    "returnToHome": "ホームに戻る",
+    "loginToAccess": "サインインして始める",
+    "signIn": "サインイン",
+    "signInWithGithub": "GitHubでログイン",
+    "signingInWithGithub": "GitHubでログイン中..."
+  },
+  "posts": {
+    "title": "投稿",
+    "id": "投稿ID",
+    "content": "投稿内容",
+    "post1": "最初の投稿",
+    "post2": "2番目の投稿",
+    "backToList": "投稿一覧に戻る",
+    "sampleTitle": "サンプル投稿タイトル",
+    "loading": "投稿を読み込み中...",
+    "empty": "このカテゴリに投稿はありません",
+    "eventPeriod": "イベント期間: {{start}} - {{end}}",
+    "categories": "カテゴリ",
+    "selectCategory": "カテゴリを選択してください",
+    "invalidCategory": "無効なカテゴリ",
+    "allPosts": "すべての投稿",
+    "allPostsDescription": "コミュニティからのすべての投稿を閲覧する",
+    "createPost": "投稿作成",
+    "noPosts": "投稿が見つかりません",
+    "write": "投稿を書く",
+    "recentPosts": "最近の投稿",
+    "viewMore": "もっと見る",
+    "deleteConfirmTitle": "投稿を削除しますか？",
+    "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？"
+  },
+  "postCategories": {
+    "ALL": { "name": "すべて", "description": "すべての投稿" },
+    "NEWS": {
+      "name": "ニュース",
+      "description": "クロスプラットフォーム開発コミュニティからの最新情報とお知らせです。"
+    },
+    "QA": {
+      "name": "質問と回答",
+      "description": "クロスプラットフォーム開発に関する質問と回答を共有する場です。"
+    },
+    "READING": {
+      "name": "読み物",
+      "description": "興味深い記事、チュートリアル、学習リソースを共有します。"
+    },
+    "INFO_SHARE": {
+      "name": "情報共有",
+      "description": "役立つ情報、ヒント、リソースをコミュニティと共有します。"
+    },
+    "FREE_BOARD": {
+      "name": "自由掲示板",
+      "description": "クロスプラットフォーム開発に関する一般的なディスカッションの場です。"
+    },
+    "JOB_POSTING": {
+      "name": "求人情報",
+      "description": "クロスプラットフォーム開発に関連する求人情報を共有したり、求職情報を投稿できます。"
+    }
+  },
+  "pages": {
+    "posts": "投稿",
+    "showcase": "ショーケース",
+    "jobs": "求人",
+    "events": "イベント",
+    "featureRequests": "機能リクエスト"
+  },
+  "featureRequest": {
+    "title": "機能リクエスト",
+    "description": "既存の機能リクエストに投票するか、新しい機能を提案してプラットフォームの改善にご協力ください。",
+    "requestButton": "機能をリクエスト",
+    "cancelButton": "キャンセル",
+    "formTitle": "機能リクエストを提出",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "どのような機能が見たいですか？",
+    "descriptionLabel": "説明",
+    "descriptionPlaceholder": "希望する機能について詳しく説明してください...",
+    "emailLabel": "メール（任意）",
+    "emailPlaceholder": "メールアドレス（更新情報をお知らせします）",
+    "emailDescription": "メールは、この機能の更新情報をお知らせするためにのみ使用されます。",
+    "submitButton": "リクエストを提出",
+    "submittingButton": "提出中...",
+    "successMessage": "機能リクエストが正常に提出されました！",
+    "noRequests": "まだ機能リクエストがありません。最初に提案してください！",
+    "noRequestsTitle": "機能リクエストはまだありません",
+    "beTheFirst": "最初に機能を提案してください！",
+    "loading": "機能リクエストを読み込み中...",
+    "loadingMore": "さらに読み込み中...",
+    "loadMore": "さらにリクエストを読み込む",
+    "votes": "投票",
+    "voteAriaLabel": "この機能に投票",
+    "ownRequestCannotVote": "自分のリクエストには投票できません",
+    "requestedOn": "リクエスト日",
+    "status": {
+      "requested": "リクエスト済み",
+      "planned": "計画中",
+      "inProgress": "進行中",
+      "completed": "完了"
+    },
+    "validation": {
+      "titleTooShort": "タイトルは3文字以上である必要があります。",
+      "descriptionTooShort": "説明は10文字以上である必要があります。",
+      "serverError": "サーバーエラー: {{message}}",
+      "failedToSubmit": "機能リクエストの送信に失敗しました。"
+    },
+    "deleteButton": "削除",
+    "deleteConfirm": "本当に削除しますか？",
+    "deleteSuccess": "機能リクエストが削除されました。",
+    "deleteFailed": "削除に失敗しました。",
+    "comments": "コメント",
+    "commentPlaceholder": "コメントを書いてください...",
+    "addComment": "コメント追加",
+    "submittingComment": "送信中...",
+    "commentAdded": "コメントが追加されました。",
+    "commentFailed": "コメントの追加に失敗しました。",
+    "commentDeleted": "コメントが削除されました。",
+    "commentDeleteFailed": "コメントの削除に失敗しました。",
+    "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
+    "backToList": "一覧に戻る",
+    "notFound": "機能リクエストが見つかりません",
+    "notFoundDescription": "お探しの機能リクエストは存在しないか、削除されています。"
+  },
+  "postWrite": {
+    "writeNewPost": "新規投稿",
+    "edit": "編集",
+    "preview": "プレビュー",
+    "uploadingImages": "画像をアップロード中",
+    "enterFullscreen": "全画面表示",
+    "exitFullscreen": "全画面表示を終了",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "タイトルを入力してください",
+    "categoryLabel": "カテゴリー",
+    "tagsLabel": "タグ",
+    "tagsPlaceholder": "タグを追加 (Enterまたはカンマで追加)",
+    "addTag": "タグを追加",
+    "contentPlaceholder": "投稿内容を入力してください...",
+    "previewTitle": "プレビュー",
+    "previewPlaceholder": "ここに内容のプレビューが表示されます",
+    "publishPost": "投稿する",
+    "editPost": "投稿を編集",
+    "updatePost": "更新する",
+    "formatting": {
+      "bold": "太字",
+      "italic": "斜体",
+      "link": "リンク挿入",
+      "image": "画像挿入",
+      "list": "箇条書き",
+      "orderedList": "番号付きリスト"
+    },
+    "bold": "太字",
+    "italic": "斜体",
+    "link": "リンク",
+    "image": "画像",
+    "bulletList": "箇条書き",
+    "numberedList": "番号付きリスト",
+    "changeThumbnail": "サムネイル変更",
+    "selectThumbnail": "代表画像を選択"
+  },
+  "summary": {
+    "welcome": "クロスプラットフォーム・コリアへようこそ",
+    "welcomeMessage": "コミュニティに参加して他の開発者と繋がりましょう",
+    "heroTitle": "Cross-Platform Korea",
+    "heroDescription": "異なるプラットフォームに散らばる情報と経験を集めて共有し、より生産的な次の方向をともに見つけます。"
+  },
+  "auth": {
+    "loginDescription": "サインインするとプロフィールの管理、投稿の作成、いいねやコメントができます。",
+    "signIn": "サインイン"
+  },
+  "comments": {
+    "title": "コメント",
+    "writePlaceholder": "コメントを書く...",
+    "submit": "投稿",
+    "shortcuts": "Cmd/Ctrl + Enterで投稿",
+    "loginRequired": "コメントを投稿するにはログインしてください",
+    "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
+    "deleteCommentTitle": "コメント削除",
+    "deleteCommentMessage": "このコメントを削除してもよろしいですか？この操作は元に戻せません。"
+  },
+  "user": {
+    "posts": "投稿",
+    "about": "プロフィール",
+    "postsBy": "{{name}}さんの投稿",
+    "userNotFound": "ユーザーが見つかりません",
+    "userNotFoundMessage": "お探しのユーザープロフィールは存在しないか、削除されています。",
+    "noPosts": "このユーザーはまだ投稿していません。",
+    "noAdditionalInfo": "追加情報はありません。",
+    "aboutMe": "自己紹介",
+    "lookingFor": "探しているもの",
+    "expectations": "期待すること",
+    "anonymousUser": "匿名ユーザー",
+    "aboutUser": "このユーザーについて",
+    "noDescription": "説明がありません",
+    "noProfileDetails": "プロフィール詳細はありません",
+    "noPostsYet": "まだ投稿がありません"
+  },
+  "showcase": {
+    "title": "ショーケース",
+    "description": "素晴らしいクロスプラットフォームアプリケーションを発見しましょう",
+    "addNew": "追加",
+    "addFirst": "最初のショーケースを追加",
+    "signInToAdd": "ログインしてショーケースを追加",
+    "searchPlaceholder": "ショーケースを検索...",
+    "allCategories": "すべてのカテゴリ",
+    "noShowcases": "まだショーケースがありません",
+    "noSearchResults": "検索結果が見つかりません",
+    "tryAdjusting": "検索語やフィルターを調整して探しているものを見つけてください。",
+    "beTheFirst": "あなたのクロスプラットフォームアプリケーションを最初にショーケースに追加してみましょう！",
+    "loadMore": "もっと見る",
+    "form": {
+      "create": "ショーケースを作成",
+      "edit": "ショーケースを編集",
+      "title": "タイトル",
+      "titlePlaceholder": "ショーケースのタイトルを入力",
+      "description": "説明",
+      "descriptionPlaceholder": "ショーケースの説明を入力してください（任意）",
+      "category": "カテゴリ",
+      "imageUrl": "画像URL",
+      "imageUrlPlaceholder": "example.com/image.jpg",
+      "imageUrlHelp": "ショーケース画像のURLを提供してください",
+      "links": "リンク",
+      "linksRequired": "（少なくとも1つのURLが必要です）",
+      "websiteUrl": "ウェブサイトURL",
+      "appStoreUrl": "App Store URL",
+      "playStoreUrl": "Play Store URL",
+      "otherLinks": "その他のリンク",
+      "addLink": "追加",
+      "maxLinksReached": "最大{{max}}個のリンクまで許可されています",
+      "tags": "タグ",
+      "tagsPlaceholder": "タグを追加（Enterキーで追加）",
+      "addTag": "タグを追加",
+      "submitting": "送信中...",
+      "createButton": "作成",
+      "update": "更新",
+      "cancel": "キャンセル",
+      "success": {
+        "created": "ショーケースが正常に作成されました！",
+        "updated": "ショーケースが正常に更新されました！"
+      },
+      "error": {
+        "titleRequired": "タイトルは必須です",
+        "categoryRequired": "カテゴリは必須です",
+        "imageRequired": "画像URLは必須です",
+        "oneUrlRequired": "少なくとも1つのURL（ウェブサイト、App Store、またはPlay Store）が必要です",
+        "invalidUrl": "有効なURLを入力してください: {{url}}",
+        "general": "エラーが発生しました。もう一度お試しください。"
+      }
+    },
+    "website": "ウェブサイト",
+    "appStore": "App Store",
+    "playStore": "Play Store",
+    "otherLinksButton": "その他リンク",
+    "linkLabel": "リンク",
+    "featured": "注目",
+    "user": "ユーザー"
+  },
+  "showcaseCategories": {
+    "REACT_NATIVE": {
+      "name": "React Native",
+      "description": "JavaScriptとReactを使用してネイティブモバイルアプリを構築するためのフレームワーク"
+    },
+    "FLUTTER": {
+      "name": "Flutter",
+      "description": "Googleのネイティブにコンパイルされるアプリケーションを構築するためのUIツールキット"
+    },
+    "IONIC": {
+      "name": "Ionic",
+      "description": "ウェブ技術を使用してクロスプラットフォームアプリを構築するためのオープンソースモバイルUIツールキット"
+    },
+    "XAMARIN": {
+      "name": "Xamarin",
+      "description": ".NETとC#でAndroidとiOSアプリを構築するためのMicrosoftのプラットフォーム"
+    },
+    "MAUI": {
+      "name": "MAUI",
+      "description": "Microsoftの.NET Multi-platform App UIフレームワークでクロスプラットフォームアプリを開発"
+    },
+    "KOTLIN": {
+      "name": "Kotlin Multiplatform",
+      "description": "JetBrainsのKotlinを使用したクロスプラットフォームモバイルおよびデスクトップ開発フレームワーク"
+    },
+    "CAPACITOR": {
+      "name": "Capacitor",
+      "description": "ウェブネイティブアプリを構築するためのオープンソースネイティブランタイム"
+    },
+    "CORDOVA": {
+      "name": "Cordova",
+      "description": "HTML、CSS、JavaScriptを使用してモバイルネイティブアプリを開発するためのオープンソースフレームワーク"
+    },
+    "TAURI": {
+      "name": "Tauri",
+      "description": "すべての主要なデスクトッププラットフォーム用の小さく高速なバイナリを構築するためのフレームワーク"
+    },
+    "ELECTRON": {
+      "name": "Electron",
+      "description": "JavaScript、HTML、CSSでクロスプラットフォームデスクトップアプリを構築"
+    },
+    "PWA": {
+      "name": "PWA",
+      "description": "ネイティブアプリのような体験を提供するウェブアプリケーション"
+    },
+    "LYNX": {
+      "name": "Lynx",
+      "description": "ウェブ技術をベースにした現代的なクロスプラットフォームアプリフレームワーク"
+    },
+    "PHP_NATIVE": {
+      "name": "PHP Native",
+      "description": "PHPを使用したネイティブアプリ開発フレームワーク"
+    },
+    "UNITY": {
+      "name": "Unity",
+      "description": "2Dおよび3Dゲーム開発のためのクロスプラットフォームゲームエンジン"
+    },
+    "OTHER": {
+      "name": "その他",
+      "description": "その他のカテゴリ"
+    }
+  },
+  "pwa": {
+    "install": "アプリをインストール",
+    "installing": "インストール中...",
+    "installed": "インストール完了",
+    "offline": "オフラインモード",
+    "updateAvailable": "新しいバージョンが利用可能です",
+    "reload": "再読み込み"
+  },
+  "notifications": {
+    "title": "通知",
+    "bellAriaLabel": "通知を見る",
+    "markAllAsRead": "すべて既読にする",
+    "noNotifications": "通知はありません",
+    "viewAll": "すべての通知を見る",
+    "totalCount": "合計: {{count}}件",
+    "unreadCount": "未読: {{count}}件",
+    "selectAll": "すべて選択",
+    "deselectAll": "選択解除",
+    "deleteSelected": "選択項目を削除",
+    "markAsRead": "既読にする",
+    "delete": "削除",
+    "noNotificationsDesc": "すべての通知を確認しました！新しい通知があれば、またご確認ください。",
+    "pushNotifications": {
+      "title": "プッシュ通知",
+      "description": "ブラウザプッシュ通知を設定してください",
+      "permission": {
+        "title": "権限",
+        "granted": "許可済み",
+        "denied": "拒否済み",
+        "default": "待機中"
+      },
+      "subscription": {
+        "title": "購読",
+        "subscribed": "購読済み",
+        "notSubscribed": "未購読"
+      },
+      "buttons": {
+        "requestPermission": "権限を要求",
+        "subscribe": "購読する",
+        "unsubscribe": "購読解除"
+      },
+      "help": {
+        "browserNotSupported": "このブラウザはプッシュ通知をサポートしていません",
+        "permissionDefault": "通知を受信するには権限を許可してください",
+        "permissionDenied": "ブラウザ設定で通知を許可してください",
+        "subscriptionHelp": "通知を受信するには購読してください"
+      },
+      "messages": {
+        "subscribeSuccess": "プッシュ通知を購読しました",
+        "unsubscribeSuccess": "プッシュ通知の購読を解除しました",
+        "permissionGranted": "通知権限が許可されました",
+        "testNotificationSent": "テスト通知を送信しました"
+      },
+      "errors": {
+        "subscriptionFailed": "購読に失敗しました",
+        "unsubscriptionFailed": "購読解除に失敗しました",
+        "permissionDenied": "通知権限が拒否されました",
+        "testNotificationFailed": "テスト通知の送信に失敗しました"
+      }
+    }
+  },
+  "meta": {
+    "title": "クロスプラットフォームコリア",
+    "description": "韓国クロスプラットフォーム開発者コミュニティ",
+    "keywords": "クロスプラットフォーム, 開発者, コミュニティ, React Native, Flutter, PWA, モバイル開発"
+  },
+  "chat": {
+    "title": "ChatGPT",
+    "inputPlaceholder": "メッセージを入力してください...",
+    "send": "送信",
+    "sending": "送信中...",
+    "newChat": "新しいチャット",
+    "conversations": "会話リスト",
+    "noConversations": "まだ会話はありません",
+    "typeMessage": "メッセージを入力してください...",
+    "configureApiKey": "チャットを開始するにはAPIキーを設定してください",
+    "apiKey": {
+      "title": "APIキー",
+      "label": "OpenAI APIキー",
+      "description": "チャットを開始するにはOpenAI APIキーを入力してください",
+      "placeholder": "OpenAI APIキーを入力してください",
+      "save": "APIキーを保存",
+      "missing": "まずOpenAI APIキーを設定してください",
+      "sessionNotice": "⚠️ APIキーはデータベースに保存され、セキュリティのため暗号化されます。",
+      "configure": "設定"
+    },
+    "errors": {
+      "failedToSend": "メッセージの送信に失敗しました",
+      "failedToCreate": "会話の作成に失敗しました",
+      "noApiKey": "APIキーが設定されていません",
+      "invalidResponse": "サーバーから無効な応答を受信しました",
+      "invalidApiKey": "無効なOpenAI APIキーです",
+      "rateLimitExceeded": "OpenAI APIのレート制限を超過しました",
+      "insufficientCredits": "OpenAIクレジットが不足しています",
+      "invalidApiKeyFormat": "APIキーは'sk-'で始まる必要があります"
+    },
+    "messages": {
+      "user": "ユーザー",
+      "assistant": "AIアシスタント",
+      "streaming": "応答生成中..."
+    }
+  }
+}

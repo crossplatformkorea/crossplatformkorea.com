@@ -1,0 +1,52 @@
+---
+id: start
+title: Start the Project
+sidebar_label: Start the Project
+---
+
+import AdFitMobileBanner from "@site/src/uis/AdFitMobileBanner";
+import ImgDoobooInit from "@site/static/img/react-native/dooboo-init.png";
+import ImgDoobooInitRun1 from "@site/static/img/react-native/dooboo-init-run-1.png";
+
+<AdFitMobileBanner
+  unit="DAN-YpcHf9p49U5ykXi8"
+  className="adfit-top-mobile"
+/>
+
+Our community aims to provide valuable resources and guidance to beginners by allowing them to directly experience the app development process from the beginning.
+To initiate our project, we utilize [dooboo-cli](https://github.com/hyochan/dooboo-cli). This tool efficiently integrates necessary components to facilitate project commencement and has been consistently maintained for 7 years, reflecting the latest tech stack.
+
+## Creating the Project
+
+First, enter the following command in a terminal where Node.js is properly installed. Those who have followed the instructions in the 'Development Environment' section should already have the necessary environment set up.
+
+```bash
+npx dooboo init
+```
+
+<img src={ImgDoobooInit} alt="dooboo-init" />
+
+Then, input the project name in PascalCase as shown below, and the project will be created.
+
+<img src={ImgDoobooInitRun1} alt="dooboo-init-run-1" />
+
+For more detailed information about dooboo-cli, you can check out [this blog post](https://medium.com/crossplatformkorea/%EC%83%88%EB%A1%9C%EC%9A%B4-dooboo-cli-5c60e17a87e0).
+
+### Error Resolution
+
+When you face below error in `iOS`,
+```
+Error: xcrun exited with non-zero code: 60
+An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=60):
+Unable to boot the Simulator.
+```
+
+Try to run below command and run again.
+```
+rm -rf ~/Library/Developer/CoreSimulator/Caches
+```
+
+<AdFitMobileBanner
+  unit="DAN-weLLBNA8C31gpo1t"
+  className="adfit-bottom-mobile"
+/>

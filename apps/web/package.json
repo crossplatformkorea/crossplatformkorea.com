@@ -1,0 +1,49 @@
+{
+  "name": "@crossplatformkorea/web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
+    "tsc": "tsc -p . -noEmit --pretty false",
+    "build": "vite build --mode production",
+    "build:trace": "vite build --debug"
+  },
+  "dependencies": {
+    "@convex-dev/auth": "0.0.86",
+    "@convex-dev/persistent-text-streaming": "0.3.3",
+    "@icons-pack/react-simple-icons": "12.8.0",
+    "@radix-ui/react-dialog": "1.1.11",
+    "@types/react-mentions": "4.4.1",
+    "@types/react-syntax-highlighter": "15.5.13",
+    "clsx": "2.1.1",
+    "convex": "1.45.0",
+    "date-fns": "4.1.0",
+    "framer-motion": "12.12.1",
+    "i18next": "25.0.1",
+    "lucide-react": "0.503.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-i18next": "15.5.1",
+    "react-markdown": "10.1.0",
+    "react-mentions": "4.4.10",
+    "react-router-dom": "7.5.1",
+    "react-syntax-highlighter": "15.6.1",
+    "rehype-raw": "7.0.0",
+    "remark-breaks": "4.0.0",
+    "remark-gfm": "4.0.1",
+    "sonner": "2.0.3",
+    "tailwind-merge": "3.2.0",
+    "zustand": "5.0.5"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "@vitejs/plugin-react": "4.4.1",
+    "autoprefixer": "10.4.21",
+    "postcss": "8.5.6",
+    "tailwindcss": "3.4.17",
+    "vite": "6.3.2"
+  }
+}

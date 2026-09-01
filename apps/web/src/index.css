@@ -1,0 +1,741 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 0% 22%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 82%;
+    --input: 0 0% 82%;
+    --ring: 0 0% 12%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 22%;
+    --accent-foreground: 0 0% 96%;
+
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 0 0% 96%;
+
+    --border: 0 0% 22%;
+    --input: 0 0% 22%;
+    --ring: 0 0% 88%;
+  }
+
+  /* 시스템 다크모드 자동 감지 - 클래스 설정이 없을 때만 적용 */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light):not(.dark) {
+      --background: 0 0% 5%;
+      --foreground: 0 0% 96%;
+
+      --card: 0 0% 8%;
+      --card-foreground: 0 0% 96%;
+
+      --popover: 0 0% 8%;
+      --popover-foreground: 0 0% 96%;
+
+      --primary: 0 0% 96%;
+      --primary-foreground: 0 0% 5%;
+
+      --secondary: 0 0% 15%;
+      --secondary-foreground: 0 0% 96%;
+
+      --muted: 0 0% 14%;
+      --muted-foreground: 0 0% 65%;
+
+      --accent: 0 0% 22%;
+      --accent-foreground: 0 0% 96%;
+
+      --destructive: 0 72% 58%;
+      --destructive-foreground: 0 0% 96%;
+
+      --border: 0 0% 22%;
+      --input: 0 0% 22%;
+      --ring: 0 0% 88%;
+    }
+  }
+
+  /* 라이트모드 강제 설정 */
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 0% 22%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 82%;
+    --input: 0 0% 82%;
+    --ring: 0 0% 12%;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-background font-sans text-foreground antialiased transition-colors duration-300;
+}
+
+@layer components {
+  .site-canvas {
+    background-color: hsl(var(--background));
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.24) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.24) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: -1px -1px;
+  }
+
+  .site-canvas::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 75% 0%, hsl(var(--primary) / 0.11), transparent 32rem);
+  }
+
+  .auth-canvas {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(circle at 10% 10%, hsl(var(--accent) / 0.12), transparent 28rem),
+      radial-gradient(circle at 90% 75%, hsl(var(--primary) / 0.14), transparent 30rem),
+      linear-gradient(hsl(var(--border) / 0.28) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.28) 1px, transparent 1px);
+    background-size:
+      auto,
+      auto,
+      54px 54px,
+      54px 54px;
+  }
+
+  .auth-panel,
+  .surface-card {
+    @apply border border-border/80 bg-card/90 shadow-[0_24px_80px_-48px_rgba(31,26,23,0.7)] backdrop-blur-xl;
+  }
+
+  .auth-panel {
+    @apply rounded-[1.35rem];
+  }
+
+  .surface-card {
+    @apply rounded-2xl;
+  }
+
+  .surface-card-interactive {
+    @apply surface-card transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_28px_90px_-50px_rgba(0,0,0,0.5)];
+  }
+
+  .section-kicker {
+    @apply flex items-center gap-3 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-primary;
+  }
+
+  .field-label {
+    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+  }
+
+  .field-control {
+    @apply w-full rounded-xl border border-input bg-background/70 px-4 text-foreground outline-none transition placeholder:text-muted-foreground/55 focus:border-primary/70 focus:ring-4 focus:ring-primary/10;
+  }
+
+  .page-hero {
+    @apply relative mb-8 overflow-hidden rounded-2xl border border-border/80 bg-card/80 p-6 sm:p-8;
+  }
+
+  .page-hero::after {
+    content: '/';
+    @apply pointer-events-none absolute -bottom-12 right-2 font-mono text-[10rem] font-black italic leading-none text-primary/10;
+  }
+
+  .page-title {
+    @apply mt-4 max-w-3xl text-3xl font-semibold leading-none tracking-[-0.05em] sm:text-5xl;
+  }
+
+  .page-description {
+    @apply mt-4 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7;
+  }
+
+  .stat-tile {
+    @apply border-l border-border/80 px-4 first:border-l-0 first:pl-0;
+  }
+}
+
+.accent-text {
+  @apply text-muted-foreground dark:text-muted;
+}
+
+.button {
+  @apply bg-primary text-primary-foreground;
+}
+
+.input-field {
+  @apply w-full px-3 py-2 rounded-md bg-background border-2 border-input focus:outline-none focus:border-primary transition-colors;
+}
+
+.auth-button {
+  @apply w-full py-2 rounded-md text-primary-foreground font-medium button hover:opacity-90 transition-opacity;
+}
+
+.link-text {
+  @apply text-primary dark:text-primary-foreground hover:underline cursor-pointer font-medium;
+}
+
+/* Elegant scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/30;
+}
+
+/* Hamburger menu animation */
+.hamburger-line {
+  @apply transition-all duration-300 ease-in-out transform;
+}
+
+.hamburger-top {
+  @apply translate-y-[-6px];
+}
+
+.hamburger-bottom {
+  @apply translate-y-[6px];
+}
+
+.hamburger-top.active {
+  @apply rotate-45 translate-y-0 origin-center;
+}
+
+.hamburger-middle.active {
+  @apply opacity-0;
+}
+
+.hamburger-bottom.active {
+  @apply -rotate-45 translate-y-0 origin-center;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/40;
+}
+
+/* Even thinner scrollbar for specific elements */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/50 transition-colors;
+  /* Ensure the scrollbar doesn't go all the way to the edges */
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Hide scrollbar for cleaner UI but keep functionality */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-logo {
+  height: 40px;
+  width: auto;
+}
+
+/* Prose 스타일 커스터마이징 - 포스트 콘텐츠 띄어쓰기 문제 해결 */
+.prose {
+  white-space: normal;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  white-space: pre-line;
+}
+
+/* 단락 사이 간격 추가 */
+.prose p + p {
+  margin-top: 1em;
+}
+
+/* 링크 스타일링 */
+.prose a {
+  @apply text-blue-600 hover:text-blue-800 underline decoration-1 underline-offset-2 transition-colors;
+  font-weight: 500;
+}
+
+.dark .prose a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* 리스트 스타일링 */
+.prose ul {
+  @apply list-disc list-inside space-y-1 my-4;
+  padding-left: 1.5rem;
+}
+
+.prose ol {
+  @apply list-decimal list-inside space-y-1 my-4;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  @apply leading-relaxed;
+  padding-left: 0.5rem;
+}
+
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
+  @apply mt-2 mb-2;
+  padding-left: 1.5rem;
+}
+
+/* 제목 스타일링 */
+.prose h1 {
+  @apply text-2xl font-bold mt-8 mb-4 text-foreground;
+}
+
+.prose h2 {
+  @apply text-xl font-semibold mt-6 mb-3 text-foreground;
+}
+
+.prose h3 {
+  @apply text-lg font-medium mt-5 mb-2 text-foreground;
+}
+
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply font-medium mt-4 mb-2 text-foreground;
+}
+
+/* 인용문 스타일링 */
+.prose blockquote {
+  @apply border-l-4 border-muted-foreground/30 pl-4 italic text-muted-foreground my-4;
+}
+
+.dark .prose blockquote {
+  @apply border-muted/50 text-muted;
+}
+
+/* 구분선 스타일링 */
+.prose hr {
+  @apply border-0 border-t border-border my-8;
+}
+
+/* 강조 텍스트 스타일링 */
+.prose strong {
+  @apply font-semibold text-foreground;
+}
+
+.prose em {
+  @apply italic;
+}
+
+/* 코드 블록 스타일링 - GitHub/Discourse 스타일 */
+.prose pre {
+  @apply bg-gray-100 border border-gray-300 rounded-lg p-4 text-sm font-mono shadow-sm overflow-x-auto;
+  background-color: #f6f8fa !important;
+  border: 1px solid #d1d9e0 !important;
+  color: #24292f !important;
+  position: relative;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 rounded-none text-sm font-mono;
+  background-color: transparent !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 인라인 코드 스타일링 */
+.prose code {
+  @apply bg-gray-200 px-1.5 py-0.5 rounded text-sm font-mono;
+  background-color: #f6f8fa !important;
+  color: #24292f !important;
+  border: 1px solid #e1e8ed !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* 다크모드 코드 블록 */
+.dark .prose pre {
+  @apply bg-gray-900 border-gray-700;
+  background-color: #0d1117 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+.dark .prose pre code {
+  background-color: transparent !important;
+  color: inherit !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 다크모드 인라인 코드 */
+.dark .prose code {
+  @apply bg-gray-800 text-gray-200;
+  background-color: #21262d !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* 링크 스타일링 */
+.prose a {
+  color: #2563eb !important; /* blue-600 */
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.prose a:hover {
+  color: #1d4ed8 !important; /* blue-700 */
+  text-decoration: underline;
+}
+
+.dark .prose a {
+  color: #60a5fa !important; /* blue-400 for dark mode */
+}
+
+.dark .prose a:hover {
+  color: #93c5fd !important; /* blue-300 for dark mode hover */
+}
+
+/* 리스트 스타일링 */
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}
+
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose ul > li::marker {
+  color: #6b7280; /* gray-500 */
+}
+
+.prose ol > li::marker {
+  color: #6b7280; /* gray-500 */
+  font-weight: 500;
+}
+
+.dark .prose ul > li::marker,
+.dark .prose ol > li::marker {
+  color: #9ca3af; /* gray-400 for dark mode */
+}
+
+/* 코드 블록에 복사 버튼 공간 확보 */
+.prose pre {
+  padding-right: 3rem;
+}
+
+/* 더 나은 구분을 위한 추가 스타일 */
+.prose pre::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #6b7280, #374151);
+  border-radius: 2px 0 0 2px;
+}
+
+.dark .prose pre::before {
+  background: linear-gradient(to bottom, #9ca3af, #6b7280);
+}
+
+/* GitHub-style Mentions CSS */
+.mentions {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.mentions__control {
+  position: relative;
+  border: 1px solid hsl(var(--border));
+  border-radius: 8px;
+  background: hsl(var(--background));
+  min-height: 96px;
+  max-height: 300px; /* Allow expansion up to 300px */
+  overflow-y: auto; /* Enable scrolling */
+  padding: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.mentions__control:focus-within {
+  border-color: #0969da;
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+  outline: none;
+}
+
+/* Dark mode control styles */
+.dark .mentions__control {
+  background: hsl(var(--background)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+.dark .mentions__control:focus-within {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.12);
+}
+
+/* Hide the highlighter completely for clean GitHub-style */
+.mentions__highlighter {
+  display: none !important;
+}
+
+.mentions__input {
+  position: relative !important;
+  z-index: 1 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: hsl(var(--foreground)) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-family: inherit !important;
+  resize: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0px !important;
+}
+
+.mentions__input::placeholder {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Dark mode input text color */
+.dark .mentions__input {
+  color: hsl(var(--foreground)) !important;
+}
+
+.dark .mentions__input::placeholder {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Suggestions dropdown - GitHub style */
+.mentions__suggestions {
+  position: absolute !important;
+  z-index: 9999 !important;
+  border: 1px solid #d1d9e0 !important;
+  border-radius: 8px !important;
+  box-shadow:
+    0 8px 24px rgba(140, 149, 159, 0.2),
+    0 0 0 1px rgba(209, 217, 225, 0.8) !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  min-width: 240px !important;
+  max-width: 320px !important;
+  margin-top: 8px !important;
+  color: #24292f !important;
+}
+
+/* Dark mode suggestions */
+.dark .mentions__suggestions {
+  background: #161b22 !important;
+  color: #f0f6fc !important;
+  border-color: #30363d !important;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+}
+
+.mentions__suggestions__list {
+  padding: 4px !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+.mentions__suggestions__item {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.mentions__suggestions__item--focused {
+  background-color: #0969da !important;
+  color: white !important;
+}
+
+/* Mention text styling */
+.mentions__mention {
+  color: #0969da !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  position: relative !important;
+  z-index: 1 !important;
+  text-shadow: none !important;
+  pointer-events: none !important;
+}
+
+/* Dark mode mention text */
+.dark .mentions__mention {
+  color: #58a6ff !important;
+}
+
+/* Scrollbar styling for suggestions */
+.mentions__suggestions::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mentions__suggestions::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mentions__suggestions::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.dark .mentions__suggestions::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Scrollbar styling for mention input control */
+.mentions__control::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mentions__control::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mentions__control::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.dark .mentions__control::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}

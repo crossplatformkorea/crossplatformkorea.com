@@ -1,0 +1,61 @@
+{
+  "name": "@crossplatformkorea/monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "setup": "convex dev --once && node setup.mjs",
+    "dev": "npm-run-all --parallel dev:web dev:backend",
+    "dev:web": "bun run --cwd apps/web dev",
+    "dev:docs": "bun run --cwd apps/docs start",
+    "dev:backend": "convex dev",
+    "test": "bun test tests/auth-redirect.test.js",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
+    "tsc": "tsc -p convex -noEmit --pretty false && bun run --cwd apps/web tsc",
+    "build": "bun run build:web",
+    "build:web": "bun run --cwd apps/web build",
+    "build:docs": "bun run --cwd apps/docs build",
+    "ci": "bun run test && bun run lint && bun run tsc && bun run build:web && bun run build:docs",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@auth/core": "0.39.0",
+    "@convex-dev/auth": "0.0.86",
+    "@convex-dev/persistent-text-streaming": "0.3.3",
+    "convex": "1.45.0",
+    "oslo": "1.2.1",
+    "resend": "4.4.0",
+    "web-push": "3.6.7"
+  },
+  "overrides": {
+    "convex": "1.45.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.25.1",
+    "@types/node": "22.14.1",
+    "@types/web-push": "3.6.4",
+    "dotenv": "16.5.0",
+    "eslint": "9.25.1",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "16.0.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7",
+    "npm-run-all": "4.1.5",
+    "prettier": "3.5.3",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.31.0"
+  },
+  "lint-staged": {
+    "apps/web/**/*.{ts,tsx}": [
+      "eslint --report-unused-disable-directives"
+    ],
+    "convex/**/*.ts": [
+      "eslint --report-unused-disable-directives"
+    ]
+  },
+  "packageManager": "bun@1.2.21"
+}

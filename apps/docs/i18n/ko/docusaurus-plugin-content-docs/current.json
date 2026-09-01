@@ -1,0 +1,38 @@
+{
+  "version.label": {
+    "message": "최신",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Meetup": {
+    "message": "밋업",
+    "description": "The label for Meetup"
+  },
+  "sidebar.docs.category.Community": {
+    "message": "커뮤니티",
+    "description": "The label for Community"
+  },
+  "sidebar.docs.category.React Native": {
+    "message": "리엑트 네이티브",
+    "description": "The label for React Native"
+  },
+  "sidebar.react-native.category.Development Environment": {
+    "message": "개발 환경",
+    "description": "Navbar item with label Development Environment"
+  },
+  "sidebar.react-native.category.Component": {
+    "message": "컴포넌트",
+    "description": "Navbar item with label Component"
+  },
+  "sidebar.react-native.category.Style": {
+    "message": "스타일",
+    "description": "Navbar item with label Style"
+  },
+  "sidebar.react-native.category.Router": {
+    "message": "라우터",
+    "description": "Navbar item with label Router"
+  },
+  "sidebar.react-native.category.Development": {
+    "message": "개발",
+    "description": "Navbar item with label Development"
+  }
+}
