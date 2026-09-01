@@ -177,10 +177,15 @@
     "recentPosts": "최근 게시물",
     "viewMore": "더보기",
     "deleteConfirmTitle": "게시물 삭제?",
-    "deleteConfirmMessage": "이 작업은 되돌릴 수 없습니다. 정말로 이 게시물을 삭제하시겠습니까?"
+    "deleteConfirmMessage": "이 작업은 되돌릴 수 없습니다. 정말로 이 게시물을 삭제하시겠습니까?",
+    "draftBanner": "이 글은 임시 저장 상태이며 작성자만 볼 수 있습니다.",
+    "scheduledBanner": "이 글은 예약 발행 상태이며 공개 시각 전까지 작성자만 볼 수 있습니다."
   },
   "postCategories": {
-    "ALL": { "name": "전체", "description": "모든 게시글" },
+    "ALL": {
+      "name": "전체",
+      "description": "모든 게시글"
+    },
     "NEWS": {
       "name": "소식",
       "description": "크로스 플랫폼 개발 커뮤니티의 최신 소식과 공지사항입니다."
@@ -302,7 +307,13 @@
     "bulletList": "글머리 기호",
     "numberedList": "번호 매기기",
     "changeThumbnail": "썸네일 변경",
-    "selectThumbnail": "대표 이미지 선택"
+    "selectThumbnail": "대표 이미지 선택",
+    "youtubeUrlLabel": "YouTube URL",
+    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+    "publishAtLabel": "공개 예약 (Asia/Seoul)",
+    "publishAtHelp": "비워 두면 바로 공개됩니다. 미래 시각은 예약 글로 저장됩니다.",
+    "saveAsDraft": "임시 저장",
+    "schedulePost": "예약 발행"
   },
   "summary": {
     "welcome": "크로스플랫폼 코리아에 오신 것을 환영합니다",

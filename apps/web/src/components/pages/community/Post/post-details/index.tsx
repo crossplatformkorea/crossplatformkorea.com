@@ -11,6 +11,7 @@ import AuthorCard from './AuthorCard';
 import CategoryBadge from '@/components/uis/CategoryBadge';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import PostWriteModal from '../PostWriteModal';
+import NotFound from '@/components/pages/NotFound';
 import Comments from './Comments';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
@@ -277,8 +278,10 @@ export default function PostDetailsPage() {
       </Button>
 
       {/* Show loading state while waiting for post data */}
-      {!slugOrId ? null : !post ? (
-        <PostDetailsSkeleton /> // AppLoading 대신 PostDetailsSkeleton 사용
+      {!slugOrId ? null : post === undefined ? (
+        <PostDetailsSkeleton />
+      ) : post === null ? (
+        <NotFound />
       ) : (
         <article itemScope itemType="https://schema.org/BlogPosting">
           {/* Post header section with visual depth */}
@@ -301,9 +304,19 @@ export default function PostDetailsPage() {
 
               {/* Title and post actions */}
               <div className="relative">
-                <h1 className="mb-4 pr-20 text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-5xl">
+                <h1 className="mb-4 pr-20 text-3xl font-semibold leading-[1.35] tracking-[-0.045em] sm:text-5xl">
                   {post.title}
                 </h1>
+                {isAuthor && post.status === 'draft' && (
+                  <div className="mb-3 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
+                    {t('posts.draftBanner')}
+                  </div>
+                )}
+                {isAuthor && post.status === 'scheduled' && (
+                  <div className="mb-3 rounded-md border border-sky-500/40 bg-sky-500/10 px-3 py-2 text-sm text-sky-200">
+                    {t('posts.scheduledBanner')}
+                  </div>
+                )}
 
                 {/* Post actions - For author only */}
                 {isAuthor && (
@@ -384,6 +397,11 @@ export default function PostDetailsPage() {
           {/* Post content with footer containing social actions */}
           <div className={cn('surface-card relative overflow-hidden px-5 py-8 sm:px-8 sm:py-10')}>
             {/* Replace dangerouslySetInnerHTML with ReactMarkdown */}
+            {post.youtubeUrl && extractYouTubeVideoId(post.youtubeUrl) && (
+              <div className="mb-6 overflow-hidden rounded-lg border border-border">
+                <YouTubeEmbed videoId={extractYouTubeVideoId(post.youtubeUrl)!} />
+              </div>
+            )}
             <div className="prose prose-lg max-w-none" style={{ wordBreak: 'break-word' }}>
               <ReactMarkdown
                 rehypePlugins={[rehypeRaw]}
@@ -599,6 +617,9 @@ export default function PostDetailsPage() {
           defaultCategory={post.category}
           defaultTags={post.tags}
           defaultThumbnail={post.thumbnail}
+          defaultYoutubeUrl={post.youtubeUrl}
+          defaultPublishAt={post.publishAt}
+          defaultStatus={post.status}
         />
       )}
 

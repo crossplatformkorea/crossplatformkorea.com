@@ -1,11 +1,36 @@
 import { v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
-import { mutation, internalMutation } from '../_generated/server';
+import { mutation, internalMutation, MutationCtx } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
 import { DEFAULT_CATEGORY } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
 import { generateSlug } from '../utils/slug';
+import { isPublicPost, resolvePostStatus } from './visibility';
+
+const postStatusValidator = v.union(
+  v.literal('draft'),
+  v.literal('scheduled'),
+  v.literal('published'),
+);
+
+async function notifyPublishedPost(
+  ctx: MutationCtx,
+  args: { postId: Id<'posts'>; title: string; content: string; category: string },
+) {
+  await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
+    postId: args.postId,
+    title: args.title,
+    content: args.content,
+    category: args.category,
+  });
+  await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
+    postId: args.postId,
+    title: args.title,
+    content: args.content,
+    category: args.category,
+  });
+}
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -18,6 +43,9 @@ export const createPost = mutation({
     endDate: v.optional(v.string()),
     storageIds: v.optional(v.array(v.id('_storage'))), // 업로드된 이미지 ID 목록 추가
     thumbnail: v.optional(v.string()), // 대표 썸네일 URL (선택 안하면 첫 이미지로 자동 설정)
+    status: v.optional(postStatusValidator),
+    publishAt: v.optional(v.string()),
+    youtubeUrl: v.optional(v.string()),
   },
   returns: v.id('posts'),
   handler: async (ctx, args) => {
@@ -30,13 +58,19 @@ export const createPost = mutation({
 
     // Ensure a valid category is used
     const category = args.category || DEFAULT_CATEGORY;
+    const youtubeUrl = args.youtubeUrl?.trim() || undefined;
+    const publishAt = args.publishAt?.trim() || undefined;
+    const status = resolvePostStatus({ status: args.status, publishAt });
 
     // 멘션 추출 및 해결
     const mentionedDisplayNames = extractMentions(args.content);
     const mentionedUserIds = await resolveMentions(ctx, mentionedDisplayNames);
 
     // 썸네일 결정: 사용자가 선택한 것 또는 자동 추출 (유튜브 > 첫 번째 이미지)
-    const thumbnail = args.thumbnail || extractThumbnailFromContent(args.content);
+    const thumbnail =
+      args.thumbnail ||
+      extractThumbnailFromContent(args.content) ||
+      extractThumbnailFromContent(youtubeUrl ?? '');
 
     const slug = generateSlug(args.title);
 
@@ -53,10 +87,13 @@ export const createPost = mutation({
       mentions: mentionedUserIds.length > 0 ? mentionedUserIds : undefined,
       thumbnail,
       slug,
+      status,
+      publishAt,
+      youtubeUrl,
     });
 
     // 멘션 알림 생성
-    if (mentionedUserIds.length > 0) {
+    if (status === 'published' && mentionedUserIds.length > 0) {
       const authorProfile = await ctx.db
         .query('userProfiles')
         .withIndex('by_user', (q) => q.eq('userId', userId))
@@ -138,20 +175,14 @@ export const createPost = mutation({
     }
 
     // Slack 알림 전송 (비동기로 실행)
-    await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
-      postId,
-      title: args.title,
-      content: args.content,
-      category,
-    });
-
-    // Discord 알림 전송 (비동기로 실행)
-    await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
-      postId,
-      title: args.title,
-      content: args.content,
-      category,
-    });
+    if (status === 'published') {
+      await notifyPublishedPost(ctx, {
+        postId,
+        title: args.title,
+        content: args.content,
+        category,
+      });
+    }
 
     return postId;
   },
@@ -240,6 +271,9 @@ export const createPostFromScript = internalMutation({
     content: v.string(),
     tags: v.array(v.string()),
     thumbnail: v.optional(v.string()),
+    status: v.optional(postStatusValidator),
+    publishAt: v.optional(v.string()),
+    youtubeUrl: v.optional(v.string()),
   },
   returns: v.id('posts'),
   handler: async (ctx, args) => {
@@ -255,7 +289,13 @@ export const createPostFromScript = internalMutation({
     const authorId = profile.userId;
     const now = new Date().toISOString();
     const category = args.category || DEFAULT_CATEGORY;
-    const thumbnail = args.thumbnail || extractThumbnailFromContent(args.content);
+    const youtubeUrl = args.youtubeUrl?.trim() || undefined;
+    const publishAt = args.publishAt?.trim() || undefined;
+    const status = resolvePostStatus({ status: args.status, publishAt });
+    const thumbnail =
+      args.thumbnail ||
+      extractThumbnailFromContent(args.content) ||
+      extractThumbnailFromContent(youtubeUrl ?? '');
     const slug = generateSlug(args.title);
 
     const postId = await ctx.db.insert('posts', {
@@ -267,21 +307,19 @@ export const createPostFromScript = internalMutation({
       authorId,
       thumbnail,
       slug,
+      status,
+      publishAt,
+      youtubeUrl,
     });
 
-    await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
-      postId,
-      title: args.title,
-      content: args.content,
-      category,
-    });
-
-    await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
-      postId,
-      title: args.title,
-      content: args.content,
-      category,
-    });
+    if (status === 'published') {
+      await notifyPublishedPost(ctx, {
+        postId,
+        title: args.title,
+        content: args.content,
+        category,
+      });
+    }
 
     return postId;
   },
@@ -297,6 +335,9 @@ export const updatePostFromScript = internalMutation({
     tags: v.optional(v.array(v.string())),
     category: v.optional(v.string()),
     thumbnail: v.optional(v.string()),
+    status: v.optional(postStatusValidator),
+    publishAt: v.optional(v.string()),
+    youtubeUrl: v.optional(v.string()),
   },
   returns: v.boolean(),
   handler: async (ctx, args) => {
@@ -315,6 +356,19 @@ export const updatePostFromScript = internalMutation({
     if (args.category !== undefined) updateData.category = args.category;
     if (args.thumbnail !== undefined) updateData.thumbnail = args.thumbnail;
 
+    if (args.youtubeUrl !== undefined) {
+      updateData.youtubeUrl = args.youtubeUrl.trim() || undefined;
+    }
+    if (args.status !== undefined || args.publishAt !== undefined) {
+      const publishAt =
+        args.publishAt !== undefined ? args.publishAt.trim() || undefined : post.publishAt;
+      updateData.publishAt = publishAt;
+      updateData.status = resolvePostStatus({
+        status: args.status ?? post.status,
+        publishAt,
+      });
+    }
+
     // Backfill slug if the post doesn't have one yet. Never overwrite an
     // existing slug on update — keeping URLs stable matters more than having
     // the slug match a renamed title.
@@ -323,6 +377,19 @@ export const updatePostFromScript = internalMutation({
     }
 
     await ctx.db.patch(args.postId, updateData);
+
+    const nextStatus =
+      (typeof updateData.status === 'string' ? updateData.status : post.status) ?? 'published';
+    const wasPublished = (post.status ?? 'published') === 'published';
+    if (!wasPublished && nextStatus === 'published') {
+      await notifyPublishedPost(ctx, {
+        postId: args.postId,
+        title: typeof updateData.title === 'string' ? updateData.title : post.title,
+        content: typeof updateData.content === 'string' ? updateData.content : post.content,
+        category: typeof updateData.category === 'string' ? updateData.category : post.category,
+      });
+    }
+
     return true;
   },
 });
@@ -350,12 +417,10 @@ export const backfillSlugs = internalMutation({
     isDone: v.boolean(),
   }),
   handler: async (ctx, args) => {
-    const page = await ctx.db
-      .query('posts')
-      .paginate({
-        cursor: args.cursor ?? null,
-        numItems: args.batchSize ?? 100,
-      });
+    const page = await ctx.db.query('posts').paginate({
+      cursor: args.cursor ?? null,
+      numItems: args.batchSize ?? 100,
+    });
 
     let updated = 0;
     for (const post of page.page) {
@@ -386,6 +451,9 @@ export const updatePost = mutation({
     endDate: v.optional(v.string()),
     storageIds: v.optional(v.array(v.id('_storage'))), // 업로드된 이미지 ID 목록 추가
     thumbnail: v.optional(v.string()), // 대표 썸네일 URL
+    status: v.optional(postStatusValidator),
+    publishAt: v.optional(v.string()),
+    youtubeUrl: v.optional(v.string()),
   },
   returns: v.boolean(),
   handler: async (ctx, args) => {
@@ -449,6 +517,19 @@ export const updatePost = mutation({
     if (args.startDate !== undefined) updateData.startDate = args.startDate;
     if (args.endDate !== undefined) updateData.endDate = args.endDate;
 
+    if (args.youtubeUrl !== undefined) {
+      updateData.youtubeUrl = args.youtubeUrl.trim() || undefined;
+    }
+    if (args.status !== undefined || args.publishAt !== undefined) {
+      const publishAt =
+        args.publishAt !== undefined ? args.publishAt.trim() || undefined : post.publishAt;
+      updateData.publishAt = publishAt;
+      updateData.status = resolvePostStatus({
+        status: args.status ?? post.status,
+        publishAt,
+      });
+    }
+
     // 썸네일 업데이트: 명시적으로 전달된 경우에만 덮어쓰기 (위에서 이미 자동 추출됨)
     if (args.thumbnail !== undefined) {
       updateData.thumbnail = args.thumbnail;
@@ -457,6 +538,18 @@ export const updatePost = mutation({
 
     // Update the post first
     await ctx.db.patch(args.postId, updateData);
+
+    const nextStatus =
+      (typeof updateData.status === 'string' ? updateData.status : post.status) ?? 'published';
+    const wasPublished = (post.status ?? 'published') === 'published';
+    if (!wasPublished && nextStatus === 'published') {
+      await notifyPublishedPost(ctx, {
+        postId: args.postId,
+        title: typeof updateData.title === 'string' ? updateData.title : post.title,
+        content: typeof updateData.content === 'string' ? updateData.content : post.content,
+        category: typeof updateData.category === 'string' ? updateData.category : post.category,
+      });
+    }
 
     // 썸네일 삭제가 필요한 경우 빈 문자열로 설정 (undefined는 JSON 직렬화에서 제거됨)
     console.log('shouldClearThumbnail:', shouldClearThumbnail, 'post.thumbnail:', post.thumbnail);
@@ -858,6 +951,9 @@ export const incrementViewCount = mutation({
     // Check if post exists
     const post = await ctx.db.get(args.postId);
     if (!post) {
+      return false;
+    }
+    if (!isPublicPost(post)) {
       return false;
     }
 

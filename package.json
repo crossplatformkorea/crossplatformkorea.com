@@ -12,7 +12,7 @@
     "dev:web": "bun run --cwd apps/web dev",
     "dev:docs": "bun run --cwd apps/docs start",
     "dev:backend": "convex dev",
-    "test": "bun test tests/auth-redirect.test.js",
+    "test": "bun test tests",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "tsc": "tsc -p convex -noEmit --pretty false && bun run --cwd apps/web tsc",
     "build": "bun run build:web",

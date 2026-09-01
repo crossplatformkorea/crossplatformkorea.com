@@ -179,10 +179,15 @@
     "recentPosts": "最近の投稿",
     "viewMore": "もっと見る",
     "deleteConfirmTitle": "投稿を削除しますか？",
-    "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？"
+    "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？",
+    "draftBanner": "この投稿は下書きで、作成者だけが閲覧できます。",
+    "scheduledBanner": "この投稿は予約公開中で、公開時刻まで作成者だけが閲覧できます。"
   },
   "postCategories": {
-    "ALL": { "name": "すべて", "description": "すべての投稿" },
+    "ALL": {
+      "name": "すべて",
+      "description": "すべての投稿"
+    },
     "NEWS": {
       "name": "ニュース",
       "description": "クロスプラットフォーム開発コミュニティからの最新情報とお知らせです。"
@@ -304,7 +309,13 @@
     "bulletList": "箇条書き",
     "numberedList": "番号付きリスト",
     "changeThumbnail": "サムネイル変更",
-    "selectThumbnail": "代表画像を選択"
+    "selectThumbnail": "代表画像を選択",
+    "youtubeUrlLabel": "YouTube URL",
+    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+    "publishAtLabel": "公開予約 (Asia/Seoul)",
+    "publishAtHelp": "空欄ならすぐ公開します。未来の日時は予約投稿として保存されます。",
+    "saveAsDraft": "下書き保存",
+    "schedulePost": "予約公開"
   },
   "summary": {
     "welcome": "クロスプラットフォーム・コリアへようこそ",

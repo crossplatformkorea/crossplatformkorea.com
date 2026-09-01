@@ -26,11 +26,17 @@ export default defineSchema({
     commentCount: v.optional(v.number()), // 댓글 수 필드 추가
     // 멘션 필드 추가
     mentions: v.optional(v.array(v.id('users'))), // 멘션된 사용자들
+    // Publishing: missing status is treated as published (legacy rows).
+    // startDate/endDate remain event windows and must not be reused for scheduling.
+    status: v.optional(v.union(v.literal('draft'), v.literal('scheduled'), v.literal('published'))),
+    publishAt: v.optional(v.string()), // UTC ISO; naive worker values are Asia/Seoul
+    youtubeUrl: v.optional(v.string()),
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
     .index('by_author', ['authorId'])
-    .index('by_slug', ['slug']),
+    .index('by_slug', ['slug'])
+    .index('by_status', ['status']),
   userProfiles: defineTable({
     userId: v.id('users'),
     email: v.string(),

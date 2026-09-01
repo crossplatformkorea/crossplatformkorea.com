@@ -28,6 +28,11 @@ import { Button } from '../../../uis/Button';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { api } from '@convex/_generated/api';
+import {
+  resolvePostStatus,
+  seoulLocalToUtcIso,
+  utcIsoToSeoulLocal,
+} from '@convex/posts/visibility';
 
 interface PostWriteProps {
   isOpen: boolean;
@@ -40,6 +45,9 @@ interface PostWriteProps {
   defaultContent?: string;
   defaultTags?: string[];
   defaultThumbnail?: string;
+  defaultYoutubeUrl?: string;
+  defaultPublishAt?: string;
+  defaultStatus?: string;
 }
 
 // 컨텐츠에서 이미지 URL 추출하는 헬퍼 함수
@@ -78,6 +86,9 @@ export default function PostWriteModal({
   defaultContent = '',
   defaultTags = [],
   defaultThumbnail = '',
+  defaultYoutubeUrl = '',
+  defaultPublishAt = '',
+  defaultStatus = '',
 }: PostWriteProps) {
   const { t } = useTranslation();
   const { isAuthenticated, requireAuth } = useAuthStore(); // Correctly destructure requireAuth
@@ -96,13 +107,19 @@ export default function PostWriteModal({
   const [tagInput, setTagInput] = useState('');
   const [selectedThumbnail, setSelectedThumbnail] = useState(defaultThumbnail);
   const [showThumbnailMenu, setShowThumbnailMenu] = useState(false);
+  const [youtubeUrl, setYoutubeUrl] = useState(defaultYoutubeUrl);
+  const [publishAtLocal, setPublishAtLocal] = useState(
+    defaultPublishAt ? utcIsoToSeoulLocal(defaultPublishAt) : '',
+  );
+  const [saveAsDraft, setSaveAsDraft] = useState(defaultStatus === 'draft');
   const thumbnailMenuRef = useRef<HTMLDivElement>(null);
 
   // 컨텐츠에서 이미지 URL 목록 추출
   const contentImages = extractImageUrlsFromContent(content);
 
   // 현재 선택된 썸네일 또는 기본 첫 번째 이미지
-  const currentThumbnail = selectedThumbnail || (contentImages.length > 0 ? contentImages[0] : null);
+  const currentThumbnail =
+    selectedThumbnail || (contentImages.length > 0 ? contentImages[0] : null);
 
   // State for view mode (especially for mobile)
   const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -180,11 +197,25 @@ export default function PostWriteModal({
       setContent(defaultContent);
       setTags(defaultTags || []);
       setSelectedThumbnail(defaultThumbnail || '');
+      setYoutubeUrl(defaultYoutubeUrl || '');
+      setPublishAtLocal(defaultPublishAt ? utcIsoToSeoulLocal(defaultPublishAt) : '');
+      setSaveAsDraft(defaultStatus === 'draft');
       if (defaultCategory) {
         setCategory(defaultCategory);
       }
     }
-  }, [isOpen, isEditMode, defaultTitle, defaultContent, defaultTags, defaultCategory, defaultThumbnail]);
+  }, [
+    isOpen,
+    isEditMode,
+    defaultTitle,
+    defaultContent,
+    defaultTags,
+    defaultCategory,
+    defaultThumbnail,
+    defaultYoutubeUrl,
+    defaultPublishAt,
+    defaultStatus,
+  ]);
 
   // Reset all form data function
   const resetFormData = useCallback(() => {
@@ -195,6 +226,9 @@ export default function PostWriteModal({
       setCategory(defaultCategory || 'GENERAL');
       setTags([]);
       setSelectedThumbnail('');
+      setYoutubeUrl('');
+      setPublishAtLocal('');
+      setSaveAsDraft(false);
     }
     setTagInput('');
     setError(null);
@@ -428,10 +462,21 @@ export default function PostWriteModal({
     try {
       // 썸네일 결정: 현재 콘텐츠에 있는 이미지만 유효
       // 선택된 썸네일이 콘텐츠에 없으면 무시 (유튜브 삭제 등의 경우)
-      const isSelectedThumbnailValid = selectedThumbnail && contentImages.includes(selectedThumbnail);
+      const isSelectedThumbnailValid =
+        selectedThumbnail && contentImages.includes(selectedThumbnail);
       const thumbnailToSave = isSelectedThumbnailValid
         ? selectedThumbnail
-        : (contentImages.length > 0 ? contentImages[0] : undefined);
+        : contentImages.length > 0
+          ? contentImages[0]
+          : undefined;
+
+      const publishAtUtc = publishAtLocal.trim() ? seoulLocalToUtcIso(publishAtLocal) : undefined;
+      const status = saveAsDraft ? 'draft' : resolvePostStatus({ publishAt: publishAtUtc });
+      const scheduling = {
+        youtubeUrl: youtubeUrl.trim() || undefined,
+        publishAt: publishAtUtc,
+        status,
+      };
 
       if (isEditMode && postId) {
         // 수정 모드: updatePost 호출
@@ -443,6 +488,7 @@ export default function PostWriteModal({
           tags,
           storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
           thumbnail: thumbnailToSave,
+          ...scheduling,
         });
       } else {
         // 생성 모드: createPost 호출
@@ -453,6 +499,7 @@ export default function PostWriteModal({
           tags,
           storageIds: uploadedStorageIds.length > 0 ? uploadedStorageIds : undefined,
           thumbnail: thumbnailToSave,
+          ...scheduling,
         });
       }
 
@@ -746,7 +793,8 @@ export default function PostWriteModal({
                     </p>
                     <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
                       {contentImages.map((imageUrl, index) => {
-                        const isSelected = selectedThumbnail === imageUrl || (!selectedThumbnail && index === 0);
+                        const isSelected =
+                          selectedThumbnail === imageUrl || (!selectedThumbnail && index === 0);
                         return (
                           <button
                             key={index}
@@ -984,6 +1032,45 @@ export default function PostWriteModal({
             </div>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label htmlFor="post-youtube-url" className="block text-sm font-medium mb-1">
+                {t('postWrite.youtubeUrlLabel')}
+              </label>
+              <input
+                id="post-youtube-url"
+                type="url"
+                value={youtubeUrl}
+                onChange={(e) => setYoutubeUrl(e.target.value)}
+                placeholder={t('postWrite.youtubeUrlPlaceholder')}
+                className={cn(
+                  'w-full px-3 py-2',
+                  'border border-border rounded-md',
+                  'focus:outline-none focus:ring-1 focus:ring-primary/40',
+                  'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
+                )}
+              />
+            </div>
+            <div>
+              <label htmlFor="post-publish-at" className="block text-sm font-medium mb-1">
+                {t('postWrite.publishAtLabel')}
+              </label>
+              <input
+                id="post-publish-at"
+                type="datetime-local"
+                value={publishAtLocal}
+                onChange={(e) => setPublishAtLocal(e.target.value)}
+                className={cn(
+                  'w-full px-3 py-2',
+                  'border border-border rounded-md',
+                  'focus:outline-none focus:ring-1 focus:ring-primary/40',
+                  'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
+                )}
+              />
+              <p className="mt-1 text-xs text-muted-foreground">{t('postWrite.publishAtHelp')}</p>
+            </div>
+          </div>
+
           {/* Tags input section removed from here */}
         </div>
 
@@ -1165,17 +1252,25 @@ export default function PostWriteModal({
                     'dark:prose-invert',
                   )}
                 >
-                  <ReactMarkdown 
+                  <ReactMarkdown
                     rehypePlugins={[rehypeRaw]}
                     components={{
                       // Fix list spacing and formatting
                       ul: ({ children, ...props }) => (
-                        <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
+                        <ul
+                          className="pl-6 mb-4"
+                          style={{ listStyleType: 'disc', listStylePosition: 'outside' }}
+                          {...props}
+                        >
                           {children}
                         </ul>
                       ),
                       ol: ({ children, ...props }) => (
-                        <ol className="pl-6 mb-4" style={{ listStyleType: 'decimal', listStylePosition: 'outside' }} {...props}>
+                        <ol
+                          className="pl-6 mb-4"
+                          style={{ listStyleType: 'decimal', listStylePosition: 'outside' }}
+                          {...props}
+                        >
                           {children}
                         </ol>
                       ),
@@ -1372,17 +1467,25 @@ export default function PostWriteModal({
                     'dark:prose-invert',
                   )}
                 >
-                  <ReactMarkdown 
+                  <ReactMarkdown
                     rehypePlugins={[rehypeRaw]}
                     components={{
                       // Fix list spacing and formatting
                       ul: ({ children, ...props }) => (
-                        <ul className="pl-6 mb-4" style={{ listStyleType: 'disc', listStylePosition: 'outside' }} {...props}>
+                        <ul
+                          className="pl-6 mb-4"
+                          style={{ listStyleType: 'disc', listStylePosition: 'outside' }}
+                          {...props}
+                        >
                           {children}
                         </ul>
                       ),
                       ol: ({ children, ...props }) => (
-                        <ol className="pl-6 mb-4" style={{ listStyleType: 'decimal', listStylePosition: 'outside' }} {...props}>
+                        <ol
+                          className="pl-6 mb-4"
+                          style={{ listStyleType: 'decimal', listStylePosition: 'outside' }}
+                          {...props}
+                        >
                           {children}
                         </ol>
                       ),
@@ -1529,7 +1632,16 @@ export default function PostWriteModal({
               )}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 items-center">
+              <label className="mr-2 inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <input
+                  type="checkbox"
+                  checked={saveAsDraft}
+                  onChange={(e) => setSaveAsDraft(e.target.checked)}
+                  className="rounded border-border dark:bg-gray-800"
+                />
+                {t('postWrite.saveAsDraft')}
+              </label>
               <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
                 {t('common.cancel')}
               </Button>
@@ -1545,6 +1657,10 @@ export default function PostWriteModal({
                   </>
                 ) : isEditMode ? (
                   t('postWrite.updatePost')
+                ) : saveAsDraft ? (
+                  t('postWrite.saveAsDraft')
+                ) : publishAtLocal ? (
+                  t('postWrite.schedulePost')
                 ) : (
                   t('postWrite.publishPost')
                 )}
