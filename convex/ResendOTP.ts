@@ -24,7 +24,7 @@ interface EmailTemplate {
   fromName: string;
 }
 
-const RESEND_API_KEY = process.env.AUTH_RESEND_KEY;
+const AUTH_RESEND_KEY = process.env.AUTH_RESEND_KEY;
 const SITE_URL = 'https://crossplatformkorea.com';
 
 const emailTemplates: Record<Locale, EmailTemplate> = {
@@ -72,8 +72,28 @@ const emailTemplates: Record<Locale, EmailTemplate> = {
   },
 };
 
-const fromEmail =
-  process.env.ENVIRONMENT !== 'production' ? 'onboarding@resend.dev' : 'crossplatformkorea@hyo.dev';
+const PRODUCTION_FROM_EMAIL = 'crossplatformkorea@hyo.dev';
+const DEV_FROM_EMAIL = 'onboarding@resend.dev';
+
+function normalizeSiteUrl(url: string | undefined) {
+  return (url ?? '').trim().replace(/\/+$/, '');
+}
+
+function isLiveOtpEnvironment() {
+  return (
+    process.env.ENVIRONMENT === 'production' ||
+    normalizeSiteUrl(process.env.SITE_URL) === SITE_URL
+  );
+}
+
+function resolveFromEmail() {
+  const override = process.env.AUTH_EMAIL_FROM?.trim();
+  if (override) {
+    return override;
+  }
+
+  return isLiveOtpEnvironment() ? PRODUCTION_FROM_EMAIL : DEV_FROM_EMAIL;
+}
 
 function buildEmailHtml(template: EmailTemplate, token: string) {
   return `<!doctype html>
@@ -147,20 +167,23 @@ async function sendOtpEmail(
   if (!provider.apiKey) throw new Error('Missing Resend API key');
   const resend = new ResendAPI(provider.apiKey);
   const { error } = await resend.emails.send({
-    from: `${template.fromName} <${fromEmail}>`,
+    from: `${template.fromName} <${resolveFromEmail()}>`,
     to: [email],
     subject: template.subject,
     html: buildEmailHtml(template, token),
     text: buildEmailText(template, token),
   });
 
-  if (error) throw new Error(JSON.stringify(error));
+  if (error) {
+    console.error('Failed to send verification email', error);
+    throw new Error('Failed to send verification email');
+  }
 }
 
 function createOtpProvider(locale: Locale) {
   return Email({
     id: `resend-otp-${locale}`,
-    apiKey: RESEND_API_KEY,
+    apiKey: AUTH_RESEND_KEY,
     maxAge: 60 * 15,
     async generateVerificationToken() {
       return generateRandomString(8, alphabet('0-9'));

@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthActions } from '@convex-dev/auth/react';
-import { useMutation } from 'convex/react';
+import { useConvexAuth, useMutation } from 'convex/react';
 import { SiGithub } from '@icons-pack/react-simple-icons';
 import { ArrowLeft, ArrowRight, Mail, ShieldCheck } from 'lucide-react';
 import { api } from '@convex/_generated/api';
 import { t, getLocale } from '../../../lib/i18n';
 import { devConsole } from '../../../lib/utils';
 import { Button } from '../../uis/Button';
+
+// Upper bound on waiting for the Convex client to pick up the new identity.
+const PROFILE_SYNC_TIMEOUT_MS = 5000;
 
 interface SigningInProps {
   returnTo: string;
@@ -18,10 +21,12 @@ export default function SigningIn({ returnTo }: SigningInProps) {
   const [code, setCode] = useState('');
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingProfileEmail, setPendingProfileEmail] = useState<string | null>(null);
   const [isGitHubLoading, setIsGitHubLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { signIn } = useAuthActions();
+  const { isAuthenticated } = useConvexAuth();
   const navigate = useNavigate();
   const createOrUpdateUser = useMutation(api.users.mutation.createOrUpdateUser);
   const providerId = `resend-otp-${getLocale()}`;
@@ -70,8 +75,10 @@ export default function SigningIn({ returnTo }: SigningInProps) {
 
     try {
       await signIn(providerId, { email, code });
-      await createOrUpdateUser({ email });
-      void navigate(returnTo, { replace: true });
+      // `signIn` resolves once the tokens are stored, but the Convex client has
+      // not re-authenticated its socket yet. Calling the profile mutation here
+      // sends it unauthenticated, so defer it until `isAuthenticated` flips.
+      setPendingProfileEmail(email);
     } catch (verifyError) {
       devConsole.error('Error verifying code:', verifyError);
       setError(
@@ -79,10 +86,57 @@ export default function SigningIn({ returnTo }: SigningInProps) {
           ? verifyError.message
           : 'Failed to verify code. Please check the code and try again.',
       );
-    } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!pendingProfileEmail) return;
+
+    let cancelled = false;
+
+    const goToDestination = () => {
+      if (cancelled) return;
+      setPendingProfileEmail(null);
+      setIsLoading(false);
+      void navigate(returnTo, { replace: true });
+    };
+
+    // The sign-in already succeeded, so never strand the user on the form if the
+    // client identity is slow to settle. Use a full reload rather than an SPA
+    // navigate: while the socket re-auth is pending, useConvexAuth reports
+    // isLoading:false + isAuthenticated:false, so route guards would bounce an
+    // apparently signed-out user straight back to this form. A fresh load
+    // re-reads the stored token with isLoading:true and the guards wait.
+    const timeout = setTimeout(() => {
+      if (cancelled) return;
+      window.location.replace(returnTo);
+    }, PROFILE_SYNC_TIMEOUT_MS);
+
+    const cleanup = () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+
+    if (!isAuthenticated) return cleanup;
+
+    const finishSignIn = async () => {
+      try {
+        await createOrUpdateUser({ email: pendingProfileEmail });
+      } catch (profileError) {
+        // The profile page recreates a missing profile on its own, so a failure
+        // here must not surface as a sign-in error.
+        devConsole.error('Failed to create user profile after sign-in:', profileError);
+      }
+
+      clearTimeout(timeout);
+      goToDestination();
+    };
+
+    void finishSignIn();
+
+    return cleanup;
+  }, [pendingProfileEmail, isAuthenticated, createOrUpdateUser, navigate, returnTo]);
 
   const errorMessage = error ? (
     <div

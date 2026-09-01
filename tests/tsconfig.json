@@ -1,0 +1,17 @@
+{
+  /* Type-check context for the bun test suite so ESLint's type-aware rules
+   * can resolve these files (they live outside the web and convex projects). */
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ES2021", "dom"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["./**/*"]
+}
