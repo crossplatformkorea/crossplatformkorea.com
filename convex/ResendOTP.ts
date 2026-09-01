@@ -24,7 +24,7 @@ interface EmailTemplate {
   fromName: string;
 }
 
-const RESEND_API_KEY = process.env.AUTH_RESEND_KEY;
+const AUTH_RESEND_KEY = process.env.AUTH_RESEND_KEY;
 const SITE_URL = 'https://crossplatformkorea.com';
 
 const emailTemplates: Record<Locale, EmailTemplate> = {
@@ -183,7 +183,7 @@ async function sendOtpEmail(
 function createOtpProvider(locale: Locale) {
   return Email({
     id: `resend-otp-${locale}`,
-    apiKey: RESEND_API_KEY,
+    apiKey: AUTH_RESEND_KEY,
     maxAge: 60 * 15,
     async generateVerificationToken() {
       return generateRandomString(8, alphabet('0-9'));
