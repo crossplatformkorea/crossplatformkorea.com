@@ -1,80 +1,22 @@
 # Cross-Platform Korea
 
-[Cross-Platform Korea](https://crossplatformkorea.com)는 여러 기술 생태계에
-흩어진 경험과 지식을 연결하는 한국 크로스플랫폼 개발자 커뮤니티입니다.
+[Cross-Platform Korea](https://crossplatformkorea.com)는 여러 플랫폼에
+흩어진 지식과 경험을 연결하는 한국 크로스플랫폼 개발자 커뮤니티입니다.
 
-## Monorepo
+## 둘러보기
 
-```text
-apps/
-  web/   # React + Vite community site
-  docs/  # Docusaurus documentation and blog
-convex/  # Convex backend and authentication
-```
+- [커뮤니티](https://crossplatformkorea.com)
+- [문서와 블로그](https://doc.crossplatformkorea.com)
 
-## Development
+서로 다른 생태계의 정보와 경험을 나누고, 더 생산적인 다음 방향을 함께
+발견해 보세요.
 
-Install [Node.js 20.20.2](https://nodejs.org/) and
-[Bun 1.2.21](https://bun.sh/), then install dependencies:
+## 함께하기
 
-```sh
-bun install
-```
-
-For the first local web/backend setup, connect a Convex development deployment
-and initialize Convex Auth:
-
-```sh
-bun run setup
-```
-
-Follow the interactive prompts, then configure the development deployment with
-the provider/runtime variable names listed in [`.env.example`](.env.example).
-Convex writes local client/deployment values such as `VITE_CONVEX_URL` to
-`.env.local`; configure provider and server secrets such as GitHub and Resend on
-the target Convex development deployment through its dashboard or CLI. Never
-commit either kind of value.
-
-Run the community site and Convex backend together:
-
-```sh
-bun run dev
-```
-
-Run the documentation site separately:
-
-```sh
-bun run dev:docs
-```
-
-## Validation
-
-```sh
-bun run test
-bun run lint
-bun run tsc
-bun run build:web
-bun run build:docs
-```
-
-## Deployment
-
-- `apps/web` and `convex` deploy automatically to Firebase Hosting and Convex
-  after relevant changes land on `main`.
-- `apps/docs` deploys automatically to GitHub Pages after documentation changes
-  land on `main`.
-
-Production variable names are also documented in [`.env.example`](.env.example).
-Secrets must be stored in Convex or GitHub environment settings and must never
-be committed.
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Security issues should be reported using
-the process in [SECURITY.md](SECURITY.md).
+개발 환경, 프로젝트 구조, 실행 방법은 [CONTRIBUTING.md](CONTRIBUTING.md)를
+확인해 주세요. 보안 문제는 [SECURITY.md](SECURITY.md)를 통해 알려주세요.
 
 ## License
 
-Software is available under the [MIT License](LICENSE). Imported editorial
-documentation, blog posts, translations, and media retain their existing
-rights; see [apps/docs/CONTENT_RIGHTS.md](apps/docs/CONTENT_RIGHTS.md).
+소프트웨어는 [MIT License](LICENSE)를 따릅니다. 문서와 미디어의 권리는
+[콘텐츠 권리 안내](apps/docs/CONTENT_RIGHTS.md)를 확인해 주세요.
