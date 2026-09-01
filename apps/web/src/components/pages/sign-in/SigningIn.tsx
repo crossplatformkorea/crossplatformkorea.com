@@ -103,8 +103,15 @@ export default function SigningIn({ returnTo }: SigningInProps) {
     };
 
     // The sign-in already succeeded, so never strand the user on the form if the
-    // client identity is slow to settle.
-    const timeout = setTimeout(goToDestination, PROFILE_SYNC_TIMEOUT_MS);
+    // client identity is slow to settle. Use a full reload rather than an SPA
+    // navigate: while the socket re-auth is pending, useConvexAuth reports
+    // isLoading:false + isAuthenticated:false, so route guards would bounce an
+    // apparently signed-out user straight back to this form. A fresh load
+    // re-reads the stored token with isLoading:true and the guards wait.
+    const timeout = setTimeout(() => {
+      if (cancelled) return;
+      window.location.replace(returnTo);
+    }, PROFILE_SYNC_TIMEOUT_MS);
 
     const cleanup = () => {
       cancelled = true;
