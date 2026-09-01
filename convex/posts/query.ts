@@ -1,8 +1,16 @@
 import { v } from 'convex/values';
-import { query } from '../_generated/server';
+import { query, QueryCtx } from '../_generated/server';
 import { CATEGORIES } from '../constants';
 import { paginationOptsValidator } from 'convex/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
+import { Doc } from '../_generated/dataModel';
+import { isPublicPost } from './visibility';
+
+const postStatusValidator = v.union(
+  v.literal('draft'),
+  v.literal('scheduled'),
+  v.literal('published'),
+);
 
 // Define a common post object validator for consistent return types
 const postObjectValidator = v.object({
@@ -23,19 +31,42 @@ const postObjectValidator = v.object({
   viewCount: v.optional(v.number()),
   commentCount: v.optional(v.number()), // 댓글 수 validator 추가
   mentions: v.optional(v.array(v.id('users'))), // 멘션된 사용자들
+
+  status: v.optional(postStatusValidator),
+  publishAt: v.optional(v.string()),
+  youtubeUrl: v.optional(v.string()),
 });
+
+async function canSeePost(ctx: QueryCtx, post: Doc<'posts'>): Promise<boolean> {
+  if (isPublicPost(post)) {
+    return true;
+  }
+  const userId = await getAuthUserId(ctx);
+  if (!userId) {
+    return false;
+  }
+  if (post.authorId === userId) {
+    return true;
+  }
+  const admin = await ctx.db
+    .query('admins')
+    .withIndex('by_userId', (q) => q.eq('userId', userId))
+    .unique();
+  return admin !== null;
+}
+
+function publicOnly<T extends Doc<'posts'>>(posts: T[]): T[] {
+  return posts.filter((post) => isPublicPost(post));
+}
 
 // Get all posts for sitemap generation
 export const getAllPostsForSitemap = query({
   args: {},
   handler: async (ctx) => {
     // Fetch all posts, but only return necessary fields for sitemap
-    const posts = await ctx.db
-      .query('posts')
-      .order('desc')
-      .collect();
+    const posts = await ctx.db.query('posts').order('desc').collect();
 
-    return posts.map(post => ({
+    return publicOnly(posts).map((post) => ({
       _id: post._id,
       _creationTime: post._creationTime,
       updatedAt: post.updatedAt,
@@ -56,10 +87,10 @@ export const getRecentPostsForRss = query({
       .query('posts')
       .withIndex('by_creation_time')
       .order('desc')
-      .take(limit);
+      .take(Math.max(limit * 3, limit));
 
     const results = [];
-    for (const post of posts) {
+    for (const post of publicOnly(posts).slice(0, limit)) {
       let authorName: string | undefined;
       if (post.authorId) {
         const profile = await ctx.db
@@ -128,16 +159,20 @@ export const getPostsByCategory = query({
     category: v.string(),
   },
   handler: async (ctx, args) => {
-    const query = ctx.db.query('posts');
+    const queryBuilder = ctx.db.query('posts');
 
-    if (args.category !== 'all') {
-      return await query
-        .withIndex('by_category', (q) => q.eq('category', args.category))
-        .order('desc')
-        .paginate(args.paginationOpts);
-    }
+    const result =
+      args.category !== 'all'
+        ? await queryBuilder
+            .withIndex('by_category', (q) => q.eq('category', args.category))
+            .order('desc')
+            .paginate(args.paginationOpts)
+        : await queryBuilder.order('desc').paginate(args.paginationOpts);
 
-    return await query.order('desc').paginate(args.paginationOpts);
+    return {
+      ...result,
+      page: result.page.filter((post) => isPublicPost(post)),
+    };
   },
 });
 
@@ -167,7 +202,7 @@ export const getById = query({
   handler: async (ctx, args) => {
     const post = await ctx.db.get(args.id);
     if (!post) return null;
-
+    if (!(await canSeePost(ctx, post))) return null;
     return post;
   },
 });
@@ -190,16 +225,17 @@ export const getBySlugOrId = query({
     if (bySlug.length > 1) {
       console.error(`Duplicate posts found for slug: ${args.slugOrId}`);
     }
-    if (bySlug.length >= 1) return bySlug[0];
+    let post: Doc<'posts'> | null = bySlug[0] ?? null;
+    if (!post) {
+      const normalizedId = ctx.db.normalizeId('posts', args.slugOrId);
+      if (normalizedId) {
+        post = await ctx.db.get(normalizedId);
+      }
+    }
 
-    // Fall back to treating the param as a Convex document ID. Validate the
-    // format before calling `db.get` to avoid the runtime error Convex raises
-    // on malformed IDs.
-    const normalizedId = ctx.db.normalizeId('posts', args.slugOrId);
-    if (!normalizedId) return null;
-
-    const byId = await ctx.db.get(normalizedId);
-    return byId ?? null;
+    if (!post) return null;
+    if (!(await canSeePost(ctx, post))) return null;
+    return post;
   },
 });
 
@@ -213,9 +249,9 @@ export const getRecentPosts = query({
       .query('posts')
       .withIndex('by_creation_time')
       .order('desc')
-      .take(args.limit);
+      .take(Math.max(args.limit * 3, args.limit));
 
-    return posts;
+    return publicOnly(posts).slice(0, args.limit);
   },
 });
 
@@ -227,7 +263,7 @@ export const getTags = query({
     // Extract unique tags from all posts
     const tagsSet = new Set<string>();
 
-    for (const post of posts) {
+    for (const post of publicOnly(posts)) {
       if (post.tags && Array.isArray(post.tags)) {
         post.tags.forEach((tag) => tagsSet.add(tag));
       }
@@ -261,6 +297,10 @@ export const getPostsByAuthor = query({
       startDate: v.optional(v.string()),
       endDate: v.optional(v.string()),
       mentions: v.optional(v.array(v.id('users'))),
+      slug: v.optional(v.string()),
+      status: v.optional(postStatusValidator),
+      publishAt: v.optional(v.string()),
+      youtubeUrl: v.optional(v.string()),
     }),
   ),
   handler: async (ctx, args) => {
@@ -270,6 +310,10 @@ export const getPostsByAuthor = query({
       .order('desc')
       .take(args.limit || 10);
 
-    return posts;
+    const userId = await getAuthUserId(ctx);
+    if (userId === args.authorId) {
+      return posts;
+    }
+    return publicOnly(posts);
   },
 });

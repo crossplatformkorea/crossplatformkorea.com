@@ -177,7 +177,9 @@
     "recentPosts": "Recent Posts",
     "viewMore": "View More",
     "deleteConfirmTitle": "Delete Post?",
-    "deleteConfirmMessage": "This action cannot be undone. Are you sure you want to delete this post?"
+    "deleteConfirmMessage": "This action cannot be undone. Are you sure you want to delete this post?",
+    "draftBanner": "This post is a draft and is only visible to you.",
+    "scheduledBanner": "This post is scheduled and is only visible to you until it goes live."
   },
   "notifications": {
     "title": "Notifications",
@@ -321,7 +323,13 @@
     "bulletList": "Bullet List",
     "numberedList": "Numbered List",
     "changeThumbnail": "Change Thumbnail",
-    "selectThumbnail": "Select Thumbnail"
+    "selectThumbnail": "Select Thumbnail",
+    "youtubeUrlLabel": "YouTube URL",
+    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+    "publishAtLabel": "Schedule (Asia/Seoul)",
+    "publishAtHelp": "Leave empty to publish now. A future time saves the post as scheduled.",
+    "saveAsDraft": "Save as draft",
+    "schedulePost": "Schedule post"
   },
   "summary": {
     "welcome": "Welcome to Cross-Platform Korea",
@@ -361,7 +369,10 @@
     "noPostsYet": "No posts yet"
   },
   "postCategories": {
-    "ALL": { "name": "All", "description": "All posts" },
+    "ALL": {
+      "name": "All",
+      "description": "All posts"
+    },
     "NEWS": {
       "name": "News",
       "description": "Latest updates and announcements from the cross-platform development community."

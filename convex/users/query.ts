@@ -2,6 +2,7 @@ import { getAuthUserId } from '@convex-dev/auth/server';
 import { query } from '../_generated/server';
 import { v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
+import { isPublicPost } from '../posts/visibility';
 
 // Get all users for sitemap generation
 export const getAllUsersForSitemap = query({
@@ -12,8 +13,8 @@ export const getAllUsersForSitemap = query({
       .query('userProfiles')
       .filter((q) => q.neq(q.field('displayName'), undefined))
       .collect();
-    
-    return profiles.map(profile => ({
+
+    return profiles.map((profile) => ({
       _id: profile._id,
       _creationTime: profile._creationTime,
       displayName: profile.displayName,
@@ -195,12 +196,15 @@ export const getUserStats = query({
       .withIndex('by_author', (q) => q.eq('authorId', userId))
       .collect();
 
+    const viewerId = await getAuthUserId(ctx);
+    const visiblePosts = viewerId === userId ? posts : posts.filter((post) => isPublicPost(post));
+
     // 받은 좋아요 총합 계산
-    const totalLikes = posts.reduce((sum, post) => sum + (post.likeCount || 0), 0);
+    const totalLikes = visiblePosts.reduce((sum, post) => sum + (post.likeCount || 0), 0);
 
     // 받은 댓글 수 계산
     let commentCount = 0;
-    for (const post of posts) {
+    for (const post of visiblePosts) {
       const comments = await ctx.db
         .query('comments')
         .withIndex('by_post', (q) => q.eq('postId', post._id))
@@ -209,7 +213,7 @@ export const getUserStats = query({
     }
 
     return {
-      postCount: posts.length,
+      postCount: visiblePosts.length,
       likeCount: totalLikes,
       commentCount: commentCount,
     };
