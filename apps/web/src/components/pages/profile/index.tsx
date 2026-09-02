@@ -383,7 +383,7 @@ export default function ProfilePage() {
 
       // Validate required fields
       if (!displayName || displayName.trim() === '') {
-        setSaveError(t('profile.errors.displayNameRequired'));
+        setSaveError(t('errors.profile.displayNameRequired'));
         setIsSaving(false);
         return;
       }

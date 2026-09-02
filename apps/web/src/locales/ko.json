@@ -45,7 +45,15 @@
       "goHome": "홈으로 이동",
       "generic": "요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.",
       "loadFailed": "내용을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
-    }
+    },
+    "like": "좋아요",
+    "unlike": "좋아요 취소",
+    "deleteConfirmTitle": "삭제 확인",
+    "deleteConfirmMessage": "삭제하면 되돌릴 수 없습니다. 계속할까요?",
+    "enterFullscreen": "전체 화면",
+    "exitFullscreen": "전체 화면 종료",
+    "profile": "프로필",
+    "user": "사용자"
   },
   "errors": {
     "general": "오류가 발생했습니다. 다시 시도해주세요.",
@@ -229,7 +237,14 @@
       "publishedSection": "발행된 게시물",
       "scheduledSection": "예약된 게시물",
       "draftSection": "임시저장"
-    }
+    },
+    "like": "좋아요",
+    "unlike": "좋아요 취소",
+    "likes": "좋아요",
+    "comments": "댓글",
+    "views": "조회수",
+    "edit": "게시글 수정",
+    "delete": "게시글 삭제"
   },
   "postCategories": {
     "ALL": {

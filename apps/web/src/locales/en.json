@@ -45,7 +45,15 @@
       "goHome": "Go to home",
       "generic": "We couldn't complete that request. Please try again in a moment.",
       "loadFailed": "We couldn't load this content. Please try again in a moment."
-    }
+    },
+    "like": "Like",
+    "unlike": "Unlike",
+    "deleteConfirmTitle": "Confirm delete",
+    "deleteConfirmMessage": "This cannot be undone. Delete anyway?",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "profile": "Profile",
+    "user": "User"
   },
   "errors": {
     "general": "An error occurred. Please try again.",
@@ -229,7 +237,14 @@
       "publishedSection": "Published posts",
       "scheduledSection": "Scheduled posts",
       "draftSection": "Drafts"
-    }
+    },
+    "like": "Like",
+    "unlike": "Unlike",
+    "likes": "Likes",
+    "comments": "Comments",
+    "views": "Views",
+    "edit": "Edit post",
+    "delete": "Delete post"
   },
   "notifications": {
     "title": "Notifications",

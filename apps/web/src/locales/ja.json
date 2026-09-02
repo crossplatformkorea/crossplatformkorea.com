@@ -45,7 +45,15 @@
       "goHome": "ホームへ",
       "generic": "リクエストを完了できませんでした。しばらくしてからもう一度お試しください。",
       "loadFailed": "コンテンツを読み込めませんでした。しばらくしてからもう一度お試しください。"
-    }
+    },
+    "like": "いいね",
+    "unlike": "いいねを取り消す",
+    "deleteConfirmTitle": "削除の確認",
+    "deleteConfirmMessage": "削除すると元に戻せません。続行しますか？",
+    "enterFullscreen": "全画面表示",
+    "exitFullscreen": "全画面表示を終了",
+    "profile": "プロフィール",
+    "user": "ユーザー"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -231,7 +239,14 @@
       "publishedSection": "公開済みの投稿",
       "scheduledSection": "予約中の投稿",
       "draftSection": "下書き"
-    }
+    },
+    "like": "いいね",
+    "unlike": "いいねを取り消す",
+    "likes": "いいね",
+    "comments": "コメント",
+    "views": "閲覧数",
+    "edit": "投稿を編集",
+    "delete": "投稿を削除"
   },
   "postCategories": {
     "ALL": {

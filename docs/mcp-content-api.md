@@ -18,7 +18,7 @@ An MCP write endpoint differs from the web form in three ways that matter:
 | | Web form | MCP |
 | --- | --- | --- |
 | Effort per submission | A human types it | A loop can emit hundreds |
-| Attribution | Session cookie, one browser | A token that can be copied anywhere |
+| Attribution | A signed-in session in one browser | A token that can be copied anywhere |
 | Content origin | The person | A model, possibly steered by a third party |
 
 The third is the subtle one. If a member asks their assistant to "summarize this
