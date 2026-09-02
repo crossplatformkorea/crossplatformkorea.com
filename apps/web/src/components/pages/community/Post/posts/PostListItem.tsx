@@ -13,6 +13,7 @@ import { Button } from '../../../../uis/Button';
 import { toast } from 'sonner';
 import { cn, devConsole } from '@/lib/utils';
 import { userFacingErrorMessage } from '@/lib/errors';
+import PostStatusBadge from '@/components/uis/PostStatusBadge';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { createUserProfileLink } from '@/lib/utils';
@@ -128,7 +129,10 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
             >
               {post.title}
             </h3>
-            <CategoryBadge category={post.category} />
+            <div className="flex flex-shrink-0 items-center gap-2">
+              <PostStatusBadge post={post} />
+              <CategoryBadge category={post.category} />
+            </div>
           </div>
 
           {/* Tags - hide when thumbnail exists for cleaner look */}

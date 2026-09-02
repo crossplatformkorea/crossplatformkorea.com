@@ -222,7 +222,16 @@
     "deleteConfirmTitle": "投稿を削除しますか？",
     "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？",
     "draftBanner": "この投稿は下書きで、作成者だけが閲覧できます。",
-    "scheduledBanner": "この投稿は予約公開中で、公開時刻まで作成者だけが閲覧できます。"
+    "scheduledBanner": "この投稿は予約公開中で、公開時刻まで作成者だけが閲覧できます。",
+    "status": {
+      "published": "公開済み",
+      "scheduled": "予約投稿",
+      "draft": "下書き",
+      "scheduledFor": "{{when}} に公開予定",
+      "publishedSection": "公開済みの投稿",
+      "scheduledSection": "予約中の投稿",
+      "draftSection": "下書き"
+    }
   },
   "postCategories": {
     "ALL": {

@@ -220,7 +220,16 @@
     "deleteConfirmTitle": "Delete Post?",
     "deleteConfirmMessage": "This action cannot be undone. Are you sure you want to delete this post?",
     "draftBanner": "This post is a draft and is only visible to you.",
-    "scheduledBanner": "This post is scheduled and is only visible to you until it goes live."
+    "scheduledBanner": "This post is scheduled and is only visible to you until it goes live.",
+    "status": {
+      "published": "Published",
+      "scheduled": "Scheduled",
+      "draft": "Draft",
+      "scheduledFor": "Goes live {{when}}",
+      "publishedSection": "Published posts",
+      "scheduledSection": "Scheduled posts",
+      "draftSection": "Drafts"
+    }
   },
   "notifications": {
     "title": "Notifications",

@@ -69,6 +69,7 @@ export default function ChatGptPage() {
       const conversationId = await createConversation({
         title: `New Chat ${new Date().toLocaleString()}`,
       });
+      setError(null);
       setSelectedConversationId(conversationId);
     } catch (error) {
       devConsole.error('Failed to create conversation:', error);
@@ -219,6 +220,14 @@ export default function ChatGptPage() {
             <div className="text-center max-w-md mx-auto">
               <MessageSquare size={48} className="mx-auto mb-4 text-gray-400 dark:text-zinc-500" />
               <p className="text-gray-600 dark:text-zinc-400 mb-4">{t('chat.noConversations')}</p>
+              {/* ChatInput carries the error banner, but it only mounts once a
+                  conversation is selected — so a failed create from this very
+                  screen would otherwise be invisible. */}
+              {error && (
+                <p role="alert" className="mb-4 text-sm text-red-600 dark:text-red-400">
+                  {error}
+                </p>
+              )}
               {!hasApiKey ? (
                 <Button
                   onClick={() => setIsApiKeyDialogOpen(true)}

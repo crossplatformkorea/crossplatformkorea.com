@@ -5,6 +5,7 @@ import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 // Import translation utility for error messages
 import { LogOut, Globe, Link as LinkIcon, LucideLinkedin, ArrowLeft } from 'lucide-react';
 // 브랜드 아이콘 가져오기
@@ -534,7 +535,9 @@ export default function ProfilePage() {
       // window.location.reload(); - REMOVED THIS LINE
     } catch (error) {
       devConsole.error('Error saving profile:', error);
-      setSaveError(t('errors.general'));
+      // updateProfile raises the taken-name and invalid-name cases as
+      // ConvexError i18n keys, so the specific guidance is worth surfacing.
+      setSaveError(userFacingErrorMessage(error, t('errors.profileSaveFailed')));
     } finally {
       setIsSaving(false);
     }
