@@ -37,6 +37,14 @@
       "now": "今",
       "ago": "前",
       "in": "後"
+    },
+    "errors": {
+      "title": "問題が発生しました",
+      "description": "画面を読み込めませんでした。しばらくしてからもう一度お試しください。",
+      "retry": "再試行",
+      "goHome": "ホームへ",
+      "generic": "リクエストを完了できませんでした。しばらくしてからもう一度お試しください。",
+      "loadFailed": "コンテンツを読み込めませんでした。しばらくしてからもう一度お試しください。"
     }
   },
   "errors": {
@@ -72,7 +80,33 @@
       "onlyHyphens": "ユーザー名をハイフンのみで構成することはできません",
       "reserved": "このユーザー名は予約語のため使用できません"
     },
-    "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。"
+    "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。",
+    "showcase": {
+      "titleRequired": "タイトルを入力してください。",
+      "categoryInvalid": "有効なカテゴリを選択してください。",
+      "imageRequired": "画像URLを入力してください。",
+      "linkRequired": "ウェブサイト、App Store、Play Storeのうち少なくとも1つのリンクが必要です。"
+    },
+    "featureRequest": {
+      "titleTooShort": "タイトルは3文字以上で入力してください。"
+    },
+    "comment": {
+      "empty": "コメントを入力してください。"
+    },
+    "chat": {
+      "apiKeyInvalidFormat": "APIキーの形式が正しくありません。「sk-」で始まる必要があります。"
+    },
+    "commentCreationFailed": "コメントを投稿できませんでした。もう一度お試しください。",
+    "commentDeleteFailed": "コメントを削除できませんでした。もう一度お試しください。",
+    "postDeleteFailed": "投稿を削除できませんでした。もう一度お試しください。",
+    "likeFailed": "リアクションを処理できませんでした。もう一度お試しください。",
+    "voteFailed": "投票を処理できませんでした。もう一度お試しください。",
+    "notificationUpdateFailed": "通知を更新できませんでした。もう一度お試しください。",
+    "notificationDeleteFailed": "通知を削除できませんでした。もう一度お試しください。",
+    "conversationCreateFailed": "新しい会話を開始できませんでした。もう一度お試しください。",
+    "conversationDeleteFailed": "会話を削除できませんでした。もう一度お試しください。",
+    "profileSaveFailed": "プロフィールを保存できませんでした。もう一度お試しください。",
+    "signOutFailed": "ログアウトできませんでした。もう一度お試しください。"
   },
   "profile": {
     "title": "プロフィール",
@@ -155,7 +189,14 @@
     "loginToAccess": "サインインして始める",
     "signIn": "サインイン",
     "signInWithGithub": "GitHubでログイン",
-    "signingInWithGithub": "GitHubでログイン中..."
+    "signingInWithGithub": "GitHubでログイン中...",
+    "errors": {
+      "sendCodeFailed": "認証コードを送信できませんでした。しばらくしてからもう一度お試しください。",
+      "invalidCode": "コードが正しくないか、期限切れです。最新のメールに記載されたコードをご確認ください。",
+      "githubFailed": "GitHubログインに失敗しました。しばらくしてからもう一度お試しください。",
+      "signOutFailed": "ログアウトできませんでした。もう一度お試しください。"
+    },
+    "codeReplaceNotice": "新しいコードをリクエストすると、以前のコードは使用できなくなります。"
   },
   "posts": {
     "title": "投稿",
@@ -570,7 +611,8 @@
       "invalidApiKey": "無効なOpenAI APIキーです",
       "rateLimitExceeded": "OpenAI APIのレート制限を超過しました",
       "insufficientCredits": "OpenAIクレジットが不足しています",
-      "invalidApiKeyFormat": "APIキーは'sk-'で始まる必要があります"
+      "invalidApiKeyFormat": "APIキーは'sk-'で始まる必要があります",
+      "failedToSaveApiKey": "APIキーを保存できませんでした。もう一度お試しください。"
     },
     "messages": {
       "user": "ユーザー",

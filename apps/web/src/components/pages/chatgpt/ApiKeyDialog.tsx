@@ -3,6 +3,7 @@ import { Key } from 'lucide-react';
 import { Button } from '@/components/uis/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/uis/Dialog';
 import { t } from '@/lib/i18n';
+import { userFacingErrorMessage } from '@/lib/errors';
 
 interface ApiKeyDialogProps {
   open: boolean;
@@ -51,7 +52,7 @@ export function ApiKeyDialog({
       setApiKey('');
     } catch (error) {
       console.error('Failed to save API key:', error);
-      alert(error instanceof Error ? error.message : 'Failed to save API key');
+      alert(userFacingErrorMessage(error, t('chat.errors.failedToSaveApiKey')));
     } finally {
       setIsLoading(false);
     }

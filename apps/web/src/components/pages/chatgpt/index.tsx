@@ -4,7 +4,8 @@ import { api } from '@convex/_generated/api';
 import { MessageSquare, Settings, Plus, Trash2, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/uis/Button';
 import { useAuthStore } from '@/stores/authStore';
-import { cn } from '@/lib/utils';
+import { cn, devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 import { Id } from '@convex/_generated/dataModel';
 import { t } from '@/lib/i18n';
 import { MessageList } from './MessageList';
@@ -70,7 +71,8 @@ export default function ChatGptPage() {
       });
       setSelectedConversationId(conversationId);
     } catch (error) {
-      console.error('Failed to create conversation:', error);
+      devConsole.error('Failed to create conversation:', error);
+      setError(userFacingErrorMessage(error, t('errors.conversationCreateFailed')));
     }
   };
 
@@ -91,34 +93,16 @@ export default function ChatGptPage() {
         model,
       });
 
-      console.log('Created streaming message with streamId:', result.streamId);
+      devConsole.log('Created streaming message with streamId:', result.streamId);
 
       // The streaming will now be handled by the persistent-text-streaming component
       // No need to call HTTP endpoint manually - the useStream hook will handle it
     } catch (error) {
-      console.error('Failed to send message:', error);
-      // Set user-friendly error message based on error type
-      if (error instanceof Error) {
-        const errorMessage = error.message;
-
-        // Map specific error messages to translation keys
-        if (
-          errorMessage.includes('Invalid OpenAI API key') ||
-          errorMessage.includes('Incorrect API key')
-        ) {
-          setError(t('chat.errors.invalidApiKey'));
-        } else if (errorMessage.includes('rate limit')) {
-          setError(t('chat.errors.rateLimitExceeded'));
-        } else if (errorMessage.includes('insufficient') || errorMessage.includes('credits')) {
-          setError(t('chat.errors.insufficientCredits'));
-        } else if (errorMessage.includes('API key should start with')) {
-          setError(t('chat.errors.invalidApiKeyFormat'));
-        } else {
-          setError(errorMessage);
-        }
-      } else {
-        setError(t('chat.errors.failedToSend'));
-      }
+      devConsole.error('Failed to send message:', error);
+      // Matching on `error.message` was dead code: production Convex redacts a
+      // thrown Error to "[CONVEX M(...)] ... Server Error". Specific causes now
+      // arrive as ConvexError i18n-key payloads, which the helper translates.
+      setError(userFacingErrorMessage(error, t('chat.errors.failedToSend')));
     } finally {
       setIsSending(false);
     }
@@ -131,7 +115,8 @@ export default function ChatGptPage() {
         setSelectedConversationId(null);
       }
     } catch (error) {
-      console.error('Failed to delete conversation:', error);
+      devConsole.error('Failed to delete conversation:', error);
+      setError(userFacingErrorMessage(error, t('errors.conversationDeleteFailed')));
     }
   };
 

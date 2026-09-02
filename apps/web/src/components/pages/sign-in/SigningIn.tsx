@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { useConvexAuth, useMutation } from 'convex/react';
@@ -7,10 +7,15 @@ import { ArrowLeft, ArrowRight, Mail, ShieldCheck } from 'lucide-react';
 import { api } from '@convex/_generated/api';
 import { t, getLocale } from '../../../lib/i18n';
 import { devConsole } from '../../../lib/utils';
+import { userFacingErrorMessage } from '../../../lib/errors';
 import { Button } from '../../uis/Button';
 
 // Upper bound on waiting for the Convex client to pick up the new identity.
 const PROFILE_SYNC_TIMEOUT_MS = 5000;
+
+// Re-submitting the email within this window returns to the code screen without
+// requesting a new code — each new request invalidates the previous email's code.
+const RESEND_COOLDOWN_MS = 30_000;
 
 interface SigningInProps {
   returnTo: string;
@@ -29,6 +34,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
   const { isAuthenticated } = useConvexAuth();
   const navigate = useNavigate();
   const createOrUpdateUser = useMutation(api.users.mutation.createOrUpdateUser);
+  const lastCodeSentRef = useRef<{ email: string; at: number } | null>(null);
   const providerId = `resend-otp-${getLocale()}`;
 
   const handleSendCode = async (event: React.FormEvent) => {
@@ -36,16 +42,22 @@ export default function SigningIn({ returnTo }: SigningInProps) {
     setIsLoading(true);
     setError(null);
 
+    // The previously emailed code is still valid; requesting another would
+    // silently invalidate it, so just return to the code screen.
+    const lastSent = lastCodeSentRef.current;
+    if (lastSent && lastSent.email === email && Date.now() - lastSent.at < RESEND_COOLDOWN_MS) {
+      setIsCodeSent(true);
+      setIsLoading(false);
+      return;
+    }
+
     try {
       await signIn(providerId, { email });
+      lastCodeSentRef.current = { email, at: Date.now() };
       setIsCodeSent(true);
     } catch (sendError) {
       devConsole.error('Error sending verification code:', sendError);
-      setError(
-        sendError instanceof Error
-          ? sendError.message
-          : 'Failed to send verification code. Please try again.',
-      );
+      setError(userFacingErrorMessage(sendError, t('signIn.errors.sendCodeFailed')));
     } finally {
       setIsLoading(false);
     }
@@ -59,11 +71,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
       await signIn('github', { redirectTo: returnTo });
     } catch (signInError) {
       devConsole.error('Error signing in with GitHub:', signInError);
-      setError(
-        signInError instanceof Error
-          ? signInError.message
-          : 'Failed to sign in with GitHub. Please try again.',
-      );
+      setError(userFacingErrorMessage(signInError, t('signIn.errors.githubFailed')));
       setIsGitHubLoading(false);
     }
   };
@@ -81,11 +89,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
       setPendingProfileEmail(email);
     } catch (verifyError) {
       devConsole.error('Error verifying code:', verifyError);
-      setError(
-        verifyError instanceof Error
-          ? verifyError.message
-          : 'Failed to verify code. Please check the code and try again.',
-      );
+      setError(userFacingErrorMessage(verifyError, t('signIn.errors.invalidCode')));
       setIsLoading(false);
     }
   };
@@ -161,6 +165,8 @@ export default function SigningIn({ returnTo }: SigningInProps) {
             <span className="font-medium text-foreground">{email}</span>
             <br />
             {t('signIn.verifyEmailMessage')}
+            <br />
+            {t('signIn.codeReplaceNotice')}
           </p>
         </div>
 

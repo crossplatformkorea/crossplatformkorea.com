@@ -37,6 +37,14 @@
       "now": "now",
       "ago": "ago",
       "in": "in"
+    },
+    "errors": {
+      "title": "Something went wrong",
+      "description": "We couldn't load this screen. Please try again in a moment.",
+      "retry": "Try again",
+      "goHome": "Go to home",
+      "generic": "We couldn't complete that request. Please try again in a moment.",
+      "loadFailed": "We couldn't load this content. Please try again in a moment."
     }
   },
   "errors": {
@@ -72,7 +80,33 @@
       "onlyHyphens": "Username cannot consist only of hyphens",
       "reserved": "This username is reserved and cannot be used"
     },
-    "postUpdateFailed": "Failed to update post. Please try again."
+    "postUpdateFailed": "Failed to update post. Please try again.",
+    "showcase": {
+      "titleRequired": "A title is required.",
+      "categoryInvalid": "Please choose a valid category.",
+      "imageRequired": "An image URL is required.",
+      "linkRequired": "Add at least one link (website, App Store, or Play Store)."
+    },
+    "featureRequest": {
+      "titleTooShort": "The title must be at least 3 characters long."
+    },
+    "comment": {
+      "empty": "A comment can't be empty."
+    },
+    "chat": {
+      "apiKeyInvalidFormat": "That API key looks wrong — it should start with \"sk-\"."
+    },
+    "commentCreationFailed": "Failed to post the comment. Please try again.",
+    "commentDeleteFailed": "Failed to delete the comment. Please try again.",
+    "postDeleteFailed": "Failed to delete the post. Please try again.",
+    "likeFailed": "We couldn't register that reaction. Please try again.",
+    "voteFailed": "We couldn't register your vote. Please try again.",
+    "notificationUpdateFailed": "We couldn't update the notification. Please try again.",
+    "notificationDeleteFailed": "We couldn't delete the notification. Please try again.",
+    "conversationCreateFailed": "We couldn't start a new conversation. Please try again.",
+    "conversationDeleteFailed": "We couldn't delete the conversation. Please try again.",
+    "profileSaveFailed": "We couldn't save your profile. Please try again.",
+    "signOutFailed": "Sign-out failed. Please try again."
   },
   "profile": {
     "title": "Profile",
@@ -153,7 +187,14 @@
     "signOut": "Sign Out",
     "returnToHome": "Return to Home",
     "signInWithGithub": "Sign in with GitHub",
-    "signingInWithGithub": "Signing in with GitHub..."
+    "signingInWithGithub": "Signing in with GitHub...",
+    "errors": {
+      "sendCodeFailed": "We couldn't send the verification code. Please try again in a moment.",
+      "invalidCode": "That code is incorrect or has expired. Please use the code from the most recent email.",
+      "githubFailed": "GitHub sign-in failed. Please try again in a moment.",
+      "signOutFailed": "Sign-out failed. Please try again."
+    },
+    "codeReplaceNotice": "Requesting a new code invalidates the previous one."
   },
   "posts": {
     "title": "Posts",
@@ -568,7 +609,8 @@
       "invalidApiKey": "Invalid OpenAI API key. Please check your API key and try again.",
       "rateLimitExceeded": "OpenAI API rate limit exceeded. Please try again later.",
       "insufficientCredits": "Insufficient OpenAI credits. Please add credits to your account.",
-      "invalidApiKeyFormat": "Invalid API key format. API key should start with 'sk-'"
+      "invalidApiKeyFormat": "Invalid API key format. API key should start with 'sk-'",
+      "failedToSaveApiKey": "We couldn't save the API key. Please try again."
     },
     "messages": {
       "user": "You",

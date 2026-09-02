@@ -10,7 +10,9 @@ import { api } from '@convex/_generated/api';
 import { useAuthStore } from '@/stores/authStore';
 import CategoryBadge from '../../../../uis/CategoryBadge';
 import { Button } from '../../../../uis/Button';
-import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { cn, devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { createUserProfileLink } from '@/lib/utils';
@@ -52,7 +54,14 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
       return;
     }
 
-    void toggleLike({ postId: post._id });
+    void (async () => {
+      try {
+        await toggleLike({ postId: post._id });
+      } catch (error) {
+        devConsole.error('Failed to toggle post like:', error);
+        toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
+      }
+    })();
   };
 
   // Handle author profile click

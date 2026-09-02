@@ -4,6 +4,7 @@ import { Button } from '../../uis/Button';
 import { usePushNotifications } from '../../../hooks/usePushNotifications';
 import { t } from '../../../lib/i18n';
 import { cn } from '../../../lib/utils';
+import { userFacingErrorMessage } from '../../../lib/errors';
 
 interface PushNotificationSettingsProps {
   className?: string;
@@ -477,7 +478,7 @@ const PushNotificationSettings = ({ className }: PushNotificationSettingsProps) 
       clearMessages();
     } catch (err) {
       console.error('Failed to subscribe to push notifications:', err);
-      const errorMessage = err instanceof Error ? err.message : t('notifications.pushNotifications.errors.subscriptionFailed');
+      const errorMessage = userFacingErrorMessage(err, t('notifications.pushNotifications.errors.subscriptionFailed'));
       setError(errorMessage);
       clearMessages();
     }
@@ -491,7 +492,7 @@ const PushNotificationSettings = ({ className }: PushNotificationSettingsProps) 
       setSuccessMessage(t('notifications.pushNotifications.messages.unsubscribeSuccess'));
       clearMessages();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : t('notifications.pushNotifications.errors.unsubscriptionFailed');
+      const errorMessage = userFacingErrorMessage(err, t('notifications.pushNotifications.errors.unsubscriptionFailed'));
       setError(errorMessage);
       clearMessages();
     }
@@ -505,7 +506,7 @@ const PushNotificationSettings = ({ className }: PushNotificationSettingsProps) 
       setSuccessMessage(t('notifications.pushNotifications.messages.permissionGranted'));
       clearMessages();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : t('notifications.pushNotifications.errors.permissionDenied');
+      const errorMessage = userFacingErrorMessage(err, t('notifications.pushNotifications.errors.permissionDenied'));
       setError(errorMessage);
       clearMessages();
     }
@@ -519,7 +520,7 @@ const PushNotificationSettings = ({ className }: PushNotificationSettingsProps) 
       setSuccessMessage(t('notifications.pushNotifications.messages.testNotificationSent'));
       clearMessages();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : t('notifications.pushNotifications.errors.testNotificationFailed');
+      const errorMessage = userFacingErrorMessage(err, t('notifications.pushNotifications.errors.testNotificationFailed'));
       setError(errorMessage);
       clearMessages();
     }

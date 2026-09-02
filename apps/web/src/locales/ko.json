@@ -37,6 +37,14 @@
       "now": "지금",
       "ago": "전",
       "in": "후"
+    },
+    "errors": {
+      "title": "문제가 발생했습니다",
+      "description": "화면을 불러오는 중 오류가 발생했어요. 잠시 후 다시 시도해 주세요.",
+      "retry": "다시 시도",
+      "goHome": "홈으로 이동",
+      "generic": "요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      "loadFailed": "내용을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
     }
   },
   "errors": {
@@ -72,7 +80,33 @@
       "onlyHyphens": "사용자명은 하이픈으로만 구성될 수 없습니다",
       "reserved": "이 사용자명은 예약어로 사용할 수 없습니다"
     },
-    "postUpdateFailed": "게시글 수정에 실패했습니다. 다시 시도해주세요."
+    "postUpdateFailed": "게시글 수정에 실패했습니다. 다시 시도해주세요.",
+    "showcase": {
+      "titleRequired": "제목을 입력해 주세요.",
+      "categoryInvalid": "유효한 카테고리를 선택해 주세요.",
+      "imageRequired": "이미지 URL을 입력해 주세요.",
+      "linkRequired": "웹사이트, 앱스토어, 플레이스토어 중 최소 하나의 링크가 필요합니다."
+    },
+    "featureRequest": {
+      "titleTooShort": "제목은 3자 이상이어야 합니다."
+    },
+    "comment": {
+      "empty": "댓글 내용을 입력해 주세요."
+    },
+    "chat": {
+      "apiKeyInvalidFormat": "API 키 형식이 올바르지 않습니다. \"sk-\"로 시작해야 합니다."
+    },
+    "commentCreationFailed": "댓글을 등록하지 못했습니다. 다시 시도해 주세요.",
+    "commentDeleteFailed": "댓글을 삭제하지 못했습니다. 다시 시도해 주세요.",
+    "postDeleteFailed": "게시글을 삭제하지 못했습니다. 다시 시도해 주세요.",
+    "likeFailed": "반응을 처리하지 못했습니다. 다시 시도해 주세요.",
+    "voteFailed": "투표를 처리하지 못했습니다. 다시 시도해 주세요.",
+    "notificationUpdateFailed": "알림을 업데이트하지 못했습니다. 다시 시도해 주세요.",
+    "notificationDeleteFailed": "알림을 삭제하지 못했습니다. 다시 시도해 주세요.",
+    "conversationCreateFailed": "새 대화를 시작하지 못했습니다. 다시 시도해 주세요.",
+    "conversationDeleteFailed": "대화를 삭제하지 못했습니다. 다시 시도해 주세요.",
+    "profileSaveFailed": "프로필을 저장하지 못했습니다. 다시 시도해 주세요.",
+    "signOutFailed": "로그아웃하지 못했습니다. 다시 시도해 주세요."
   },
   "profile": {
     "title": "프로필",
@@ -153,7 +187,14 @@
     "signOut": "로그아웃",
     "returnToHome": "홈으로 돌아가기",
     "signInWithGithub": "GitHub로 로그인",
-    "signingInWithGithub": "GitHub로 로그인 중..."
+    "signingInWithGithub": "GitHub로 로그인 중...",
+    "errors": {
+      "sendCodeFailed": "인증 코드를 보내지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      "invalidCode": "코드가 올바르지 않거나 만료되었습니다. 가장 최근 메일의 코드를 확인해 주세요.",
+      "githubFailed": "GitHub 로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.",
+      "signOutFailed": "로그아웃하지 못했습니다. 다시 시도해 주세요."
+    },
+    "codeReplaceNotice": "코드를 다시 요청하면 이전 코드는 사용할 수 없습니다."
   },
   "posts": {
     "title": "게시물",
@@ -568,7 +609,8 @@
       "invalidApiKey": "유효하지 않은 OpenAI API 키입니다",
       "rateLimitExceeded": "요청 한도를 초과했습니다",
       "insufficientCredits": "크레딧이 부족합니다",
-      "invalidApiKeyFormat": "API 키는 'sk-'로 시작해야 합니다"
+      "invalidApiKeyFormat": "API 키는 'sk-'로 시작해야 합니다",
+      "failedToSaveApiKey": "API 키를 저장하지 못했습니다. 다시 시도해 주세요."
     },
     "messages": {
       "user": "사용자",

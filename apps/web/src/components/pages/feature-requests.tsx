@@ -9,6 +9,7 @@ import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { cn, devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 import { useMetaTags } from '@/hooks/useMetaTags';
 import PageHeader from '@/components/uis/PageHeader';
 
@@ -163,9 +164,7 @@ export default function FeatureRequestsPage() {
       setShowForm(false);
       toast.success(t('featureRequest.successMessage'));
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit');
-      setError(errorMessage);
+      setError(userFacingErrorMessage(err, t('featureRequest.validation.failedToSubmit')));
       devConsole.error('Error submitting feature request:', err);
     } finally {
       setIsSubmitting(false);
