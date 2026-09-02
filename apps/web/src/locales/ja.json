@@ -37,7 +37,23 @@
       "now": "今",
       "ago": "前",
       "in": "後"
-    }
+    },
+    "errors": {
+      "title": "問題が発生しました",
+      "description": "画面を読み込めませんでした。しばらくしてからもう一度お試しください。",
+      "retry": "再試行",
+      "goHome": "ホームへ",
+      "generic": "リクエストを完了できませんでした。しばらくしてからもう一度お試しください。",
+      "loadFailed": "コンテンツを読み込めませんでした。しばらくしてからもう一度お試しください。"
+    },
+    "like": "いいね",
+    "unlike": "いいねを取り消す",
+    "deleteConfirmTitle": "削除の確認",
+    "deleteConfirmMessage": "削除すると元に戻せません。続行しますか？",
+    "enterFullscreen": "全画面表示",
+    "exitFullscreen": "全画面表示を終了",
+    "profile": "プロフィール",
+    "user": "ユーザー"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -72,7 +88,33 @@
       "onlyHyphens": "ユーザー名をハイフンのみで構成することはできません",
       "reserved": "このユーザー名は予約語のため使用できません"
     },
-    "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。"
+    "postUpdateFailed": "投稿の更新に失敗しました。もう一度お試しください。",
+    "showcase": {
+      "titleRequired": "タイトルを入力してください。",
+      "categoryInvalid": "有効なカテゴリを選択してください。",
+      "imageRequired": "画像URLを入力してください。",
+      "linkRequired": "ウェブサイト、App Store、Play Storeのうち少なくとも1つのリンクが必要です。"
+    },
+    "featureRequest": {
+      "titleTooShort": "タイトルは3文字以上で入力してください。"
+    },
+    "comment": {
+      "empty": "コメントを入力してください。"
+    },
+    "chat": {
+      "apiKeyInvalidFormat": "APIキーの形式が正しくありません。「sk-」で始まる必要があります。"
+    },
+    "commentCreationFailed": "コメントを投稿できませんでした。もう一度お試しください。",
+    "commentDeleteFailed": "コメントを削除できませんでした。もう一度お試しください。",
+    "postDeleteFailed": "投稿を削除できませんでした。もう一度お試しください。",
+    "likeFailed": "リアクションを処理できませんでした。もう一度お試しください。",
+    "voteFailed": "投票を処理できませんでした。もう一度お試しください。",
+    "notificationUpdateFailed": "通知を更新できませんでした。もう一度お試しください。",
+    "notificationDeleteFailed": "通知を削除できませんでした。もう一度お試しください。",
+    "conversationCreateFailed": "新しい会話を開始できませんでした。もう一度お試しください。",
+    "conversationDeleteFailed": "会話を削除できませんでした。もう一度お試しください。",
+    "profileSaveFailed": "プロフィールを保存できませんでした。もう一度お試しください。",
+    "signOutFailed": "ログアウトできませんでした。もう一度お試しください。"
   },
   "profile": {
     "title": "プロフィール",
@@ -155,7 +197,14 @@
     "loginToAccess": "サインインして始める",
     "signIn": "サインイン",
     "signInWithGithub": "GitHubでログイン",
-    "signingInWithGithub": "GitHubでログイン中..."
+    "signingInWithGithub": "GitHubでログイン中...",
+    "errors": {
+      "sendCodeFailed": "認証コードを送信できませんでした。しばらくしてからもう一度お試しください。",
+      "invalidCode": "コードが正しくないか、期限切れです。最新のメールに記載されたコードをご確認ください。",
+      "githubFailed": "GitHubログインに失敗しました。しばらくしてからもう一度お試しください。",
+      "signOutFailed": "ログアウトできませんでした。もう一度お試しください。"
+    },
+    "codeReplaceNotice": "新しいコードをリクエストすると、以前のコードは使用できなくなります。"
   },
   "posts": {
     "title": "投稿",
@@ -181,7 +230,23 @@
     "deleteConfirmTitle": "投稿を削除しますか？",
     "deleteConfirmMessage": "この操作は元に戻せません。本当にこの投稿を削除しますか？",
     "draftBanner": "この投稿は下書きで、作成者だけが閲覧できます。",
-    "scheduledBanner": "この投稿は予約公開中で、公開時刻まで作成者だけが閲覧できます。"
+    "scheduledBanner": "この投稿は予約公開中で、公開時刻まで作成者だけが閲覧できます。",
+    "status": {
+      "published": "公開済み",
+      "scheduled": "予約投稿",
+      "draft": "下書き",
+      "scheduledFor": "{{when}} に公開予定",
+      "publishedSection": "公開済みの投稿",
+      "scheduledSection": "予約中の投稿",
+      "draftSection": "下書き"
+    },
+    "like": "いいね",
+    "unlike": "いいねを取り消す",
+    "likes": "いいね",
+    "comments": "コメント",
+    "views": "閲覧数",
+    "edit": "投稿を編集",
+    "delete": "投稿を削除"
   },
   "postCategories": {
     "ALL": {
@@ -570,7 +635,8 @@
       "invalidApiKey": "無効なOpenAI APIキーです",
       "rateLimitExceeded": "OpenAI APIのレート制限を超過しました",
       "insufficientCredits": "OpenAIクレジットが不足しています",
-      "invalidApiKeyFormat": "APIキーは'sk-'で始まる必要があります"
+      "invalidApiKeyFormat": "APIキーは'sk-'で始まる必要があります",
+      "failedToSaveApiKey": "APIキーを保存できませんでした。もう一度お試しください。"
     },
     "messages": {
       "user": "ユーザー",

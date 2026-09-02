@@ -9,6 +9,7 @@ import useAuthGuard from '@/hooks/useAuthGuard';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { cn, devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 import { useMetaTags } from '@/hooks/useMetaTags';
 import PageHeader from '@/components/uis/PageHeader';
 
@@ -145,15 +146,23 @@ export default function FeatureRequestsPage() {
   };
 
   const onSubmitFeatureRequest = useCallback(async () => {
-    setIsSubmitting(true);
     setError(null);
+
+    // Local validation carries its own translated message, so report it
+    // directly rather than throwing into the catch below, which only knows how
+    // to translate ConvexError payloads and would flatten these to the generic
+    // submit-failed string.
+    if (title.trim().length < 3) {
+      setError(t('featureRequest.validation.titleTooShort'));
+      return;
+    }
+    if (description.trim().length < 10) {
+      setError(t('featureRequest.validation.descriptionTooShort'));
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      if (title.trim().length < 3) {
-        throw new Error(t('featureRequest.validation.titleTooShort'));
-      }
-      if (description.trim().length < 10) {
-        throw new Error(t('featureRequest.validation.descriptionTooShort'));
-      }
       const _result = await addFeatureRequest({
         title: title.trim(),
         description: description.trim(),
@@ -163,9 +172,7 @@ export default function FeatureRequestsPage() {
       setShowForm(false);
       toast.success(t('featureRequest.successMessage'));
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : t('featureRequest.validation.failedToSubmit');
-      setError(errorMessage);
+      setError(userFacingErrorMessage(err, t('featureRequest.validation.failedToSubmit')));
       devConsole.error('Error submitting feature request:', err);
     } finally {
       setIsSubmitting(false);

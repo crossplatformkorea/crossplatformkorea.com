@@ -19,6 +19,7 @@ interface EmailTemplate {
   intro: string;
   codeLabel: string;
   expires: string;
+  latestOnly: string;
   security: string;
   footer: string;
   fromName: string;
@@ -37,6 +38,7 @@ const emailTemplates: Record<Locale, EmailTemplate> = {
     intro: 'Enter the verification code below on the sign-in screen.',
     codeLabel: 'YOUR VERIFICATION CODE',
     expires: 'This code expires in 15 minutes.',
+    latestOnly: 'Only the most recently requested code works — earlier codes stop working as soon as a new one is sent.',
     security:
       'If you didn’t request this code, you can safely ignore this email. Never share this code with anyone.',
     footer: 'A community for people building across platforms.',
@@ -51,6 +53,7 @@ const emailTemplates: Record<Locale, EmailTemplate> = {
     intro: '아래 인증 코드를 로그인 화면에 입력해 주세요.',
     codeLabel: '인증 코드',
     expires: '이 코드는 15분 후 만료됩니다.',
+    latestOnly: '가장 최근에 요청한 코드만 사용할 수 있습니다. 새 코드를 요청하면 이전 코드는 무효화됩니다.',
     security:
       '직접 요청하지 않았다면 이 메일을 무시해도 안전합니다. 인증 코드는 누구에게도 공유하지 마세요.',
     footer: '크로스플랫폼을 만드는 사람들의 커뮤니티',
@@ -65,6 +68,7 @@ const emailTemplates: Record<Locale, EmailTemplate> = {
     intro: '以下の認証コードをログイン画面に入力してください。',
     codeLabel: '認証コード',
     expires: 'このコードは15分後に期限切れになります。',
+    latestOnly: '最後にリクエストしたコードのみ有効です。新しいコードをリクエストすると、以前のコードは無効になります。',
     security:
       'このコードをリクエストしていない場合は、このメールを無視しても安全です。コードを他人と共有しないでください。',
     footer: 'クロスプラットフォームをつくる人のためのコミュニティ',
@@ -138,6 +142,7 @@ function buildEmailHtml(template: EmailTemplate, token: string) {
                 </table>
 
                 <p style="margin:18px 0 0;font-size:13px;font-weight:600;color:#111111;">${template.expires}</p>
+                <p style="margin:8px 0 0;font-size:13px;line-height:1.65;color:#707070;">${template.latestOnly}</p>
                 <p style="margin:28px 0 0;padding-top:22px;border-top:1px solid #e5e5e5;font-size:13px;line-height:1.65;color:#707070;">${template.security}</p>
               </td>
             </tr>
@@ -156,7 +161,7 @@ function buildEmailHtml(template: EmailTemplate, token: string) {
 }
 
 function buildEmailText(template: EmailTemplate, token: string) {
-  return `${template.heading}\n\n${template.intro}\n\n${template.codeLabel}: ${token}\n${template.expires}\n\n${template.security}\n\n${template.footer}\n${SITE_URL}`;
+  return `${template.heading}\n\n${template.intro}\n\n${template.codeLabel}: ${token}\n${template.expires}\n${template.latestOnly}\n\n${template.security}\n\n${template.footer}\n${SITE_URL}`;
 }
 
 async function sendOtpEmail(

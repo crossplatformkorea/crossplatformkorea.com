@@ -63,6 +63,19 @@ export enum ErrorCode {
   PROFILE_NOT_FOUND = "errors.profile.notFound",
   AUTH_REQUIRED = "errors.auth.required",
   GENERAL_ERROR = "errors.general",
+
+  // Showcase validation
+  SHOWCASE_TITLE_REQUIRED = "errors.showcase.titleRequired",
+  SHOWCASE_CATEGORY_INVALID = "errors.showcase.categoryInvalid",
+  SHOWCASE_IMAGE_REQUIRED = "errors.showcase.imageRequired",
+  SHOWCASE_LINK_REQUIRED = "errors.showcase.linkRequired",
+
+  // Feature request validation
+  FEATURE_TITLE_TOO_SHORT = "errors.featureRequest.titleTooShort",
+  COMMENT_EMPTY = "errors.comment.empty",
+
+  // Chat
+  API_KEY_INVALID_FORMAT = "errors.chat.apiKeyInvalidFormat",
 }
 
 export function getCategoryBySlug(slug: string): CategoryType | undefined {

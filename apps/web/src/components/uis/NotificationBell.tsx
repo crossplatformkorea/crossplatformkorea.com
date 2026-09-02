@@ -4,7 +4,9 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { useConvexAuth } from 'convex/react';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '../../lib/utils';
+import { toast } from 'sonner';
+import { cn, devConsole } from '../../lib/utils';
+import { userFacingErrorMessage } from '../../lib/errors';
 import { Button } from '../uis/Button';
 import { t } from '../../lib/i18n';
 import { formatDistanceToNow } from 'date-fns';
@@ -63,9 +65,15 @@ export default function NotificationBell() {
     setIsOpen(!isOpen);
   };
   const handleNotificationClick = async (notification: any) => {
-    // Mark as read if not already read
+    // Mark as read if not already read. A failure here must not swallow the
+    // navigation the user actually clicked for.
     if (!notification.isRead) {
-      await markAsRead({ notificationId: notification._id });
+      try {
+        await markAsRead({ notificationId: notification._id });
+      } catch (error) {
+        devConsole.error('Failed to mark notification as read:', error);
+        toast.error(userFacingErrorMessage(error, t('errors.notificationUpdateFailed')));
+      }
     }
 
     // Navigate to appropriate page based on notification type

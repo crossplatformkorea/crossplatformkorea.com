@@ -1,5 +1,5 @@
 import { mutation } from '../_generated/server';
-import { v } from 'convex/values';
+import { ConvexError, v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { ErrorCode, SHOWCASE_CATEGORIES } from '../constants';
 import { Id } from '../_generated/dataModel';
@@ -13,28 +13,28 @@ export const createShowcase = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error(ErrorCode.AUTH_REQUIRED);
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Validate title (required, non-empty)
     if (!args.title.trim()) {
-      throw new Error('제목은 필수입니다');
+      throw new ConvexError(ErrorCode.SHOWCASE_TITLE_REQUIRED);
     }
 
     // Validate category (must be valid)
     const validCategory = SHOWCASE_CATEGORIES.some((cat) => cat.key === args.category);
     if (!validCategory) {
-      throw new Error('유효한 카테고리를 선택해주세요');
+      throw new ConvexError(ErrorCode.SHOWCASE_CATEGORY_INVALID);
     }
 
     // Validate image URL (required)
     if (!args.imageUrl.trim()) {
-      throw new Error('이미지 URL은 필수입니다');
+      throw new ConvexError(ErrorCode.SHOWCASE_IMAGE_REQUIRED);
     }
 
     // Ensure at least one URL is provided
     if (!hasAtLeastOneUrl(args.websiteUrl, args.appStoreUrl, args.playStoreUrl)) {
-      throw new Error('최소 하나의 URL(웹사이트, 앱스토어, 플레이스토어)이 필요합니다');
+      throw new ConvexError(ErrorCode.SHOWCASE_LINK_REQUIRED);
     }
 
     // Format URLs with https:// prefix
@@ -83,7 +83,7 @@ export const updateShowcase = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error(ErrorCode.AUTH_REQUIRED);
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     const { showcaseId, ...inputData } = args;
@@ -101,23 +101,23 @@ export const updateShowcase = mutation({
 
     // Validate title (required, non-empty)
     if (!inputData.title.trim()) {
-      throw new Error('제목은 필수입니다');
+      throw new ConvexError(ErrorCode.SHOWCASE_TITLE_REQUIRED);
     }
 
     // Validate category (must be valid)
     const validCategory = SHOWCASE_CATEGORIES.some((cat) => cat.key === inputData.category);
     if (!validCategory) {
-      throw new Error('유효한 카테고리를 선택해주세요');
+      throw new ConvexError(ErrorCode.SHOWCASE_CATEGORY_INVALID);
     }
 
     // Validate image URL (required)
     if (!inputData.imageUrl.trim()) {
-      throw new Error('이미지 URL은 필수입니다');
+      throw new ConvexError(ErrorCode.SHOWCASE_IMAGE_REQUIRED);
     }
 
     // Ensure at least one URL is provided
     if (!hasAtLeastOneUrl(inputData.websiteUrl, inputData.appStoreUrl, inputData.playStoreUrl)) {
-      throw new Error('최소 하나의 URL(웹사이트, 앱스토어, 플레이스토어)이 필요합니다');
+      throw new ConvexError(ErrorCode.SHOWCASE_LINK_REQUIRED);
     }
 
     // Format URLs with https:// prefix
@@ -167,7 +167,7 @@ export const deleteShowcase = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error(ErrorCode.AUTH_REQUIRED);
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // 기존 쇼케이스 조회
@@ -203,7 +203,7 @@ export const toggleLike = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error(ErrorCode.AUTH_REQUIRED);
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // 기존 쇼케이스 조회
@@ -276,7 +276,7 @@ export const toggleFeatured = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error(ErrorCode.AUTH_REQUIRED);
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // 관리자 권한 확인 (실제 구현에서는 관리자 테이블 확인 필요)
@@ -315,7 +315,7 @@ export const updateImageUrl = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error(ErrorCode.AUTH_REQUIRED);
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // 쇼케이스 조회
