@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 import { t } from 'i18next';
 import { Button } from '@/components/uis/Button';
 import PostListItem from '../community/Post/posts/PostListItem';
+import { resolvePostStatus } from '@convex/posts/visibility';
 import ProfileHeader from './ProfileHeader';
 import UserSkeleton from './UserSkeleton';
 import { useMetaTags } from '@/hooks/useMetaTags';
@@ -41,6 +42,20 @@ export default function UserProfilePage() {
     api.posts.query.getPostsByAuthor,
     user && user !== null ? { authorId: user.userId, limit: 10 } : 'skip', // Use userId instead of _id
   );
+
+  // The server only returns drafts and scheduled rows to their own author, so
+  // these groups are non-empty exactly when you are looking at your own profile.
+  const groupedPosts = useMemo(() => {
+    const groups: { published: typeof userPosts; scheduled: typeof userPosts; draft: typeof userPosts } = {
+      published: [],
+      scheduled: [],
+      draft: [],
+    };
+    for (const post of userPosts ?? []) {
+      groups[resolvePostStatus({ status: post.status, publishAt: post.publishAt })]?.push(post);
+    }
+    return groups;
+  }, [userPosts]);
 
   // SEO optimization for user profile pages
   useMetaTags(
@@ -246,10 +261,35 @@ export default function UserProfilePage() {
               ))}
             </div>
           ) : userPosts.length > 0 ? (
-            <div className="space-y-4">
-              {userPosts.map((post) => (
-                <PostListItem key={post._id} post={post} />
-              ))}
+            <div className="space-y-8">
+              {(
+                [
+                  ['scheduled', groupedPosts.scheduled],
+                  ['draft', groupedPosts.draft],
+                  ['published', groupedPosts.published],
+                ] as const
+              )
+                .filter(([, posts]) => posts && posts.length > 0)
+                .map(([key, posts]) => (
+                  <section key={key} className="space-y-4">
+                    {/* Only the author ever sees more than one group, so a lone
+                        published list stays unlabelled as before. */}
+                    {(groupedPosts.scheduled?.length || groupedPosts.draft?.length) ? (
+                      <div className="flex items-center gap-3">
+                        <h3 className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                          {t(`posts.status.${key}Section`)}
+                        </h3>
+                        <span className="text-xs text-muted-foreground">{posts?.length}</span>
+                        <span className="h-px flex-1 bg-border" />
+                      </div>
+                    ) : null}
+                    <div className="space-y-4">
+                      {posts?.map((post) => (
+                        <PostListItem key={post._id} post={post} />
+                      ))}
+                    </div>
+                  </section>
+                ))}
             </div>
           ) : (
             <div className="text-center py-6 text-muted-foreground">{t('user.noPostsYet')}</div>

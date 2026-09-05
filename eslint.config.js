@@ -30,6 +30,7 @@ export default tseslint.config(
           './apps/web/tsconfig.node.json',
           './apps/web/tsconfig.app.json',
           './convex/tsconfig.json',
+          './tests/tsconfig.json',
         ],
       },
     },

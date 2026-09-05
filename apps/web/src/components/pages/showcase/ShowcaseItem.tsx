@@ -29,6 +29,11 @@ interface ShowcaseItemProps {
 const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: ShowcaseItemProps) => {
   const { t } = useTranslation();
   const [showOtherLinksDropdown, setShowOtherLinksDropdown] = useState(false);
+  // A dead image URL otherwise renders the browser's broken-image icon and the
+  // raw alt text over the card; fall back to the same placeholder used when no
+  // image was supplied at all.
+  const [imageFailed, setImageFailed] = useState(false);
+  const [avatarFailed, setAvatarFailed] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Other Links 파싱 헬퍼 함수
@@ -50,6 +55,14 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
 
   // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
+    setImageFailed(false);
+  }, [showcase.imageUrl]);
+
+  useEffect(() => {
+    setAvatarFailed(false);
+  }, [showcase.author?.avatarUrl]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowOtherLinksDropdown(false);
@@ -66,12 +79,13 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
     <div className={cn('surface-card-interactive relative overflow-hidden', className)}>
       {/* 이미지 영역 */}
       <div className="relative w-full overflow-hidden bg-muted">
-        {showcase.imageUrl ? (
+        {showcase.imageUrl && !imageFailed ? (
           <img
             src={showcase.imageUrl}
             alt={showcase.title}
             className="w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
             loading="lazy"
+            onError={() => setImageFailed(true)}
           />
         ) : (
           <div className="flex h-48 items-center justify-center bg-muted">
@@ -336,11 +350,12 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
                 to={createUserProfileLink(showcase.author.name)}
                 className="flex items-center gap-1.5 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
               >
-                {showcase.author.avatarUrl ? (
+                {showcase.author.avatarUrl && !avatarFailed ? (
                   <img
                     src={showcase.author.avatarUrl}
                     alt={showcase.author.name}
                     className="h-4 w-4 rounded-full object-cover border border-gray-200 dark:border-gray-600"
+                    onError={() => setAvatarFailed(true)}
                   />
                 ) : (
                   <div className="h-4 w-4 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">

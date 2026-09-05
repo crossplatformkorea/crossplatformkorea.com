@@ -14,7 +14,9 @@ import PostWriteModal from '../PostWriteModal';
 import NotFound from '@/components/pages/NotFound';
 import Comments from './Comments';
 import { useAuthStore } from '@/stores/authStore';
-import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { cn, devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 import { Button } from '@/components/uis/Button';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -101,9 +103,14 @@ export default function PostDetailsPage() {
   };
 
   const handleDelete = async () => {
-    if (post) {
+    if (!post) return;
+    try {
       await deletePost({ postId: post._id });
       void navigate('/posts');
+    } catch (error) {
+      // Navigating unconditionally used to imply the delete had worked.
+      devConsole.error('Failed to delete post:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.postDeleteFailed')));
     }
   };
 
@@ -113,7 +120,14 @@ export default function PostDetailsPage() {
         requireAuth();
         return;
       }
-      void toggleLike({ postId: post._id });
+      void (async () => {
+        try {
+          await toggleLike({ postId: post._id });
+        } catch (error) {
+          devConsole.error('Failed to toggle post like:', error);
+          toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
+        }
+      })();
     }
   };
 

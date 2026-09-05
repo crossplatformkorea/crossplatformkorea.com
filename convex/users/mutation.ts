@@ -1,6 +1,6 @@
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation } from '../_generated/server';
-import { v } from 'convex/values';
+import { ConvexError, v } from 'convex/values';
 import { Doc, Id } from '../_generated/dataModel';
 import { ErrorCode } from '../constants';
 import { validateUsername, normalizeUsername } from '../validators';
@@ -292,7 +292,7 @@ export const updateProfile = mutation({
     const normalizedDisplayName = normalizeUsername(args.displayName);
     const validation = validateUsername(normalizedDisplayName);
     if (!validation.isValid) {
-      throw new Error(validation.error || 'Invalid username format');
+      throw new ConvexError(validation.error || ErrorCode.DISPLAY_NAME_REQUIRED);
     }
 
     // Replace the displayName with normalized version
@@ -318,7 +318,7 @@ export const updateProfile = mutation({
         .first();
 
       if (existingWithName) {
-        throw new Error('This display name is already taken');
+        throw new ConvexError(ErrorCode.DISPLAY_NAME_TAKEN);
       }
     }
 
