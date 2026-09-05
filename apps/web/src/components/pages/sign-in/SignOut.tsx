@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { t } from '../../../lib/i18n';
 import { cn } from '../../../lib/utils';
+import { userFacingErrorMessage } from '../../../lib/errors';
 import { Button } from '../../uis/Button';
 
 export default function SignOut() {
@@ -25,7 +26,7 @@ export default function SignOut() {
         void navigate('/');
       }, 500);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to sign out. Please try again.');
+      setError(userFacingErrorMessage(error, t('signIn.errors.signOutFailed')));
       setIsLoading(false);
     }
   };

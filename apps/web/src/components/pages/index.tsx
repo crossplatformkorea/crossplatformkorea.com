@@ -7,6 +7,7 @@ import PostsPage from './community/Post/posts';
 import { useMetaTags } from '../../hooks/useMetaTags';
 import DevPanel from '../DevPanel';
 import AppLoading from '../AppLoading';
+import { ErrorBoundary } from '../uis/ErrorBoundary';
 import PostDetailsPage from './community/Post/post-details';
 import SummaryPage from './community/Summary';
 
@@ -33,58 +34,63 @@ export default function AppRoutes() {
 
   return (
     <AppLayout>
-      <Suspense fallback={<AppLoading />}>
-        {isSignInPage ? (
-          <Routes>
-            <Route path="/sign-in" element={<SignInPage />} />
-            <Route
-              path="/*"
-              element={
-                <div className="h-full w-full">
-                  <CommunityPage />
-                </div>
-              }
-            />
-          </Routes>
-        ) : isChatGptPage ? (
-          // ChatGPT page takes full screen without container styles
-          <div className="h-full w-full">
+      {/* Keyed on the path so navigating away clears a crashed page. Inside the
+          layout, so a page-level throw keeps the nav usable instead of blanking
+          the app — a failing Convex `useQuery` throws during render. */}
+      <ErrorBoundary key={location.pathname}>
+        <Suspense fallback={<AppLoading />}>
+          {isSignInPage ? (
             <Routes>
-              <Route path="/chatgpt" element={<ChatGptPage />} />
+              <Route path="/sign-in" element={<SignInPage />} />
+              <Route
+                path="/*"
+                element={
+                  <div className="h-full w-full">
+                    <CommunityPage />
+                  </div>
+                }
+              />
             </Routes>
-          </div>
-        ) : (
-          // Apply the container styles to all other pages
-          <div
-            className={cn(
-              'site-canvas bg-background w-full overflow-y-auto', // Changed overflow-y-scroll to overflow-y-auto for better mobile experience
-              'px-3 py-4 sm:px-4 md:px-6 lg:px-16 sm:pt-6 sm:pb-16 md:pt-8 md:pb-20', // Progressive padding for different screen sizes
-            )}
-          >
-            <div className="max-w-5xl mx-auto">
-              {' '}
-              {/* Added max-width container for large screens */}
+          ) : isChatGptPage ? (
+            // ChatGPT page takes full screen without container styles
+            <div className="h-full w-full">
               <Routes>
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/showcase" element={<ShowcasePage />} />
-                <Route path="/notifications" element={<NotificationsPage />} />
-                <Route path="/feature-request" element={<FeatureRequestsPage />} />
-                <Route
-                  path="/feature-request/:featureRequestId"
-                  element={<FeatureRequestDetailPage />}
-                />
-                <Route path="/posts" element={<PostsPage />} />
-                <Route path="/post/:slugOrId" element={<PostDetailsPage />} />
-                <Route path="/" element={<SummaryPage />} />
-                {/* @로 시작하는 모든 경로를 UserProfilePage로 라우팅 */}
-                <Route path="/:displayName" element={<UserProfilePage />} />
-                {/* 404 Catch-all route - must be last */}
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/chatgpt" element={<ChatGptPage />} />
               </Routes>
             </div>
-          </div>
-        )}
-      </Suspense>
+          ) : (
+            // Apply the container styles to all other pages
+            <div
+              className={cn(
+                'site-canvas bg-background w-full overflow-y-auto', // Changed overflow-y-scroll to overflow-y-auto for better mobile experience
+                'px-3 py-4 sm:px-4 md:px-6 lg:px-16 sm:pt-6 sm:pb-16 md:pt-8 md:pb-20', // Progressive padding for different screen sizes
+              )}
+            >
+              <div className="max-w-5xl mx-auto">
+                {' '}
+                {/* Added max-width container for large screens */}
+                <Routes>
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/showcase" element={<ShowcasePage />} />
+                  <Route path="/notifications" element={<NotificationsPage />} />
+                  <Route path="/feature-request" element={<FeatureRequestsPage />} />
+                  <Route
+                    path="/feature-request/:featureRequestId"
+                    element={<FeatureRequestDetailPage />}
+                  />
+                  <Route path="/posts" element={<PostsPage />} />
+                  <Route path="/post/:slugOrId" element={<PostDetailsPage />} />
+                  <Route path="/" element={<SummaryPage />} />
+                  {/* @로 시작하는 모든 경로를 UserProfilePage로 라우팅 */}
+                  <Route path="/:displayName" element={<UserProfilePage />} />
+                  {/* 404 Catch-all route - must be last */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </div>
+            </div>
+          )}
+        </Suspense>
+      </ErrorBoundary>
       <Toaster theme="system" position="bottom-right" richColors closeButton />
       <DevPanel />
     </AppLayout>

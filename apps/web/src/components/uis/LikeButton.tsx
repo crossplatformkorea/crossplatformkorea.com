@@ -4,7 +4,9 @@ import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
 import { Heart } from 'lucide-react';
 import { Button } from './Button';
-import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { cn, devConsole } from '@/lib/utils';
+import { userFacingErrorMessage } from '@/lib/errors';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/stores/authStore';
 import LikedUsersList from './LikedUsersList';
@@ -53,10 +55,15 @@ export default function LikeButton({
       requireAuth();
       return;
     }
-    if (type === 'showcases') {
-      await toggleLike({ showcaseId: postId as Id<'showcases'> });
-    } else {
-      await toggleLike({ postId: postId as Id<'posts'> });
+    try {
+      if (type === 'showcases') {
+        await toggleLike({ showcaseId: postId as Id<'showcases'> });
+      } else {
+        await toggleLike({ postId: postId as Id<'posts'> });
+      }
+    } catch (error) {
+      devConsole.error('Failed to toggle like:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
     }
   };
 

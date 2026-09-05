@@ -1,8 +1,9 @@
-import { v } from 'convex/values';
+import { ConvexError, v } from 'convex/values';
 import { mutation, internalMutation } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { PersistentTextStreaming } from "@convex-dev/persistent-text-streaming";
 import { components } from "../_generated/api";
+import { ErrorCode } from '../constants';
 
 const persistentTextStreaming = new PersistentTextStreaming(
   components.persistentTextStreaming
@@ -129,7 +130,7 @@ export const storeApiKey = mutation({
 
     // Validate API key format
     if (!args.apiKey.trim().startsWith('sk-')) {
-      throw new Error('Invalid API key format. API key should start with "sk-"');
+      throw new ConvexError(ErrorCode.API_KEY_INVALID_FORMAT);
     }
 
     // Simple encoding using btoa (browser-compatible base64 encoding)
