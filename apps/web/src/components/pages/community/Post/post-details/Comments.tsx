@@ -12,6 +12,8 @@ import { useAuthStore } from '@/stores/authStore';
 import { Button } from '../../../../uis/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CommentInput from '../../../../uis/CommentInput';
+import { toast } from 'sonner';
+import { userFacingErrorMessage } from '@/lib/errors';
 import { renderMentionsAndLinks } from '../../../../../utils/mentionUtils';
 import { createSignInHref } from '@/lib/authRedirect';
 
@@ -86,6 +88,7 @@ export default function Comments({ postId }: CommentsProps) {
         setMentionedUsers([]);
       } catch (error) {
         devConsole.error('Error adding comment:', error);
+        toast.error(userFacingErrorMessage(error, t('errors.commentCreationFailed')));
       } finally {
         setIsSubmitting(false);
       }
@@ -98,9 +101,13 @@ export default function Comments({ postId }: CommentsProps) {
     void (async () => {
       try {
         await deleteComment({ commentId });
-        setShowDeleteCommentModal(null);
       } catch (error) {
         devConsole.error('Error deleting comment:', error);
+        toast.error(userFacingErrorMessage(error, t('errors.commentDeleteFailed')));
+      } finally {
+        // Closing only on success left the confirm dialog stuck open with the
+        // comment still there and nothing explaining why.
+        setShowDeleteCommentModal(null);
       }
     })();
   };
@@ -127,7 +134,14 @@ export default function Comments({ postId }: CommentsProps) {
       return;
     }
 
-    void toggleLike({ commentId });
+    void (async () => {
+      try {
+        await toggleLike({ commentId });
+      } catch (error) {
+        devConsole.error('Error toggling comment like:', error);
+        toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
+      }
+    })();
   };
 
   // 좋아요 상태 체크 함수

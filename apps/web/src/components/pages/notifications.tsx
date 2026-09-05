@@ -4,7 +4,9 @@ import { useQuery, useMutation } from 'convex/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '@convex/_generated/api';
 import { useConvexAuth } from 'convex/react';
-import { cn } from '../../lib/utils';
+import { toast } from 'sonner';
+import { cn, devConsole } from '../../lib/utils';
+import { userFacingErrorMessage } from '../../lib/errors';
 import { Button } from '../uis/Button';
 import { t } from '../../lib/i18n';
 import { formatDistanceToNow } from 'date-fns';
@@ -99,9 +101,15 @@ export default function NotificationsPage() {
     isRead: boolean,
     notification: any,
   ) => {
-    // Mark as read if not already read
+    // Mark as read if not already read. A failure here must not block the
+    // navigation the user actually asked for.
     if (!isRead) {
-      await markAsRead({ notificationId });
+      try {
+        await markAsRead({ notificationId });
+      } catch (error) {
+        devConsole.error('Failed to mark notification as read:', error);
+        toast.error(userFacingErrorMessage(error, t('errors.notificationUpdateFailed')));
+      }
     }
 
     // Navigate to appropriate page based on notification type
@@ -115,11 +123,21 @@ export default function NotificationsPage() {
   };
 
   const handleMarkAllAsRead = async () => {
-    await markAllAsRead({});
+    try {
+      await markAllAsRead({});
+    } catch (error) {
+      devConsole.error('Failed to mark all notifications as read:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.notificationUpdateFailed')));
+    }
   };
 
   const handleDeleteNotification = async (notificationId: Id<'notifications'>) => {
-    await deleteNotification({ notificationId });
+    try {
+      await deleteNotification({ notificationId });
+    } catch (error) {
+      devConsole.error('Failed to delete notification:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.notificationDeleteFailed')));
+    }
   };
 
   const handleSelectNotification = (notificationId: Id<'notifications'>) => {
@@ -143,10 +161,19 @@ export default function NotificationsPage() {
   };
 
   const handleDeleteSelected = async () => {
-    for (const notificationId of selectedNotifications) {
-      await deleteNotification({ notificationId });
+    try {
+      await Promise.all(
+        [...selectedNotifications].map((notificationId) => deleteNotification({ notificationId })),
+      );
+    } catch (error) {
+      // One rejection used to abandon the loop mid-way with the selection intact
+      // and no explanation; clear the selection either way so the list and the
+      // checkboxes cannot drift apart.
+      devConsole.error('Failed to delete selected notifications:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.notificationDeleteFailed')));
+    } finally {
+      setSelectedNotifications(new Set());
     }
-    setSelectedNotifications(new Set());
   };
 
   const unreadNotifications = notifications?.page?.filter((n) => !n.isRead) || [];

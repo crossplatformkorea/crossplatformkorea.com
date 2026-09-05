@@ -3,6 +3,8 @@ import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { internal } from "../_generated/api";
 import { Id } from "../_generated/dataModel";
+import { ConvexError } from 'convex/values';
+import { ErrorCode } from '../constants';
 
 // Add a new feature request
 export const add = mutation({
@@ -18,7 +20,7 @@ export const add = mutation({
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity || !userId) {
-      throw new Error("You must be logged in to request a feature");
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Extract user information from identity
@@ -35,7 +37,7 @@ export const add = mutation({
     // Validate inputs
     if (title.trim().length < 3) {
       console.error("Title too short");
-      throw new Error("Title must be at least 3 characters long");
+      throw new ConvexError(ErrorCode.FEATURE_TITLE_TOO_SHORT);
     }
 
     try {
@@ -76,7 +78,7 @@ export const vote = mutation({
     const userId = await getAuthUserId(ctx);
 
     if (!identity || !userId) {
-      throw new Error("You must be logged in to vote");
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Get the current feature request
@@ -122,7 +124,7 @@ export const deleteFeatureRequest = mutation({
     const userId = await getAuthUserId(ctx);
 
     if (!userId) {
-      throw new Error("You must be logged in to delete a feature request");
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Get the current feature request
@@ -155,7 +157,7 @@ export const addComment = mutation({
     const userId = await getAuthUserId(ctx);
 
     if (!userId) {
-      throw new Error("You must be logged in to add a comment");
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Check if feature request exists
@@ -166,7 +168,7 @@ export const addComment = mutation({
 
     // Validate content
     if (args.content.trim().length < 1) {
-      throw new Error("Comment cannot be empty");
+      throw new ConvexError(ErrorCode.COMMENT_EMPTY);
     }
 
     // Create comment
@@ -225,7 +227,7 @@ export const deleteComment = mutation({
     const userId = await getAuthUserId(ctx);
 
     if (!userId) {
-      throw new Error("You must be logged in to delete a comment");
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     const comment = await ctx.db.get(args.commentId);

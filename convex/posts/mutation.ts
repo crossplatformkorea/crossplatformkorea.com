@@ -1,8 +1,8 @@
-import { v } from 'convex/values';
+import { ConvexError, v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { mutation, internalMutation, MutationCtx } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
-import { DEFAULT_CATEGORY } from '../constants';
+import { DEFAULT_CATEGORY, ErrorCode } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
 import { generateSlug } from '../utils/slug';
@@ -51,7 +51,7 @@ export const createPost = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     const now = new Date().toISOString();
@@ -459,7 +459,7 @@ export const updatePost = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Verify post exists
@@ -654,7 +654,7 @@ export const deletePost = mutation({
     const userId = await getAuthUserId(ctx);
 
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Verify post exists
@@ -739,7 +739,7 @@ export const likePost = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // 포스트 확인
@@ -774,7 +774,7 @@ export const unlikePost = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // 포스트 확인
@@ -809,7 +809,7 @@ export const toggleLike = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Get the post
@@ -884,7 +884,7 @@ export const addComment = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Verify post exists
@@ -976,7 +976,7 @@ export const deleteComment = mutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error('Authentication required');
+      throw new ConvexError(ErrorCode.AUTH_REQUIRED);
     }
 
     // Get the comment
