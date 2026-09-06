@@ -260,6 +260,13 @@ export const updateUserLocale = mutation({
       throw new Error('User profile not found');
     }
 
+    // 값이 같으면 쓰지 않는다. 같은 값으로 patch 해도 이 문서를 읽는 구독이
+    // 무효화되어 currentUser/getProfile이 재실행되고, 그것이 다시 이 mutation을
+    // 부르는 순환이 된다.
+    if (userProfile.locale === args.locale) {
+      return null;
+    }
+
     // locale만 업데이트
     await ctx.db.patch(userProfile._id, {
       locale: args.locale,
