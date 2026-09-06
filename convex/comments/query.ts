@@ -49,6 +49,7 @@ export const getCommentAuthorProfiles = query({
       tags: v.optional(v.array(v.string())),
       userId: v.id('users'),
       locale: v.optional(v.string()),
+      displayNameLower: v.optional(v.string()),
     }),
   ),
   handler: async (ctx, args) => {

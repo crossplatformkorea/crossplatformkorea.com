@@ -56,6 +56,7 @@ export const currentUser = query({
           tags: v.optional(v.array(v.string())),
           userId: v.id('users'),
           locale: v.optional(v.string()), // locale 필드 추가
+          displayNameLower: v.optional(v.string()),
         }),
       ),
       tokenIdentifier: v.optional(v.string()),
@@ -122,6 +123,7 @@ export const getProfile = query({
       lookingFor: v.optional(v.string()),
       expectations: v.optional(v.string()),
       locale: v.optional(v.string()),
+      displayNameLower: v.optional(v.string()),
     }),
     v.null(),
   ),
@@ -158,6 +160,7 @@ export const getProfilesByUserIds = query({
       lookingFor: v.optional(v.string()),
       expectations: v.optional(v.string()),
       locale: v.optional(v.string()),
+      displayNameLower: v.optional(v.string()),
     }),
   ),
   handler: async (ctx, args) => {
