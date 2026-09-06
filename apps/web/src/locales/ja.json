@@ -477,7 +477,41 @@
     "otherLinksButton": "その他リンク",
     "linkLabel": "リンク",
     "featured": "注目",
-    "user": "ユーザー"
+    "user": "ユーザー",
+    "catalog": {
+      "description": "身近なサービスから新しいアプリまで、クロスプラットフォーム技術の活用例を見つけましょう。",
+      "collection": "ショーケースの種類",
+      "curated": "CPK セレクション",
+      "community": "コミュニティのアプリ",
+      "intro": "公式ショーケースと開発チームの公開資料から、CPK が選んだ100の導入事例です。アプリ開発、一部の機能、共通ロジックを区別しています。確認日は資料を確認した日で、最新バージョンの実装を保証するものではありません。紹介文は英語で表示します。ご自身の作品はコミュニティのアプリにご投稿ください。",
+      "technology": "開発技術",
+      "all": "すべて",
+      "search": "アプリ・企業・技術を検索",
+      "results": "{{count}} 件の事例",
+      "reset": "フィルターをリセット",
+      "more": "さらに表示 · {{shown}} / {{total}}",
+      "source": "導入事例の出典",
+      "website": "公式サイト",
+      "reviewed": "資料確認日 {{date}}",
+      "scopes": {
+        "app": "アプリ開発",
+        "features": "一部の機能",
+        "shared-logic": "共通ロジック",
+        "listed": "公式ショーケース掲載"
+      },
+      "categories": {
+        "finance": "金融",
+        "commerce": "ショッピング",
+        "productivity": "仕事・生産性",
+        "social": "ソーシャル",
+        "entertainment": "メディア・娯楽",
+        "travel": "旅行・モビリティ",
+        "health": "健康",
+        "education": "教育",
+        "utilities": "生活・ツール",
+        "developer": "開発・デザイン"
+      }
+    }
   },
   "showcaseCategories": {
     "REACT_NATIVE": {
