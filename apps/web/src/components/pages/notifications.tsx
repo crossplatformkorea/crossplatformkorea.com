@@ -315,7 +315,7 @@ export default function NotificationsPage() {
           ) : (
             <div className="surface-card py-16 text-center">
               <Bell size={64} className="mx-auto mb-4 opacity-30" />
-              <h3 className="text-lg font-medium mb-2">{t('notifications.noNotifications')}</h3>
+              <h3 className="text-lg font-bold mb-2">{t('notifications.noNotifications')}</h3>
               <p className="text-muted-foreground">{t('notifications.noNotificationsDesc')}</p>
             </div>
           )}

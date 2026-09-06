@@ -123,7 +123,7 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
           <div className={cn('flex items-start justify-between', post.thumbnail ? 'mb-2' : 'mb-3')}>
             <h3
               className={cn(
-                'font-semibold flex-1 mr-3 group-hover:text-primary transition-colors',
+                'font-bold flex-1 mr-3 group-hover:text-primary transition-colors',
                 post.thumbnail ? 'text-base sm:text-lg line-clamp-2' : 'text-xl line-clamp-2',
               )}
             >

@@ -5,9 +5,11 @@ import { ArrowUpRight, Search } from 'lucide-react';
 import { Button } from '../../uis/Button';
 import { cn } from '@/lib/utils';
 import { curatedApps } from './catalog-data';
+import { storeMetrics } from './catalog-metrics';
 import {
   catalogCategories,
   filterCuratedApps,
+  rankCuratedApps,
   technologies,
   technologyNames,
   type CuratedApp,
@@ -17,11 +19,17 @@ function AppCard({ app }: { app: CuratedApp }) {
   const { t, i18n } = useTranslation();
   const language = i18n.language.startsWith('ko') ? 'ko' : 'en';
   const [imageFailed, setImageFailed] = useState(false);
+  const metrics = storeMetrics[app.id];
+  const formatCount = (count: number) =>
+    new Intl.NumberFormat(i18n.language, {
+      notation: 'compact',
+      maximumFractionDigits: 1,
+    }).format(count);
   return (
     <article className="surface-card flex min-w-0 flex-col p-5">
       <div className="mb-5 flex items-center gap-3">
         <div
-          className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-white text-lg font-semibold text-gray-700 dark:border-gray-700"
+          className="flex h-12 w-12 shrink-0 items-center justify-center text-lg font-semibold text-gray-700 dark:text-gray-300"
           aria-hidden="true"
         >
           {app.imageUrl && !imageFailed ? (
@@ -32,7 +40,7 @@ function AppCard({ app }: { app: CuratedApp }) {
               height={48}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-contain p-1.5"
+              className="h-full w-full rounded-xl object-cover"
               onError={() => setImageFailed(true)}
             />
           ) : (
@@ -40,7 +48,7 @@ function AppCard({ app }: { app: CuratedApp }) {
           )}
         </div>
         <div className="min-w-0">
-          <h2 className="break-words text-base font-semibold text-gray-950 dark:text-gray-50">
+          <h2 className="break-words text-base font-bold text-gray-950 dark:text-gray-50">
             {app.name}
           </h2>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{app.publisher}</p>
@@ -52,6 +60,30 @@ function AppCard({ app }: { app: CuratedApp }) {
         </span>
         <span className="py-1">{t(`showcase.catalog.categories.${app.category}`)}</span>
       </div>
+      {metrics ? (
+        <a
+          href={metrics.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${app.name} — ${t('showcase.catalog.storeMetrics')}`}
+          title={`${metrics.storeName} · Google Play (${metrics.region}) · ${metrics.checkedAt}`}
+          className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+        >
+          <span>
+            {t('showcase.catalog.ratingCount', { value: formatCount(metrics.ratingCount) })}
+          </span>
+          <span>
+            {t('showcase.catalog.downloadCount', {
+              value: formatCount(metrics.downloadsLowerBound),
+            })}
+          </span>
+          <ArrowUpRight size={12} aria-hidden="true" />
+        </a>
+      ) : (
+        <p className="mb-3 text-xs text-gray-500 dark:text-gray-400">
+          {t('showcase.catalog.metricsUnavailable')}
+        </p>
+      )}
       <p lang={language} className="mb-5 text-sm leading-6 text-gray-600 dark:text-gray-300">
         {app.description[language]}
       </p>
@@ -102,7 +134,10 @@ export default function CuratedShowcases() {
   const technology = technologies.find((item) => item === params.get('tech')) || '';
   const category = catalogCategories.find((item) => item === params.get('category')) || '';
   // Keying the result list resets pagination for filters and browser back/forward.
-  const apps = filterCuratedApps(curatedApps, { query, technology, category });
+  const apps = rankCuratedApps(
+    filterCuratedApps(curatedApps, { query, technology, category }),
+    storeMetrics,
+  );
   const update = (key: string, value: string) => {
     setParams(
       (previous) => {
@@ -129,6 +164,10 @@ export default function CuratedShowcases() {
       <p className="mb-6 max-w-3xl text-sm leading-6 text-gray-500 dark:text-gray-400">
         {t('showcase.catalog.intro')}
       </p>
+      <details className="mb-6 max-w-3xl text-xs leading-6 text-gray-500 dark:text-gray-400">
+        <summary className="cursor-pointer font-bold">{t('showcase.catalog.rankingTitle')}</summary>
+        <p className="mt-2">{t('showcase.catalog.rankingMethod')}</p>
+      </details>
       <div
         className="mb-5 flex flex-wrap gap-2"
         role="group"
@@ -221,7 +260,7 @@ function CatalogResults({ apps }: { apps: CuratedApp[] }) {
     </>
   ) : (
     <div className="surface-card p-12 text-center">
-      <h2 className="font-semibold">{t('showcase.noSearchResults')}</h2>
+      <h2 className="font-bold">{t('showcase.noSearchResults')}</h2>
       <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{t('showcase.tryAdjusting')}</p>
     </div>
   );

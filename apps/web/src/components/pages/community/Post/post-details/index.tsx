@@ -318,7 +318,7 @@ export default function PostDetailsPage() {
 
               {/* Title and post actions */}
               <div className="relative">
-                <h1 className="mb-4 pr-20 text-3xl font-semibold leading-[1.35] tracking-[-0.045em] sm:text-5xl">
+                <h1 className="mb-4 pr-20 text-3xl font-bold leading-[1.35] tracking-[-0.045em] sm:text-5xl">
                   {post.title}
                 </h1>
                 {isAuthor && post.status === 'draft' && (

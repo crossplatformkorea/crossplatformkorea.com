@@ -138,7 +138,7 @@ export default function NotificationBell() {
                 'hover:text-foreground transition-colors cursor-pointer',
               )}
             >
-              <h3 className="font-semibold text-lg">
+              <h3 className="font-bold text-lg">
                 {t('notifications.title')}
                 {recentNotifications && recentNotifications.length > 0 && (
                   <span className="text-sm text-muted-foreground ml-2">

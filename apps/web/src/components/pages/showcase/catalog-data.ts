@@ -24,6 +24,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://toss.im/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6e/ef/88/6eef887a-9ea8-8f67-2422-d18db842945d/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/kr/app/%ED%86%A0%EC%8A%A4/id839333328?uo=4',
   },
   {
     id: 'my-bmw',
@@ -45,8 +48,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/bmw',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.60c14ccc2aef00f0d4a526def49dabe7.webp',
     websiteUrl: 'https://www.bmw.com/en/innovation/my-bmw-app.html',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/23/03/67/2303670b-651b-6ae6-761f-3e0a7c6e8334/bmwappstore-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/my-bmw/id1519457734?uo=4',
   },
   {
     id: 'duolingo',
@@ -68,8 +73,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/duolingo-logo.svg',
     websiteUrl: 'https://www.duolingo.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b7/b8/6b/b7b86b67-18ad-44c9-8909-f1da80444946/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/duolingo-language-lessons/id570060128?uo=4',
   },
   {
     id: 'facebook',
@@ -91,8 +98,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/facebook.webp',
     websiteUrl: 'https://www.facebook.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e4/86/b0/e486b05a-e507-5865-bf0b-5eb1ac65da49/Icon-Production-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/facebook/id284882215?uo=4',
   },
   {
     id: 'notebooklm',
@@ -114,8 +123,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/notebooklm',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.b813be12565809fb31408ee3ad588457.png',
     websiteUrl: 'https://notebooklm.google/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/15/51/22/15512226-1bca-edda-7883-743a82041103/gemini_notebook_ios-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/gemini-notebook/id6737527615?uo=4',
   },
   {
     id: 'sony-headphones',
@@ -137,6 +148,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/2e/aa/ed/2eaaeda4-1c7a-0501-ed68-874a7ae58f5e/AppIcon-0-0-1x_U007emarketing-0-3-0-GLES2_U002c0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/sony-sound-connect/id1168502924?uo=4',
   },
   {
     id: 'instagram-quest',
@@ -158,8 +172,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/instagram.png',
     websiteUrl: 'https://www.meta.com/experiences/instagram/6894135610696226/',
+    imageUrl: 'https://reactnative.dev/img/showcase/instagram.png',
+    imageSourceUrl: 'https://reactnative.dev/showcase',
   },
   {
     id: 'google-pay',
@@ -181,8 +196,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/google-pay',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.a2b7ea1e1ec073f8902621af1c1eba84.png',
     websiteUrl: 'https://pay.google.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/72/80/41/7280412d-8a61-b5e6-e0f5-9eb2ba644dcc/GPayAppIcon-0-0-1x_U007ephone-0-0-0-1-0-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/in/app/google-pay-save-pay-manage/id1193357041',
   },
   {
     id: 'booking-com',
@@ -204,7 +221,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/booking-logo.svg',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/10/01/f6/1001f6e4-136d-61bb-4988-1bccb6b331de/AppIcon-0-0-1x_U007epad-0-9-0-85-220.jpeg/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839?uo=4',
   },
   {
     id: 'meta-ads-manager',
@@ -226,8 +245,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/adsmanager.png',
     websiteUrl: 'https://www.facebook.com/business/tools/ads-manager',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/53/87/5f/53875fad-f3f6-e3d9-1e00-2d7cb39fadda/AppIcon-MetaBrand-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/meta-ads-manager/id964397083?uo=4',
   },
   {
     id: 'google-classroom',
@@ -249,8 +270,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/google-classroom',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.4a252f324b24965a7a32781c23d95e67.webp',
     websiteUrl: 'https://classroom.google.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/90/63/77/906377b3-8285-9e25-b0d6-364fc8a2fe83/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/google-classroom/id924620788?uo=4',
   },
   {
     id: 'philo',
@@ -272,8 +295,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://www.philo.com/blog/kotlin-multiplatform-at-philo-3-years-later',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/philo-logo.svg',
     websiteUrl: 'https://www.philo.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8c/db/25/8cdb255b-2943-1c91-e179-69b3fbfc5ed5/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/philo-shows-movies-live-tv/id1248646044?uo=4',
   },
   {
     id: 'meta-horizon',
@@ -295,8 +320,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/metahorizon.webp',
     websiteUrl: 'https://www.meta.com/experiences/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4f/51/2a/4f512a9e-6500-38a9-58a7-8cb7f0d93e84/AppIcon-MetaHorizon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/meta-horizon/id1366478176?uo=4',
   },
   {
     id: 'google-crowdsource',
@@ -318,8 +345,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/crowdsource',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.90a7ed951869e8a29a22d1e79f1898d7.webp',
     websiteUrl: 'https://crowdsource.google.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/XWXaPrToMlugwEIOfd75YzA4-tMfLxOEGilanak4xjHIhRWzbS64MJ4taaiYoOeRjIkCPew_Z_2cFBrR_FRe4A',
+    imageSourceUrl:
+      'https://play.google.com/store/apps/details?id=com.google.android.apps.village.boond',
   },
   {
     id: 'hm',
@@ -341,7 +371,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/h&m-logo.svg',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/6a/c4/c06ac477-3218-1726-fd1f-5901b59f177d/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/h-m/id834465911?uo=4',
   },
   {
     id: 'microsoft-office',
@@ -363,8 +395,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/officemobile.png',
     websiteUrl: 'https://www.microsoft.com/microsoft-365',
+    imageUrl: 'https://reactnative.dev/img/showcase/officemobile.png',
+    imageSourceUrl: 'https://reactnative.dev/showcase',
   },
   {
     id: 'knowunity',
@@ -386,8 +419,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/knowunity',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/knowunity_logo.f83bcbefd4d644c5198fe37bda965686.webp',
     websiteUrl: 'https://knowunity.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f0/e2/52/f0e25276-9539-e6c1-2f04-bf97dcc1ed8b/AppIcon-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/knowunity-ai-study-homework/id1484296272?uo=4',
   },
   {
     id: 'bitkey',
@@ -409,8 +444,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://engineering.block.xyz/blog/how-bitkey-uses-cross-platform-development',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/bitkey-logo.svg',
     websiteUrl: 'https://bitkey.world/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/78/3d/88/783d8892-f7c2-2ac4-1129-a076e503033d/AppIconRelease-0-0-1x_U007emarketing-0-7-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/bitkey-bitcoin-wallet/id6476990471?uo=4',
   },
   {
     id: 'microsoft-outlook',
@@ -432,9 +469,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/outlookmobile.png',
     websiteUrl:
       'https://www.microsoft.com/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c2/c5/d8/c2c5d8ba-1bd8-b3ac-8cae-732f19764c52/AppIcon-outlook.prod-0-0-1x_U007epad-0-1-0-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/microsoft-outlook/id951937596?uo=4',
   },
   {
     id: 'sofi',
@@ -456,7 +495,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/sofi',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/sofi.88144cf8642fb7b5f8e26bcf53951c55.svg',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/09/31/37/09313724-19bf-5fa0-a1c3-17de8598ccb4/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/sofi-bank-invest-crypto/id1191985736?uo=4',
   },
   {
     id: 'markaz',
@@ -479,6 +520,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.markaz.app/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9e/e5/c9/9ee5c9be-8ad1-2c29-11d2-83793dbfb101/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/pk/app/markaz-online-shopping/id6470020517?uo=4',
   },
   {
     id: 'microsoft-teams',
@@ -500,8 +544,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/teamsmobile.png',
     websiteUrl: 'https://www.microsoft.com/microsoft-teams/group-chat-software',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d9/d0/fe/d9d0fe80-f987-c8eb-e729-031ff11fe152/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/microsoft-teams/id1113153706?uo=4',
   },
   {
     id: 'kqed',
@@ -523,8 +569,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/kqed',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/kqed.w128.33f5eaa6150ed61764f01ced2828b6bb.png',
     websiteUrl: 'https://www.kqed.org/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/02/87/c5/0287c5fc-7455-7683-ca6c-e7649bf43e75/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/kqed-bay-area-culture-news/id466558955?uo=4',
   },
   {
     id: 'opensooq',
@@ -546,8 +594,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/opensooq-logo.svg',
     websiteUrl: 'https://www.opensooq.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/27/dd/c3/27ddc3db-a23c-3543-3390-39ee971b8966/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl:
+      'https://apps.apple.com/us/app/%D8%A7%D9%84%D8%B3%D9%88%D9%82-%D8%A7%D9%84%D9%85%D9%81%D8%AA%D9%88%D8%AD-opensooq/id654456967?uo=4',
   },
   {
     id: 'amazon-shopping',
@@ -569,7 +620,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/amazon-shopping.png',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/5d/79/b8/5d79b865-9ad4-f905-696c-0e07bac67986/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/amazon-shopping/id297606951?uo=4',
   },
   {
     id: 'talabat',
@@ -591,8 +644,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/talabat',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/talabat_logo.w128.dfd5b43d959549c36730936adce9d59d.png',
     websiteUrl: 'https://www.talabat.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/30/61/ab/3061ab29-2151-2a6d-21bf-5dbc5282e437/AppIcon-0-1x_U007ephone-0-1-85-220-0.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/talabat-food-grocery-more/id451001072?uo=4',
   },
   {
     id: 'workspace-one',
@@ -614,7 +669,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/vmware-logo.svg',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/69/d6/fc/69d6fc8a-a603-d6a8-a226-d02f82172e44/AppIcon-0-1x_U007epad-0-11-0-0-0-GLES2_U002c0-85-220-0.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/intelligent-hub/id338761996?uo=4',
   },
   {
     id: 'amazon-alexa',
@@ -636,7 +693,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/amazon-alexa.webp',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/05/36/c0/0536c016-95b2-cad3-827b-7e1b052378ab/AppIconRelease-0-1x_U007epad-0-0-0-10-0-0-0-85-220-0.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/amazon-alexa/id944011620?uo=4',
   },
   {
     id: 'zoho-tables',
@@ -658,8 +717,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/zoho-tables',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/zoho.w128.7645402f76a149e2de92abe5584b7e16.png',
     websiteUrl: 'https://www.zoho.com/tables/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b5/e0/0a/b5e00aec-a15c-151c-4c81-a8a1c433f79c/zt_app_icon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/zoho-tables-organize-work/id1569639592?uo=4',
   },
   {
     id: 'netflix-studio',
@@ -681,7 +742,8 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/netflix-logo.svg',
+    imageUrl: 'https://i.iinfo.cz/s/product-icons/itunes/77/65/prodicle.png',
+    imageSourceUrl: 'https://www.slunecnice.cz/ios/sw/prodicle/',
   },
   {
     id: 'amazon-photos',
@@ -703,7 +765,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/amazon-photos.webp',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ba/63/83/ba638370-d9ba-5ac6-aa2b-eab1a8957841/AppIconRelease-0-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/amazon-photos-photo-video/id621574163?uo=4',
   },
   {
     id: 'karaca',
@@ -725,8 +789,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/karaca',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.42732c3e3c080418d2f860860752e4df.png',
     websiteUrl: 'https://www.karaca.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/42/63/e7/4263e7b0-45ac-120f-b47b-4ea2fc4c7348/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.webp',
+    imageSourceUrl:
+      'https://apps.apple.com/us/app/karaca-ev-ya%C5%9Fam-al%C4%B1%C5%9Fveri%C5%9Fi/id1547965580?uo=4',
   },
   {
     id: 'quizlet',
@@ -748,7 +815,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/quizlet-logo.svg',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bf/a4/13/bfa4131a-2b4c-53fd-9c94-43e61b7162a8/AppIcon-production-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/quizlet-more-than-flashcards/id546473125?uo=4',
   },
   {
     id: 'shopify',
@@ -770,8 +839,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/shopify.png',
     websiteUrl: 'https://www.shopify.com/mobile',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/45/67/1f/45671f85-3d88-446d-b01b-7224bda823f1/AppIcon-com.jadedpixel.shopify-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/shopify-sell-online-in-person/id371294472?uo=4',
   },
   {
     id: 'kikoff',
@@ -793,9 +864,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/kikoff',
     },
     reviewedAt: '2026-09-06',
-    imageUrl:
-      'https://flutter.dev/assets/kikoff-logo-635-470.w128.d62a5c76f98f9e53d1531d42a3ebef09.png',
     websiteUrl: 'https://kikoff.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/5d/77/26/5d772650-f97a-ed50-52eb-2edc0660a8d3/AppIcon-enterprise-0-0-1x_U007epad-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/kikoff-build-credit-quickly/id1525159784?uo=4',
   },
   {
     id: 'memrise',
@@ -817,8 +889,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/memrise-logo.svg',
     websiteUrl: 'https://www.memrise.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/55/48/d4/5548d47f-d6cc-4f35-eb13-5fa69872e717/AppIcon-0-0-1x_U007emarketing-0-8-0-P3-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/memrise-easy-language-learning/id635966718?uo=4',
   },
   {
     id: 'shop',
@@ -840,7 +914,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/shop.webp',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fb/66/c9/fb66c96b-4c3f-7ab3-e53e-fcf57a69fc7f/AppIconProduction-0-0-1x_U007ephone-0-11-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/shop-track-pay-discover/id1223471316?uo=4',
   },
   {
     id: 'expo-city-dubai',
@@ -862,8 +938,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/expo-city-dubai',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.ef1fe5f1b69ea262dc72c38027aeb953.png',
     websiteUrl: 'https://www.expocitydubai.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/19/74/eb/1974ebea-e87d-7831-6ba5-32927e2cda45/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/expo-city-dubai/id6504216698?uo=4',
   },
   {
     id: 'forbes',
@@ -885,8 +963,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/forbes-logo.svg',
     websiteUrl: 'https://www.forbes.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/98/07/29/980729b1-e689-2aaa-fe78-849de2fec2bc/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/forbes/id1638757310?uo=4',
   },
   {
     id: 'shopify-inbox',
@@ -908,8 +988,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/shopify-inbox.webp',
     websiteUrl: 'https://www.shopify.com/inbox',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fe/90/3b/fe903bc1-dac9-f43d-15bd-a43544798c80/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/shopify-inbox/id1301681854?uo=4',
   },
   {
     id: 'agape',
@@ -931,8 +1013,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/agape',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.72ba8e914068a540380326c2b2cb7c6d.webp',
     websiteUrl: 'https://www.getdailyagape.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/8rJnXVsXmK28UGQZ4GFnPYjBTCnlEDGiRElMGjXib52pB2oIYmeQk19jIzfKLd0U3XxKd3-JxLDCMdlxnF00',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.getdailyagape',
   },
   {
     id: 'bilibili',
@@ -954,8 +1038,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/bilibili-logo.svg',
     websiteUrl: 'https://www.bilibili.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/11/db/0f/11db0f86-e5a4-3c6a-1946-698346e63d44/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl:
+      'https://apps.apple.com/cn/app/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9-%E5%BC%B9%E5%B9%95%E7%95%AA%E5%89%A7%E7%9B%B4%E6%92%AD%E9%AB%98%E6%B8%85%E8%A7%86%E9%A2%91/id736536022?uo=4',
   },
   {
     id: 'shopify-pos',
@@ -977,8 +1064,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/pos.webp',
     websiteUrl: 'https://www.shopify.com/pos',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f4/38/0a/f4380a41-5f53-0fda-4a0c-d14f01c12acb/PosAppIcon-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/shopify-point-of-sale-pos/id686830644?uo=4',
   },
   {
     id: 'headspace',
@@ -1000,8 +1089,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/headspace',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.20e99b79494ac6049e668c80fcfe17e1.png',
     websiteUrl: 'https://www.headspace.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/64/da/0e/64da0e97-b29f-bf25-ef1b-8b90c4ab8ee8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/headspace-sleep-meditation/id493145008?uo=4',
   },
   {
     id: 'workday',
@@ -1023,8 +1114,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/workday-logo.png',
     websiteUrl: 'https://www.workday.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6f/d8/e8/6fd8e8b1-da87-613b-6e23-859fd37e7431/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/workday/id316800034?uo=4',
   },
   {
     id: 'spaces-by-wix',
@@ -1046,7 +1139,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/spaces.webp',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/2a/34/e4/2a34e4fc-06fe-2c59-d3bc-0cac50cd6c3f/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/spaces-follow-businesses/id1099748482?uo=4',
   },
   {
     id: 'mgm-resorts',
@@ -1068,8 +1163,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/mgm-resorts',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.b6aad54bc052a0f281e4a787111a7cc3.png',
     websiteUrl: 'https://www.mgmresorts.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/hz96RBbN8iyp_J6UEgszo-TGWVoIGmOJt9Nwu3DZk8vFr90IaA9hm8dp8QyceQgL3USZSDf74qvvVKhxvnm4MQ',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.mgmresorts.mgmresorts',
   },
   {
     id: 'x',
@@ -1092,6 +1189,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://x.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/83/6f/af/836faf36-eb77-9ac5-4d0d-c38b77970b8a/ProductionAppIcon-0-0-1x_U007emarketing-0-8-0-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/x/id333903271?uo=4',
   },
   {
     id: 'dine-by-wix',
@@ -1113,7 +1213,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/dine.webp',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/yAm6V6uL9woMYOPU2yJFdtvuN_wfLlX889ZSoNaVfsVsyLY-LsmVv3w_daEjMBacqYbzId7eVoDmv8GLzMdcwQ',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.wix.restaurants',
   },
   {
     id: 'kride',
@@ -1135,8 +1237,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/kakao-mobility',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.6a1452e8f3d92665f451a2f27c0d74df.webp',
     websiteUrl: 'https://play.google.com/store/apps/details?id=com.kakaomobility.kride',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/-dlo-blvIDhtkIL4pljFst1ljMagoBTOnG-jbUag_eS7uZtTeovEPJVjQFTXzTsgFhcc9wNsyx8BB9MK9aAf',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.kakaomobility.kride',
   },
   {
     id: 'bolt',
@@ -1158,8 +1262,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/bolt-logo.svg',
     websiteUrl: 'https://bolt.eu/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/iiEjUHqz2W3uHQ0wFchSGFYNMwBMazonXpq9e2j_P81Tbq32iJqsy1VzMmUhzfjnOrO4oTQLbD3ki7zXIOIihlM',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=ee.mtakso.client',
   },
   {
     id: 'fit-by-wix',
@@ -1181,7 +1287,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/fit.webp',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/WO7KaxGaaemVK_T2ARoLfF0I3aCuJuHte6XwFyh7i0TmdQwGoQLHuo9qoUnpOk4LDu3r2Cmtr_S-qk5K3znCHA',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.wix.fitness',
   },
   {
     id: 'compra-certa',
@@ -1203,8 +1311,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/whirlpool',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.a0381b9fbdf2fb33b19ec58dbc4c92c0.webp',
     websiteUrl: 'https://www.compracerta.com.br/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/67/cc/f2/67ccf29a-d588-b489-3d6f-f47754f3dafb/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/br/app/compra-certa-compras-online/id6447604703',
   },
   {
     id: 'meetup',
@@ -1226,8 +1336,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/meetup-logo.svg',
     websiteUrl: 'https://www.meetup.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ba/19/e3/ba19e363-f991-dc9b-a61b-61722879c33e/appIconRedesigned-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/meetup-social-events-groups/id375990038?uo=4',
   },
   {
     id: 'wix-owner',
@@ -1249,7 +1361,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://reactnative.dev/showcase',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://reactnative.dev/img/showcase/owner.webp',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/89/d4/66/89d466be-f3c0-e70a-acd3-f38caf91e0bb/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/wix-website-builder/id1545924344?uo=4',
   },
   {
     id: 'sncf-connect',
@@ -1271,7 +1385,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/sncf-connect',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.c8306ab77e0a6736287d269d524a3d16.png',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/2a/a4/05/2aa4056f-7183-760c-7001-9aba8cc24fe9/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/sncf-connect-trains-routes/id343889987?uo=4',
   },
   {
     id: 'cash-app',
@@ -1293,8 +1409,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/cash-app/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/cash-app-logo.svg',
     websiteUrl: 'https://cash.app/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d4/3c/a6/d43ca6d7-6f87-8286-bd1a-6174673c93f2/AppIcon-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/cash-app/id711923939?uo=4',
   },
   {
     id: 'mta-traintime',
@@ -1317,6 +1435,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.mta.info/traintime',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/nSdyGmq7s73HfeVaJ4tePcSQnIx3L-MrH3lcRQntUzC_kkWmtF2UXSFtwBA7Bs9zx5KYwmYSqNHhtwVnYjd1JA',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.mta.mobileapp',
   },
   {
     id: 'monta',
@@ -1338,8 +1459,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/monta',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.a900db160fb65e38871561c824f60e23.webp',
     websiteUrl: 'https://monta.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/Vm612db0CZSazwCWOJMvUOWRwu3YB-AY0A1f9jCnZsGlq79x6TgB9hSymifJb1qU3agBzobQJ6ThpOOLyCYWcg',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.montaapp.monta',
   },
   {
     id: 'prezzee',
@@ -1361,8 +1484,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/prezzee-logo.png',
     websiteUrl: 'https://www.prezzee.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/43/6f/71/436f71dc-a57d-2de2-2caa-3496ef74fd6c/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/prezzee-egift-cards/id1047060902?uo=4',
   },
   {
     id: 'hipcamp',
@@ -1385,6 +1510,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.hipcamp.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6b/9d/5e/6b9d5ed2-21dc-42dd-72f9-5a809fdd8eb7/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/hipcamp-camping-rvs-cabins/id1440066037',
   },
   {
     id: 'wolt-merchant',
@@ -1406,7 +1534,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/wolt',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.f25603d95567c24a248610b60ab8fb78.webp',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/tFHzAO9jbkssc1WejX5Sbda6DZU-LbcLlSZ3fkGxhp_Hl3anSBQIfngLF7ICFVULlzuIWkRdBlWA9X8JIa_eMg',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.wolt.picker&hl=en',
   },
   {
     id: 'down-dog',
@@ -1428,8 +1558,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/down-dog/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/down-dog-logo.svg',
     websiteUrl: 'https://www.downdogapp.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/ec/2c/a0ec2c9d-9b74-523c-7cdb-445ee79907a0/Original-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/yoga-down-dog/id983693694?uo=4',
   },
   {
     id: 'phantom',
@@ -1452,6 +1584,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://phantom.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/de/04/e8/de04e88f-2cf8-0579-0b3f-76eee94a5c00/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/phantom-trading-wallet/id1598432977?uo=4',
   },
   {
     id: 'xiaomi-ev',
@@ -1473,8 +1608,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/xiaomi',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.3c336caf6ca77bdcc220f137959b5e67.png',
     websiteUrl: 'https://www.xiaomiev.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/97/3b/5b/973b5b97-35e1-00ba-3d89-9e779c48f44f/AppIcon-0-0-1x_U007emarketing-0-8-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl:
+      'https://apps.apple.com/cn/app/%E5%B0%8F%E7%B1%B3%E6%B1%BD%E8%BD%A6/id6473663234',
   },
   {
     id: '9gag',
@@ -1496,8 +1634,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/9gag-logo.svg',
     websiteUrl: 'https://9gag.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/O3exMzvq4XfEBBr96KeMynd3E30tk4xPGcnYrQGrHtBZAVUgOIEHMqTA7hU_VHniqTO1wIZu5d7wPb4xxDA5F5U',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.ninegag.android.app',
   },
   {
     id: 'partiful',
@@ -1520,6 +1660,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://partiful.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c9/45/dc/c945dc06-d1ff-c2b9-3864-57fa923d3aaa/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/partiful-party-invite-maker/id1662982304?uo=4',
   },
   {
     id: 'virgin-money',
@@ -1541,8 +1684,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/virgin-money',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.4fef7e57399125723588f79c0bee74bd.png',
     websiteUrl: 'https://uk.virginmoney.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/38/39/f938396f-d3c8-85ac-ee0d-c674a9f8361f/AppIcon-1x_U007epad-0-1-sRGB-85-220-0.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/gb/app/virgin-money-mobile-banking/id1482269155?uo=4',
   },
   {
     id: 'fastwork',
@@ -1564,8 +1709,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/fastwork/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/fastwork-logo.svg',
     websiteUrl: 'https://fastwork.co/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c8/69/ed/c869ed70-b3e6-bdcd-fde3-f3b2131e8c13/AppIcon-0-0-1x_U007ephone-0-11-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/th/app/fastwork-hire-freelancers/id1154830520?uo=4',
   },
   {
     id: 'incident-io',
@@ -1588,6 +1735,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://incident.io/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ad/21/ec/ad21ec2f-f8f9-78eb-403b-c9543704901c/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/incident-io/id6471268530?uo=4',
   },
   {
     id: 'universal-parks',
@@ -1609,8 +1759,11 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/universal-studios',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.4455da7825fef68ac1d36b55291fa965.png',
     websiteUrl: 'https://www.universalorlando.com/web/en/us/plan-your-visit/mobile-app',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/-FVujVhMQOzbvxPbz8uq06Dl_sgTdd_-kgd4wI38HDX6b6BJwmHWgirUAA9SOaEv_kgkCj6XeXf8CHYypTQOhsc',
+    imageSourceUrl:
+      'https://play.google.com/store/apps/details?id=com.universalstudios.orlandoresort',
   },
   {
     id: 'kuaiying',
@@ -1632,7 +1785,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/kuaishou-logo.svg',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/59/9e/c9/599ec9f3-3cc6-5cd0-fbf1-503009a19a1f/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl:
+      'https://apps.apple.com/cn/app/%E5%BF%AB%E5%BD%B1-%E5%BF%AB%E6%89%8B%E5%AE%98%E6%96%B9ai%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91%E5%88%9B%E4%BD%9C%E5%B7%A5%E5%85%B7/id1195860596',
   },
   {
     id: 'cottages-com',
@@ -1655,6 +1811,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.cottages.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e5/8e/7e/e58e7e54-f03e-93ff-4777-e698d0dc7237/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/gb/app/cottages-com-holiday-cottages/id6741528848',
   },
   {
     id: 'sozcu',
@@ -1676,8 +1835,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/sozcu',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.ce1330c22fbca7805ea2bfec44a7fa35.webp',
     websiteUrl: 'https://www.sozcu.com.tr/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/4qBlzLBBzVxm2YGReY382CAuzGRFQXkFvx5uBQojKHk4iWjKh-rf6s5PKRm2iLpiwZ1H__Qua33MAYZw4TtOuQM',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=org.studionord.sozcu.gazete',
   },
   {
     id: 'baidu-wonder',
@@ -1699,7 +1860,8 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://kotlinlang.org/case-studies/baidu/',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://kotlinlang.org/images/case-studies/baidu-logo.svg',
+    imageUrl: 'https://img.apk3.com/img2021/12/15/15/2021121599344661_APP.png',
+    imageSourceUrl: 'https://www.apk3.com/app/483179.html',
   },
   {
     id: 'business-insider',
@@ -1722,6 +1884,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.businessinsider.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f5/64/bb/f564bb12-0aaf-477b-df47-29bb15725330/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/business-insider-news-more/id554260576?uo=4',
   },
   {
     id: 'stage',
@@ -1743,8 +1908,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/stage',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.c8df7b2528190778b6f3065ee2b729e3.png',
     websiteUrl: 'https://www.stage.in/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/Z-S84mMc8pzsT2uYHOhsNcfyZEiBGjDYXFmt6YUNl89BKmyQgIlsahjtjo5i9rBGG3ENkaqYoGMWRcWQuimz',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=in.stage',
   },
   {
     id: 'lingvano',
@@ -1767,6 +1934,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.lingvano.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/izg1IXdCag0to2njdwtKUSDKVY28E02GQD4jxzZz68iMh725rI9joMp8cNf2RAOpacDC58W_meqqT3h2yW6mGYA',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.lingvano.app',
   },
   {
     id: 'lucid',
@@ -1788,8 +1958,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/lucid-motors',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.f330792774c2b2bf5adb6c3459d92a86.png',
     websiteUrl: 'https://lucidmotors.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3a/62/e7/3a62e703-93cc-1b1c-a3d1-bcf2f40d7a52/Lucid_Bear_V2-0-0-1x_U007ephone-0-0-0-1-0-0-P3-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/lucid-motors/id1579793272?uo=4',
   },
   {
     id: 'bounce',
@@ -1812,6 +1984,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://bounce.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/-RCdR_cT1Mlq939yom1Rx1an5yazlXi3mqU5mF0OCkjrhA9Fdk7CBK0aHez1JfhYTWJ6AiZgzD_kGeG5kEBwuA',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.usebounce',
   },
   {
     id: 'romwe',
@@ -1833,8 +2008,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/romwe-fashion-shein',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.c33b883a0c2c9f5b034826f657453ec6.png',
     websiteUrl: 'https://www.romwe.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/neutrU5FMF-yBjZOp6ed0fB-hup-yy7NqXHyaYgm_tTrTlZSD6UrjMveEvQcLBCSVz64_buxTrYnHOhi3fen',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.romwe',
   },
   {
     id: 'mollie',
@@ -1857,6 +2034,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.mollie.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/83/23/7c/83237cb7-5a6a-8303-614a-65fb03b4c24e/prod-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/mollie/id1473455257?uo=4',
   },
   {
     id: 'cz',
@@ -1878,8 +2058,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/cz-zorgverzekeringen',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.0c65223c7b34539a1b0df35a2ee00c9f.webp',
     websiteUrl: 'https://www.cz.nl/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/a6ke2MmX3JuXz-urXz5ha16o9Tnbtok5k4hrBjRG6p6A3EYgYc6riwcTJvOZ7AvkFcGBl-J-rFFlBDWGx1vTTg',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=nl.cz.app',
   },
   {
     id: 'goody',
@@ -1902,6 +2084,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.ongoody.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/5a/ce/c1/5acec131-860a-285d-03c7-0597a7a757e1/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/goody-easy-gifting/id1502301646?uo=4',
   },
   {
     id: 'betterment',
@@ -1923,8 +2108,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/betterment',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.aa818d443348acfc5aa6acedec18b009.png',
     websiteUrl: 'https://www.betterment.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/61/16/2f/61162f06-7d49-e441-5757-09ab2a8cddd2/BMT_App_Icon_iOS_Prod-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/betterment-invest-save-money/id393156562',
   },
   {
     id: 'better',
@@ -1947,6 +2134,8 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://better.com/',
+    imageUrl: 'https://media.better.com/better-com/1627660194327/meta/apple-touch-icon.png',
+    imageSourceUrl: 'https://better.com/',
   },
   {
     id: 'kijiji',
@@ -1968,8 +2157,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/kijiji1',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.89d8526b3444e06c4d1025cedecb2a15.webp',
     websiteUrl: 'https://www.kijiji.ca/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/73/d0/b6/73d0b61b-7f56-6d9f-6c50-95e9acf05685/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/ca/app/kijiji-buy-sell-find-deals/id318979520',
   },
   {
     id: 'blackline',
@@ -1992,6 +2183,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.blackline.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/73/4f/b0734f3c-3719-5d69-1b5b-bc3c1efe395b/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/blackline/id1609332076?uo=4',
   },
   {
     id: 'skandia',
@@ -2013,8 +2207,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/skandia',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.73cf79b4662c9b4e9acb8b4757552942.png',
     websiteUrl: 'https://www.skandia.se/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/fEn7X2jHDopMKWs30YZ9errWhbFUnStsw3Zg1zm1V8U4ca8LSDyFNbYk415niTtzXGQNVGTHT9ulRoaHuQO5Zw',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=se.skandiabanken.android.wallet',
   },
   {
     id: 'playon',
@@ -2037,6 +2233,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.playonsports.com/',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/78/86/9f/78869f57-fb3b-9f74-a944-77266ca6ce82/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/gofan-buy-tickets-to-events/id1049091284',
   },
   {
     id: 'caribou-coffee',
@@ -2058,7 +2257,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/caribou-coffee',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.fec2ef71ad55d287574d5110f563c976.webp',
+    imageUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/08/ac/73/08ac7327-f615-d913-8f8d-e19cae300936/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/512x512bb.webp',
+    imageSourceUrl: 'https://apps.apple.com/us/app/caribou-coffee/id971358255',
   },
   {
     id: 'cameo',
@@ -2080,6 +2281,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://expo.dev/customers/cameo',
     },
     reviewedAt: '2026-09-06',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/rtRsGaOrEbC6ZyLHUEkyYWUwZYXnFgNBcLkVpn7Sv9KqodxwwC09m6mGOL9QswqRxPJDU8lVYDXeRCj-jXwHDQ',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.baronapp.cameo',
   },
   {
     id: 'so-vegan',
@@ -2101,7 +2305,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/so-vegan',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.900c95e7b36359a013415350c88a36c4.webp',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/7r8rsfQiV9EJGitPmR8EMIxeOEcav8TElNgYt7S4PeKHcmwp6C4nC6j1vCDmbtGwRtBl7KxgHX-9p0GyKjHvOH8',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.wearesovegan.app',
   },
   {
     id: 'bluesky',
@@ -2125,6 +2331,9 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://bsky.app/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/54eUk_UXr65meQqoOIMXAnuNIyLOuznb-Ad19ZytLq7nBqSaeF0fefspnZkDSKbbZASMSpKaAUCSGD_c0eliSRM',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=xyz.blueskyweb.app',
   },
   {
     id: 'reflection',
@@ -2146,8 +2355,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/reflectionapp',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.f8b82e5999837d5869c5c1819c8ffd77.png',
     websiteUrl: 'https://www.reflection.app/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/4UHVuzkgdJXsgX0y7dSXDAh4CpXL6YuGmKC0jTigODA96JFMqsSty1jt4yDkmTT_QLgy20DXVPvPpnBrXZE51A',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=app.reflection.reflection',
   },
   {
     id: 'superlist',
@@ -2169,8 +2380,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/superlist',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.889829ff00c9b39affaa159bb635ec5a.png',
     websiteUrl: 'https://www.superlist.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/-fIAP4PsvfDpljW19_q3lklL2Sf6Nmwlyr22filS3tvM0JOTDsO-gG7eXB7mwM6FMgwor1Y5b1xE7bnBi954ow',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.superlist.superlist',
   },
   {
     id: 'rows',
@@ -2192,8 +2405,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/rows',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.919f428ab3ac9c22a0478c92fe21ec39.png',
     websiteUrl: 'https://rows.com/',
+    imageUrl: 'https://rows.com/favicons/apple-touch-icon.png?v=1',
+    imageSourceUrl: 'https://rows.com/',
   },
   {
     id: 'rive',
@@ -2215,8 +2429,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/rive',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.05495774435f02d91cdf7fdbb95e6a23.png',
     websiteUrl: 'https://rive.app/',
+    imageUrl:
+      'https://framerusercontent.com/images/5WNUOLDFjvpqT7O9s67mXZ8Kv3o.png?width=1024&height=1024',
+    imageSourceUrl: 'https://www.rive.app/downloads',
   },
   {
     id: 'nubank',
@@ -2238,8 +2454,10 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/nubank',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.a03eecc1c83bc9164fdb3e54561389f0.jpg',
     websiteUrl: 'https://nubank.com.br/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/FP6PILGwB6hrdvwg_mE8H1MKi2AcRDbHJcdg7WMfjiHbs4-ZZhYSMtgibkpeakstu1UeNHL4TGCo1l0mV2qkQa4',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.nu.production',
   },
   {
     id: 'xianyu',
@@ -2261,7 +2479,9 @@ export const curatedApps: CuratedApp[] = [
       url: 'https://flutter.dev/showcase/alibaba-group',
     },
     reviewedAt: '2026-09-06',
-    imageUrl: 'https://flutter.dev/assets/logo.w128.96076832c1a65bd3333effe216ddc7a6.png',
     websiteUrl: 'https://www.goofish.com/',
+    imageUrl:
+      'https://play-lh.googleusercontent.com/yEyIAHHM8m7l_bFfVxhVfxTXsAf0ekrnCnxKk6_d-Swsu19rTx4yq-u6rIYdLNS6JJ1j6Kzm6qg4_6AEtJtKhQ',
+    imageSourceUrl: 'https://play.google.com/store/apps/details?id=com.taobao.idlefish',
   },
 ];

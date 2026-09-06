@@ -302,7 +302,7 @@ const ShowcaseFormModal = ({
             'bg-gray-200 dark:bg-gray-700',
           )}
         >
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">
             {isEditMode ? t('showcase.form.edit') : t('showcase.form.create')}
           </h3>
           <Button
@@ -464,7 +464,7 @@ const ShowcaseFormModal = ({
 
             {/* URLs */}
             <div className="space-y-4">
-              <h4 className="font-medium text-gray-800 dark:text-gray-200">
+              <h4 className="font-bold text-gray-800 dark:text-gray-200">
                 {t('showcase.form.links')} <span className="text-red-500 dark:text-red-400">*</span>
                 <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 font-normal">
                   {t('showcase.form.linksRequired')}

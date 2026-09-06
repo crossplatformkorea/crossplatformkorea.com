@@ -508,7 +508,13 @@
         "education": "교육",
         "utilities": "생활·도구",
         "developer": "개발·디자인"
-      }
+      },
+      "storeMetrics": "Google Play 평가·다운로드 출처",
+      "ratingCount": "평가 {{value}}개",
+      "downloadCount": "다운로드 {{value}}+",
+      "metricsUnavailable": "비교 가능한 스토어 수치 미확인",
+      "rankingTitle": "평가·다운로드 순 · 평가 수에 더 높은 가중치",
+      "rankingMethod": "2026-09-06에 확인한 Google Play 공개 수치로 정렬합니다. 평가 수 70%, 다운로드 구간 하한값 30%를 로그 점수로 합산합니다. 평가 수는 별점 평가 건수이며 글 리뷰만의 수가 아닙니다. 기본 미국 목록, Google Pay는 인도 목록을 사용하며 iOS와 다른 스토어의 전체 이용 규모를 뜻하지 않습니다. 수치가 확인되지 않은 앱은 뒤에 표시합니다."
     }
   },
   "showcaseCategories": {

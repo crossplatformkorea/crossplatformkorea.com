@@ -36,7 +36,7 @@ export default function SummaryPage() {
           <span>SEOUL</span>
         </div>
         <div className="mt-7 grid items-end gap-x-8 gap-y-7 lg:grid-cols-[1fr_18rem]">
-          <h1 className="whitespace-nowrap text-[clamp(2.15rem,1rem+6.5cqw,6.75rem)] font-semibold leading-none tracking-[-0.075em] sm:text-[clamp(2.15rem,0.75rem+8cqw,6.75rem)] lg:col-span-2">
+          <h1 className="whitespace-nowrap text-[clamp(2.15rem,1rem+6.5cqw,6.75rem)] font-bold leading-none tracking-[-0.075em] sm:text-[clamp(2.15rem,0.75rem+8cqw,6.75rem)] lg:col-span-2">
             {t('summary.heroTitle')}
           </h1>
           <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
@@ -77,7 +77,7 @@ export default function SummaryPage() {
                 <div className="section-kicker">SIGNED IN / PROFILE</div>
                 <Link
                   to={userProfileUrl}
-                  className="mt-2 block truncate text-2xl font-semibold tracking-[-0.035em] hover:text-primary"
+                  className="mt-2 block truncate text-2xl font-bold tracking-[-0.035em] hover:text-primary"
                 >
                   {userIdentity.profile?.displayName || userIdentity.email?.split('@')[0]}
                 </Link>
@@ -100,7 +100,7 @@ export default function SummaryPage() {
           <div className="surface-card flex flex-col justify-between gap-5 p-5 sm:flex-row sm:items-center sm:p-7">
             <div>
               <div className="section-kicker">MEMBER ACCESS</div>
-              <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em]">
+              <h2 className="mt-2 text-xl font-bold tracking-[-0.03em]">
                 {t('common.loginToAccess')}
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">{t('auth.loginDescription')}</p>
@@ -119,7 +119,7 @@ export default function SummaryPage() {
         <div className="mb-6 flex items-end justify-between gap-4 border-b border-border/80 pb-4">
           <div>
             <div className="section-kicker">LATEST / 06</div>
-            <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] sm:text-3xl">
+            <h2 className="mt-2 text-2xl font-bold tracking-[-0.04em] sm:text-3xl">
               {t('posts.recentPosts')}
             </h2>
           </div>
@@ -133,7 +133,7 @@ export default function SummaryPage() {
 
         {recentPosts === undefined ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[0, 1, 2].map((item) => (
+            {[0, 1, 2, 3, 4, 5].map((item) => (
               <div
                 key={item}
                 className="h-64 animate-pulse rounded-2xl border border-border/70 bg-card/60"

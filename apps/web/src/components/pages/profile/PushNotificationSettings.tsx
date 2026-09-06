@@ -41,7 +41,7 @@ function ProductionUI({ className, state, handlers }: UIProps) {
             <BellOff className="w-5 h-5 text-muted-foreground" />
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">{t('notifications.pushNotifications.title')}</h3>
+            <h3 className="font-bold text-foreground">{t('notifications.pushNotifications.title')}</h3>
             <p className="text-sm text-muted-foreground">Browser not supported</p>
           </div>
         </div>
@@ -61,7 +61,7 @@ function ProductionUI({ className, state, handlers }: UIProps) {
           <Bell className="w-5 h-5 text-primary" />
         </div>
         <div>
-          <h3 className="font-semibold text-foreground">{t('notifications.pushNotifications.title')}</h3>
+          <h3 className="font-bold text-foreground">{t('notifications.pushNotifications.title')}</h3>
           <p className="text-sm text-muted-foreground">{t('notifications.pushNotifications.description')}</p>
         </div>
       </div>
@@ -205,7 +205,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
             <BellOff className="w-5 h-5 text-muted-foreground" />
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">{t('notifications.pushNotifications.title')}</h3>
+            <h3 className="font-bold text-foreground">{t('notifications.pushNotifications.title')}</h3>
             <p className="text-sm text-muted-foreground">Browser not supported</p>
           </div>
         </div>
@@ -227,7 +227,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
             <Bell className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">{t('notifications.pushNotifications.title')}</h3>
+            <h3 className="font-bold text-foreground">{t('notifications.pushNotifications.title')}</h3>
             <p className="text-sm text-muted-foreground">Development mode with enhanced controls</p>
           </div>
         </div>
@@ -396,7 +396,7 @@ function DevelopmentUI({ className, state, handlers }: UIProps) {
                 <Info className="w-5 h-5 text-orange-600 dark:text-orange-400" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground">Permission Revocation Guide</h3>
+                <h3 className="font-bold text-foreground">Permission Revocation Guide</h3>
                 <p className="text-xs text-orange-600 dark:text-orange-400">(Development Mode Only)</p>
               </div>
             </div>

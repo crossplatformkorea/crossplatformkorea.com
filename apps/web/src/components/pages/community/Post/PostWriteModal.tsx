@@ -744,7 +744,7 @@ export default function PostWriteModal({
           )}
         >
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-bold">
               {isEditMode ? t('postWrite.editPost') : t('postWrite.writeNewPost')}
             </h2>
 
