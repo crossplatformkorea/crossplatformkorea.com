@@ -173,9 +173,8 @@ export const curatedApps: CuratedApp[] = [
     },
     reviewedAt: '2026-09-06',
     websiteUrl: 'https://www.meta.com/experiences/instagram/6894135610696226/',
-    imageUrl:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/84/f3/dc/84f3dc56-cf85-0cc4-b24c-1f87a99ac806/Prod-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.webp',
-    imageSourceUrl: 'https://apps.apple.com/us/app/instagram/id389801252?uo=4',
+    imageUrl: 'https://reactnative.dev/img/showcase/instagram.png',
+    imageSourceUrl: 'https://reactnative.dev/showcase',
   },
   {
     id: 'google-pay',

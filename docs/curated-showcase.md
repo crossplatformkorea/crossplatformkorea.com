@@ -66,7 +66,7 @@ other product URLs were omitted; their verified adoption evidence remains linked
 
 All 100 entries have remote icons and separate image provenance. Most use store
 artwork; Rows and Better use official home-screen icons, Rive its desktop download
-icon, and Office the React Native showcase app icon. Prodicle and Baidu Wonder
+icon, and Office and Instagram for Meta Quest their React Native showcase icons. Prodicle and Baidu Wonder
 use archived app-listing icons because current public listings are unavailable.
 Compra Certa retains its historical Apple artwork. These archival icons do not
 assert that retired apps are available for download today. Icon sources are
