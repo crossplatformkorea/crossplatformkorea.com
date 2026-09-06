@@ -475,7 +475,41 @@
     "otherLinksButton": "기타 링크",
     "linkLabel": "링크",
     "featured": "추천",
-    "user": "사용자"
+    "user": "사용자",
+    "catalog": {
+      "description": "익숙한 서비스부터 새로운 앱까지, 크로스플랫폼 기술이 쓰이는 곳을 만나보세요.",
+      "collection": "쇼케이스 모음",
+      "curated": "CPK 선정 사례",
+      "community": "커뮤니티 앱",
+      "intro": "공식 쇼케이스와 개발팀의 공개 자료를 바탕으로 CPK가 정리한 100개 도입 사례입니다. 앱 전체 개발, 일부 기능, 공통 로직의 활용 범위를 구분했습니다. 확인일은 자료를 검토한 날이며 최신 앱 버전의 기술 스택을 보증하지 않습니다. 직접 만든 앱은 커뮤니티 앱에 소개해 주세요.",
+      "technology": "개발 기술",
+      "all": "전체",
+      "search": "앱, 회사 또는 기술 검색",
+      "results": "{{count}}개 사례",
+      "reset": "필터 초기화",
+      "more": "더 보기 · {{shown}} / {{total}}",
+      "source": "도입 근거",
+      "website": "공식 사이트",
+      "reviewed": "자료 확인 {{date}}",
+      "scopes": {
+        "app": "앱 개발 사례",
+        "features": "일부 기능에 도입",
+        "shared-logic": "공통 로직 공유",
+        "listed": "공식 쇼케이스 등재"
+      },
+      "categories": {
+        "finance": "금융",
+        "commerce": "쇼핑·커머스",
+        "productivity": "업무·생산성",
+        "social": "소셜·커뮤니티",
+        "entertainment": "미디어·엔터테인먼트",
+        "travel": "여행·모빌리티",
+        "health": "건강·웰니스",
+        "education": "교육",
+        "utilities": "생활·도구",
+        "developer": "개발·디자인"
+      }
+    }
   },
   "showcaseCategories": {
     "REACT_NATIVE": {

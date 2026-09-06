@@ -528,7 +528,43 @@
     "otherLinksButton": "Other Links",
     "linkLabel": "Link",
     "featured": "Featured",
-    "user": "User"
+    "user": "User",
+    "catalog": {
+      "description": "Discover where cross-platform technology powers familiar services and new applications.",
+      "collection": "Showcase collection",
+      "curated": "CPK selections",
+      "community": "Community apps",
+      "intro": "100 adoption examples curated by CPK from official showcases and engineering teams. Each entry distinguishes app development, individual features and shared logic. Review dates refer to the evidence, not verification of the latest app version. Share your own work in Community apps.",
+      "technology": "Technology",
+      "all": "All",
+      "search": "Search apps, companies or technologies",
+      "results": "{{count}} examples",
+      "reset": "Reset filters",
+      "more": "Load more · {{shown}} / {{total}}",
+      "source": "Adoption source",
+      "website": "Official site",
+      "reviewed": "Evidence reviewed {{date}}",
+      "scopes": {
+        "app": "App development",
+        "features": "Selected features",
+        "shared-logic": "Shared logic",
+        "listed": "Official showcase listing"
+      },
+      "categories": {
+        "finance": "Finance",
+        "commerce": "Shopping & commerce",
+        "productivity": "Work & productivity",
+        "social": "Social & community",
+        "entertainment": "Media & entertainment",
+        "travel": "Travel & mobility",
+        "health": "Health & wellness",
+        "education": "Education",
+        "utilities": "Utilities",
+        "developer": "Development & design"
+      },
+      "results_one": "{{count}} example",
+      "results_other": "{{count}} examples"
+    }
   },
   "showcaseCategories": {
     "REACT_NATIVE": {

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
+import CuratedShowcases from './CuratedShowcases';
 import ShowcaseItem, { ShowcaseItemType } from './ShowcaseItem';
 import { Search, Plus, AppWindow, X, ChevronDown, LogIn } from 'lucide-react';
 import ShowcaseFormModal from './ShowcaseFormModal';
@@ -25,6 +26,15 @@ export default function ShowcasePage() {
   const { t: translate } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const [params, setParams] = useSearchParams();
+  const collection = params.get('collection') === 'community' ? 'community' : 'curated';
+  const selectCollection = (value: 'curated' | 'community') => {
+    setParams((previous) => {
+      const next = new URLSearchParams(previous);
+      next.set('collection', value);
+      return next;
+    });
+  };
   const { isAuthenticated } = useAuthStore();
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -40,11 +50,16 @@ export default function ShowcasePage() {
   const user = useQuery(api.users.query.currentUser);
 
   // 쇼케이스 목록 조회 (기본 페이지네이션 적용)
-  const showcaseResult = useQuery(api.showcases.query.getShowcasesByCategory, {
-    paginationOpts: { cursor, numItems: 12 },
-    category: selectedCategory || 'all',
-    searchText: searchText.trim(),
-  });
+  const showcaseResult = useQuery(
+    api.showcases.query.getShowcasesByCategory,
+    collection === 'community'
+      ? {
+          paginationOpts: { cursor, numItems: 12 },
+          category: selectedCategory || 'all',
+          searchText: searchText.trim(),
+        }
+      : 'skip',
+  );
 
   // 페이지네이션 데이터
   const showcases = showcaseResult?.page || [];
@@ -84,6 +99,8 @@ export default function ShowcasePage() {
     setIsEditMode(false);
     setEditingShowcase(null);
 
+    selectCollection('community');
+
     // 첫 페이지부터 다시 로드
     setCursor(null);
   };
@@ -102,9 +119,9 @@ export default function ShowcasePage() {
   return (
     <div className="min-h-full">
       <PageHeader
-        eyebrow="MADE BY MEMBERS / SHOWCASE"
+        eyebrow="CROSS-PLATFORM / SHOWCASE"
         title={translate('showcase.title')}
-        description={translate('showcase.description')}
+        description={translate('showcase.catalog.description')}
         action={
           <Button
             onClick={isAuthenticated ? openCreateForm : openSignIn}
@@ -116,130 +133,160 @@ export default function ShowcasePage() {
         }
       />
 
-      {/* 검색 & 필터 영역 */}
-      <div className="surface-card mb-8 flex flex-col items-stretch gap-3 p-3 sm:flex-row sm:items-center">
-        {/* 검색 창 */}
-        <div className="relative flex-1">
-          <input
-            type="text"
-            value={searchText}
-            onChange={handleSearchChange}
-            placeholder={translate('showcase.searchPlaceholder')}
-            className="field-control h-11 pl-10 pr-10"
-          />
-          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <Search size={18} className="text-gray-400 dark:text-gray-500" />
-          </div>
-          {searchText && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSearchText('')}
-              className="absolute inset-y-0 right-3 flex items-center p-0 h-auto"
-              aria-label="Clear search"
-            >
-              <X
-                size={18}
-                className={cn(
-                  'text-gray-400 dark:text-gray-500',
-                  'hover:text-gray-600 dark:hover:text-gray-300',
-                )}
-              />
-            </Button>
-          )}
-        </div>
-
-        {/* 카테고리 필터 드롭다운 */}
-        <div className="relative">
-          <select
-            value={selectedCategory || ''}
-            onChange={(e) => handleCategoryChange(e.target.value || null)}
-            className="field-control h-11 appearance-none py-2 pl-4 pr-10 sm:min-w-48"
-          >
-            <option value="">{translate('showcase.allCategories')}</option>
-            {categories.map((category) => (
-              <option key={category.key} value={category.key}>
-                {translate(`showcaseCategories.${category.key}.name`, {
-                  defaultValue: category.name || category.key,
-                })}
-              </option>
-            ))}
-          </select>
-          {/* 커스텀 화살표 아이콘 추가 */}
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-            <ChevronDown size={16} className="text-gray-500 dark:text-gray-400" />
-          </div>
-        </div>
-      </div>
-
-      {/* 쇼케이스 목록 영역 */}
-      {isLoading ? (
-        // 로딩 중에는 스켈레톤 UI 표시
-        <ShowcaseSkeletonGroup count={12} />
-      ) : showcases.length === 0 ? (
-        <div className="surface-card flex flex-col items-center justify-center py-16 text-center">
-          <div className="mb-4 text-gray-400 dark:text-gray-500">
-            <AppWindow size={48} />
-          </div>
-          <h3 className={cn('mb-2 text-xl font-medium', 'text-gray-800 dark:text-gray-200')}>
-            {searchText ? translate('showcase.noSearchResults') : translate('showcase.noShowcases')}
-          </h3>
-          <p className={cn('mx-auto max-w-md', 'text-gray-500 dark:text-gray-400')}>
-            {searchText ? translate('showcase.tryAdjusting') : translate('showcase.beTheFirst')}
-          </p>
+      <div
+        className="mb-6 flex flex-wrap gap-2 border-b border-gray-200 pb-4 dark:border-gray-800"
+        role="group"
+        aria-label={translate('showcase.catalog.collection')}
+      >
+        {(['curated', 'community'] as const).map((value) => (
           <Button
-            variant={isAuthenticated ? 'default' : 'outline'}
-            className="mt-6"
-            onClick={isAuthenticated ? openCreateForm : openSignIn}
+            key={value}
+            variant="ghost"
+            aria-pressed={collection === value}
+            onClick={() => selectCollection(value)}
+            className={cn(collection === value && 'bg-gray-100 dark:bg-gray-800')}
           >
-            {isAuthenticated ? <Plus size={16} /> : <LogIn size={16} />}
-            <span>
-              {isAuthenticated ? translate('showcase.addFirst') : translate('showcase.signInToAdd')}
-            </span>
+            {translate(`showcase.catalog.${value}`)}
           </Button>
-        </div>
+        ))}
+      </div>
+      {collection === 'curated' ? (
+        <CuratedShowcases />
       ) : (
         <>
-          {/* Pinterest-style masonry layout with JavaScript positioning */}
-          <div className="relative">
-            <MasonryGrid
-              className="w-full"
-              columnGap={20}
-              rowGap={16}
-              breakpoints={{
-                sm: 1,
-                md: 2,
-                lg: 3,
-                xl: 3,
-              }}
-            >
-              {showcases.map((showcase) => (
-                <ShowcaseItem
-                  key={showcase._id}
-                  showcase={{
-                    ...showcase,
-                    categoryName: categories.find((c) => c.key === showcase.category)
-                      ? translate(`showcaseCategories.${showcase.category}.name`, {
-                          defaultValue:
-                            categories.find((c) => c.key === showcase.category)?.name ||
-                            showcase.category,
-                        })
-                      : showcase.category,
+          {/* 검색 & 필터 영역 */}
+          <div className="surface-card mb-8 flex flex-col items-stretch gap-3 p-3 sm:flex-row sm:items-center">
+            {/* 검색 창 */}
+            <div className="relative flex-1">
+              <input
+                type="text"
+                value={searchText}
+                onChange={handleSearchChange}
+                placeholder={translate('showcase.searchPlaceholder')}
+                className="field-control h-11 pl-10 pr-10"
+              />
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <Search size={18} className="text-gray-400 dark:text-gray-500" />
+              </div>
+              {searchText && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setSearchText('');
+                    setCursor(null);
                   }}
-                  isEditable={user ? user._id === showcase.userId : false}
-                  onEditClick={() => handleEditShowcase(showcase)}
-                />
-              ))}
-            </MasonryGrid>
+                  className="absolute inset-y-0 right-3 flex items-center p-0 h-auto"
+                  aria-label="Clear search"
+                >
+                  <X
+                    size={18}
+                    className={cn(
+                      'text-gray-400 dark:text-gray-500',
+                      'hover:text-gray-600 dark:hover:text-gray-300',
+                    )}
+                  />
+                </Button>
+              )}
+            </div>
+
+            {/* 카테고리 필터 드롭다운 */}
+            <div className="relative">
+              <select
+                value={selectedCategory || ''}
+                onChange={(e) => handleCategoryChange(e.target.value || null)}
+                className="field-control h-11 appearance-none py-2 pl-4 pr-10 sm:min-w-48"
+              >
+                <option value="">{translate('showcase.allCategories')}</option>
+                {categories.map((category) => (
+                  <option key={category.key} value={category.key}>
+                    {translate(`showcaseCategories.${category.key}.name`, {
+                      defaultValue: category.name || category.key,
+                    })}
+                  </option>
+                ))}
+              </select>
+              {/* 커스텀 화살표 아이콘 추가 */}
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                <ChevronDown size={16} className="text-gray-500 dark:text-gray-400" />
+              </div>
+            </div>
           </div>
 
-          {/* 더 보기 버튼 */}
-          {!isDone && (
-            <div className="mt-8 flex justify-center">
-              <Button variant="default" onClick={handleLoadMore}>
-                {translate('showcase.loadMore')}
+          {/* 쇼케이스 목록 영역 */}
+          {isLoading ? (
+            // 로딩 중에는 스켈레톤 UI 표시
+            <ShowcaseSkeletonGroup count={12} />
+          ) : showcases.length === 0 ? (
+            <div className="surface-card flex flex-col items-center justify-center py-16 text-center">
+              <div className="mb-4 text-gray-400 dark:text-gray-500">
+                <AppWindow size={48} />
+              </div>
+              <h3 className={cn('mb-2 text-xl font-medium', 'text-gray-800 dark:text-gray-200')}>
+                {searchText
+                  ? translate('showcase.noSearchResults')
+                  : translate('showcase.noShowcases')}
+              </h3>
+              <p className={cn('mx-auto max-w-md', 'text-gray-500 dark:text-gray-400')}>
+                {searchText ? translate('showcase.tryAdjusting') : translate('showcase.beTheFirst')}
+              </p>
+              <Button
+                variant={isAuthenticated ? 'default' : 'outline'}
+                className="mt-6"
+                onClick={isAuthenticated ? openCreateForm : openSignIn}
+              >
+                {isAuthenticated ? <Plus size={16} /> : <LogIn size={16} />}
+                <span>
+                  {isAuthenticated
+                    ? translate('showcase.addFirst')
+                    : translate('showcase.signInToAdd')}
+                </span>
               </Button>
             </div>
+          ) : (
+            <>
+              {/* Pinterest-style masonry layout with JavaScript positioning */}
+              <div className="relative">
+                <MasonryGrid
+                  className="w-full"
+                  columnGap={20}
+                  rowGap={16}
+                  breakpoints={{
+                    sm: 1,
+                    md: 2,
+                    lg: 3,
+                    xl: 3,
+                  }}
+                >
+                  {showcases.map((showcase) => (
+                    <ShowcaseItem
+                      key={showcase._id}
+                      showcase={{
+                        ...showcase,
+                        categoryName: categories.find((c) => c.key === showcase.category)
+                          ? translate(`showcaseCategories.${showcase.category}.name`, {
+                              defaultValue:
+                                categories.find((c) => c.key === showcase.category)?.name ||
+                                showcase.category,
+                            })
+                          : showcase.category,
+                      }}
+                      isEditable={user ? user._id === showcase.userId : false}
+                      onEditClick={() => handleEditShowcase(showcase)}
+                    />
+                  ))}
+                </MasonryGrid>
+              </div>
+
+              {/* 더 보기 버튼 */}
+              {!isDone && (
+                <div className="mt-8 flex justify-center">
+                  <Button variant="default" onClick={handleLoadMore}>
+                    {translate('showcase.loadMore')}
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
