@@ -221,6 +221,7 @@ export const createOrUpdateUser = mutation({
       userId: userId as Id<'users'>,
       email: args.email,
       displayName: userDisplayName,
+      displayNameLower: userDisplayName.toLowerCase(),
       name: args.realName, // 실명
       organization: args.organization, // 소속
       description: args.description || '',
@@ -317,11 +318,14 @@ export const updateProfile = mutation({
 
     // Check if displayName is changing and if the new name is available
     if (args.displayName !== userProfile.displayName) {
+      // 프로필 URL은 소문자라 대소문자만 다른 이름은 같은 주소로 충돌한다.
+      // 정규화 키로 인덱스 조회해서 전체 스캔 없이 그 충돌까지 막는다.
       const existingWithName = await ctx.db
         .query('userProfiles')
-        .filter((q) =>
-          q.and(q.eq(q.field('displayName'), args.displayName), q.neq(q.field('userId'), userId)),
+        .withIndex('by_display_name_lower', (q) =>
+          q.eq('displayNameLower', args.displayName.toLowerCase()),
         )
+        .filter((q) => q.neq(q.field('userId'), userId))
         .first();
 
       if (existingWithName) {
@@ -332,6 +336,7 @@ export const updateProfile = mutation({
     // 프로필 업데이트
     await ctx.db.patch(userProfile._id, {
       displayName: args.displayName,
+      displayNameLower: args.displayName.toLowerCase(),
       description: args.description,
       avatarUrl: args.avatarUrl,
       githubId: args.githubId,
@@ -404,6 +409,7 @@ export const ensureUserProfile = mutation({
       userId: userId as Id<'users'>,
       email: email,
       displayName: displayName,
+      displayNameLower: displayName.toLowerCase(),
       // 추가 필드
       avatarUrl: user.image,
       githubId,

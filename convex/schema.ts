@@ -52,10 +52,14 @@ export default defineSchema({
     lookingFor: v.optional(v.string()), // Who they want to connect with
     expectations: v.optional(v.string()), // What they're expecting from the community
     locale: v.optional(v.string()), // 사용자 언어 설정 (en, ko, ja)
+    // displayName의 소문자 형태. 프로필 URL이 소문자로 생성되므로 조회와
+    // 중복 검사는 이 키를 쓴다. 백필 전 문서를 위해 optional로 둔다.
+    displayNameLower: v.optional(v.string()),
   })
     .index('by_email', ['email'])
     .index('by_user', ['userId'])
     .index('by_display_name', ['displayName'])
+    .index('by_display_name_lower', ['displayNameLower'])
     .index('by_githubId', ['githubId']),
   featureRequests: defineTable({
     title: v.string(),

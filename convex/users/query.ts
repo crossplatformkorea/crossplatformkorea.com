@@ -288,21 +288,25 @@ export const getProfileByDisplayName = query({
     v.null(),
   ),
   handler: async (ctx, args) => {
-    // 프로필 URL은 저장된 displayName 그대로 만들어지므로, 인덱스 조회 하나로
-    // 거의 모든 요청이 끝난다. 이 쿼리는 프로필 페이지마다 구독되기 때문에
-    // 전체 테이블 조회로 두면 사용자 수에 비례해 읽기 비용이 늘어난다.
-    const exactMatch = await ctx.db
-      .query('userProfiles')
-      .withIndex('by_display_name', (q) => q.eq('displayName', args.displayName))
-      .first();
-
-    // 대소문자만 다른 URL은 예외적인 경우라, 그때만 전체 조회로 되돌아간다.
+    // 프로필 URL은 createUserProfileLink가 소문자로 만들기 때문에, 저장된
+    // displayName과 대소문자가 다를 수 있다. 정규화 키로 조회해야 인덱스가
+    // 실제로 쓰인다. 이 쿼리는 공개돼 있고 프로필 페이지마다 구독되므로,
+    // 빗나갔을 때 전체 테이블을 읽으면 외부에서 유발 가능한 부하가 된다.
     const searchDisplayName = args.displayName.toLowerCase();
+
     const profile =
-      exactMatch ??
-      (await ctx.db.query('userProfiles').collect()).find(
-        (p) => p.displayName?.toLowerCase() === searchDisplayName,
-      );
+      (await ctx.db
+        .query('userProfiles')
+        .withIndex('by_display_name_lower', (q) =>
+          q.eq('displayNameLower', searchDisplayName),
+        )
+        .first()) ??
+      // 백필이 끝나기 전 문서에는 정규화 키가 없다. 이 폴백도 인덱스 조회라
+      // 전체 스캔으로 돌아가지는 않는다. 백필 완료 후 제거해도 된다.
+      (await ctx.db
+        .query('userProfiles')
+        .withIndex('by_display_name', (q) => q.eq('displayName', args.displayName))
+        .first());
 
     if (!profile) {
       return null;
