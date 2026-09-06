@@ -167,7 +167,7 @@ export default function Comments({ postId }: CommentsProps) {
 
   return (
     <div className="mt-8">
-      <h3 className="font-semibold text-xl mb-5 flex items-center">
+      <h3 className="font-bold text-xl mb-5 flex items-center">
         <MessageSquare className="mr-2 h-5 w-5" />
         {t('comments.title')}
         <span className="ml-2 text-sm text-muted-foreground">({comments.length})</span>

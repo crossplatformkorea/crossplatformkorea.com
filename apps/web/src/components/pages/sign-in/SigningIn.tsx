@@ -158,7 +158,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
           <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
             <ShieldCheck size={21} />
           </div>
-          <h2 className="text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-4xl">
             {t('signIn.verifyEmailTitle')}
           </h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -225,7 +225,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
         <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
           <Mail size={20} />
         </div>
-        <h2 className="text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">
+        <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-4xl">
           {t('signIn.title')}
         </h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{t('signIn.signInMessage')}</p>

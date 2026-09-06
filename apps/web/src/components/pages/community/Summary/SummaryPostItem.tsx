@@ -48,7 +48,7 @@ export default function SummaryPostItem({ post }: { post: Post }) {
           </span>
         </div>
 
-        <h3 className="mt-5 line-clamp-2 text-lg font-semibold leading-snug tracking-[-0.025em] transition group-hover:text-primary">
+        <h3 className="mt-5 line-clamp-2 text-lg font-bold leading-snug tracking-[-0.025em] transition group-hover:text-primary">
           {post.title}
         </h3>
         <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{preview}</p>

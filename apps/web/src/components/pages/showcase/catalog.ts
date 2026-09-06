@@ -29,7 +29,8 @@ export interface CuratedApp {
   adoption: { ko: string; en: string };
   source: { title: string; url: string };
   reviewedAt: string;
-  imageUrl?: string;
+  imageUrl: string;
+  imageSourceUrl: string;
   websiteUrl?: string;
 }
 const aliases: Record<Technology, string> = {

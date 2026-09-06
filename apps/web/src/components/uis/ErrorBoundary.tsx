@@ -46,7 +46,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         className="flex min-h-[50vh] flex-col items-center justify-center gap-4 px-6 text-center"
       >
         <div>
-          <h2 className="text-xl font-semibold tracking-[-0.02em]">{t('common.errors.title')}</h2>
+          <h2 className="text-xl font-bold tracking-[-0.02em]">{t('common.errors.title')}</h2>
           <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
             {t('common.errors.description')}
           </p>

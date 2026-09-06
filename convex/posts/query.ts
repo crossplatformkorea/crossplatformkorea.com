@@ -4,7 +4,7 @@ import { CATEGORIES } from '../constants';
 import { paginationOptsValidator } from 'convex/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { Doc } from '../_generated/dataModel';
-import { isPublicPost } from './visibility';
+import { isPublicPost, takePublicPosts } from './visibility';
 
 const postStatusValidator = v.union(
   v.literal('draft'),
@@ -244,14 +244,8 @@ export const getRecentPosts = query({
   args: { limit: v.number() },
   returns: v.array(postObjectValidator),
   handler: async (ctx, args) => {
-    // Use the by_title index to get posts sorted by _creationTime
-    const posts = await ctx.db
-      .query('posts')
-      .withIndex('by_creation_time')
-      .order('desc')
-      .take(Math.max(args.limit * 3, args.limit));
-
-    return publicOnly(posts).slice(0, args.limit);
+    const posts = ctx.db.query('posts').withIndex('by_creation_time').order('desc');
+    return takePublicPosts(posts, args.limit);
   },
 });
 

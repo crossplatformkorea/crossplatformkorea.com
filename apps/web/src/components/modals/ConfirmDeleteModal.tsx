@@ -65,7 +65,7 @@ export default function ConfirmDeleteModal({
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 id="modal-title" className="text-lg font-semibold mb-2 dark:text-white">
+        <h3 id="modal-title" className="text-lg font-bold mb-2 dark:text-white">
           {modalTitle}
         </h3>
         <p className="text-muted-foreground dark:text-gray-300 mb-4">{modalMessage}</p>

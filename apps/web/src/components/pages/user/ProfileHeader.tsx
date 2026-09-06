@@ -85,7 +85,7 @@ export default function ProfileHeader({
           <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
             MEMBER / PROFILE
           </span>
-          <h1 className="mt-1 text-3xl font-semibold tracking-[-0.045em]">
+          <h1 className="mt-1 text-3xl font-bold tracking-[-0.045em]">
             {displayName || t('user.anonymousUser')}
           </h1>
         </div>

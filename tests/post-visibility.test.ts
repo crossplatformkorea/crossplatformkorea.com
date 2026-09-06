@@ -3,6 +3,7 @@ import {
   defaultCompanionPublishAt,
   isDueScheduledPost,
   isPublicPost,
+  takePublicPosts,
   normalizePublishAt,
   resolvePostStatus,
   seoulLocalToUtcIso,
@@ -89,5 +90,49 @@ describe('isDueScheduledPost', () => {
       isDueScheduledPost({ status: 'scheduled', publishAt: '2026-09-02T08:00:00.000Z' }, now),
     ).toBe(false);
     expect(isDueScheduledPost({ status: 'draft' }, now)).toBe(false);
+  });
+});
+
+describe('takePublicPosts', () => {
+  const now = Date.parse('2026-09-06T00:00:00Z');
+  async function* stream(posts: { id: number; status?: string; publishAt?: string }[]) {
+    yield* posts;
+  }
+
+  test('fills six slots past more than eighteen hidden posts, preserving order', async () => {
+    const posts = [
+      { id: 0, status: 'published' },
+      ...Array.from({ length: 24 }, (_, id) => ({
+        id: id + 1,
+        status: id % 2 ? 'scheduled' : 'draft',
+      })),
+      { id: 25, status: 'published', publishAt: '2099-01-01T00:00:00Z' },
+      { id: 26, status: 'published', publishAt: 'invalid' },
+      ...Array.from({ length: 8 }, (_, id) => ({ id: id + 27 })),
+    ];
+    expect((await takePublicPosts(stream(posts), 6, now)).map((p) => p.id)).toEqual([
+      0, 27, 28, 29, 30, 31,
+    ]);
+  });
+
+  test('returns available public posts when fewer than six exist', async () => {
+    expect(await takePublicPosts(stream([{ id: 1 }, { id: 2, status: 'draft' }]), 6, now)).toEqual([
+      { id: 1 },
+    ]);
+    expect(await takePublicPosts(stream([]), 6, now)).toEqual([]);
+  });
+
+  test('stops reading as soon as the feed is full', async () => {
+    async function* posts() {
+      yield { id: 1 };
+      throw new Error('should not read another post');
+    }
+    expect(await takePublicPosts(posts(), 1, now)).toEqual([{ id: 1 }]);
+  });
+
+  test('rejects invalid limits', async () => {
+    for (const limit of [0, -1, 1.5, 101, Infinity, NaN]) {
+      await expect(takePublicPosts(stream([]), limit, now)).rejects.toThrow('Post limit');
+    }
   });
 });

@@ -20,7 +20,11 @@ describe('CPK editorial showcase', () => {
       }
       expect(app.source.title.length).toBeGreaterThan(0);
       expect(app.reviewedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      for (const link of [app.source.url, app.imageUrl, app.websiteUrl].filter(Boolean)) {
+      expect(app.imageUrl).toBeTruthy();
+      expect(app.imageSourceUrl).toBeTruthy();
+      for (const link of [app.source.url, app.imageUrl, app.imageSourceUrl, app.websiteUrl].filter(
+        Boolean,
+      )) {
         const url = new URL(link!);
         expect(url.protocol).toBe('https:');
         expect(url.username + url.password).toBe('');

@@ -222,7 +222,7 @@ export default function ShowcasePage() {
               <div className="mb-4 text-gray-400 dark:text-gray-500">
                 <AppWindow size={48} />
               </div>
-              <h3 className={cn('mb-2 text-xl font-medium', 'text-gray-800 dark:text-gray-200')}>
+              <h3 className={cn('mb-2 text-xl font-bold', 'text-gray-800 dark:text-gray-200')}>
                 {searchText
                   ? translate('showcase.noSearchResults')
                   : translate('showcase.noShowcases')}

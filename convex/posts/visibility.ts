@@ -152,3 +152,21 @@ export function defaultCompanionPublishAt(nowMs: number = Date.now()): string {
   }
   return new Date(publishUtcMs).toISOString();
 }
+
+/** Fill a public feed without letting drafts or scheduled posts consume slots. */
+export async function takePublicPosts<T extends PostVisibilityFields>(
+  posts: AsyncIterable<T>,
+  limit: number,
+  nowMs: number = Date.now(),
+): Promise<T[]> {
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100) {
+    throw new Error('Post limit must be an integer between 1 and 100');
+  }
+  const results: T[] = [];
+  for await (const post of posts) {
+    if (!isPublicPost(post, nowMs)) continue;
+    results.push(post);
+    if (results.length === limit) break;
+  }
+  return results;
+}

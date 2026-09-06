@@ -43,7 +43,7 @@ export default function SignIn() {
                 <span className="h-px w-10 bg-current opacity-40" />
                 <span>2026</span>
               </div>
-              <h1 className="mt-7 max-w-2xl text-[clamp(3.3rem,8vw,7.5rem)] font-semibold leading-[0.84] tracking-[-0.075em]">
+              <h1 className="mt-7 max-w-2xl text-[clamp(3.3rem,8vw,7.5rem)] font-bold leading-[0.84] tracking-[-0.075em]">
                 Build.
                 <br />
                 Share.

@@ -31,8 +31,12 @@ When adding or changing an entry:
 4. Validate HTTPS evidence and optional product links. Omit dead or unverified
    product links instead of inventing replacements. A successful HTTP response
    containing an access challenge is not evidence of working content.
-5. Use optional remote artwork from the official showcase; do not download or
-   republish it. Cards have a fixed-size monogram fallback for unavailable images.
+5. Use a verified app icon and record its public listing in `imageSourceUrl`.
+   Match the product and publisher, not a similarly named app or company logo.
+   Prefer App Store / Google Play artwork or official download-page icons; web
+   products may use their official home-screen touch icon. Do not download or
+   republish artwork. Render the image edge to edge with rounded corners and no
+   padding. Keep the fixed-size text fallback only for network failures.
 6. Update the evidence review date only after rereading the supporting source.
 7. Run `bun run test`, `bun run lint`, `bun run tsc`, `bun run build:web` and
    `git diff --check`. Verify search, combined filters, load more, mobile layout,
@@ -55,3 +59,13 @@ the visitor's destination.
 
 Product links were checked separately. Unavailable Wix, Wolt, Sony, Omnissa and
 other product URLs were omitted; their verified adoption evidence remains linked.
+
+## Icon audit (2026-09-06)
+
+All 100 entries have remote icons and separate image provenance. Most use store
+artwork; Rows and Better use official home-screen icons, Rive its desktop download
+icon, and Office the React Native showcase app icon. Prodicle and Baidu Wonder
+use archived app-listing icons because current public listings are unavailable.
+Compra Certa retains its historical Apple artwork. These archival icons do not
+assert that retired apps are available for download today. Icon sources are
+independent of the framework-adoption evidence and do not change its scope.

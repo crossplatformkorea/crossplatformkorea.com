@@ -134,7 +134,7 @@ const ShowcaseItem = ({ showcase, isEditable, onEditClick, className = '' }: Sho
         </div>
 
         {/* 제목 - 링크 제거 */}
-        <h3 className={cn('mb-2 line-clamp-1 text-lg font-semibold tracking-[-0.025em]')}>
+        <h3 className={cn('mb-2 line-clamp-1 text-lg font-bold tracking-[-0.025em]')}>
           {showcase.title}
         </h3>
 

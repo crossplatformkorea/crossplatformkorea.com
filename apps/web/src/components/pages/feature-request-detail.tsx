@@ -216,7 +216,7 @@ export default function FeatureRequestDetailPage() {
     return (
       <div className="max-w-3xl mx-auto">
         <div className="surface-card py-12 text-center">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
             {t('featureRequest.notFound')}
           </h3>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -270,7 +270,7 @@ export default function FeatureRequestDetailPage() {
           {/* Title and status */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-3">
-              <h1 className="text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
+              <h1 className="text-2xl font-bold tracking-[-0.035em] sm:text-3xl">
                 {featureRequest.title}
               </h1>
               <div className="flex items-center gap-2">
@@ -320,7 +320,7 @@ export default function FeatureRequestDetailPage() {
 
       {/* Comments section */}
       <section className="mt-8">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
           {t('featureRequest.comments')} ({comments?.length || 0})
         </h2>
 

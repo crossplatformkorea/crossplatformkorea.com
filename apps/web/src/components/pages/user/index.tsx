@@ -222,7 +222,7 @@ export default function UserProfilePage() {
       {/* Tab content */}
       {selectedTab === 'posts' ? (
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-xl font-bold mb-4">
             {t('user.postsBy', { name: userDisplayName || t('user.anonymousUser') })}
           </h2>
 
@@ -276,7 +276,7 @@ export default function UserProfilePage() {
                         published list stays unlabelled as before. */}
                     {(groupedPosts.scheduled?.length || groupedPosts.draft?.length) ? (
                       <div className="flex items-center gap-3">
-                        <h3 className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                        <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground">
                           {t(`posts.status.${key}Section`)}
                         </h3>
                         <span className="text-xs text-muted-foreground">{posts?.length}</span>
@@ -297,7 +297,7 @@ export default function UserProfilePage() {
         </div>
       ) : (
         <div className="surface-card p-6">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-xl font-bold mb-4">
             {t('user.aboutUser', { name: userDisplayName || t('user.anonymousUser') })}
           </h2>
           {description ? (
@@ -307,13 +307,13 @@ export default function UserProfilePage() {
           )}
           {lookingFor && (
             <div className="mb-4">
-              <h3 className="font-medium text-foreground mb-1">{t('user.lookingFor')}</h3>
+              <h3 className="font-bold text-foreground mb-1">{t('user.lookingFor')}</h3>
               <p className="text-muted-foreground whitespace-pre-wrap">{lookingFor}</p>
             </div>
           )}
           {expectations && (
             <div>
-              <h3 className="font-medium text-foreground mb-1">{t('user.expectations')}</h3>
+              <h3 className="font-bold text-foreground mb-1">{t('user.expectations')}</h3>
               <p className="text-muted-foreground whitespace-pre-wrap">{expectations}</p>
             </div>
           )}

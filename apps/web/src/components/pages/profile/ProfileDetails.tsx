@@ -47,7 +47,7 @@ export default function ProfileDetails({
 }: ProfileDetailsProps) {
   return (
     <div className="surface-card p-5 sm:p-6">
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
         <Settings className="w-5 h-5" />
         {t('profile.sections.details')}
       </h2>

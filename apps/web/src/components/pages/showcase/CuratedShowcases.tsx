@@ -21,7 +21,7 @@ function AppCard({ app }: { app: CuratedApp }) {
     <article className="surface-card flex min-w-0 flex-col p-5">
       <div className="mb-5 flex items-center gap-3">
         <div
-          className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-white text-lg font-semibold text-gray-700 dark:border-gray-700"
+          className="flex h-12 w-12 shrink-0 items-center justify-center text-lg font-semibold text-gray-700 dark:text-gray-300"
           aria-hidden="true"
         >
           {app.imageUrl && !imageFailed ? (
@@ -32,7 +32,7 @@ function AppCard({ app }: { app: CuratedApp }) {
               height={48}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-contain p-1.5"
+              className="h-full w-full rounded-xl object-cover"
               onError={() => setImageFailed(true)}
             />
           ) : (
@@ -40,7 +40,7 @@ function AppCard({ app }: { app: CuratedApp }) {
           )}
         </div>
         <div className="min-w-0">
-          <h2 className="break-words text-base font-semibold text-gray-950 dark:text-gray-50">
+          <h2 className="break-words text-base font-bold text-gray-950 dark:text-gray-50">
             {app.name}
           </h2>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{app.publisher}</p>
@@ -221,7 +221,7 @@ function CatalogResults({ apps }: { apps: CuratedApp[] }) {
     </>
   ) : (
     <div className="surface-card p-12 text-center">
-      <h2 className="font-semibold">{t('showcase.noSearchResults')}</h2>
+      <h2 className="font-bold">{t('showcase.noSearchResults')}</h2>
       <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{t('showcase.tryAdjusting')}</p>
     </div>
   );

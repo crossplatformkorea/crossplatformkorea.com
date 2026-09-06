@@ -255,7 +255,7 @@ export default function ChatGptPage() {
         <div className="w-72 border-l border-gray-200 dark:border-zinc-800 flex flex-col bg-gray-50 dark:bg-zinc-900 flex-shrink-0 h-full">
           <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex-shrink-0">
             <div className="flex items-center justify-between mb-4">
-              <h1 className="text-lg font-semibold flex items-center gap-2 text-gray-900 dark:text-white">
+              <h1 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
                 <MessageSquare size={20} />
                 ChatGPT
               </h1>
