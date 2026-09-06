@@ -172,7 +172,10 @@ export default function ShowcasePage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setSearchText('')}
+                  onClick={() => {
+                    setSearchText('');
+                    setCursor(null);
+                  }}
                   className="absolute inset-y-0 right-3 flex items-center p-0 h-auto"
                   aria-label="Clear search"
                 >
