@@ -25,6 +25,9 @@ const showcaseObjectValidator = v.object({
   viewCount: v.optional(v.number()),
 });
 
+/** 좋아요 목록에서 실제로 프로필까지 읽어올 최대 인원. */
+const LIKED_USERS_RESOLVE_LIMIT = 12;
+
 // 모든 쇼케이스 카테고리 가져오기
 export const getCategories = query({
   args: {},
@@ -240,25 +243,32 @@ export const hasLikedShowcase = query({
 // 쇼케이스에 좋아요를 누른 사용자들 목록 가져오기
 export const getShowcaseLikedUsers = query({
   args: { showcaseId: v.id('showcases') },
-  returns: v.array(v.object({
-    userId: v.id('users'),
-    displayName: v.string(),
-    avatarUrl: v.optional(v.string()),
-  })),
+  returns: v.object({
+    users: v.array(v.object({
+      userId: v.id('users'),
+      displayName: v.string(),
+      avatarUrl: v.optional(v.string()),
+    })),
+    total: v.number(),
+  }),
   handler: async (ctx, args) => {
     const showcase = await ctx.db.get(args.showcaseId);
     if (!showcase || !showcase.likedBy || showcase.likedBy.length === 0) {
-      return [];
+      return { users: [], total: 0 };
     }
 
-    // Get user profiles for all users who liked this showcase
+    // 좋아요를 누른 사람 수만큼 프로필을 읽으면 인기 쇼케이스일수록 한 번의
+    // 구독 갱신이 비싸진다. 화면은 아바타 몇 개와 나머지 개수만 쓰므로,
+    // 프로필 조회는 상한을 두고 총 개수는 배열 길이에서 그대로 가져온다.
+    const total = showcase.likedBy.length;
     const likedUsers = [];
-    for (const userId of showcase.likedBy) {
+
+    for (const userId of showcase.likedBy.slice(0, LIKED_USERS_RESOLVE_LIMIT)) {
       const userProfile = await ctx.db
         .query('userProfiles')
         .withIndex('by_user', (q) => q.eq('userId', userId))
         .first();
-      
+
       if (userProfile) {
         likedUsers.push({
           userId: userId,
@@ -268,6 +278,6 @@ export const getShowcaseLikedUsers = query({
       }
     }
 
-    return likedUsers;
+    return { users: likedUsers, total };
   },
 });

@@ -4,6 +4,9 @@ import { v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
 import { isPublicPost } from '../posts/visibility';
 
+/** 멘션 자동완성이 한 번에 훑는 프로필 수 상한. */
+const MENTION_SCAN_LIMIT = 500;
+
 // Get all users for sitemap generation
 export const getAllUsersForSitemap = query({
   args: {},
@@ -235,7 +238,18 @@ export const getAllUsersForMention = query({
   ),
   handler: async (ctx, args) => {
     const { search, limit } = args;
-    let userProfiles = await ctx.db.query('userProfiles').collect();
+    // 인자는 클라이언트가 보내므로, .take()에 음수나 과도한 값이 가지 않게 죈다.
+    const max = Math.min(
+      Math.max(typeof limit === 'number' ? Math.floor(limit) : 4, 0),
+      MENTION_SCAN_LIMIT,
+    );
+    const trimmedSearch = search?.trim() ?? '';
+
+    // 멘션 자동완성은 입력할 때마다 호출된다. 검색어가 없으면 보여줄 개수만
+    // 읽고, 있을 때도 상한을 둬서 전체 테이블 조회가 되지 않게 한다.
+    let userProfiles = await ctx.db
+      .query('userProfiles')
+      .take(trimmedSearch === '' ? max : MENTION_SCAN_LIMIT);
 
     if (search && search.trim() !== '') {
       const lower = search.trim().toLowerCase();
@@ -244,7 +258,6 @@ export const getAllUsersForMention = query({
       );
     }
 
-    const max = typeof limit === 'number' ? limit : 4;
     userProfiles = userProfiles.slice(0, max);
 
     return userProfiles.map((profile) => ({
@@ -275,12 +288,21 @@ export const getProfileByDisplayName = query({
     v.null(),
   ),
   handler: async (ctx, args) => {
-    // Convert search term to lowercase for case-insensitive search
-    const searchDisplayName = args.displayName.toLowerCase();
+    // 프로필 URL은 저장된 displayName 그대로 만들어지므로, 인덱스 조회 하나로
+    // 거의 모든 요청이 끝난다. 이 쿼리는 프로필 페이지마다 구독되기 때문에
+    // 전체 테이블 조회로 두면 사용자 수에 비례해 읽기 비용이 늘어난다.
+    const exactMatch = await ctx.db
+      .query('userProfiles')
+      .withIndex('by_display_name', (q) => q.eq('displayName', args.displayName))
+      .first();
 
-    // Get all userProfiles and filter by case-insensitive displayName match
-    const userProfiles = await ctx.db.query('userProfiles').collect();
-    const profile = userProfiles.find((p) => p.displayName?.toLowerCase() === searchDisplayName);
+    // 대소문자만 다른 URL은 예외적인 경우라, 그때만 전체 조회로 되돌아간다.
+    const searchDisplayName = args.displayName.toLowerCase();
+    const profile =
+      exactMatch ??
+      (await ctx.db.query('userProfiles').collect()).find(
+        (p) => p.displayName?.toLowerCase() === searchDisplayName,
+      );
 
     if (!profile) {
       return null;

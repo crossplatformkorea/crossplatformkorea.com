@@ -15,13 +15,16 @@ interface LikedUsersListProps {
 export default function LikedUsersList({ showcaseId, className }: LikedUsersListProps) {
   const likedUsers = useQuery(api.showcases.query.getShowcaseLikedUsers, { showcaseId });
 
-  if (!likedUsers || likedUsers.length === 0) {
+  if (!likedUsers || likedUsers.total === 0) {
     return null;
   }
 
   const maxDisplayUsers = 3;
-  const displayUsers = likedUsers.slice(0, maxDisplayUsers);
-  const remainingCount = likedUsers.length - maxDisplayUsers;
+  const displayUsers = likedUsers.users.slice(0, maxDisplayUsers);
+  // 서버는 아바타로 보여줄 만큼만 프로필을 읽어오므로 나머지 개수는 총합에서
+  // 계산한다. 프로필이 지워진 사용자가 섞여 있으면 실제로 그린 아바타가
+  // maxDisplayUsers보다 적을 수 있어, 그린 개수를 빼야 수가 맞는다.
+  const remainingCount = likedUsers.total - displayUsers.length;
 
   return (
     <div className={cn("flex items-center gap-1", className)}>
