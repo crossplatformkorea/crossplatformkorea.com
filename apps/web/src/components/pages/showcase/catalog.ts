@@ -69,3 +69,34 @@ export function filterCuratedApps(
     });
   });
 }
+
+export interface StoreMetrics {
+  sourceUrl: string;
+  storeName: string;
+  publisher: string;
+  region: string;
+  checkedAt: string;
+  ratingCount: number;
+  downloadsLowerBound: number;
+}
+
+/** Compare reach without letting raw download magnitudes overwhelm ratings. */
+export function popularityScore(metrics: StoreMetrics): number {
+  return (
+    0.7 * Math.log10(1 + metrics.ratingCount) + 0.3 * Math.log10(1 + metrics.downloadsLowerBound)
+  );
+}
+
+export function rankCuratedApps(
+  apps: readonly CuratedApp[],
+  metrics: Readonly<Record<string, StoreMetrics>>,
+): CuratedApp[] {
+  // Stable ties and unmeasured apps retain the editorial order. Never mutate it.
+  return [...apps].sort((a, b) => {
+    const left = metrics[a.id];
+    const right = metrics[b.id];
+    if (!left) return right ? 1 : 0;
+    if (!right) return -1;
+    return popularityScore(right) - popularityScore(left);
+  });
+}

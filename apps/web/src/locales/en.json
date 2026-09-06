@@ -563,7 +563,13 @@
         "developer": "Development & design"
       },
       "results_one": "{{count}} example",
-      "results_other": "{{count}} examples"
+      "results_other": "{{count}} examples",
+      "storeMetrics": "Google Play ratings and downloads source",
+      "ratingCount": "{{value}} ratings",
+      "downloadCount": "{{value}}+ downloads",
+      "metricsUnavailable": "Comparable store metrics unavailable",
+      "rankingTitle": "Ranked by ratings and downloads · ratings weighted higher",
+      "rankingMethod": "Sorted using public Google Play data checked on 2026-09-06: 70% rating count and 30% download-band lower bound, combined on a logarithmic scale. Ratings include star ratings, not only written reviews. US listings are used by default; Google Pay uses India. These figures exclude iOS and other stores and are not total product reach. Apps without verified comparable data appear last."
     }
   },
   "showcaseCategories": {

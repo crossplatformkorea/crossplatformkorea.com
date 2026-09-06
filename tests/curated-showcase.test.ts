@@ -1,8 +1,12 @@
+import { storeMetrics } from '../apps/web/src/components/pages/showcase/catalog-metrics';
 import { describe, expect, test } from 'bun:test';
 import { curatedApps } from '../apps/web/src/components/pages/showcase/catalog-data';
 import {
   catalogCategories,
   filterCuratedApps,
+  rankCuratedApps,
+  popularityScore,
+  type StoreMetrics,
 } from '../apps/web/src/components/pages/showcase/catalog';
 
 describe('CPK editorial showcase', () => {
@@ -75,5 +79,65 @@ describe('CPK editorial showcase', () => {
     expect(find('wolt-merchant').name).toBe('Wolt Merchant');
     expect(find('instagram-quest').name).toContain('Quest');
     expect(find('baidu-wonder').name).toContain('Wonder');
+  });
+});
+
+describe('showcase popularity order', () => {
+  const sample = (ratingCount: number, downloadsLowerBound: number): StoreMetrics => ({
+    sourceUrl: 'https://play.google.com/store/apps/details?id=example',
+    storeName: 'Example',
+    publisher: 'Example',
+    region: 'US',
+    checkedAt: '2026-09-06',
+    ratingCount,
+    downloadsLowerBound,
+  });
+
+  test('gives rating volume more weight than download volume', () => {
+    expect(popularityScore(sample(100_000, 1_000_000))).toBeGreaterThan(
+      popularityScore(sample(1_000, 10_000_000)),
+    );
+    expect(popularityScore(sample(100_000, 10_000_000))).toBeGreaterThan(
+      popularityScore(sample(100_000, 1_000_000)),
+    );
+  });
+
+  test('keeps unknown metrics last, preserves ties, and never mutates editorial data', () => {
+    const apps = curatedApps.slice(0, 4);
+    const original = [...apps];
+    const metrics = {
+      [apps[1].id]: sample(100, 1000),
+      [apps[2].id]: sample(100, 1000),
+    };
+    expect(rankCuratedApps(apps, metrics)).toEqual([apps[1], apps[2], apps[0], apps[3]]);
+    expect(apps).toEqual(original);
+    const filtered = filterCuratedApps(curatedApps, { technology: 'flutter' });
+    expect(rankCuratedApps(filtered, storeMetrics)).toHaveLength(40);
+    expect(rankCuratedApps(filtered, storeMetrics).every((a) => a.technology === 'flutter')).toBe(
+      true,
+    );
+  });
+
+  test('every measured entry has valid counts and first-party provenance', () => {
+    for (const [id, metrics] of Object.entries(storeMetrics)) {
+      expect(curatedApps.some((app) => app.id === id)).toBe(true);
+      expect(Number.isSafeInteger(metrics.ratingCount)).toBe(true);
+      expect(metrics.ratingCount).toBeGreaterThanOrEqual(0);
+      expect(Number.isSafeInteger(metrics.downloadsLowerBound)).toBe(true);
+      expect(metrics.downloadsLowerBound).toBeGreaterThan(0);
+      expect(metrics.checkedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      const url = new URL(metrics.sourceUrl);
+      expect(url.origin).toBe('https://play.google.com');
+      expect(url.pathname).toBe('/store/apps/details');
+      expect(url.searchParams.get('id')).toBeTruthy();
+      expect(url.searchParams.get('gl')).toBe(metrics.region);
+    }
+    // Do not substitute consumer Netflix/Instagram, Wallet or Xiaomi Home metrics.
+    expect(storeMetrics).not.toHaveProperty('netflix-studio');
+    expect(storeMetrics).not.toHaveProperty('instagram-quest');
+    expect(storeMetrics).not.toHaveProperty('xiaomi-ev');
+    expect(new URL(storeMetrics['google-pay'].sourceUrl).searchParams.get('id')).toBe(
+      'com.google.android.apps.nbu.paisa.user',
+    );
   });
 });

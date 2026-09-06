@@ -3,7 +3,8 @@
 The Showcase page has two separate collections: CPK editorial adoption examples
 and member-owned community submissions. The initial editorial collection has
 100 entries (35 React Native, 40 Flutter, 25 Kotlin Multiplatform). It is an
-educational selection, not a popularity ranking or an endorsement by the brands.
+educational selection, ordered using public store metrics, not an endorsement by
+the brands or a ranking of framework quality.
 
 ## Evidence and maintenance
 
@@ -18,7 +19,8 @@ team publications and the Bluesky source repository. Where an engineering blog
 blocks automated access, the Kotlin official case-study gallery supplies the
 publicly stated scope. The review date records when the evidence was read; it
 does not assert the latest released application still has the same architecture.
-No download counts, adoption percentages or popularity ranks are inferred.
+No adoption percentages are inferred. Popularity ordering uses separately
+verified store metrics as described below.
 
 When adding or changing an entry:
 
@@ -69,3 +71,31 @@ use archived app-listing icons because current public listings are unavailable.
 Compra Certa retains its historical Apple artwork. These archival icons do not
 assert that retired apps are available for download today. Icon sources are
 independent of the framework-adoption evidence and do not change its scope.
+
+## Popularity ordering (2026-09-06)
+
+`catalog-metrics.ts` records first-party Google Play listing URLs, app/publisher
+names, region, check date, exact star-rating counts, and the lower bound of the
+public download band. The snapshot has 84 entries with both metrics. The other
+16 retain their editorial order at the end; missing data is not a zero count.
+
+Score = `0.7 * log10(1 + ratingCount) + 0.3 * log10(1 + downloadsLowerBound)`.
+Ratings carry more weight than downloads; the logarithm limits the influence of
+raw scale. Written-review counts and average star ratings are not substituted
+for rating volume. Ties preserve editorial order, and filtering retains the same
+score order. Sorting does not mutate the original catalog.
+
+Use US listings by default and India for Google Pay (not Google Wallet). These
+are store snapshots, not cross-store totals, exact install counts, active users,
+or evidence of how much of an app uses a framework. Regional variants can differ
+(e.g. My BMW North America); the linked listing identifies the measured product.
+Office's listing has become Microsoft Copilot and NotebookLM's Gemini Notebook;
+counts belong to the linked app lineage, while historical adoption copy remains
+unchanged. Never use consumer Netflix, mobile Instagram, or Xiaomi Home numbers
+for Prodicle, Instagram for Meta Quest, or Xiaomi EV. Likewise, do not aggregate
+Workspace ONE family members or mix international Bilibili/Kuaiying variants.
+
+Cards display compact counts and link directly to the measured listing. The
+expandable ranking explanation states the weights, date, store coverage, and
+missing-data behavior in Korean, English, and Japanese. Refresh numbers and the
+explanation date together after verifying app identity and both visible metrics.

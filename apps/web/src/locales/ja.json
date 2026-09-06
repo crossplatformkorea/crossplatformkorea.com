@@ -510,7 +510,13 @@
         "education": "教育",
         "utilities": "生活・ツール",
         "developer": "開発・デザイン"
-      }
+      },
+      "storeMetrics": "Google Play の評価数・ダウンロード数の出典",
+      "ratingCount": "評価 {{value}} 件",
+      "downloadCount": "{{value}}+ ダウンロード",
+      "metricsUnavailable": "比較可能なストアの数値は未確認",
+      "rankingTitle": "評価数・ダウンロード数順 · 評価数を重視",
+      "rankingMethod": "2026-09-06 に確認した Google Play の公開数値を使用。評価数70%、ダウンロード区間の下限30%を対数スコアで合算します。評価数は星の評価を含み、文章レビューだけの件数ではありません。原則米国、Google Pay はインドの掲載値です。iOS や他ストアを含む総利用規模ではありません。比較可能な数値を確認できないアプリは最後に表示します。"
     }
   },
   "showcaseCategories": {
