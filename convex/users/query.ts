@@ -4,6 +4,9 @@ import { v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
 import { isPublicPost } from '../posts/visibility';
 
+/** 멘션 자동완성이 한 번에 훑는 프로필 수 상한. */
+const MENTION_SCAN_LIMIT = 500;
+
 // Get all users for sitemap generation
 export const getAllUsersForSitemap = query({
   args: {},
@@ -235,7 +238,18 @@ export const getAllUsersForMention = query({
   ),
   handler: async (ctx, args) => {
     const { search, limit } = args;
-    let userProfiles = await ctx.db.query('userProfiles').collect();
+    // 인자는 클라이언트가 보내므로, .take()에 음수나 과도한 값이 가지 않게 죈다.
+    const max = Math.min(
+      Math.max(typeof limit === 'number' ? Math.floor(limit) : 4, 0),
+      MENTION_SCAN_LIMIT,
+    );
+    const trimmedSearch = search?.trim() ?? '';
+
+    // 멘션 자동완성은 입력할 때마다 호출된다. 검색어가 없으면 보여줄 개수만
+    // 읽고, 있을 때도 상한을 둬서 전체 테이블 조회가 되지 않게 한다.
+    let userProfiles = await ctx.db
+      .query('userProfiles')
+      .take(trimmedSearch === '' ? max : MENTION_SCAN_LIMIT);
 
     if (search && search.trim() !== '') {
       const lower = search.trim().toLowerCase();
@@ -244,7 +258,6 @@ export const getAllUsersForMention = query({
       );
     }
 
-    const max = typeof limit === 'number' ? limit : 4;
     userProfiles = userProfiles.slice(0, max);
 
     return userProfiles.map((profile) => ({
@@ -275,12 +288,25 @@ export const getProfileByDisplayName = query({
     v.null(),
   ),
   handler: async (ctx, args) => {
-    // Convert search term to lowercase for case-insensitive search
+    // 프로필 URL은 createUserProfileLink가 소문자로 만들기 때문에, 저장된
+    // displayName과 대소문자가 다를 수 있다. 정규화 키로 조회해야 인덱스가
+    // 실제로 쓰인다. 이 쿼리는 공개돼 있고 프로필 페이지마다 구독되므로,
+    // 빗나갔을 때 전체 테이블을 읽으면 외부에서 유발 가능한 부하가 된다.
     const searchDisplayName = args.displayName.toLowerCase();
 
-    // Get all userProfiles and filter by case-insensitive displayName match
-    const userProfiles = await ctx.db.query('userProfiles').collect();
-    const profile = userProfiles.find((p) => p.displayName?.toLowerCase() === searchDisplayName);
+    const profile =
+      (await ctx.db
+        .query('userProfiles')
+        .withIndex('by_display_name_lower', (q) =>
+          q.eq('displayNameLower', searchDisplayName),
+        )
+        .first()) ??
+      // 백필이 끝나기 전 문서에는 정규화 키가 없다. 이 폴백도 인덱스 조회라
+      // 전체 스캔으로 돌아가지는 않는다. 백필 완료 후 제거해도 된다.
+      (await ctx.db
+        .query('userProfiles')
+        .withIndex('by_display_name', (q) => q.eq('displayName', args.displayName))
+        .first());
 
     if (!profile) {
       return null;
