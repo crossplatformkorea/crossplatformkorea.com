@@ -6,6 +6,17 @@
 - `apps/docs` contains the Docusaurus documentation and blog.
 - `convex` contains the shared backend and authentication functions.
 - Use Bun from the repository root for installs, validation, and builds.
+- Use `bun run [script]` instead of `npm run [script]`, `bun install` instead
+  of `npm install`, and `bun add` instead of `npm install [package]`.
+
+## Development Commands
+
+- `bun run dev` - Start the community site and backend development servers
+- `bun run build:web` - Build the community site for production
+- `bun run build:docs` - Build the documentation site
+- `bun run dev:docs` - Start the documentation site development server
+- `bun run lint` - Run linting
+- `bun run tsc` - Type check the code
 
 ## Branch Names
 
@@ -26,6 +37,19 @@
   adapter pointed at the matching canonical file.
 - Use `project-workflows` to route broad work and `loop-review` for a requested
   review-to-production loop.
+
+## Code Conventions
+
+- When combining multiple class names, use `clsx` or `cn` (from `@/lib/utils`).
+  Do not use string concatenation:
+
+  ```tsx
+  // Good
+  <div className={cn("flex items-center", isActive && "bg-primary", className)} />
+
+  // Bad - don't use string concatenation
+  <div className={"flex items-center " + (isActive ? "bg-primary" : "")} />
+  ```
 
 ## UI and UX Rules
 
