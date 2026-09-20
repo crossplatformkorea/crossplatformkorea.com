@@ -93,13 +93,14 @@ rewrite, a request for a chunk that no longer exists still matches `/assets/**`
 and the HTML it gets back is cached under a `.js` URL.
 
 Dropping `immutable` buys less than it looks like, so it is worth knowing what
-it actually does. Firefox and Safari revalidate subresources on a soft reload
-unless they carry `immutable`, so there it is the difference between recovering
-with F5 and not. Chrome and Edge have not revalidated subresources on a soft
-reload since M54, so there it changes nothing either way and recovery means a
-hard reload — which bypasses the cache outright and worked even with
-`immutable`. The cost is the mirror of the benefit: Firefox soft reloads now
-issue a conditional request per hashed chunk instead of none.
+it actually does. Firefox is the only browser it changes: Firefox revalidates
+subresources on a soft reload unless they carry `immutable`, so there it is the
+difference between recovering with F5 and not. Chrome, Edge and Safari do not
+revalidate unexpired subresources on a soft reload at all, so there it changes
+nothing either way and recovery means a hard reload — which bypasses the cache
+outright and worked even with `immutable`. The cost is the mirror of the
+benefit and just as narrow: Firefox soft reloads now issue a conditional
+request per hashed chunk instead of none.
 
 Order matters and is the opposite of the rest of the file: redirects and
 rewrites are first-match-wins, but `headers` is **last-match-wins** for a given
