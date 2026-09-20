@@ -74,15 +74,19 @@ Practically:
    needs no build.
 2. Then move Convex, from a local checkout of the last good commit:
 
-   ```sh
+   ```bash
    git checkout <last-good-sha>
 
    # Paste the production deploy key at the prompt. Passing it inline instead
    # would leave it in shell history, and it can deploy backend code.
-   read -rs CONVEX_DEPLOY_KEY && export CONVEX_DEPLOY_KEY
+   read -rsp 'Convex deploy key: ' CONVEX_DEPLOY_KEY && export CONVEX_DEPLOY_KEY && echo
 
    bunx convex deploy
    ```
+
+   `-s` and `-p` are bash/zsh, not POSIX `sh`. `-s` hides the key as you paste
+   it, `-p` is what actually prints the prompt, and the trailing `echo` puts
+   back the newline `-s` swallows.
 
    The key is the same `CONVEX_DEPLOY_KEY` the workflow takes from repository
    secrets. It selects the deployment by itself, so no target flag is needed.
