@@ -76,8 +76,16 @@ Practically:
 
    ```sh
    git checkout <last-good-sha>
-   CONVEX_DEPLOY_KEY=... bunx convex deploy
+
+   # Paste the production deploy key at the prompt. Passing it inline instead
+   # would leave it in shell history, and it can deploy backend code.
+   read -rs CONVEX_DEPLOY_KEY && export CONVEX_DEPLOY_KEY
+
+   bunx convex deploy
    ```
+
+   The key is the same `CONVEX_DEPLOY_KEY` the workflow takes from repository
+   secrets. It selects the deployment by itself, so no target flag is needed.
 
    No workflow does this for you. Dispatching `Deploy to Production` will not:
    the job is guarded by `if: github.ref == 'refs/heads/main'`, so a dispatch
