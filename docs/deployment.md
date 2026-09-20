@@ -8,7 +8,8 @@ independently, which is the part worth understanding before you need it.
 
 `.github/workflows/deploy.yml` runs on `workflow_dispatch`, and on every push to
 `main` touching `apps/web/**`, `convex/**`, `package.json`, `bun.lock`,
-`firebase.json`, `.firebaserc`, or the workflow itself. Two steps matter:
+`firebase.json`, `.firebaserc`, or the workflow itself. It first runs `ci.yml`
+as a gate (see below); then two steps matter:
 
 ```yaml
 - name: Build and deploy Convex
@@ -40,11 +41,15 @@ happily and fails at the server.
 
 `convex deploy`'s own typecheck is scoped to `convex/` by `convex/tsconfig.json`,
 so it does not see `apps/web`. The only thing that catches a dangling backend
-reference from the frontend is `bun run tsc`, which runs in `ci.yml` — a
-separate workflow firing on the same push. `needs:` orders jobs within one
-workflow and cannot reach across files, so there is nothing to add to
-`deploy.yml`; ordering the two would mean a `workflow_run:` trigger or folding
-them together. As it stands they race, and a red CI does not stop a release.
+reference from the frontend is `bun run tsc`.
+
+That runs in `ci.yml`, a separate workflow. `needs:` orders jobs within one
+workflow and cannot reach across files, so `deploy.yml` gates itself by
+*calling* `ci.yml` as a reusable workflow (`uses: ./.github/workflows/ci.yml`)
+and hanging the deploy off it with `needs: validate`. A red build now stops the
+release. The cost is that a push to `main` touching the deploy paths runs
+`bun run ci` twice — once standalone, once as the gate — and the deploy waits
+for it.
 
 The committed `convex/_generated/api.d.ts` is the only copy the build sees,
 since the push regenerates it afterwards. A stale one is a type-level mismatch
@@ -55,6 +60,31 @@ and reports the config diff without changing anything. It does **not** run the
 `--cmd` build: the CLI skips that under `--dry-run` and only prints
 `Would have run "…"`. Build the bundle separately if that is what you need to
 know.
+
+## Why `index.html` must not be cached
+
+`firebase.json` rewrites `**` to `/index.html`, so a request for a file that
+does not exist is answered with the HTML shell at **200**, not a 404. A browser
+asking for a JavaScript chunk therefore receives HTML and tries to execute it,
+which throws before the app mounts and leaves a blank page with nothing obvious
+in the console.
+
+That turns a cached `index.html` into an outage. Every build emits
+content-hashed chunk names; a reader holding yesterday's `index.html` asks for
+yesterday's chunks, the rewrite hands back HTML, and the page is blank until
+the cache expires. Firebase's default is `max-age=3600`, so the window was an
+hour after every deploy.
+
+The `headers` block fixes both ends:
+
+- `**` → `no-cache`, so the HTML shell and anything else unhashed
+  (`sw.js`, `manifest.json`) is revalidated every load.
+- `/assets/**` → `max-age=31536000, immutable`, which is safe precisely because
+  those names are content-hashed.
+
+Order matters and is the opposite of the rest of the file: redirects and
+rewrites are first-match-wins, but `headers` is **last-match-wins** for a given
+header key. The catch-all goes first and the specific rule after it.
 
 ## Rolling back
 
@@ -125,7 +155,17 @@ validator:
 ## Previews
 
 `.github/workflows/deploy-preview.yml` builds a PR bundle and publishes it to a
-Firebase preview channel. It has no `convex deploy` step, so a preview runs new
-client code against whatever functions are already deployed. A PR that adds an
-argument to a Convex function will show that call failing in its own preview
-until it merges. That is expected, not a defect in the change.
+Firebase preview channel.
+
+When the repository secret `CONVEX_PREVIEW_DEPLOY_KEY` is set — a **Preview**
+deploy key from the Convex dashboard, not the production one — the workflow
+creates a Convex preview deployment named `pr-<number>` and builds against it,
+so a change to a backend function is exercised by the preview that contains it.
+Those deployments start with no data, which is the trade: the preview stops
+lying about the backend and stops showing real content.
+
+With the secret unset the workflow falls back to building against
+`VITE_CONVEX_URL`, the previous behaviour. In that mode a preview runs new
+client code against functions that are already deployed, so a PR adding an
+argument to a query shows that call failing in its own preview until it merges.
+That is expected, not a defect in the change.
