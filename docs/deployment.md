@@ -72,19 +72,36 @@ in the console.
 That turns a cached `index.html` into an outage. Every build emits
 content-hashed chunk names; a reader holding yesterday's `index.html` asks for
 yesterday's chunks, the rewrite hands back HTML, and the page is blank until
-the cache expires. Firebase's default is `max-age=3600`, so the window was an
-hour after every deploy.
+the cache expires. With no `headers` block, responses were observed carrying
+`max-age=3600` — Firebase documents no default for static content — so the
+window was an hour after every deploy.
 
-The `headers` block fixes both ends:
+The `headers` block:
 
 - `**` → `no-cache`, so the HTML shell and anything else unhashed
   (`sw.js`, `manifest.json`) is revalidated every load.
-- `/assets/**` → `max-age=31536000, immutable`, which is safe precisely because
-  those names are content-hashed.
+- `/assets/**` → `max-age=31536000`, safe for build output because those names
+  carry a content hash.
+- `/assets/@(logo|favicon).png` → back to `no-cache`. Vite copies
+  `apps/web/public/assets/` into `dist/assets/` **without** hashing, so those
+  two files sit in the hashed directory under unhashed names. Anything else
+  added to `public/assets/` needs the same treatment, or a year-long cache on a
+  filename that never changes will pin it.
+
+Note there is no `immutable`. Because headers match the request path before the
+rewrite, a request for a chunk that no longer exists still matches
+`/assets/**` and the HTML it gets back is cached under a `.js` URL. Without
+`immutable` a reload revalidates and recovers; with it, conforming browsers
+would not.
 
 Order matters and is the opposite of the rest of the file: redirects and
 rewrites are first-match-wins, but `headers` is **last-match-wins** for a given
-header key. The catch-all goes first and the specific rule after it.
+header key (superstatic sets every matching rule in config order, so the last
+write survives). The catch-all goes first, specific rules after it.
+
+One thing this does not reach: `dist/sw.js` caches same-origin 200s into Cache
+Storage, which no HTTP header governs. A rewrite response stored there clears
+only when `CACHE_NAME` is bumped.
 
 ## Rolling back
 
@@ -159,10 +176,27 @@ Firebase preview channel.
 
 When the repository secret `CONVEX_PREVIEW_DEPLOY_KEY` is set — a **Preview**
 deploy key from the Convex dashboard, not the production one — the workflow
-creates a Convex preview deployment named `pr-<number>` and builds against it,
-so a change to a backend function is exercised by the preview that contains it.
-Those deployments start with no data, which is the trade: the preview stops
-lying about the backend and stops showing real content.
+builds against a Convex preview deployment named `pr-<number>`, so a change to
+a backend function is exercised by the preview that contains it. A wrong key
+type fails loudly rather than touching production: the CLI refuses
+`--preview-name` unless the key is a preview key.
+
+`--preview-name` reuses the deployment across pushes. `--preview-create` is the
+variant that deletes and recreates it, which would discard whatever a reviewer
+signed in and seeded on the previous commit.
+
+Two things to expect before turning it on:
+
+- The deployment starts empty, so the preview stops showing real content. That
+  is the trade for it no longer lying about the backend.
+- It also starts with no environment variables beyond the project's preview
+  defaults. The backend reads `AUTH_RESEND_KEY`, `VAPID_PRIVATE_KEY`,
+  `VAPID_SUBJECT`, `SITE_URL`, the GitHub OAuth credentials and the
+  `@convex-dev/auth` JWT keys; `convex deploy` succeeds without them and
+  sign-in then fails at runtime. Set preview defaults in the Convex dashboard
+  first.
+
+Convex deletes idle preview deployments on its own, so no cleanup job is needed.
 
 With the secret unset the workflow falls back to building against
 `VITE_CONVEX_URL`, the previous behaviour. In that mode a preview runs new

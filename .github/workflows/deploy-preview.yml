@@ -56,13 +56,17 @@ jobs:
       # exercised by the preview that contains it. Without this the preview
       # calls whatever is already deployed, and any PR that adds an argument to
       # a query shows that call failing in its own preview until it merges.
+      #
+      # `--preview-name` reuses the deployment across pushes; `--preview-create`
+      # deletes and recreates it, which would throw away anything a reviewer
+      # signed in and seeded on the previous commit.
       - name: Build against a per-PR Convex preview deployment
         if: ${{ steps.convex.outputs.preview == 'true' }}
         run: >-
           bunx convex deploy
           --cmd 'bun run build:web'
           --cmd-url-env-var-name VITE_CONVEX_URL
-          --preview-create "pr-${{ github.event.pull_request.number }}"
+          --preview-name "pr-${{ github.event.pull_request.number }}"
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_PREVIEW_DEPLOY_KEY }}
           VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
