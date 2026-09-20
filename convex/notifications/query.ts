@@ -169,66 +169,6 @@ export const getUnreadCount = query({
   },
 });
 
-// 최근 읽지 않은 알림 미리보기 (최대 5개)
-export const getRecentUnreadNotifications = query({
-  args: {},
-  returns: v.array(
-    v.object({
-      _id: v.id('notifications'),
-      _creationTime: v.number(),
-      type: getNotificationTypeValidator(),
-      title: v.string(),
-      message: v.string(),
-      postId: v.optional(v.id('posts')),
-      showcaseId: v.optional(v.id('showcases')),
-      triggeredBy: v.object({
-        _id: v.id('users'),
-        displayName: v.string(),
-        avatarUrl: v.optional(v.string()),
-      }),
-    }),
-  ),
-  handler: async (ctx, _args) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      return [];
-    }
-
-    const notifications = await ctx.db
-      .query('notifications')
-      .withIndex('by_userId_isRead', (q) => q.eq('userId', userId).eq('isRead', false))
-      .order('desc')
-      .take(5);
-
-    const enrichedNotifications = await Promise.all(
-      notifications.map(async (notification) => {
-        const triggeredByUser = await ctx.db.get(notification.triggeredById);
-        const triggeredByProfile = await ctx.db
-          .query('userProfiles')
-          .withIndex('by_user', (q) => q.eq('userId', notification.triggeredById))
-          .unique();
-
-        return {
-          _id: notification._id,
-          _creationTime: notification._creationTime,
-          type: notification.type,
-          title: notification.title,
-          message: notification.message,
-          postId: notification.postId,
-          showcaseId: notification.showcaseId,
-          triggeredBy: {
-            _id: triggeredByUser!._id,
-            displayName: triggeredByProfile?.displayName || triggeredByUser!.name || 'Unknown User',
-            avatarUrl: triggeredByProfile?.avatarUrl,
-          },
-        };
-      }),
-    );
-
-    return enrichedNotifications;
-  },
-});
-
 // 최근 알림 조회 (읽음/읽지 않음 포함, 최대 limit개)
 export const getRecentNotifications = query({
   args: {

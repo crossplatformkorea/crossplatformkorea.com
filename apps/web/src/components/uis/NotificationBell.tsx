@@ -98,7 +98,9 @@ export default function NotificationBell() {
         aria-label={t('notifications.bellAriaLabel')}
       >
         <Bell size={20} />
-        {unreadCount && unreadCount > 0 && (
+        {/* Not `unreadCount &&`: when the count is 0 that yields the number
+            0, which React renders as a literal "0" beside the bell. */}
+        {unreadCount !== undefined && unreadCount > 0 && (
           <span
             className={cn(
               'absolute -top-1 -right-1',
@@ -138,10 +140,11 @@ export default function NotificationBell() {
             >
               <h3 className="font-bold text-lg">
                 {t('notifications.title')}
-                {recentNotifications && recentNotifications.length > 0 && (
-                  <span className="text-sm text-muted-foreground ml-2">
-                    ({recentNotifications.length})
-                  </span>
+                {/* Unread, matching the bell badge. This counted the rows in the
+                    dropdown instead, so a single unread notification still read
+                    as "(5)" next to a badge showing 1. */}
+                {unreadCount !== undefined && unreadCount > 0 && (
+                  <span className="text-sm text-muted-foreground ml-2">({unreadCount})</span>
                 )}
               </h3>
             </button>
