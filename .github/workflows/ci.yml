@@ -2,6 +2,10 @@ name: CI
 
 on:
   workflow_dispatch:
+  # Called by deploy.yml so a release is gated on these checks. `needs:` only
+  # orders jobs inside one workflow, so this is the way to make one workflow
+  # wait for another.
+  workflow_call:
   push:
     branches: [main]
   pull_request:
