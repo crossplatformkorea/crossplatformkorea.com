@@ -138,10 +138,11 @@ export default function NotificationBell() {
             >
               <h3 className="font-bold text-lg">
                 {t('notifications.title')}
-                {recentNotifications && recentNotifications.length > 0 && (
-                  <span className="text-sm text-muted-foreground ml-2">
-                    ({recentNotifications.length})
-                  </span>
+                {/* Unread, matching the bell badge. This counted the rows in the
+                    dropdown instead, so a single unread notification still read
+                    as "(5)" next to a badge showing 1. */}
+                {unreadCount !== undefined && unreadCount > 0 && (
+                  <span className="text-sm text-muted-foreground ml-2">({unreadCount})</span>
                 )}
               </h3>
             </button>
