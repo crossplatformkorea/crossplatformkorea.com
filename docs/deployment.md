@@ -33,8 +33,13 @@ accepting whatever the old bundle sends.
 
 Two consequences:
 
-- The committed `convex/_generated/api.d.ts` has to be current. The build runs
-  before the push regenerates it, so a stale file fails the deploy's build step.
+- The committed `convex/_generated/api.d.ts` is the only copy the build sees,
+  because the push regenerates it afterwards. It will not fail the deploy:
+  `bun run build:web` is `vite build`, which strips types without checking
+  them, and Convex resolves `api.*` through runtime proxies, so a stale file is
+  a type-level mismatch only. It fails `bun run tsc` in CI instead — and CI
+  does not gate this workflow, so keep it committed and current rather than
+  relying on either to catch it.
 - `bunx convex deploy --dry-run -y --cmd "bun run build:web" --cmd-url-env-var-name VITE_CONVEX_URL`
   reproduces the whole thing locally, including schema validation against
   production data, without changing anything.
