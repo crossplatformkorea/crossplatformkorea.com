@@ -98,7 +98,9 @@ export default function NotificationBell() {
         aria-label={t('notifications.bellAriaLabel')}
       >
         <Bell size={20} />
-        {unreadCount && unreadCount > 0 && (
+        {/* Not `unreadCount &&`: when the count is 0 that yields the number
+            0, which React renders as a literal "0" beside the bell. */}
+        {unreadCount !== undefined && unreadCount > 0 && (
           <span
             className={cn(
               'absolute -top-1 -right-1',
