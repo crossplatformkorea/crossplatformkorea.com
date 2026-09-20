@@ -40,9 +40,11 @@ happily and fails at the server.
 
 `convex deploy`'s own typecheck is scoped to `convex/` by `convex/tsconfig.json`,
 so it does not see `apps/web`. The only thing that catches a dangling backend
-reference from the frontend is `bun run tsc`, which runs in `ci.yml` — and
-`deploy.yml` has no `needs:` on it, so CI and the production deploy race rather
-than gate.
+reference from the frontend is `bun run tsc`, which runs in `ci.yml` — a
+separate workflow firing on the same push. `needs:` orders jobs within one
+workflow and cannot reach across files, so there is nothing to add to
+`deploy.yml`; ordering the two would mean a `workflow_run:` trigger or folding
+them together. As it stands they race, and a red CI does not stop a release.
 
 The committed `convex/_generated/api.d.ts` is the only copy the build sees,
 since the push regenerates it afterwards. A stale one is a type-level mismatch
@@ -70,7 +72,18 @@ Practically:
 1. Roll Hosting back to the previous release from the Firebase console's
    Hosting release history. This is the step that stops the bleeding, and it
    needs no build.
-2. Then move Convex, by deploying from the last good commit.
+2. Then move Convex, from a local checkout of the last good commit:
+
+   ```sh
+   git checkout <last-good-sha>
+   CONVEX_DEPLOY_KEY=... bunx convex deploy
+   ```
+
+   No workflow does this for you. Dispatching `Deploy to Production` will not:
+   the job is guarded by `if: github.ref == 'refs/heads/main'`, so a dispatch
+   from a tag or an older branch is skipped and still reported as a successful
+   run, while a dispatch from `main` deploys `main`'s current HEAD — the code
+   you are trying to get rid of.
 
 Reverting the commit on `main` and letting the workflow run is *not* the
 fast path: it re-runs the same build → Convex → Hosting order, so the old
@@ -80,10 +93,12 @@ state after the incident, not to end it.
 
 Rolling Convex back far enough also reverts `returns` validators, which is worth
 checking first. A validator has to enumerate every field the value it returns
-can carry; if it omits one, the query throws `ReturnsValidationError` — but only
-for the rows that actually carry the undeclared field. That is why these
-surface hours or days after the deploy that caused them, and why the symptom can
-be partial rather than total.
+can carry; if it omits one, the query throws `ReturnsValidationError`. The throw
+is per call, not per row: one offending row fails the whole response, so a
+paginated page dies entirely rather than returning the rest. What is partial is
+who it reaches — only callers whose own data carries the undeclared field. That
+is why these surface hours or days after the deploy that caused them, spreading
+as the data does.
 
 Two in-repo examples, both times the field reached the data without reaching the
 validator:
