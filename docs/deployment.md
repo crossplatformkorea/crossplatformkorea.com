@@ -89,10 +89,17 @@ The `headers` block:
   filename that never changes will pin it.
 
 Note there is no `immutable`. Because headers match the request path before the
-rewrite, a request for a chunk that no longer exists still matches
-`/assets/**` and the HTML it gets back is cached under a `.js` URL. Without
-`immutable` a reload revalidates and recovers; with it, conforming browsers
-would not.
+rewrite, a request for a chunk that no longer exists still matches `/assets/**`
+and the HTML it gets back is cached under a `.js` URL.
+
+Dropping `immutable` buys less than it looks like, so it is worth knowing what
+it actually does. Firefox and Safari revalidate subresources on a soft reload
+unless they carry `immutable`, so there it is the difference between recovering
+with F5 and not. Chrome and Edge have not revalidated subresources on a soft
+reload since M54, so there it changes nothing either way and recovery means a
+hard reload — which bypasses the cache outright and worked even with
+`immutable`. The cost is the mirror of the benefit: Firefox soft reloads now
+issue a conditional request per hashed chunk instead of none.
 
 Order matters and is the opposite of the rest of the file: redirects and
 rewrites are first-match-wins, but `headers` is **last-match-wins** for a given
@@ -177,13 +184,19 @@ Firebase preview channel.
 When the repository secret `CONVEX_PREVIEW_DEPLOY_KEY` is set — a **Preview**
 deploy key from the Convex dashboard, not the production one — the workflow
 builds against a Convex preview deployment named `pr-<number>`, so a change to
-a backend function is exercised by the preview that contains it. A wrong key
-type fails loudly rather than touching production: the CLI refuses
-`--preview-name` unless the key is a preview key.
+a backend function is exercised by the preview that contains it.
 
 `--preview-name` reuses the deployment across pushes. `--preview-create` is the
 variant that deletes and recreates it, which would discard whatever a reviewer
 signed in and seeded on the previous commit.
+
+**The workflow checks the key's shape itself, and has to.** The CLI guards only
+`--preview-create`: given `--preview-name` and a key that is not a preview key,
+it ignores the flag and deploys to whatever that key points at. A production
+key in `CONVEX_PREVIEW_DEPLOY_KEY` — the secret's name is the only thing
+claiming otherwise — would push an unmerged PR's functions and schema to
+production, from a `pull_request` event, with a green job and no error. The
+detection step rejects anything whose prefix is not `preview:<team>:<project>`.
 
 Two things to expect before turning it on:
 
@@ -196,7 +209,10 @@ Two things to expect before turning it on:
   sign-in then fails at runtime. Set preview defaults in the Convex dashboard
   first.
 
-Convex deletes idle preview deployments on its own, so no cleanup job is needed.
+Convex deletes preview deployments a few days after they are created — five on
+the free plan — so no cleanup job is needed. It is age-based, not idleness:
+a long-lived PR loses its preview mid-review and the next push recreates it
+empty.
 
 With the secret unset the workflow falls back to building against
 `VITE_CONVEX_URL`, the previous behaviour. In that mode a preview runs new

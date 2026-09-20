@@ -46,11 +46,31 @@ jobs:
         env:
           PREVIEW_KEY: ${{ secrets.CONVEX_PREVIEW_DEPLOY_KEY }}
         run: |
-          if [ -n "$PREVIEW_KEY" ]; then
-            echo 'preview=true' >> "$GITHUB_OUTPUT"
-          else
+          if [ -z "$PREVIEW_KEY" ]; then
             echo 'preview=false' >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+
+          # The CLI guards only `--preview-create`: given `--preview-name` and a
+          # non-preview key it ignores the flag and deploys to whatever the key
+          # points at, which for a production key is production — from a
+          # pull_request event, with unreviewed functions. The secret's name is
+          # the only thing saying "preview", so verify the key's own shape.
+          # A preview key is `preview:<team>:<project>|...`; never echo anything
+          # derived from it, since GitHub masks the secret but not substrings.
+          case "${PREVIEW_KEY%%|*}" in
+            preview:*:*:*)
+              echo '::error::CONVEX_PREVIEW_DEPLOY_KEY is malformed' >&2
+              exit 1
+              ;;
+            preview:*:*) ;;
+            *)
+              echo '::error::CONVEX_PREVIEW_DEPLOY_KEY is not a preview deploy key. Generate a Preview key in the Convex dashboard; a production key here would deploy this PR to production.' >&2
+              exit 1
+              ;;
+          esac
+
+          echo 'preview=true' >> "$GITHUB_OUTPUT"
 
       # Give the PR its own backend, so a change to a Convex function is
       # exercised by the preview that contains it. Without this the preview
