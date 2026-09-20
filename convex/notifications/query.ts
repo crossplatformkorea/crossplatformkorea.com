@@ -3,11 +3,15 @@ import { query, internalQuery } from '../_generated/server';
 import { getAuthUserId } from '@convex-dev/auth/server';
 import { paginationOptsValidator } from 'convex/server';
 import { getNotificationTypeValidator } from '../utils';
+import { localizeNotification } from './localize';
 
 // 사용자의 알림 목록 조회 (페이지네이션)
 export const getUserNotifications = query({
   args: {
     paginationOpts: paginationOptsValidator,
+    // Reader's locale. Copy is re-rendered per request so one list never mixes
+    // languages; omitted falls back to `en` inside the catalog.
+    locale: v.optional(v.string()),
   },
   returns: v.object({
     page: v.array(
@@ -21,6 +25,14 @@ export const getUserNotifications = query({
         postId: v.optional(v.id('posts')),
         showcaseId: v.optional(v.id('showcases')),
         commentId: v.optional(v.id('comments')),
+        // This handler returns the document itself, so the validator has to
+        // enumerate every field the row can carry or Convex rejects the value.
+        // `updatedAt` is written on every insert and `featureRequestId` on
+        // feature-request comment notifications; both were missing, so this
+        // query threw `ReturnsValidationError` for anyone holding a
+        // notification. Same class of break as 82ea64c.
+        featureRequestId: v.optional(v.id('featureRequests')),
+        updatedAt: v.optional(v.number()),
         triggeredById: v.id('users'),
         isRead: v.boolean(),
         readAt: v.optional(v.string()),
@@ -91,11 +103,37 @@ export const getUserNotifications = query({
           }
         }
 
+        const displayName =
+          triggeredByProfile?.displayName || triggeredByUser!.name || 'Unknown User';
+
+        const localized = await localizeNotification(
+          ctx,
+          notification,
+          displayName,
+          args.locale ?? 'en',
+          // Both were already resolved above; `null` tells the helper the
+          // document is gone so it does not read the same miss again.
+          {
+            post: notification.postId
+              ? relatedPost
+                ? { title: relatedPost.title }
+                : null
+              : undefined,
+            showcase: notification.showcaseId
+              ? relatedShowcase
+                ? { title: relatedShowcase.title }
+                : null
+              : undefined,
+          },
+        );
+
         return {
           ...notification,
+          title: localized.title,
+          message: localized.message,
           triggeredBy: {
             _id: triggeredByUser!._id,
-            displayName: triggeredByProfile?.displayName || triggeredByUser!.name || 'Unknown User',
+            displayName,
             avatarUrl: triggeredByProfile?.avatarUrl,
           },
           relatedPost,
@@ -195,6 +233,8 @@ export const getRecentUnreadNotifications = query({
 export const getRecentNotifications = query({
   args: {
     limit: v.optional(v.number()),
+    // See `getUserNotifications` — copy is rendered for the reader, not frozen.
+    locale: v.optional(v.string()),
   },
   returns: v.array(
     v.object({
@@ -205,6 +245,8 @@ export const getRecentNotifications = query({
       message: v.string(),
       postId: v.optional(v.id('posts')),
       showcaseId: v.optional(v.id('showcases')),
+      // Lets the bell deep-link to the comment itself rather than the post top.
+      commentId: v.optional(v.id('comments')),
       isRead: v.boolean(),
       triggeredByUser: v.object({
         _id: v.id('users'),
@@ -234,18 +276,22 @@ export const getRecentNotifications = query({
           .withIndex('by_user', (q) => q.eq('userId', notification.triggeredById))
           .unique();
 
+        const name = triggeredByProfile?.displayName || triggeredByUser!.name || 'Unknown User';
+        const localized = await localizeNotification(ctx, notification, name, args.locale ?? 'en');
+
         return {
           _id: notification._id,
           _creationTime: notification._creationTime,
           type: notification.type,
-          title: notification.title,
-          message: notification.message,
+          title: localized.title,
+          message: localized.message,
           postId: notification.postId,
           showcaseId: notification.showcaseId,
+          commentId: notification.commentId,
           isRead: notification.isRead,
           triggeredByUser: {
             _id: triggeredByUser!._id,
-            name: triggeredByProfile?.displayName || triggeredByUser!.name || 'Unknown User',
+            name,
             avatarUrl: triggeredByProfile?.avatarUrl,
           },
         };

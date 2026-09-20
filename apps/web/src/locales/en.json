@@ -202,7 +202,11 @@
       "githubFailed": "GitHub sign-in failed. Please try again in a moment.",
       "signOutFailed": "Sign-out failed. Please try again."
     },
-    "codeReplaceNotice": "Requesting a new code invalidates the previous one."
+    "codeReplaceNotice": "Requesting a new code invalidates the previous one.",
+    "chooseMethodMessage": "Sign in to post, comment, and showcase what you build.",
+    "continueWithGithub": "Continue with GitHub",
+    "githubRedirectNotice": "You'll be redirected to GitHub to authorize {{app}}",
+    "useEmailInstead": "Have an existing email account? Sign in with email code"
   },
   "posts": {
     "title": "Posts",

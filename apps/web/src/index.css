@@ -207,7 +207,7 @@ body {
   }
 
   .page-hero {
-    @apply relative mb-8 overflow-hidden rounded-2xl border border-border/80 bg-card/80 p-6 sm:p-8;
+    @apply relative isolate mb-8 overflow-hidden rounded-2xl border border-border/80 bg-card/80 p-6 sm:p-8;
   }
 
   .page-hero::after {

@@ -42,7 +42,7 @@ export function Header({
     <header
       className={cn(
         // Base layout
-        'h-16 flex-shrink-0 flex items-center justify-between px-2 sm:px-4 relative z-10',
+        'h-16 flex-shrink-0 flex items-center justify-between px-2 sm:px-4 relative z-30',
         // Visual styling
         'border-b border-border/70 bg-card/80 backdrop-blur-xl',
       )}

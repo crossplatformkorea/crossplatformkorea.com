@@ -202,7 +202,11 @@
       "githubFailed": "GitHub 로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.",
       "signOutFailed": "로그아웃하지 못했습니다. 다시 시도해 주세요."
     },
-    "codeReplaceNotice": "코드를 다시 요청하면 이전 코드는 사용할 수 없습니다."
+    "codeReplaceNotice": "코드를 다시 요청하면 이전 코드는 사용할 수 없습니다.",
+    "chooseMethodMessage": "글쓰기, 댓글, 쇼케이스 등록을 하려면 로그인하세요.",
+    "continueWithGithub": "GitHub로 계속하기",
+    "githubRedirectNotice": "GitHub로 이동해 {{app}} 권한을 승인하게 됩니다",
+    "useEmailInstead": "이메일 계정이 있으신가요? 이메일 코드로 로그인"
   },
   "posts": {
     "title": "게시물",
