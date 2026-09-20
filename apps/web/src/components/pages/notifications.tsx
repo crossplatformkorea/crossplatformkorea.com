@@ -15,6 +15,7 @@ import { getLocale } from '../../lib/i18n';
 import { Id } from '@convex/_generated/dataModel';
 import PageHeader from '../uis/PageHeader';
 import { createSignInHref } from '../../lib/authRedirect';
+import { notificationHref } from '../../lib/notificationTarget';
 
 const formatTimeAgo = (timestamp: number) => {
   const locale = getLocale();
@@ -44,6 +45,7 @@ export default function NotificationsPage() {
             numItems: 20,
             cursor: null,
           },
+          locale: getLocale(),
         }
       : 'skip',
   );
@@ -112,13 +114,10 @@ export default function NotificationsPage() {
       }
     }
 
-    // Navigate to appropriate page based on notification type
-    if (notification.postId) {
-      // Navigate to post details
-      void navigate(`/post/${notification.postId}`);
-    } else if (notification.showcaseId) {
-      // Navigate to showcase details
-      void navigate(`/showcase/${notification.showcaseId}`);
+    // Comment notifications land on the comment itself, not the post header.
+    const href = notificationHref(notification);
+    if (href) {
+      void navigate(href);
     }
   };
 

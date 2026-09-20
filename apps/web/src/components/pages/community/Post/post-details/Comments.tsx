@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery, useMutation } from 'convex/react';
 import { useTranslation } from 'react-i18next';
 import { api } from '@convex/_generated/api';
@@ -16,12 +16,15 @@ import { toast } from 'sonner';
 import { userFacingErrorMessage } from '@/lib/errors';
 import { renderMentionsAndLinks } from '../../../../../utils/mentionUtils';
 import { createSignInHref } from '@/lib/authRedirect';
+import { commentAnchorId } from '@/lib/notificationTarget';
 
 interface CommentsProps {
   postId: Id<'posts'>;
+  /** Comment a notification linked straight to; scrolled to and flashed once. */
+  highlightCommentId?: string | null;
 }
 
-export default function Comments({ postId }: CommentsProps) {
+export default function Comments({ postId, highlightCommentId }: CommentsProps) {
   const { t, i18n } = useTranslation();
   const { isAuthenticated, requireAuth } = useAuthStore();
   const [comment, setComment] = useState('');
@@ -37,6 +40,26 @@ export default function Comments({ postId }: CommentsProps) {
 
   // 댓글 작성자 정보 가져오기 - 전체 쿼리로 변경
   const authorProfiles = useQuery(api.comments.query.getCommentAuthorProfiles, { postId });
+
+  // The browser cannot honour a `#comment-<id>` hash on its own: the anchor does
+  // not exist at navigation time because comments arrive from their own query.
+  // Scroll once the list has rendered, keyed on the navigation as well as the
+  // comment — clicking the same notification again after scrolling away is a
+  // fresh request to go back there, and keying on the id alone would swallow it.
+  const scrolledToRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!highlightCommentId || !comments) return;
+
+    const scrollKey = `${location.key}:${highlightCommentId}`;
+    if (scrolledToRef.current === scrollKey) return;
+
+    const target = document.getElementById(commentAnchorId(highlightCommentId));
+    // Not rendered yet — leave the ref unset so the next `comments` change retries.
+    if (!target) return;
+
+    scrolledToRef.current = scrollKey;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [highlightCommentId, comments, location.key]);
 
   // 뮤테이션
   const addComment = useMutation(api.comments.mutation.addComment);
@@ -248,10 +271,17 @@ export default function Comments({ postId }: CommentsProps) {
               const hasLiked = checkIfLiked(comment);
               const likeCount = comment.likeCount || 0;
 
+              const isHighlighted = highlightCommentId === comment._id.toString();
+
               return (
                 <div
                   key={comment._id.toString()}
-                  className="border-b border-border/30 dark:border-gray-700/30 pb-4 last:border-b-0"
+                  id={commentAnchorId(comment._id.toString())}
+                  className={cn(
+                    'border-b border-border/30 dark:border-gray-700/30 pb-4 last:border-b-0',
+                    'scroll-mt-24 rounded-md transition-colors duration-700',
+                    isHighlighted && 'bg-primary/10 ring-1 ring-primary/30 px-3 pt-3',
+                  )}
                 >
                   {/* 댓글 작성자 정보 */}
                   <div className="flex justify-between items-start mb-2">

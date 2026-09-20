@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { formatDistanceToNow } from 'date-fns';
@@ -17,6 +17,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { toast } from 'sonner';
 import { cn, devConsole } from '@/lib/utils';
 import { userFacingErrorMessage } from '@/lib/errors';
+import { commentIdFromHash } from '@/lib/notificationTarget';
 import { Button } from '@/components/uis/Button';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -47,6 +48,9 @@ export default function PostDetailsPage() {
   const { slugOrId } = useParams();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  // Set when a notification deep-linked to one comment: `#comment-<id>`.
+  const highlightCommentId = commentIdFromHash(location.hash);
   const user = useQuery(api.users.query.currentUser);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [viewIncremented, setViewIncremented] = useState(false);
@@ -71,9 +75,11 @@ export default function PostDetailsPage() {
   // slug URL so search engines see only one canonical form.
   useEffect(() => {
     if (post && slugOrId && post.slug && slugOrId !== post.slug) {
-      void navigate(`/post/${post.slug}`, { replace: true });
+      // Keep the hash: notifications link by post id, and the comment anchor
+      // would otherwise be dropped by this canonicalizing redirect.
+      void navigate(`/post/${post.slug}${location.hash}`, { replace: true });
     }
-  }, [post, slugOrId, navigate]);
+  }, [post, slugOrId, navigate, location.hash]);
 
   useEffect(() => {
     if (!post || viewIncremented) return;
@@ -613,7 +619,7 @@ export default function PostDetailsPage() {
           <div className={cn('surface-card mt-4 px-5 py-8 sm:px-8')}>
             {/* Add ref to the Comments section */}
             <div ref={commentsRef} id="comments">
-              {post && <Comments postId={post._id} />}
+              {post && <Comments postId={post._id} highlightCommentId={highlightCommentId} />}
             </div>
           </div>
         </article>

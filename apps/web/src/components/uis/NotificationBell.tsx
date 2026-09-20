@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { cn, devConsole } from '../../lib/utils';
 import { userFacingErrorMessage } from '../../lib/errors';
+import { notificationHref } from '../../lib/notificationTarget';
 import { Button } from '../uis/Button';
 import { t } from '../../lib/i18n';
 import { formatDistanceToNow } from 'date-fns';
@@ -38,7 +39,7 @@ export default function NotificationBell() {
 
   const recentNotifications = useQuery(
     api.notifications.query.getRecentNotifications,
-    isAuthenticated ? { limit: 5 } : 'skip',
+    isAuthenticated ? { limit: 5, locale: getLocale() } : 'skip',
   );
 
   // 알림 읽음 처리 뮤테이션
@@ -76,13 +77,10 @@ export default function NotificationBell() {
       }
     }
 
-    // Navigate to appropriate page based on notification type
-    if (notification.postId) {
-      // Navigate to post details
-      void navigate(`/post/${notification.postId}`);
-    } else if (notification.showcaseId) {
-      // Navigate to showcase details (assuming showcase route exists)
-      void navigate(`/showcase/${notification.showcaseId}`);
+    // Comment notifications land on the comment itself, not the post header.
+    const href = notificationHref(notification);
+    if (href) {
+      void navigate(href);
     }
 
     // Close the dropdown
