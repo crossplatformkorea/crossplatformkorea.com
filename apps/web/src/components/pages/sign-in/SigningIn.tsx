@@ -6,7 +6,7 @@ import { SiGithub } from '@icons-pack/react-simple-icons';
 import { ArrowLeft, ArrowRight, Mail, ShieldCheck } from 'lucide-react';
 import { api } from '@convex/_generated/api';
 import { t, getLocale } from '../../../lib/i18n';
-import { devConsole } from '../../../lib/utils';
+import { cn, devConsole } from '../../../lib/utils';
 import { userFacingErrorMessage } from '../../../lib/errors';
 import { Button } from '../../uis/Button';
 
@@ -25,6 +25,9 @@ export default function SigningIn({ returnTo }: SigningInProps) {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [isCodeSent, setIsCodeSent] = useState(false);
+  // GitHub is the headline path; the email form is revealed on request. Email
+  // sign-in stays fully supported — this only changes which one leads.
+  const [showEmailForm, setShowEmailForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [pendingProfileEmail, setPendingProfileEmail] = useState<string | null>(null);
   const [isGitHubLoading, setIsGitHubLoading] = useState(false);
@@ -219,43 +222,91 @@ export default function SigningIn({ returnTo }: SigningInProps) {
     );
   }
 
+  if (showEmailForm) {
+    return (
+      <>
+        <div className="mb-8">
+          <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
+            <Mail size={20} />
+          </div>
+          <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-4xl">
+            {t('signIn.title')}
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">{t('signIn.signInMessage')}</p>
+        </div>
+
+        <form className="space-y-5" onSubmit={(event) => void handleSendCode(event)}>
+          <div>
+            <label htmlFor="email" className="field-label">
+              {t('signIn.emailLabel')}
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              autoComplete="email"
+              required
+              autoFocus
+              className="field-control h-12"
+              placeholder={t('signIn.emailPlaceholder')}
+            />
+          </div>
+
+          {errorMessage}
+
+          <Button type="submit" disabled={isLoading} variant="auth" size="lg" className="w-full">
+            {isLoading ? t('signIn.sendingCode') : t('signIn.signInWithEmail')}
+            {!isLoading && <ArrowRight size={17} />}
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              setError(null);
+              setShowEmailForm(false);
+            }}
+            variant="ghost"
+            size="lg"
+            className="w-full"
+          >
+            <ArrowLeft size={16} />
+            {t('signIn.back')}
+          </Button>
+        </form>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="mb-8">
         <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
-          <Mail size={20} />
+          <SiGithub size={20} />
         </div>
-        <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-4xl">
-          {t('signIn.title')}
-        </h2>
-        <p className="mt-3 text-sm leading-6 text-muted-foreground">{t('signIn.signInMessage')}</p>
+        <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-4xl">{t('signIn.title')}</h2>
+        <p className="mt-3 text-sm leading-6 text-muted-foreground">
+          {t('signIn.chooseMethodMessage')}
+        </p>
       </div>
 
-      <form className="space-y-5" onSubmit={(event) => void handleSendCode(event)}>
-        <div>
-          <label htmlFor="email" className="field-label">
-            {t('signIn.emailLabel')}
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            autoComplete="email"
-            required
-            className="field-control h-12"
-            placeholder={t('signIn.emailPlaceholder')}
-          />
-        </div>
+      <Button
+        type="button"
+        onClick={() => void handleGitHubSignIn()}
+        disabled={isGitHubLoading}
+        variant="auth"
+        size="lg"
+        className="w-full"
+      >
+        <SiGithub size={18} />
+        {isGitHubLoading ? t('signIn.signingInWithGithub') : t('signIn.continueWithGithub')}
+      </Button>
 
-        {errorMessage}
+      <p className="mt-3 text-center text-xs leading-5 text-muted-foreground">
+        {t('signIn.githubRedirectNotice', { app: t('common.appName') })}
+      </p>
 
-        <Button type="submit" disabled={isLoading} variant="auth" size="lg" className="w-full">
-          {isLoading ? t('signIn.sendingCode') : t('signIn.signInWithEmail')}
-          {!isLoading && <ArrowRight size={17} />}
-        </Button>
-      </form>
+      {errorMessage ? <div className="mt-5">{errorMessage}</div> : null}
 
       <div className="my-7 flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
         <span className="h-px flex-1 bg-border" />
@@ -263,17 +314,20 @@ export default function SigningIn({ returnTo }: SigningInProps) {
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      <Button
+      <button
         type="button"
-        onClick={() => void handleGitHubSignIn()}
-        disabled={isGitHubLoading}
-        variant="secondary"
-        size="lg"
-        className="w-full"
+        onClick={() => {
+          setError(null);
+          setShowEmailForm(true);
+        }}
+        className={cn(
+          'group flex w-full items-center justify-center gap-1.5 rounded-md px-3 py-2',
+          'text-sm font-medium text-muted-foreground transition-colors hover:text-foreground',
+        )}
       >
-        <SiGithub size={18} />
-        {isGitHubLoading ? t('signIn.signingInWithGithub') : t('signIn.signInWithGithub')}
-      </Button>
+        {t('signIn.useEmailInstead')}
+        <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+      </button>
     </>
   );
 }

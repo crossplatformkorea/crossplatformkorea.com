@@ -60,13 +60,13 @@ export default function SignIn() {
                 <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   01
                 </span>
-                <span className="mt-1 block font-medium">Email OTP</span>
+                <span className="mt-1 block font-medium">GitHub</span>
               </div>
               <div className="border-l border-border/80 pl-4">
                 <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   02
                 </span>
-                <span className="mt-1 block font-medium">GitHub</span>
+                <span className="mt-1 block font-medium">Email OTP</span>
               </div>
               <div className="border-l border-border/80 pl-4">
                 <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">

@@ -204,7 +204,11 @@
       "githubFailed": "GitHubログインに失敗しました。しばらくしてからもう一度お試しください。",
       "signOutFailed": "ログアウトできませんでした。もう一度お試しください。"
     },
-    "codeReplaceNotice": "新しいコードをリクエストすると、以前のコードは使用できなくなります。"
+    "codeReplaceNotice": "新しいコードをリクエストすると、以前のコードは使用できなくなります。",
+    "chooseMethodMessage": "投稿・コメント・ショーケース登録にはログインが必要です。",
+    "continueWithGithub": "GitHubで続ける",
+    "githubRedirectNotice": "GitHubに移動して{{app}}を承認します",
+    "useEmailInstead": "メールアカウントをお持ちですか？メールコードでログイン"
   },
   "posts": {
     "title": "投稿",
