@@ -8,7 +8,8 @@ independently, which is the part worth understanding before you need it.
 
 `.github/workflows/deploy.yml` runs on `workflow_dispatch`, and on every push to
 `main` touching `apps/web/**`, `convex/**`, `package.json`, `bun.lock`,
-`firebase.json`, `.firebaserc`, or the workflow itself. Two steps matter:
+`firebase.json`, `.firebaserc`, or the workflow itself. It first runs `ci.yml`
+as a gate (see below); then two steps matter:
 
 ```yaml
 - name: Build and deploy Convex
@@ -40,11 +41,15 @@ happily and fails at the server.
 
 `convex deploy`'s own typecheck is scoped to `convex/` by `convex/tsconfig.json`,
 so it does not see `apps/web`. The only thing that catches a dangling backend
-reference from the frontend is `bun run tsc`, which runs in `ci.yml` — a
-separate workflow firing on the same push. `needs:` orders jobs within one
-workflow and cannot reach across files, so there is nothing to add to
-`deploy.yml`; ordering the two would mean a `workflow_run:` trigger or folding
-them together. As it stands they race, and a red CI does not stop a release.
+reference from the frontend is `bun run tsc`.
+
+That runs in `ci.yml`, a separate workflow. `needs:` orders jobs within one
+workflow and cannot reach across files, so `deploy.yml` gates itself by
+*calling* `ci.yml` as a reusable workflow (`uses: ./.github/workflows/ci.yml`)
+and hanging the deploy off it with `needs: validate`. A red build now stops the
+release. The cost is that a push to `main` touching the deploy paths runs
+`bun run ci` twice — once standalone, once as the gate — and the deploy waits
+for it.
 
 The committed `convex/_generated/api.d.ts` is the only copy the build sees,
 since the push regenerates it afterwards. A stale one is a type-level mismatch
@@ -55,6 +60,56 @@ and reports the config diff without changing anything. It does **not** run the
 `--cmd` build: the CLI skips that under `--dry-run` and only prints
 `Would have run "…"`. Build the bundle separately if that is what you need to
 know.
+
+## Why `index.html` must not be cached
+
+`firebase.json` rewrites `**` to `/index.html`, so a request for a file that
+does not exist is answered with the HTML shell at **200**, not a 404. A browser
+asking for a JavaScript chunk therefore receives HTML and tries to execute it,
+which throws before the app mounts and leaves a blank page with nothing obvious
+in the console.
+
+That turns a cached `index.html` into an outage. Every build emits
+content-hashed chunk names; a reader holding yesterday's `index.html` asks for
+yesterday's chunks, the rewrite hands back HTML, and the page is blank until
+the cache expires. With no `headers` block, responses were observed carrying
+`max-age=3600` — Firebase documents no default for static content — so the
+window was an hour after every deploy.
+
+The `headers` block:
+
+- `**` → `no-cache`, so the HTML shell and anything else unhashed
+  (`sw.js`, `manifest.json`) is revalidated every load.
+- `/assets/**` → `max-age=31536000`, safe for build output because those names
+  carry a content hash.
+- `/assets/@(logo|favicon).png` → back to `no-cache`. Vite copies
+  `apps/web/public/assets/` into `dist/assets/` **without** hashing, so those
+  two files sit in the hashed directory under unhashed names. Anything else
+  added to `public/assets/` needs the same treatment, or a year-long cache on a
+  filename that never changes will pin it.
+
+Note there is no `immutable`. Because headers match the request path before the
+rewrite, a request for a chunk that no longer exists still matches `/assets/**`
+and the HTML it gets back is cached under a `.js` URL.
+
+Dropping `immutable` buys less than it looks like, so it is worth knowing what
+it actually does. Firefox is the only browser it changes: Firefox revalidates
+subresources on a soft reload unless they carry `immutable`, so there it is the
+difference between recovering with F5 and not. Chrome, Edge and Safari do not
+revalidate unexpired subresources on a soft reload at all, so there it changes
+nothing either way and recovery means a hard reload — which bypasses the cache
+outright and worked even with `immutable`. The cost is the mirror of the
+benefit and just as narrow: Firefox soft reloads now issue a conditional
+request per hashed chunk instead of none.
+
+Order matters and is the opposite of the rest of the file: redirects and
+rewrites are first-match-wins, but `headers` is **last-match-wins** for a given
+header key (superstatic sets every matching rule in config order, so the last
+write survives). The catch-all goes first, specific rules after it.
+
+One thing this does not reach: `dist/sw.js` caches same-origin 200s into Cache
+Storage, which no HTTP header governs. A rewrite response stored there clears
+only when `CACHE_NAME` is bumped.
 
 ## Rolling back
 
@@ -125,7 +180,43 @@ validator:
 ## Previews
 
 `.github/workflows/deploy-preview.yml` builds a PR bundle and publishes it to a
-Firebase preview channel. It has no `convex deploy` step, so a preview runs new
-client code against whatever functions are already deployed. A PR that adds an
-argument to a Convex function will show that call failing in its own preview
-until it merges. That is expected, not a defect in the change.
+Firebase preview channel.
+
+When the repository secret `CONVEX_PREVIEW_DEPLOY_KEY` is set — a **Preview**
+deploy key from the Convex dashboard, not the production one — the workflow
+builds against a Convex preview deployment named `pr-<number>`, so a change to
+a backend function is exercised by the preview that contains it.
+
+`--preview-name` reuses the deployment across pushes. `--preview-create` is the
+variant that deletes and recreates it, which would discard whatever a reviewer
+signed in and seeded on the previous commit.
+
+**The workflow checks the key's shape itself, and has to.** The CLI guards only
+`--preview-create`: given `--preview-name` and a key that is not a preview key,
+it ignores the flag and deploys to whatever that key points at. A production
+key in `CONVEX_PREVIEW_DEPLOY_KEY` — the secret's name is the only thing
+claiming otherwise — would push an unmerged PR's functions and schema to
+production, from a `pull_request` event, with a green job and no error. The
+detection step rejects anything whose prefix is not `preview:<team>:<project>`.
+
+Two things to expect before turning it on:
+
+- The deployment starts empty, so the preview stops showing real content. That
+  is the trade for it no longer lying about the backend.
+- It also starts with no environment variables beyond the project's preview
+  defaults. The backend reads `AUTH_RESEND_KEY`, `VAPID_PRIVATE_KEY`,
+  `VAPID_SUBJECT`, `SITE_URL`, the GitHub OAuth credentials and the
+  `@convex-dev/auth` JWT keys; `convex deploy` succeeds without them and
+  sign-in then fails at runtime. Set preview defaults in the Convex dashboard
+  first.
+
+Convex deletes preview deployments a few days after they are created — five on
+the free plan — so no cleanup job is needed. It is age-based, not idleness:
+a long-lived PR loses its preview mid-review and the next push recreates it
+empty.
+
+With the secret unset the workflow falls back to building against
+`VITE_CONVEX_URL`, the previous behaviour. In that mode a preview runs new
+client code against functions that are already deployed, so a PR adding an
+argument to a query shows that call failing in its own preview until it merges.
+That is expected, not a defect in the change.
