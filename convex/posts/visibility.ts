@@ -115,10 +115,33 @@ export function nextPublishedAt(
   // A row not yet backfilled has no value; derive it the way the backfill
   // would, so an edit in that window cannot date a scheduled post at creation.
   const current = before.publishedAt ?? effectivePublishTime(before, before._creationTime);
-  if (after.publishAt === undefined || after.publishAt === before.publishAt) {
+  if (after.publishAt === undefined || sameMinute(after.publishAt, before.publishAt)) {
     return current;
   }
   return publishedAtFor('published', after.publishAt, current);
+}
+
+/**
+ * Whether two stored dates name the same minute. The editor re-sends a date at
+ * minute precision in canonical ISO, but the script and companion paths store
+ * whatever they were given — `+09:00` offsets, missing milliseconds, seconds.
+ * Comparing strings would read the editor's re-send of an unchanged date as a
+ * new explicit date and re-date the post on the next typo fix.
+ */
+function sameMinute(a: string, b: string | undefined): boolean {
+  if (b === undefined) {
+    return false;
+  }
+  if (a === b) {
+    return true;
+  }
+  const aMs = Date.parse(a);
+  const bMs = Date.parse(b);
+  return (
+    !Number.isNaN(aMs) &&
+    !Number.isNaN(bMs) &&
+    Math.floor(aMs / 60_000) === Math.floor(bMs / 60_000)
+  );
 }
 
 /**

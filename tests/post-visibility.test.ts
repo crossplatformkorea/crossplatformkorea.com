@@ -286,6 +286,26 @@ describe('nextPublishedAt', () => {
     ).toBe(Date.parse('2026-09-10T00:00:00.000Z'));
   });
 
+  // Scripts store dates as given; the editor re-sends them in canonical ISO at
+  // minute precision. Compared as strings, a typo fix read that re-send as a
+  // new date and moved a post the script had published back to its stored
+  // date, days down the feed.
+  test('treats an unchanged date re-sent in another format as unchanged', () => {
+    const publishedByScript = {
+      status: 'published',
+      publishAt: '2026-09-20T16:00:30+09:00',
+      publishedAt: Date.parse('2026-09-24T00:00:00.000Z'),
+      _creationTime: created,
+    };
+    expect(
+      nextPublishedAt(
+        publishedByScript,
+        { status: 'published', publishAt: '2026-09-20T07:00:00.000Z' },
+        Date.parse('2026-09-25T00:00:00.000Z'),
+      ),
+    ).toBe(Date.parse('2026-09-24T00:00:00.000Z'));
+  });
+
   // The Wasm post's shape before the backfill: published by the cron, keyed by
   // nothing yet. An edit in that window must date it as the backfill would.
   test('keeps the scheduled time for a cron-published row edited before the backfill', () => {
