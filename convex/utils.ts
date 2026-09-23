@@ -127,6 +127,10 @@ export function getNotificationMessages(
     },
   };
 
-  const localeMessages = messages[locale as keyof typeof messages] || messages.en;
+  // Own keys only: a stored locale is whatever string a user sent, and a name
+  // like "constructor" would find Object.prototype's entry, which has no copy.
+  const localeMessages = Object.prototype.hasOwnProperty.call(messages, locale)
+    ? messages[locale as keyof typeof messages]
+    : messages.en;
   return localeMessages[type];
 }

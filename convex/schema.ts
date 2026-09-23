@@ -153,6 +153,9 @@ export default defineSchema({
   })
     .index('by_userId', ['userId'])
     .index('by_userId_isRead', ['userId', 'isRead'])
+    // Lets posts/announce.ts ask whether a user already holds a post's mention
+    // notification without reading anything else that user was sent.
+    .index('by_userId_postId_type_commentId', ['userId', 'postId', 'type', 'commentId'])
     .index('by_type', ['type']),
 
   // 푸시 노티피케이션 구독 테이블

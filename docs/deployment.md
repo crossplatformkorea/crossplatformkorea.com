@@ -150,8 +150,8 @@ Practically:
    field** — see the one-way note below. If it is, this deploy is refused, and
    you need a forward fix instead.
 
-   **If it predates `convex/posts/announce.ts`, check the Schedules page as
-   well** — see the note on scheduled functions below.
+   **If it predates `convex/posts/announce.ts` or #29, check the Schedules page
+   as well** — see the note on scheduled functions below.
 
    No workflow does this for you. Dispatching `Deploy to Production` will not:
    the job is guarded by `if: github.ref == 'refs/heads/main'`, so a dispatch
@@ -194,10 +194,19 @@ validator:
 
 Scheduled functions are in flight too. Every post published in the five minutes
 before a rollback has a `posts/announce:announceIfStillPublic` job waiting to
-announce it. A job fails for good, with no alert, if its function is gone when
-it comes due or rejects the `{ postId }` it stored. Rolling Convex back to a
-commit without that function does this; so does reverting the commit that added
-it on `main`, renaming it, or changing its arguments.
+announce it and to notify the users it mentions. A job fails for good, with no
+alert, if its function is gone when it comes due or rejects the `{ postId }` it
+stored. Rolling Convex back to a commit without that function does this; so does
+reverting the commit that added it on `main`, renaming it, or changing its
+arguments.
+
+Rolling back past #29, which moved post mention notifications into this job,
+fails nothing, but the posts published in those five minutes get no mention
+notifications: their publish left that to the job, and the older job does not
+create them. Holding step 2 as below avoids it. Otherwise the posts to look at
+are those whose `announceIfStillPublic` job was scheduled before the push landed
+(its `_creationTime`) but completed after it; later posts ran the old code
+throughout. Recreate their notifications as described below.
 
 For a rollback, waiting avoids most of this: the jobs are never more than five
 minutes old, so with Hosting already rolled back, hold step 2 until the
@@ -221,6 +230,15 @@ For each of those jobs whose post is still public, run
 dashboard with the post's `postId`, `title`, `content` and `category`. Only
 those: a job that ran before the rollback landed has already announced its
 post, and Slack cannot take a duplicate back.
+
+A failed job also created none of its post's mention notifications. They are
+in-app only; to recreate them for a failed job, or for a post the #29 note above
+names, skip the post unless it is still public. If
+`posts/announce:notifyMentionedUsers` is deployed, run it with the post's
+`postId`: it checks both that and who is already notified. Otherwise run
+`notifications/mutation:createNotification` once per mentioned user other than
+the author, skipping anyone who already holds a `MENTIONED` notification for
+the post without a `commentId`.
 
 ## Previews
 
