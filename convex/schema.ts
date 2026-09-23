@@ -31,12 +31,18 @@ export default defineSchema({
     status: v.optional(v.union(v.literal('draft'), v.literal('scheduled'), v.literal('published'))),
     publishAt: v.optional(v.string()), // UTC ISO; naive worker values are Asia/Seoul
     youtubeUrl: v.optional(v.string()),
+    // When the post became public (ms), unset while draft or scheduled. Feeds
+    // sort on this so a scheduled post surfaces at the top when it goes live.
+    // Maintained by `publishedAtFor` in visibility.ts on every status change.
+    publishedAt: v.optional(v.number()),
   })
     .index('by_category', ['category'])
     .index('by_title', ['title']) // Create a proper index for sorting by title (or any other field) that can be used for getting recent posts
     .index('by_author', ['authorId'])
     .index('by_slug', ['slug'])
-    .index('by_status', ['status']),
+    .index('by_status', ['status'])
+    .index('by_published_at', ['publishedAt'])
+    .index('by_category_published_at', ['category', 'publishedAt']),
   userProfiles: defineTable({
     userId: v.id('users'),
     email: v.string(),

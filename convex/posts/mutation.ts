@@ -6,7 +6,7 @@ import { DEFAULT_CATEGORY, ErrorCode } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
 import { generateSlug } from '../utils/slug';
-import { isPublicPost, resolvePostStatus } from './visibility';
+import { isPublicPost, publishedAtFor, resolvePostStatus } from './visibility';
 
 const postStatusValidator = v.union(
   v.literal('draft'),
@@ -90,6 +90,7 @@ export const createPost = mutation({
       status,
       publishAt,
       youtubeUrl,
+      publishedAt: publishedAtFor(status, publishAt, Date.now()),
     });
 
     // 멘션 알림 생성
@@ -310,6 +311,7 @@ export const createPostFromScript = internalMutation({
       status,
       publishAt,
       youtubeUrl,
+      publishedAt: publishedAtFor(status, publishAt, Date.now()),
     });
 
     if (status === 'published') {
@@ -363,10 +365,14 @@ export const updatePostFromScript = internalMutation({
       const publishAt =
         args.publishAt !== undefined ? args.publishAt.trim() || undefined : post.publishAt;
       updateData.publishAt = publishAt;
-      updateData.status = resolvePostStatus({
+      const resolvedStatus = resolvePostStatus({
         status: args.status ?? post.status,
         publishAt,
       });
+      updateData.status = resolvedStatus;
+      // Keep the feed key in step with publication: set when this makes the
+      // post public, cleared when it drafts or reschedules it.
+      updateData.publishedAt = publishedAtFor(resolvedStatus, publishAt, post._creationTime);
     }
 
     // Backfill slug if the post doesn't have one yet. Never overwrite an
@@ -524,10 +530,14 @@ export const updatePost = mutation({
       const publishAt =
         args.publishAt !== undefined ? args.publishAt.trim() || undefined : post.publishAt;
       updateData.publishAt = publishAt;
-      updateData.status = resolvePostStatus({
+      const resolvedStatus = resolvePostStatus({
         status: args.status ?? post.status,
         publishAt,
       });
+      updateData.status = resolvedStatus;
+      // Keep the feed key in step with publication: set when this makes the
+      // post public, cleared when it drafts or reschedules it.
+      updateData.publishedAt = publishedAtFor(resolvedStatus, publishAt, post._creationTime);
     }
 
     // 썸네일 업데이트: 명시적으로 전달된 경우에만 덮어쓰기 (위에서 이미 자동 추출됨)

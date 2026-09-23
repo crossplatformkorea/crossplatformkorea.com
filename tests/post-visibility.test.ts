@@ -5,6 +5,7 @@ import {
   isPublicPost,
   takePublicPosts,
   normalizePublishAt,
+  publishedAtFor,
   resolvePostStatus,
   seoulLocalToUtcIso,
   utcIsoToSeoulLocal,
@@ -134,5 +135,66 @@ describe('takePublicPosts', () => {
     for (const limit of [0, -1, 1.5, 101, Infinity, NaN]) {
       await expect(takePublicPosts(stream([]), limit, now)).rejects.toThrow('Post limit');
     }
+  });
+});
+
+describe('publishedAtFor', () => {
+  const created = Date.parse('2026-09-02T01:49:00.000Z');
+
+  test('is unset while a post is not public', () => {
+    expect(publishedAtFor('draft', undefined, created)).toBeUndefined();
+    expect(publishedAtFor('scheduled', '2026-09-22T07:00:00.000Z', created)).toBeUndefined();
+  });
+
+  test('is the creation time for a post published immediately', () => {
+    expect(publishedAtFor('published', undefined, created)).toBe(created);
+  });
+
+  test('is the scheduled time once a scheduled post goes public', () => {
+    expect(publishedAtFor('published', '2026-09-22T07:00:00.000Z', created)).toBe(
+      Date.parse('2026-09-22T07:00:00.000Z'),
+    );
+  });
+
+  test('falls back to creation time when publishAt is unreadable', () => {
+    expect(publishedAtFor('published', 'not-a-date', created)).toBe(created);
+  });
+
+  // The production feed on 2026-09-24, reproduced. The Wasm post was created
+  // on 9/2 and scheduled for 9/22 16:00 KST, making it the most recently
+  // published post — yet ordering by creation time put it below two posts
+  // that went public before it.
+  test('orders a feed by publication, surfacing posts scheduled far ahead', () => {
+    const posts = [
+      {
+        title: 'wasm',
+        _creationTime: Date.parse('2026-09-02T01:49:00.000Z'),
+        publishAt: '2026-09-22T07:00:00.000Z',
+      },
+      {
+        title: 'xcode',
+        _creationTime: Date.parse('2026-09-20T21:17:00.000Z'),
+        publishAt: '2026-09-22T00:00:00.000Z',
+      },
+      {
+        title: 'iphone',
+        _creationTime: Date.parse('2026-09-20T21:13:00.000Z'),
+        publishAt: undefined,
+      },
+    ];
+
+    const byCreation = [...posts]
+      .sort((a, b) => b._creationTime - a._creationTime)
+      .map((p) => p.title);
+    expect(byCreation).toEqual(['xcode', 'iphone', 'wasm']);
+
+    const byPublication = [...posts]
+      .sort(
+        (a, b) =>
+          publishedAtFor('published', b.publishAt, b._creationTime)! -
+          publishedAtFor('published', a.publishAt, a._creationTime)!,
+      )
+      .map((p) => p.title);
+    expect(byPublication).toEqual(['wasm', 'xcode', 'iphone']);
   });
 });

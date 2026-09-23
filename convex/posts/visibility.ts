@@ -59,6 +59,28 @@ export function effectivePublishTime(post: PostVisibilityFields, fallbackMs: num
   return post._creationTime ?? fallbackMs;
 }
 
+/**
+ * `publishedAt` for a row: when it became public, or `undefined` while it is
+ * not. Stored so feeds can paginate in publication order — Convex cursors only
+ * follow an index, so ordering by a computed value is not possible at read
+ * time. Without it, a post scheduled weeks ahead surfaces where its creation
+ * time puts it, already buried under everything published in between.
+ *
+ * Leaving drafts and scheduled rows unset sorts them after every published
+ * post in a descending index (Convex orders `undefined` lowest), so they never
+ * take a slot at the head of a feed page.
+ */
+export function publishedAtFor(
+  status: PostStatus,
+  publishAt: string | undefined,
+  creationMs: number,
+): number | undefined {
+  if (status !== 'published') {
+    return undefined;
+  }
+  return effectivePublishTime({ publishAt, _creationTime: creationMs }, creationMs);
+}
+
 export function resolvePostStatus(
   args: { status?: string; publishAt?: string },
   nowMs: number = Date.now(),

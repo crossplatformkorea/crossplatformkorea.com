@@ -7,6 +7,7 @@ import {
   defaultCompanionPublishAt,
   isDueScheduledPost,
   normalizePublishAt,
+  publishedAtFor,
   resolvePostStatus,
 } from './visibility';
 
@@ -153,6 +154,7 @@ export const createCompanionPost = internalMutation({
       status,
       publishAt,
       youtubeUrl,
+      publishedAt: publishedAtFor(status, publishAt, Date.now()),
     });
 
     if (status === 'published') {
@@ -195,6 +197,10 @@ export const publishDuePosts = internalMutation({
       await ctx.db.patch(post._id, {
         status: 'published',
         updatedAt: new Date(nowMs).toISOString(),
+        // The scheduled time, not the cron's run time: this is what the author
+        // chose and was shown as "goes live", and it keeps the key stable if
+        // the cron runs late.
+        publishedAt: publishedAtFor('published', post.publishAt, post._creationTime),
       });
       await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
         postId: post._id,
