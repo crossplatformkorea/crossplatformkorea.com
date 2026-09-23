@@ -254,6 +254,25 @@ export function normalizePublishAt(input: string): string {
 }
 
 /**
+ * A `publishAt` argument as it is stored: trimmed, `undefined` when blank, and
+ * rejected when `Date.parse` cannot read it. `resolvePostStatus` publishes a
+ * post with such a date while `isPublicPost` keeps it hidden, so its
+ * announcement check finds nothing to announce — and fixing the date later is
+ * an edit that leaves it published, which schedules no new check. Unlike
+ * `normalizePublishAt`, a readable value is kept as given.
+ */
+export function readPublishAt(input: string | undefined): string | undefined {
+  const trimmed = input?.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+  if (Number.isNaN(Date.parse(trimmed))) {
+    throw new Error(`Invalid publishAt: ${input}`);
+  }
+  return trimmed;
+}
+
+/**
  * Default companion-post time: 16:00 Asia/Seoul the same calendar day.
  * If that instant is already past, use 16:00 KST tomorrow.
  */

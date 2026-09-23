@@ -15,13 +15,13 @@ import { shouldAnnounce } from './visibility';
  *
  * The check runs once, when the window ends, and announces only if the post is
  * public then. So a post deleted, or drafted and left that way, is never
- * announced. A rescheduled post is announced by the check its own publication
- * schedules, not this one — unless it goes live before this window ends, when
- * both announce it.
+ * announced. A rescheduled post is announced by the check the cron schedules
+ * when it publishes the post — and by this one too, if the cron has published
+ * it by the time this window ends.
  *
- * It is not a debounce: publishing again inside the window, or rescheduling to
- * a time inside it, schedules a second check, and both find the post public.
- * That sends two announcements, as the immediate sends did before this.
+ * It is not a debounce: publishing again inside the window schedules a second
+ * check, and both find the post public. That sends two announcements, as the
+ * immediate sends did before this.
  */
 export const ANNOUNCE_DELAY_MS = 5 * 60 * 1000;
 
@@ -32,6 +32,13 @@ export async function scheduleAnnouncement(ctx: MutationCtx, postId: Id<'posts'>
   });
 }
 
+/**
+ * A job scheduled for this stores its path and `{ postId }`, and fails for good
+ * if, when it comes due, the function is gone or rejects those arguments. So
+ * removing it, renaming it or changing its arguments takes two deploys: stop
+ * scheduling it, then change it once `ANNOUNCE_DELAY_MS` has passed. See
+ * docs/deployment.md for rollbacks.
+ */
 export const announceIfStillPublic = internalMutation({
   args: { postId: v.id('posts') },
   returns: v.null(),

@@ -150,6 +150,9 @@ Practically:
    field** — see the one-way note below. If it is, this deploy is refused, and
    you need a forward fix instead.
 
+   **If it predates `convex/posts/announce.ts`, check the Schedules page as
+   well** — see the note on scheduled functions below.
+
    No workflow does this for you. Dispatching `Deploy to Production` will not:
    the job is guarded by `if: github.ref == 'refs/heads/main'`, so a dispatch
    from a tag or an older branch is skipped and still reported as a successful
@@ -191,10 +194,17 @@ validator:
 
 Scheduled functions are in flight too. Every post published in the five minutes
 before a rollback has a `posts/announce:announceIfStillPublic` job waiting to
-announce it. Rolling Convex back past the commit that introduced that function —
-or renaming it later — leaves those jobs naming a function that no longer
-exists, and those announcements are lost without any alert. Check the
-dashboard's Schedules page before rolling back if announcements matter.
+announce it. A job fails for good, with no alert, if its function is gone when
+it comes due or rejects the `{ postId }` it stored. Rolling Convex back to a
+commit without that function does this; so does reverting the commit that added
+it on `main`, renaming it, or changing its arguments.
+
+The jobs are never more than five minutes old, so the simplest fix is to wait:
+with Hosting already rolled back, hold step 2 until the dashboard's Schedules
+page shows no pending `announceIfStillPublic` jobs. If you cannot wait, note
+their post IDs. After the rollback, for each of those posts that is still
+public, run `posts/action:sendSlackNotification` and `sendDiscordNotification`
+from the dashboard with its `postId`, `title`, `content` and `category`.
 
 ## Previews
 

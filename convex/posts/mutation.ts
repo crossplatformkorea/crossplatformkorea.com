@@ -6,7 +6,13 @@ import { DEFAULT_CATEGORY, ErrorCode } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
 import { generateSlug } from '../utils/slug';
-import { isPublicPost, nextPublishedAt, publishedAtFor, resolvePostStatus } from './visibility';
+import {
+  isPublicPost,
+  nextPublishedAt,
+  publishedAtFor,
+  readPublishAt,
+  resolvePostStatus,
+} from './visibility';
 import { scheduleAnnouncement } from './announce';
 
 const postStatusValidator = v.union(
@@ -42,7 +48,7 @@ export const createPost = mutation({
     // Ensure a valid category is used
     const category = args.category || DEFAULT_CATEGORY;
     const youtubeUrl = args.youtubeUrl?.trim() || undefined;
-    const publishAt = args.publishAt?.trim() || undefined;
+    const publishAt = readPublishAt(args.publishAt);
     const status = resolvePostStatus({ status: args.status, publishAt });
 
     // 멘션 추출 및 해결
@@ -269,7 +275,7 @@ export const createPostFromScript = internalMutation({
     const now = new Date().toISOString();
     const category = args.category || DEFAULT_CATEGORY;
     const youtubeUrl = args.youtubeUrl?.trim() || undefined;
-    const publishAt = args.publishAt?.trim() || undefined;
+    const publishAt = readPublishAt(args.publishAt);
     const status = resolvePostStatus({ status: args.status, publishAt });
     const thumbnail =
       args.thumbnail ||
@@ -336,7 +342,7 @@ export const updatePostFromScript = internalMutation({
     }
     if (args.status !== undefined || args.publishAt !== undefined) {
       const publishAt =
-        args.publishAt !== undefined ? args.publishAt.trim() || undefined : post.publishAt;
+        args.publishAt !== undefined ? readPublishAt(args.publishAt) : post.publishAt;
       updateData.publishAt = publishAt;
       const resolvedStatus = resolvePostStatus({
         status: args.status ?? post.status,
@@ -497,7 +503,7 @@ export const updatePost = mutation({
     }
     if (args.status !== undefined || args.publishAt !== undefined) {
       const publishAt =
-        args.publishAt !== undefined ? args.publishAt.trim() || undefined : post.publishAt;
+        args.publishAt !== undefined ? readPublishAt(args.publishAt) : post.publishAt;
       updateData.publishAt = publishAt;
       const resolvedStatus = resolvePostStatus({
         status: args.status ?? post.status,

@@ -8,6 +8,7 @@ import {
   nextPublishedAt,
   publishedAtBackfill,
   publishedAtFor,
+  readPublishAt,
   resolvePostStatus,
   shouldAnnounce,
   seoulLocalToUtcIso,
@@ -400,5 +401,27 @@ describe('shouldAnnounce', () => {
   test('announces a post that is still public', () => {
     expect(shouldAnnounce({ status: 'published' }, now)).toBe(true);
     expect(shouldAnnounce({ _creationTime: now }, now)).toBe(true);
+  });
+});
+
+describe('readPublishAt', () => {
+  test('keeps a readable date as given, only trimmed', () => {
+    expect(readPublishAt(' 2026-09-24T16:00:00+09:00 ')).toBe('2026-09-24T16:00:00+09:00');
+    expect(readPublishAt('2026-09-24T07:00:00.000Z')).toBe('2026-09-24T07:00:00.000Z');
+  });
+
+  test('treats a blank date as none', () => {
+    expect(readPublishAt(undefined)).toBeUndefined();
+    expect(readPublishAt('')).toBeUndefined();
+    expect(readPublishAt('   ')).toBeUndefined();
+  });
+
+  // Stored, such a date made the post published but hidden: its announcement
+  // check skipped it, and fixing the date later scheduled no new one.
+  test('rejects a date that cannot be read', () => {
+    expect(resolvePostStatus({ status: 'published', publishAt: 'TBD' })).toBe('published');
+    expect(isPublicPost({ status: 'published', publishAt: 'TBD' })).toBe(false);
+    expect(() => readPublishAt('TBD')).toThrow('Invalid publishAt');
+    expect(() => readPublishAt('not a date')).toThrow('Invalid publishAt');
   });
 });
