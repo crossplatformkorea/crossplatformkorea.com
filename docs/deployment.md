@@ -204,7 +204,10 @@ Rolling back past #29, which moved post mention notifications into this job,
 fails nothing, but the posts published in those five minutes get no mention
 notifications: their publish left that to the job, and the older job does not
 create them. Holding step 2 as below avoids it. Otherwise the affected posts are
-those whose `announceIfStillPublic` job completed after the push landed.
+those whose `announceIfStillPublic` job was scheduled before the push landed
+(its `_creationTime`) but completed after it. Leave out later posts: they ran
+the old code throughout, and one the old `createPost` published already has its
+notifications.
 
 For a rollback, waiting avoids most of this: the jobs are never more than five
 minutes old, so with Hosting already rolled back, hold step 2 until the
