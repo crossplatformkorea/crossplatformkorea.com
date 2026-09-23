@@ -206,10 +206,17 @@ dashboard's Schedules page shows no pending `announceIfStillPublic` jobs.
 Either way — and after a revert, which deploys with no step to hold — look for
 the jobs that failed once five minutes have passed since the push landed. A
 check fails only when it comes due, so looking sooner misses some. The
-Schedules page lists only upcoming runs;
-`bunx convex data _scheduled_functions --prod` lists recent ones with their
-state. For each `posts/announce.js:announceIfStillPublic` job whose state
-is `failed` and whose post is still public, run
+Schedules page lists only upcoming runs, so list the failed ones from the CLI:
+
+```bash
+bunx convex data _scheduled_functions --prod --format jsonl | grep announceIfStillPublic | grep failed
+```
+
+`--format jsonl` matters: the default table pads the `args` column to the
+widest row, and a Slack or Discord job carries a whole post there, so a
+terminal cuts every line off before `name` and `state`.
+
+For each of those jobs whose post is still public, run
 `posts/action:sendSlackNotification` and `sendDiscordNotification` from the
 dashboard with the post's `postId`, `title`, `content` and `category`. Only
 those: a job that ran before the rollback landed has already announced its
