@@ -14,10 +14,14 @@ import { shouldAnnounce } from './visibility';
  * message back.
  *
  * The check runs once, when the window ends, and announces only if the post is
- * public then. So a post deleted — or drafted or rescheduled and left that way —
- * is never announced. It is not a debounce: publishing, drafting and publishing
- * again inside the window schedules two checks, and both find it public. That
- * sends two announcements, as the immediate sends did before this.
+ * public then. So a post deleted, or drafted and left that way, is never
+ * announced. A rescheduled post is announced by the check its own publication
+ * schedules, not this one — unless it goes live before this window ends, when
+ * both announce it.
+ *
+ * It is not a debounce: publishing again inside the window, or rescheduling to
+ * a time inside it, schedules a second check, and both find the post public.
+ * That sends two announcements, as the immediate sends did before this.
  */
 export const ANNOUNCE_DELAY_MS = 5 * 60 * 1000;
 
