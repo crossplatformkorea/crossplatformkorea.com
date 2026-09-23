@@ -99,9 +99,12 @@ export const notifyMentionedUsers = internalMutation({
     for (const userId of post.mentions) {
       const existing = await ctx.db
         .query('notifications')
-        .withIndex('by_userId_postId', (q) => q.eq('userId', userId).eq('postId', post._id))
-        .filter((q) =>
-          q.and(q.eq(q.field('type'), 'MENTIONED'), q.eq(q.field('commentId'), undefined)),
+        .withIndex('by_userId_postId_type_commentId', (q) =>
+          q
+            .eq('userId', userId)
+            .eq('postId', post._id)
+            .eq('type', 'MENTIONED')
+            .eq('commentId', undefined),
         )
         .first();
       if (existing !== null) {
