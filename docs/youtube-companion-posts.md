@@ -11,7 +11,7 @@ Cross-Platform Korea publishes a site post the same calendar day as the YouTube 
 
 Store `publishAt` as UTC ISO. Naive datetimes sent by the worker are interpreted as Asia/Seoul (KST, UTC+9, no DST). Example: `2026-09-02 16:00` and `2026-09-02T16:00+09:00` both become `2026-09-02T07:00:00.000Z`.
 
-A Convex cron runs every minute and flips due `scheduled` rows to `published`. Slack/Discord notifications fire at publish time, not at insert time.
+A Convex cron runs every minute and flips due `scheduled` rows to `published`. Slack/Discord announcements go out five minutes after that, and only if the post is still public then — see `convex/posts/announce.ts`. A companion post due at 16:00 KST is announced around 16:05.
 
 ## Category
 

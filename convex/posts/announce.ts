@@ -11,8 +11,13 @@ import { shouldAnnounce } from './visibility';
  * The announcement used to go out the moment a post was published, so posting
  * something by mistake and deleting it straight away still put it in the
  * community channels — and a Slack incoming webhook gives no way to take a
- * message back. A post deleted, drafted or rescheduled inside this window is
- * never announced.
+ * message back.
+ *
+ * The check runs once, when the window ends, and announces only if the post is
+ * public then. So a post deleted — or drafted or rescheduled and left that way —
+ * is never announced. It is not a debounce: publishing, drafting and publishing
+ * again inside the window schedules two checks, and both find it public. That
+ * sends two announcements, as the immediate sends did before this.
  */
 export const ANNOUNCE_DELAY_MS = 5 * 60 * 1000;
 
@@ -28,7 +33,7 @@ export const announceIfStillPublic = internalMutation({
   returns: v.null(),
   handler: async (ctx, args) => {
     const post = await ctx.db.get(args.postId);
-    if (!shouldAnnounce(post)) {
+    if (post === null || !shouldAnnounce(post)) {
       return null;
     }
 

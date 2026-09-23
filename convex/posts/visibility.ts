@@ -168,10 +168,10 @@ export function publishedAtBackfill(
  * Whether a post should still be announced to Slack and Discord when its grace
  * window ends. `null` is a post deleted in the meantime.
  */
-export function shouldAnnounce<T extends PostVisibilityFields>(
-  post: T | null,
+export function shouldAnnounce(
+  post: PostVisibilityFields | null,
   nowMs: number = Date.now(),
-): post is T {
+): boolean {
   return post !== null && isPublicPost(post, nowMs);
 }
 

@@ -179,6 +179,13 @@ roll back past such a change, go _forward_ — a commit that keeps the field in
 the schema and validators but reverts the behaviour. This applies today to
 `userProfiles.displayNameLower` (#22) and `posts.publishedAt`.
 
+Scheduled functions are in flight too. Every post published in the five minutes
+before a rollback has a `posts/announce:announceIfStillPublic` job waiting to
+announce it. Rolling Convex back past the commit that introduced that function —
+or renaming it later — leaves those jobs naming a function that no longer
+exists, and those announcements are lost with no error anyone sees. Check the
+dashboard's Schedules page before rolling back if announcements matter.
+
 Two in-repo examples, both times the field reached the data without reaching the
 validator:
 
