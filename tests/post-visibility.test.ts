@@ -8,7 +8,9 @@ import {
   nextPublishedAt,
   publishedAtBackfill,
   publishedAtFor,
+  readPublishAt,
   resolvePostStatus,
+  shouldAnnounce,
   seoulLocalToUtcIso,
   utcIsoToSeoulLocal,
 } from '../convex/posts/visibility.ts';
@@ -376,5 +378,51 @@ describe('publishedAtBackfill', () => {
         _creationTime: created,
       }),
     ).toBeNull();
+  });
+});
+
+// Posting by mistake and deleting straight away used to announce the post
+// anyway, because the announcement left the moment it was published. It now
+// waits out a grace window and is sent only if this still holds at the end.
+describe('shouldAnnounce', () => {
+  const now = Date.parse('2026-09-24T00:00:00.000Z');
+
+  test('stays quiet for a post deleted during the grace window', () => {
+    expect(shouldAnnounce(null, now)).toBe(false);
+  });
+
+  test('stays quiet for a post drafted or rescheduled during the window', () => {
+    expect(shouldAnnounce({ status: 'draft' }, now)).toBe(false);
+    expect(
+      shouldAnnounce({ status: 'scheduled', publishAt: '2026-10-01T00:00:00.000Z' }, now),
+    ).toBe(false);
+  });
+
+  test('announces a post that is still public', () => {
+    expect(shouldAnnounce({ status: 'published' }, now)).toBe(true);
+    expect(shouldAnnounce({ _creationTime: now }, now)).toBe(true);
+  });
+});
+
+describe('readPublishAt', () => {
+  test('keeps a readable date as given, only trimmed', () => {
+    expect(readPublishAt(' 2026-09-24T16:00:00+09:00 ')).toBe('2026-09-24T16:00:00+09:00');
+    expect(readPublishAt('2026-09-24T07:00:00.000Z')).toBe('2026-09-24T07:00:00.000Z');
+  });
+
+  test('treats a blank date as none', () => {
+    expect(readPublishAt(undefined)).toBeUndefined();
+    expect(readPublishAt('')).toBeUndefined();
+    expect(readPublishAt('   ')).toBeUndefined();
+  });
+
+  // Stored, such a date made the post published but hidden: its announcement
+  // check skipped it, and fixing the date to a past one, or clearing it,
+  // scheduled no new one.
+  test('rejects a date that cannot be read', () => {
+    expect(resolvePostStatus({ status: 'published', publishAt: 'TBD' })).toBe('published');
+    expect(isPublicPost({ status: 'published', publishAt: 'TBD' })).toBe(false);
+    expect(() => readPublishAt('TBD')).toThrow('Invalid publishAt');
+    expect(() => readPublishAt('not a date')).toThrow('Invalid publishAt');
   });
 });

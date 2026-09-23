@@ -164,6 +164,17 @@ export function publishedAtBackfill(
   return post.publishedAt === undefined ? null : { publishedAt: undefined };
 }
 
+/**
+ * Whether a post should still be announced to Slack and Discord when its grace
+ * window ends. `null` is a post deleted in the meantime.
+ */
+export function shouldAnnounce(
+  post: PostVisibilityFields | null,
+  nowMs: number = Date.now(),
+): boolean {
+  return post !== null && isPublicPost(post, nowMs);
+}
+
 export function resolvePostStatus(
   args: { status?: string; publishAt?: string },
   nowMs: number = Date.now(),
@@ -240,6 +251,26 @@ export function normalizePublishAt(input: string): string {
     return new Date(ms).toISOString();
   }
   return seoulLocalToUtcIso(trimmed);
+}
+
+/**
+ * A `publishAt` argument as it is stored: trimmed, `undefined` when blank, and
+ * rejected when `Date.parse` cannot read it. `resolvePostStatus` publishes a
+ * post with such a date while `isPublicPost` keeps it hidden, so its
+ * announcement check finds nothing to announce. Fixing the date to a past one,
+ * or clearing it, then leaves the post published, which schedules no new
+ * check, so it is never announced. Unlike `normalizePublishAt`, a readable
+ * value is kept as given.
+ */
+export function readPublishAt(input: string | undefined): string | undefined {
+  const trimmed = input?.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+  if (Number.isNaN(Date.parse(trimmed))) {
+    throw new Error(`Invalid publishAt: ${input}`);
+  }
+  return trimmed;
 }
 
 /**
