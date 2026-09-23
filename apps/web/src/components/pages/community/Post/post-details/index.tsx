@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 import { cn, devConsole } from '@/lib/utils';
 import { userFacingErrorMessage } from '@/lib/errors';
 import { commentIdFromHash } from '@/lib/notificationTarget';
+import { postPublishedTime } from '@/lib/postTime';
 import { Button } from '@/components/uis/Button';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -151,7 +152,7 @@ export default function PostDetailsPage() {
   const isAuthor = isAuthenticated && user && post?.authorId === user._id;
 
   const formattedDate = post
-    ? formatDistanceToNow(new Date(post._creationTime), {
+    ? formatDistanceToNow(new Date(postPublishedTime(post)), {
         addSuffix: true,
         locale: i18n.language === 'ko' ? ko : undefined,
       })
@@ -177,7 +178,7 @@ export default function PostDetailsPage() {
         .slice(0, 160)
     : '';
 
-  const publishedIso = post ? new Date(post._creationTime).toISOString() : undefined;
+  const publishedIso = post ? new Date(postPublishedTime(post)).toISOString() : undefined;
   const modifiedIso = post
     ? new Date(post.updatedAt || post._creationTime).toISOString()
     : undefined;
@@ -367,7 +368,7 @@ export default function PostDetailsPage() {
               <div className="flex items-center justify-between border-t border-border/10 mt-4 pt-4 ">
                 <AuthorCard
                   author={author}
-                  creationTime={post._creationTime}
+                  creationTime={postPublishedTime(post)}
                   formattedDate={formattedDate}
                 />
 

@@ -99,7 +99,10 @@ export function rssPlugin(options: RssOptions): Plugin {
               const path = post.slug || post._id;
               const link = `${hostname}/post/${path}`;
               const excerpt = buildExcerpt(post.content || '');
-              const pubDate = rfc822(post._creationTime);
+              // When it went public, not when it was drafted — readers sort
+              // on pubDate, so a scheduled post dated at creation lands weeks
+              // down their list.
+              const pubDate = rfc822(post.publishedAt ?? post._creationTime);
               const categories = [post.category, ...(post.tags ?? [])]
                 .filter(Boolean)
                 .map((c) => `    <category>${escapeXml(c)}</category>`)

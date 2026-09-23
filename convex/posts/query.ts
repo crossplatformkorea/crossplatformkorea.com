@@ -35,6 +35,10 @@ const postObjectValidator = v.object({
   status: v.optional(postStatusValidator),
   publishAt: v.optional(v.string()),
   youtubeUrl: v.optional(v.string()),
+  // Must stay in step with the schema. Handlers using this validator return
+  // the document itself, so an undeclared field throws ReturnsValidationError
+  // the moment a backfill writes it (82ea64c, #24).
+  publishedAt: v.optional(v.number()),
 });
 
 async function canSeePost(ctx: QueryCtx, post: Doc<'posts'>): Promise<boolean> {
@@ -76,16 +80,17 @@ export const getAllPostsForSitemap = query({
 });
 
 // Get recent posts with fields needed for RSS feed generation. Returns the
-// top N posts (default 30) in descending creation order. Author displayName
+// top N posts (default 30) newest-published first. Author displayName
 // is resolved server-side so the feed generator doesn't need a second round
 // trip per post.
 export const getRecentPostsForRss = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     const limit = args.limit ?? 30;
+    // Publication order — see getPostsByCategory.
     const posts = await ctx.db
       .query('posts')
-      .withIndex('by_creation_time')
+      .withIndex('by_published_at')
       .order('desc')
       .take(Math.max(limit * 3, limit));
 
@@ -110,6 +115,7 @@ export const getRecentPostsForRss = query({
         slug: post.slug,
         thumbnail: post.thumbnail,
         updatedAt: post.updatedAt,
+        publishedAt: post.publishedAt,
         authorName,
       });
     }
@@ -161,13 +167,20 @@ export const getPostsByCategory = query({
   handler: async (ctx, args) => {
     const queryBuilder = ctx.db.query('posts');
 
+    // Publication order, not creation order: a post scheduled weeks ahead has
+    // to land at the top when it goes live. Rows that are not public yet have
+    // no `publishedAt`, which sorts last descending, so they sit at the tail
+    // instead of costing slots on the first page.
     const result =
       args.category !== 'all'
         ? await queryBuilder
-            .withIndex('by_category', (q) => q.eq('category', args.category))
+            .withIndex('by_category_published_at', (q) => q.eq('category', args.category))
             .order('desc')
             .paginate(args.paginationOpts)
-        : await queryBuilder.order('desc').paginate(args.paginationOpts);
+        : await queryBuilder
+            .withIndex('by_published_at')
+            .order('desc')
+            .paginate(args.paginationOpts);
 
     return {
       ...result,
@@ -244,7 +257,8 @@ export const getRecentPosts = query({
   args: { limit: v.number() },
   returns: v.array(postObjectValidator),
   handler: async (ctx, args) => {
-    const posts = ctx.db.query('posts').withIndex('by_creation_time').order('desc');
+    // Publication order — see getPostsByCategory.
+    const posts = ctx.db.query('posts').withIndex('by_published_at').order('desc');
     return takePublicPosts(posts, args.limit);
   },
 });
@@ -295,6 +309,7 @@ export const getPostsByAuthor = query({
       status: v.optional(postStatusValidator),
       publishAt: v.optional(v.string()),
       youtubeUrl: v.optional(v.string()),
+      publishedAt: v.optional(v.number()),
     }),
   ),
   handler: async (ctx, args) => {

@@ -17,6 +17,7 @@ import PostStatusBadge from '@/components/uis/PostStatusBadge';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { createUserProfileLink } from '@/lib/utils';
+import { postPublishedTime } from '@/lib/postTime';
 
 // Import Post type from Convex data model
 type Post = Doc<'posts'>;
@@ -243,8 +244,8 @@ export default function PostListItem({ post, isEventsCategory = false }: PostLis
             </Button>
           )}
           <span className="mx-1.5 text-muted-foreground/50">•</span>
-          <time dateTime={new Date(post._creationTime).toISOString()} className="text-xs">
-            {formatDistanceToNow(new Date(post._creationTime), {
+          <time dateTime={new Date(postPublishedTime(post)).toISOString()} className="text-xs">
+            {formatDistanceToNow(new Date(postPublishedTime(post)), {
               addSuffix: true,
               locale: i18n.language === 'ko' ? ko : undefined,
             })}

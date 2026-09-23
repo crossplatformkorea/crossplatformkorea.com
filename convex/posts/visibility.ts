@@ -59,6 +59,111 @@ export function effectivePublishTime(post: PostVisibilityFields, fallbackMs: num
   return post._creationTime ?? fallbackMs;
 }
 
+/**
+ * `publishedAt` for a row: when it became public, or `undefined` while it is
+ * not. Stored so feeds can paginate in publication order — Convex cursors only
+ * follow an index, so ordering by a computed value is not possible at read
+ * time. Without it, a post scheduled weeks ahead surfaces where its creation
+ * time puts it, already buried under everything published in between.
+ *
+ * Leaving drafts and scheduled rows unset sorts them after every published
+ * post in a descending index (Convex orders `undefined` lowest), so they never
+ * take a slot at the head of a feed page.
+ */
+export function publishedAtFor(
+  status: PostStatus,
+  publishAt: string | undefined,
+  creationMs: number,
+): number | undefined {
+  if (status !== 'published') {
+    return undefined;
+  }
+  return effectivePublishTime({ publishAt, _creationTime: creationMs }, creationMs);
+}
+
+type PublishedAtFields = {
+  status?: string;
+  publishAt?: string;
+  publishedAt?: number;
+  _creationTime: number;
+};
+
+/**
+ * `publishedAt` after an edit that may change publication.
+ *
+ * A post *becoming* public through an edit appeared to readers now, whatever
+ * date it carries: a stale date left on a draft from an earlier plan, or a past
+ * time picked to publish a scheduled post early, would otherwise date it hours
+ * or weeks back and bury it — exactly as the creation-time sort did. Only
+ * creating a post with a past date backdates it (see `publishedAtFor`).
+ *
+ * For a post that was already public, an edit keeps its value unless it sets a
+ * new explicit date. Clearing the date keeps it too, rather than falling back
+ * to the creation time.
+ */
+export function nextPublishedAt(
+  before: PublishedAtFields,
+  after: { status: PostStatus; publishAt: string | undefined },
+  nowMs: number = Date.now(),
+): number | undefined {
+  if (after.status !== 'published') {
+    return undefined;
+  }
+  if (!isPublicPost(before, nowMs)) {
+    return nowMs;
+  }
+  // A row not yet backfilled has no value; derive it the way the backfill
+  // would, so an edit in that window cannot date a scheduled post at creation.
+  const current = before.publishedAt ?? effectivePublishTime(before, before._creationTime);
+  if (after.publishAt === undefined || sameMinute(after.publishAt, before.publishAt)) {
+    return current;
+  }
+  return publishedAtFor('published', after.publishAt, current);
+}
+
+/**
+ * Whether two stored dates name the same minute. The editor re-sends a date at
+ * minute precision in canonical ISO, but the script and companion paths store
+ * whatever they were given — `+09:00` offsets, missing milliseconds, seconds.
+ * Comparing strings would read the editor's re-send of an unchanged date as a
+ * new explicit date and re-date the post on the next typo fix.
+ */
+function sameMinute(a: string, b: string | undefined): boolean {
+  if (b === undefined) {
+    return false;
+  }
+  if (a === b) {
+    return true;
+  }
+  const aMs = Date.parse(a);
+  const bMs = Date.parse(b);
+  return (
+    !Number.isNaN(aMs) &&
+    !Number.isNaN(bMs) &&
+    Math.floor(aMs / 60_000) === Math.floor(bMs / 60_000)
+  );
+}
+
+/**
+ * The backfill's decision for one row: the value to write, or `null` to leave
+ * it alone.
+ *
+ * It fills gaps and clears strays but never overwrites a published row's
+ * existing value, which may be a real publication time recorded by an edit
+ * that no formula over the row can reproduce. It decides by status, as the
+ * write paths do, rather than by the current time.
+ */
+export function publishedAtBackfill(
+  post: PublishedAtFields,
+): { publishedAt: number | undefined } | null {
+  if ((post.status ?? 'published') === 'published') {
+    return post.publishedAt === undefined
+      ? { publishedAt: publishedAtFor('published', post.publishAt, post._creationTime) }
+      : null;
+  }
+  return post.publishedAt === undefined ? null : { publishedAt: undefined };
+}
+
 export function resolvePostStatus(
   args: { status?: string; publishAt?: string },
   nowMs: number = Date.now(),
