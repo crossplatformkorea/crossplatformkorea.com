@@ -165,14 +165,28 @@ export function publishedAtBackfill(
 }
 
 /**
- * Whether a post should still be announced to Slack and Discord when its grace
- * window ends. `null` is a post deleted in the meantime.
+ * Whether a post should still be announced — to Slack, Discord and the users it
+ * mentions — when its grace window ends. `null` is a post deleted in the
+ * meantime.
  */
 export function shouldAnnounce(
   post: PostVisibilityFields | null,
   nowMs: number = Date.now(),
 ): boolean {
   return post !== null && isPublicPost(post, nowMs);
+}
+
+/**
+ * The users to notify about a post's mentions: each once, never its author,
+ * and nobody in `notified` — users an earlier publication of the post already
+ * told.
+ */
+export function mentionRecipients<T extends string>(
+  authorId: T,
+  mentions: readonly T[],
+  notified: ReadonlySet<T>,
+): T[] {
+  return [...new Set(mentions)].filter((userId) => userId !== authorId && !notified.has(userId));
 }
 
 export function resolvePostStatus(

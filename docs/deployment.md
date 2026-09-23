@@ -194,10 +194,16 @@ validator:
 
 Scheduled functions are in flight too. Every post published in the five minutes
 before a rollback has a `posts/announce:announceIfStillPublic` job waiting to
-announce it. A job fails for good, with no alert, if its function is gone when
-it comes due or rejects the `{ postId }` it stored. Rolling Convex back to a
-commit without that function does this; so does reverting the commit that added
-it on `main`, renaming it, or changing its arguments.
+announce it and to notify the users it mentions. A job fails for good, with no
+alert, if its function is gone when it comes due or rejects the `{ postId }` it
+stored. Rolling Convex back to a commit without that function does this; so does
+reverting the commit that added it on `main`, renaming it, or changing its
+arguments.
+
+Rolling back past the commit that moved post mention notifications into this
+job fails nothing, but the posts published in those five minutes get no mention
+notifications: their publish left that to the job, and the older job does not
+create them.
 
 For a rollback, waiting avoids most of this: the jobs are never more than five
 minutes old, so with Hosting already rolled back, hold step 2 until the
@@ -221,6 +227,10 @@ For each of those jobs whose post is still public, run
 dashboard with the post's `postId`, `title`, `content` and `category`. Only
 those: a job that ran before the rollback landed has already announced its
 post, and Slack cannot take a duplicate back.
+
+A failed job also created none of its post's mention notifications. They are
+in-app only; if they matter, recreate them with
+`notifications/mutation:createNotification`.
 
 ## Previews
 

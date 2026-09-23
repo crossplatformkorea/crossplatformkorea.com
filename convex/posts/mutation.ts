@@ -82,40 +82,6 @@ export const createPost = mutation({
       publishedAt: publishedAtFor(status, publishAt, Date.now()),
     });
 
-    // 멘션 알림 생성
-    if (status === 'published' && mentionedUserIds.length > 0) {
-      const authorProfile = await ctx.db
-        .query('userProfiles')
-        .withIndex('by_user', (q) => q.eq('userId', userId))
-        .unique();
-
-      const mentionerName = authorProfile?.displayName || 'Someone';
-
-      for (const mentionedUserId of mentionedUserIds) {
-        // 자신을 멘션한 경우는 알림 생성하지 않음
-        if (mentionedUserId !== userId) {
-          // 멘션된 사용자의 언어 설정 조회
-          const mentionedUserProfile = await ctx.db
-            .query('userProfiles')
-            .withIndex('by_user', (q) => q.eq('userId', mentionedUserId))
-            .unique();
-
-          const userLocale = mentionedUserProfile?.locale || 'ko';
-
-          // scheduler와 action 사용 대신 직접 createNotification 호출
-          await ctx.runMutation(internal.notifications.mutation.createNotification, {
-            userId: mentionedUserId,
-            type: 'MENTIONED',
-            postId: postId,
-            triggeredById: userId,
-            mentionerName: mentionerName,
-            postTitle: args.title,
-            locale: userLocale,
-          });
-        }
-      }
-    }
-
     console.log('args.storageIds', args.storageIds);
 
     // Handle uploaded files if they exist
@@ -164,7 +130,7 @@ export const createPost = mutation({
       }
     }
 
-    // Slack/Discord 공지 — 유예 시간 뒤, 그때도 공개 상태일 때만 (announce.ts)
+    // Slack/Discord 공지와 멘션 알림 — 유예 시간 뒤, 그때도 공개 상태일 때만 (announce.ts)
     if (status === 'published') {
       await scheduleAnnouncement(ctx, postId);
     }

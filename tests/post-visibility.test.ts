@@ -3,6 +3,7 @@ import {
   defaultCompanionPublishAt,
   isDueScheduledPost,
   isPublicPost,
+  mentionRecipients,
   takePublicPosts,
   normalizePublishAt,
   nextPublishedAt,
@@ -424,5 +425,22 @@ describe('readPublishAt', () => {
     expect(isPublicPost({ status: 'published', publishAt: 'TBD' })).toBe(false);
     expect(() => readPublishAt('TBD')).toThrow('Invalid publishAt');
     expect(() => readPublishAt('not a date')).toThrow('Invalid publishAt');
+  });
+});
+
+describe('mentionRecipients', () => {
+  test('notifies each mentioned user once', () => {
+    expect(mentionRecipients('author', ['a', 'b', 'a'], new Set())).toEqual(['a', 'b']);
+  });
+
+  test('never notifies the author, even one who mentions themselves', () => {
+    expect(mentionRecipients('author', ['author', 'a'], new Set())).toEqual(['a']);
+  });
+
+  // Every publication schedules a check, so a post published, drafted and
+  // published again would otherwise tell its mentioned users twice.
+  test('skips users an earlier publication already notified', () => {
+    expect(mentionRecipients('author', ['a', 'b'], new Set(['a']))).toEqual(['b']);
+    expect(mentionRecipients('author', ['a'], new Set(['a']))).toEqual([]);
   });
 });
