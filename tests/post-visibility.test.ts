@@ -417,7 +417,8 @@ describe('readPublishAt', () => {
   });
 
   // Stored, such a date made the post published but hidden: its announcement
-  // check skipped it, and fixing the date later scheduled no new one.
+  // check skipped it, and fixing the date to a past one, or clearing it,
+  // scheduled no new one.
   test('rejects a date that cannot be read', () => {
     expect(resolvePostStatus({ status: 'published', publishAt: 'TBD' })).toBe('published');
     expect(isPublicPost({ status: 'published', publishAt: 'TBD' })).toBe(false);

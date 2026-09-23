@@ -257,9 +257,10 @@ export function normalizePublishAt(input: string): string {
  * A `publishAt` argument as it is stored: trimmed, `undefined` when blank, and
  * rejected when `Date.parse` cannot read it. `resolvePostStatus` publishes a
  * post with such a date while `isPublicPost` keeps it hidden, so its
- * announcement check finds nothing to announce — and fixing the date later is
- * an edit that leaves it published, which schedules no new check. Unlike
- * `normalizePublishAt`, a readable value is kept as given.
+ * announcement check finds nothing to announce. Fixing the date to a past one,
+ * or clearing it, then leaves the post published, which schedules no new
+ * check, so it is never announced. Unlike `normalizePublishAt`, a readable
+ * value is kept as given.
  */
 export function readPublishAt(input: string | undefined): string | undefined {
   const trimmed = input?.trim();

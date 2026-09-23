@@ -199,12 +199,19 @@ it comes due or rejects the `{ postId }` it stored. Rolling Convex back to a
 commit without that function does this; so does reverting the commit that added
 it on `main`, renaming it, or changing its arguments.
 
-The jobs are never more than five minutes old, so the simplest fix is to wait:
-with Hosting already rolled back, hold step 2 until the dashboard's Schedules
-page shows no pending `announceIfStillPublic` jobs. If you cannot wait, note
-their post IDs. After the rollback, for each of those posts that is still
-public, run `posts/action:sendSlackNotification` and `sendDiscordNotification`
-from the dashboard with its `postId`, `title`, `content` and `category`.
+For a rollback, waiting avoids most of this: the jobs are never more than five
+minutes old, so with Hosting already rolled back, hold step 2 until the
+dashboard's Schedules page shows no pending `announceIfStillPublic` jobs.
+
+Either way — and after a revert, which deploys with no step to hold — check
+afterwards for the jobs that did fail. The Schedules page lists only upcoming
+runs; `bunx convex data _scheduled_functions --prod` lists recent ones with
+their state. For each `posts/announce.js:announceIfStillPublic` job whose state
+is `failed` and whose post is still public, run
+`posts/action:sendSlackNotification` and `sendDiscordNotification` from the
+dashboard with the post's `postId`, `title`, `content` and `category`. Only
+those: a job that ran before the rollback landed has already announced its
+post, and Slack cannot take a duplicate back.
 
 ## Previews
 
