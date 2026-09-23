@@ -40,7 +40,9 @@ describe('getNotificationMessages', () => {
   });
 
   test.each(TYPES)('every locale renders %s differently from the others', (type) => {
-    const titles = LOCALES.map((locale) => getNotificationMessages(type, locale, FULL_PARAMS).title);
+    const titles = LOCALES.map(
+      (locale) => getNotificationMessages(type, locale, FULL_PARAMS).title,
+    );
     // en/ko/ja must each be translated, not silently sharing the English copy.
     expect(new Set(titles).size).toBe(LOCALES.length);
   });
@@ -49,6 +51,16 @@ describe('getNotificationMessages', () => {
     for (const type of TYPES) {
       expect(getNotificationMessages(type, 'fr', FULL_PARAMS)).toEqual(
         getNotificationMessages(type, 'en', FULL_PARAMS),
+      );
+    }
+  });
+
+  // A stored locale is whatever string a user sent. Inherited names used to
+  // find an Object.prototype entry with no copy, so the caller crashed.
+  test('falls back to English for a locale named after an Object property', () => {
+    for (const locale of ['constructor', 'toString', '__proto__', 'hasOwnProperty']) {
+      expect(getNotificationMessages('MENTIONED', locale, FULL_PARAMS)).toEqual(
+        getNotificationMessages('MENTIONED', 'en', FULL_PARAMS),
       );
     }
   });
@@ -87,12 +99,12 @@ describe('getNotificationMessages', () => {
   });
 
   test('quotes the subject the notification is about', () => {
-    expect(
-      getNotificationMessages('COMMENT_ON_POST', 'en', FULL_PARAMS).message,
-    ).toContain('Post Title');
-    expect(
-      getNotificationMessages('LIKE_ON_SHOWCASE', 'ko', FULL_PARAMS).message,
-    ).toContain('Showcase Title');
+    expect(getNotificationMessages('COMMENT_ON_POST', 'en', FULL_PARAMS).message).toContain(
+      'Post Title',
+    );
+    expect(getNotificationMessages('LIKE_ON_SHOWCASE', 'ko', FULL_PARAMS).message).toContain(
+      'Showcase Title',
+    );
     expect(
       getNotificationMessages('COMMENT_ON_FEATURE_REQUEST', 'ja', FULL_PARAMS).message,
     ).toContain('Feature Request Title');
