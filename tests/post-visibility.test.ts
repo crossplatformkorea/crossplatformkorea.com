@@ -9,6 +9,7 @@ import {
   publishedAtBackfill,
   publishedAtFor,
   resolvePostStatus,
+  shouldAnnounce,
   seoulLocalToUtcIso,
   utcIsoToSeoulLocal,
 } from '../convex/posts/visibility.ts';
@@ -376,5 +377,28 @@ describe('publishedAtBackfill', () => {
         _creationTime: created,
       }),
     ).toBeNull();
+  });
+});
+
+// Posting by mistake and deleting straight away used to announce the post
+// anyway, because the announcement left the moment it was published. It now
+// waits out a grace window and is sent only if this still holds at the end.
+describe('shouldAnnounce', () => {
+  const now = Date.parse('2026-09-24T00:00:00.000Z');
+
+  test('stays quiet for a post deleted during the grace window', () => {
+    expect(shouldAnnounce(null, now)).toBe(false);
+  });
+
+  test('stays quiet for a post drafted or rescheduled during the window', () => {
+    expect(shouldAnnounce({ status: 'draft' }, now)).toBe(false);
+    expect(
+      shouldAnnounce({ status: 'scheduled', publishAt: '2026-10-01T00:00:00.000Z' }, now),
+    ).toBe(false);
+  });
+
+  test('announces a post that is still public', () => {
+    expect(shouldAnnounce({ status: 'published' }, now)).toBe(true);
+    expect(shouldAnnounce({ _creationTime: now }, now)).toBe(true);
   });
 });

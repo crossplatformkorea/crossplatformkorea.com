@@ -1,36 +1,19 @@
 import { ConvexError, v } from 'convex/values';
 import { getAuthUserId } from '@convex-dev/auth/server';
-import { mutation, internalMutation, MutationCtx } from '../_generated/server';
+import { mutation, internalMutation } from '../_generated/server';
 import { Id } from '../_generated/dataModel';
 import { DEFAULT_CATEGORY, ErrorCode } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
 import { generateSlug } from '../utils/slug';
 import { isPublicPost, nextPublishedAt, publishedAtFor, resolvePostStatus } from './visibility';
+import { scheduleAnnouncement } from './announce';
 
 const postStatusValidator = v.union(
   v.literal('draft'),
   v.literal('scheduled'),
   v.literal('published'),
 );
-
-async function notifyPublishedPost(
-  ctx: MutationCtx,
-  args: { postId: Id<'posts'>; title: string; content: string; category: string },
-) {
-  await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
-    postId: args.postId,
-    title: args.title,
-    content: args.content,
-    category: args.category,
-  });
-  await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
-    postId: args.postId,
-    title: args.title,
-    content: args.content,
-    category: args.category,
-  });
-}
 
 // Create a new post with improved file handling
 export const createPost = mutation({
@@ -175,14 +158,9 @@ export const createPost = mutation({
       }
     }
 
-    // Slack 알림 전송 (비동기로 실행)
+    // Slack/Discord 공지 — 유예 시간 뒤, 그때도 공개 상태일 때만 (announce.ts)
     if (status === 'published') {
-      await notifyPublishedPost(ctx, {
-        postId,
-        title: args.title,
-        content: args.content,
-        category,
-      });
+      await scheduleAnnouncement(ctx, postId);
     }
 
     return postId;
@@ -315,12 +293,7 @@ export const createPostFromScript = internalMutation({
     });
 
     if (status === 'published') {
-      await notifyPublishedPost(ctx, {
-        postId,
-        title: args.title,
-        content: args.content,
-        category,
-      });
+      await scheduleAnnouncement(ctx, postId);
     }
 
     return postId;
@@ -389,12 +362,7 @@ export const updatePostFromScript = internalMutation({
       (typeof updateData.status === 'string' ? updateData.status : post.status) ?? 'published';
     const wasPublished = (post.status ?? 'published') === 'published';
     if (!wasPublished && nextStatus === 'published') {
-      await notifyPublishedPost(ctx, {
-        postId: args.postId,
-        title: typeof updateData.title === 'string' ? updateData.title : post.title,
-        content: typeof updateData.content === 'string' ? updateData.content : post.content,
-        category: typeof updateData.category === 'string' ? updateData.category : post.category,
-      });
+      await scheduleAnnouncement(ctx, args.postId);
     }
 
     return true;
@@ -555,12 +523,7 @@ export const updatePost = mutation({
       (typeof updateData.status === 'string' ? updateData.status : post.status) ?? 'published';
     const wasPublished = (post.status ?? 'published') === 'published';
     if (!wasPublished && nextStatus === 'published') {
-      await notifyPublishedPost(ctx, {
-        postId: args.postId,
-        title: typeof updateData.title === 'string' ? updateData.title : post.title,
-        content: typeof updateData.content === 'string' ? updateData.content : post.content,
-        category: typeof updateData.category === 'string' ? updateData.category : post.category,
-      });
+      await scheduleAnnouncement(ctx, args.postId);
     }
 
     // 썸네일 삭제가 필요한 경우 빈 문자열로 설정 (undefined는 JSON 직렬화에서 제거됨)

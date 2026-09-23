@@ -1,7 +1,6 @@
 import { v } from 'convex/values';
 import { internalMutation, internalQuery } from '../_generated/server';
 import { CATEGORIES } from '../constants';
-import { internal } from '../_generated/api';
 import { generateSlug } from '../utils/slug';
 import {
   defaultCompanionPublishAt,
@@ -10,6 +9,7 @@ import {
   publishedAtFor,
   resolvePostStatus,
 } from './visibility';
+import { scheduleAnnouncement } from './announce';
 
 const postStatusValidator = v.union(
   v.literal('draft'),
@@ -158,18 +158,7 @@ export const createCompanionPost = internalMutation({
     });
 
     if (status === 'published') {
-      await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
-        postId,
-        title: args.title,
-        content,
-        category,
-      });
-      await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
-        postId,
-        title: args.title,
-        content,
-        category,
-      });
+      await scheduleAnnouncement(ctx, postId);
     }
 
     return { postId, status, publishAt, slug };
@@ -202,18 +191,7 @@ export const publishDuePosts = internalMutation({
         // the cron runs late.
         publishedAt: publishedAtFor('published', post.publishAt, post._creationTime),
       });
-      await ctx.scheduler.runAfter(0, internal.posts.action.sendSlackNotification, {
-        postId: post._id,
-        title: post.title,
-        content: post.content,
-        category: post.category,
-      });
-      await ctx.scheduler.runAfter(0, internal.posts.action.sendDiscordNotification, {
-        postId: post._id,
-        title: post.title,
-        content: post.content,
-        category: post.category,
-      });
+      await scheduleAnnouncement(ctx, post._id);
       published += 1;
     }
 

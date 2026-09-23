@@ -164,6 +164,17 @@ export function publishedAtBackfill(
   return post.publishedAt === undefined ? null : { publishedAt: undefined };
 }
 
+/**
+ * Whether a post should still be announced to Slack and Discord when its grace
+ * window ends. `null` is a post deleted in the meantime.
+ */
+export function shouldAnnounce<T extends PostVisibilityFields>(
+  post: T | null,
+  nowMs: number = Date.now(),
+): post is T {
+  return post !== null && isPublicPost(post, nowMs);
+}
+
 export function resolvePostStatus(
   args: { status?: string; publishAt?: string },
   nowMs: number = Date.now(),

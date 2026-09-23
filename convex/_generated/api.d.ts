@@ -30,6 +30,7 @@ import type * as notifications_mutation from "../notifications/mutation.js";
 import type * as notifications_query from "../notifications/query.js";
 import type * as posts_action from "../posts/action.js";
 import type * as posts_admin from "../posts/admin.js";
+import type * as posts_announce from "../posts/announce.js";
 import type * as posts_http from "../posts/http.js";
 import type * as posts_migrations from "../posts/migrations.js";
 import type * as posts_mutation from "../posts/mutation.js";
@@ -75,6 +76,7 @@ declare const fullApi: ApiFromModules<{
   "notifications/query": typeof notifications_query;
   "posts/action": typeof posts_action;
   "posts/admin": typeof posts_admin;
+  "posts/announce": typeof posts_announce;
   "posts/http": typeof posts_http;
   "posts/migrations": typeof posts_migrations;
   "posts/mutation": typeof posts_mutation;
