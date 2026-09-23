@@ -203,10 +203,12 @@ For a rollback, waiting avoids most of this: the jobs are never more than five
 minutes old, so with Hosting already rolled back, hold step 2 until the
 dashboard's Schedules page shows no pending `announceIfStillPublic` jobs.
 
-Either way — and after a revert, which deploys with no step to hold — check
-afterwards for the jobs that did fail. The Schedules page lists only upcoming
-runs; `bunx convex data _scheduled_functions --prod` lists recent ones with
-their state. For each `posts/announce.js:announceIfStillPublic` job whose state
+Either way — and after a revert, which deploys with no step to hold — look for
+the jobs that failed once five minutes have passed since the push landed. A
+check fails only when it comes due, so looking sooner misses some. The
+Schedules page lists only upcoming runs;
+`bunx convex data _scheduled_functions --prod` lists recent ones with their
+state. For each `posts/announce.js:announceIfStillPublic` job whose state
 is `failed` and whose post is still public, run
 `posts/action:sendSlackNotification` and `sendDiscordNotification` from the
 dashboard with the post's `postId`, `title`, `content` and `category`. Only
