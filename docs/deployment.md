@@ -203,11 +203,10 @@ arguments.
 Rolling back past #29, which moved post mention notifications into this job,
 fails nothing, but the posts published in those five minutes get no mention
 notifications: their publish left that to the job, and the older job does not
-create them. Holding step 2 as below avoids it. Otherwise the affected posts are
-those whose `announceIfStillPublic` job was scheduled before the push landed
-(its `_creationTime`) but completed after it. Leave out later posts: they ran
-the old code throughout, and one the old `createPost` published already has its
-notifications.
+create them. Holding step 2 as below avoids it. Otherwise the posts to look at
+are those whose `announceIfStillPublic` job was scheduled before the push landed
+(its `_creationTime`) but completed after it; later posts ran the old code
+throughout. Recreate their notifications as described below.
 
 For a rollback, waiting avoids most of this: the jobs are never more than five
 minutes old, so with Hosting already rolled back, hold step 2 until the
@@ -233,10 +232,13 @@ those: a job that ran before the rollback landed has already announced its
 post, and Slack cannot take a duplicate back.
 
 A failed job also created none of its post's mention notifications. They are
-in-app only. If they matter and `posts/announce:notifyMentionedUsers` is
-deployed, run it with the post's `postId`: it skips anyone already notified.
-Otherwise run `notifications/mutation:createNotification` once per mentioned
-user other than the author.
+in-app only; to recreate them for a failed job, or for a post the #29 note above
+names, skip the post unless it is still public. If
+`posts/announce:notifyMentionedUsers` is deployed, run it with the post's
+`postId`: it checks both that and who is already notified. Otherwise run
+`notifications/mutation:createNotification` once per mentioned user other than
+the author, skipping anyone who already holds a `MENTIONED` notification for
+the post without a `commentId`.
 
 ## Previews
 

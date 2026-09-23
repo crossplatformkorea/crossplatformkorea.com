@@ -9,11 +9,12 @@ import { mentionRecipients, shouldAnnounce } from './visibility';
  * How long a newly public post waits before it is announced: to Slack and
  * Discord, and in-app to the users it mentions.
  *
- * All of these used to go out the moment a post was published, so posting
+ * The announcement used to go out the moment a post was published, so posting
  * something by mistake and deleting it straight away still put it in the
  * community channels — and a Slack incoming webhook gives no way to take a
- * message back. The mention notifications were deleted with the post, but a
- * mentioned user with the site open could see one first.
+ * message back. A post `createPost` published straight away also notified its
+ * mentions at once; those were deleted with the post, but a mentioned user with
+ * the site open could see one first.
  *
  * The check runs once, when the window ends, and announces only if the post is
  * public then. So a post deleted, or drafted and left that way, is never
