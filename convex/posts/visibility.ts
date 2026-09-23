@@ -81,6 +81,56 @@ export function publishedAtFor(
   return effectivePublishTime({ publishAt, _creationTime: creationMs }, creationMs);
 }
 
+type PublishedAtFields = {
+  status?: string;
+  publishAt?: string;
+  publishedAt?: number;
+  _creationTime: number;
+};
+
+/**
+ * `publishedAt` after an edit that may change publication.
+ *
+ * An edit that leaves an already-public post public keeps its value, so fixing
+ * a typo does not move it in the feed. A post *becoming* public with no
+ * explicit time went public now — not at its creation time, which for a draft
+ * written weeks earlier would bury it exactly as the creation-time sort did.
+ */
+export function nextPublishedAt(
+  before: PublishedAtFields,
+  after: { status: PostStatus; publishAt: string | undefined },
+  nowMs: number = Date.now(),
+): number | undefined {
+  if (after.status !== 'published') {
+    return undefined;
+  }
+  const wasPublic = isPublicPost(before, nowMs);
+  if (wasPublic && before.publishedAt !== undefined && after.publishAt === before.publishAt) {
+    return before.publishedAt;
+  }
+  return publishedAtFor('published', after.publishAt, wasPublic ? before._creationTime : nowMs);
+}
+
+/**
+ * The backfill's decision for one row: the value to write, or `null` to leave
+ * it alone.
+ *
+ * It fills gaps and clears strays but never overwrites a published row's
+ * existing value, which may be a real publication time recorded by an edit
+ * that no formula over the row can reproduce. It decides by status, as the
+ * write paths do, rather than by the current time.
+ */
+export function publishedAtBackfill(
+  post: PublishedAtFields,
+): { publishedAt: number | undefined } | null {
+  if ((post.status ?? 'published') === 'published') {
+    return post.publishedAt === undefined
+      ? { publishedAt: publishedAtFor('published', post.publishAt, post._creationTime) }
+      : null;
+  }
+  return post.publishedAt === undefined ? null : { publishedAt: undefined };
+}
+
 export function resolvePostStatus(
   args: { status?: string; publishAt?: string },
   nowMs: number = Date.now(),

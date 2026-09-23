@@ -6,7 +6,7 @@ import { DEFAULT_CATEGORY, ErrorCode } from '../constants';
 import { internal } from '../_generated/api';
 import { extractMentions, resolveMentions } from '../utils/mentions';
 import { generateSlug } from '../utils/slug';
-import { isPublicPost, publishedAtFor, resolvePostStatus } from './visibility';
+import { isPublicPost, nextPublishedAt, publishedAtFor, resolvePostStatus } from './visibility';
 
 const postStatusValidator = v.union(
   v.literal('draft'),
@@ -370,9 +370,10 @@ export const updatePostFromScript = internalMutation({
         publishAt,
       });
       updateData.status = resolvedStatus;
-      // Keep the feed key in step with publication: set when this makes the
-      // post public, cleared when it drafts or reschedules it.
-      updateData.publishedAt = publishedAtFor(resolvedStatus, publishAt, post._creationTime);
+      // Keep the feed key in step with publication: cleared when this drafts
+      // or reschedules the post, kept when it only edits a public one, and
+      // "now" when it makes the post public without an explicit time.
+      updateData.publishedAt = nextPublishedAt(post, { status: resolvedStatus, publishAt });
     }
 
     // Backfill slug if the post doesn't have one yet. Never overwrite an
@@ -535,9 +536,10 @@ export const updatePost = mutation({
         publishAt,
       });
       updateData.status = resolvedStatus;
-      // Keep the feed key in step with publication: set when this makes the
-      // post public, cleared when it drafts or reschedules it.
-      updateData.publishedAt = publishedAtFor(resolvedStatus, publishAt, post._creationTime);
+      // Keep the feed key in step with publication: cleared when this drafts
+      // or reschedules the post, kept when it only edits a public one, and
+      // "now" when it makes the post public without an explicit time.
+      updateData.publishedAt = nextPublishedAt(post, { status: resolvedStatus, publishAt });
     }
 
     // 썸네일 업데이트: 명시적으로 전달된 경우에만 덮어쓰기 (위에서 이미 자동 추출됨)

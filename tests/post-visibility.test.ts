@@ -5,6 +5,8 @@ import {
   isPublicPost,
   takePublicPosts,
   normalizePublishAt,
+  nextPublishedAt,
+  publishedAtBackfill,
   publishedAtFor,
   resolvePostStatus,
   seoulLocalToUtcIso,
@@ -196,5 +198,99 @@ describe('publishedAtFor', () => {
       )
       .map((p) => p.title);
     expect(byPublication).toEqual(['wasm', 'xcode', 'iphone']);
+  });
+});
+
+describe('nextPublishedAt', () => {
+  const created = Date.parse('2026-09-01T00:00:00.000Z');
+  const now = Date.parse('2026-09-20T00:00:00.000Z');
+
+  // The draft path back into the bug this branch fixes: without it, a draft
+  // written on 9/1 and published on 9/20 is dated 9/1 and buried 19 days down.
+  test('dates a draft published later at the moment it went public', () => {
+    const draft = { status: 'draft', _creationTime: created };
+    expect(nextPublishedAt(draft, { status: 'published', publishAt: undefined }, now)).toBe(now);
+  });
+
+  test('keeps the value when an edit leaves a public post public', () => {
+    const published = { status: 'published', publishedAt: created + 5, _creationTime: created };
+    expect(nextPublishedAt(published, { status: 'published', publishAt: undefined }, now)).toBe(
+      created + 5,
+    );
+  });
+
+  test('clears it when a public post is drafted or rescheduled', () => {
+    const published = { status: 'published', publishedAt: created, _creationTime: created };
+    expect(
+      nextPublishedAt(published, { status: 'draft', publishAt: undefined }, now),
+    ).toBeUndefined();
+    expect(
+      nextPublishedAt(
+        published,
+        { status: 'scheduled', publishAt: '2026-10-01T00:00:00.000Z' },
+        now,
+      ),
+    ).toBeUndefined();
+  });
+
+  test('honours an explicit time when a post becomes public', () => {
+    const draft = { status: 'draft', _creationTime: created };
+    expect(
+      nextPublishedAt(draft, { status: 'published', publishAt: '2026-09-10T00:00:00.000Z' }, now),
+    ).toBe(Date.parse('2026-09-10T00:00:00.000Z'));
+  });
+
+  test('matches the backfill for a public row edited before the backfill ran', () => {
+    const legacy = { _creationTime: created };
+    expect(nextPublishedAt(legacy, { status: 'published', publishAt: undefined }, now)).toBe(
+      created,
+    );
+  });
+});
+
+describe('publishedAtBackfill', () => {
+  const created = Date.parse('2026-09-01T00:00:00.000Z');
+
+  test('fills a published row that has no key', () => {
+    expect(publishedAtBackfill({ status: 'published', _creationTime: created })).toEqual({
+      publishedAt: created,
+    });
+    expect(
+      publishedAtBackfill({
+        status: 'published',
+        publishAt: '2026-09-22T07:00:00.000Z',
+        _creationTime: created,
+      }),
+    ).toEqual({ publishedAt: Date.parse('2026-09-22T07:00:00.000Z') });
+  });
+
+  test('treats a legacy row with no status as published', () => {
+    expect(publishedAtBackfill({ _creationTime: created })).toEqual({ publishedAt: created });
+  });
+
+  // Re-running must not undo a real publication time recorded by an edit —
+  // here a draft published on 9/20, which no formula over the row reproduces.
+  test('never overwrites an existing value on a published row', () => {
+    const recorded = Date.parse('2026-09-20T00:00:00.000Z');
+    expect(
+      publishedAtBackfill({ status: 'published', publishedAt: recorded, _creationTime: created }),
+    ).toBeNull();
+  });
+
+  test('clears a stray value on a row that is not published', () => {
+    expect(
+      publishedAtBackfill({ status: 'draft', publishedAt: created, _creationTime: created }),
+    ).toEqual({ publishedAt: undefined });
+  });
+
+  test('leaves unpublished rows without a key alone', () => {
+    expect(publishedAtBackfill({ status: 'draft', _creationTime: created })).toBeNull();
+    expect(
+      publishedAtBackfill({
+        status: 'scheduled',
+        publishAt: '2026-10-01T00:00:00.000Z',
+        _creationTime: created,
+      }),
+    ).toBeNull();
   });
 });

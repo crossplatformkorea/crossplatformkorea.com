@@ -45,7 +45,7 @@ reference from the frontend is `bun run tsc`.
 
 That runs in `ci.yml`, a separate workflow. `needs:` orders jobs within one
 workflow and cannot reach across files, so `deploy.yml` gates itself by
-*calling* `ci.yml` as a reusable workflow (`uses: ./.github/workflows/ci.yml`)
+_calling_ `ci.yml` as a reusable workflow (`uses: ./.github/workflows/ci.yml`)
 and hanging the deploy off it with `needs: validate`. A red build now stops the
 release. The cost is that a push to `main` touching the deploy paths runs
 `bun run ci` twice — once standalone, once as the gate — and the deploy waits
@@ -152,7 +152,7 @@ Practically:
    run, while a dispatch from `main` deploys `main`'s current HEAD — the code
    you are trying to get rid of.
 
-Reverting the commit on `main` and letting the workflow run is *not* the
+Reverting the commit on `main` and letting the workflow run is _not_ the
 fast path: it re-runs the same build → Convex → Hosting order, so the old
 functions go live underneath the still-served new bundle before Hosting
 catches up. That window is exactly the failure above. Use it to settle the
@@ -166,6 +166,14 @@ paginated page dies entirely rather than returning the rest. What is partial is
 who it reaches — only callers whose own data carries the undeclared field. That
 is why these surface hours or days after the deploy that caused them, spreading
 as the data does.
+
+The same property makes some rollbacks one-way. Once a backfill has written a
+field, you cannot deploy a commit whose schema predates it: the schema push is
+validated against existing documents and refused, and even if it went through,
+the older `returns` validators would throw on every row carrying the field. To
+roll back past such a change, go _forward_ — a commit that keeps the field in
+the schema and validators but reverts the behaviour. This applies today to
+`userProfiles.displayNameLower` (#22) and `posts.publishedAt`.
 
 Two in-repo examples, both times the field reached the data without reaching the
 validator:

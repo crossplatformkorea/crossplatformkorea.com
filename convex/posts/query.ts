@@ -80,7 +80,7 @@ export const getAllPostsForSitemap = query({
 });
 
 // Get recent posts with fields needed for RSS feed generation. Returns the
-// top N posts (default 30) in descending creation order. Author displayName
+// top N posts (default 30) newest-published first. Author displayName
 // is resolved server-side so the feed generator doesn't need a second round
 // trip per post.
 export const getRecentPostsForRss = query({
