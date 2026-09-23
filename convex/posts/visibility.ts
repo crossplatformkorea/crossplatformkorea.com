@@ -91,10 +91,15 @@ type PublishedAtFields = {
 /**
  * `publishedAt` after an edit that may change publication.
  *
- * An edit that leaves an already-public post public keeps its value, so fixing
- * a typo does not move it in the feed. A post *becoming* public with no
- * explicit time went public now — not at its creation time, which for a draft
- * written weeks earlier would bury it exactly as the creation-time sort did.
+ * A post *becoming* public through an edit appeared to readers now, whatever
+ * date it carries: a stale date left on a draft from an earlier plan, or a past
+ * time picked to publish a scheduled post early, would otherwise date it hours
+ * or weeks back and bury it — exactly as the creation-time sort did. Only
+ * creating a post with a past date backdates it (see `publishedAtFor`).
+ *
+ * For a post that was already public, an edit keeps its value unless it sets a
+ * new explicit date. Clearing the date keeps it too, rather than falling back
+ * to the creation time.
  */
 export function nextPublishedAt(
   before: PublishedAtFields,
@@ -104,11 +109,16 @@ export function nextPublishedAt(
   if (after.status !== 'published') {
     return undefined;
   }
-  const wasPublic = isPublicPost(before, nowMs);
-  if (wasPublic && before.publishedAt !== undefined && after.publishAt === before.publishAt) {
-    return before.publishedAt;
+  if (!isPublicPost(before, nowMs)) {
+    return nowMs;
   }
-  return publishedAtFor('published', after.publishAt, wasPublic ? before._creationTime : nowMs);
+  // A row not yet backfilled has no value; derive it the way the backfill
+  // would, so an edit in that window cannot date a scheduled post at creation.
+  const current = before.publishedAt ?? effectivePublishTime(before, before._creationTime);
+  if (after.publishAt === undefined || after.publishAt === before.publishAt) {
+    return current;
+  }
+  return publishedAtFor('published', after.publishAt, current);
 }
 
 /**

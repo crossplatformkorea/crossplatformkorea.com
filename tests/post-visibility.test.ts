@@ -233,11 +233,75 @@ describe('nextPublishedAt', () => {
     ).toBeUndefined();
   });
 
-  test('honours an explicit time when a post becomes public', () => {
-    const draft = { status: 'draft', _creationTime: created };
+  // Publishing a scheduled post early means picking a time that has passed;
+  // dating it at that time would put it hours down the feed while Slack and
+  // Discord announce it as new. A stale date left on a draft is the same case.
+  test('dates a post made public by an edit at now, whatever date it carries', () => {
+    const scheduled = {
+      status: 'scheduled',
+      publishAt: '2026-09-21T00:00:00.000Z',
+      _creationTime: created,
+    };
     expect(
-      nextPublishedAt(draft, { status: 'published', publishAt: '2026-09-10T00:00:00.000Z' }, now),
+      nextPublishedAt(
+        scheduled,
+        { status: 'published', publishAt: '2026-09-19T09:00:00.000Z' },
+        now,
+      ),
+    ).toBe(now);
+    const staleDraft = {
+      status: 'draft',
+      publishAt: '2026-09-05T00:00:00.000Z',
+      _creationTime: created,
+    };
+    expect(
+      nextPublishedAt(
+        staleDraft,
+        { status: 'published', publishAt: '2026-09-05T00:00:00.000Z' },
+        now,
+      ),
+    ).toBe(now);
+  });
+
+  test('keeps the value when the date is cleared on a public post', () => {
+    const published = {
+      status: 'published',
+      publishAt: '2026-09-15T00:00:00.000Z',
+      publishedAt: Date.parse('2026-09-15T00:00:00.000Z'),
+      _creationTime: created,
+    };
+    expect(nextPublishedAt(published, { status: 'published', publishAt: undefined }, now)).toBe(
+      Date.parse('2026-09-15T00:00:00.000Z'),
+    );
+  });
+
+  test('follows an explicit new date set on a post that was already public', () => {
+    const published = { status: 'published', publishedAt: created, _creationTime: created };
+    expect(
+      nextPublishedAt(
+        published,
+        { status: 'published', publishAt: '2026-09-10T00:00:00.000Z' },
+        now,
+      ),
     ).toBe(Date.parse('2026-09-10T00:00:00.000Z'));
+  });
+
+  // The Wasm post's shape before the backfill: published by the cron, keyed by
+  // nothing yet. An edit in that window must date it as the backfill would.
+  test('keeps the scheduled time for a cron-published row edited before the backfill', () => {
+    const afterPublish = Date.parse('2026-09-24T00:00:00.000Z');
+    const legacy = {
+      status: 'published',
+      publishAt: '2026-09-22T07:00:00.000Z',
+      _creationTime: created,
+    };
+    expect(
+      nextPublishedAt(
+        legacy,
+        { status: 'published', publishAt: '2026-09-22T07:00:00.000Z' },
+        afterPublish,
+      ),
+    ).toBe(Date.parse('2026-09-22T07:00:00.000Z'));
   });
 
   test('matches the backfill for a public row edited before the backfill ran', () => {

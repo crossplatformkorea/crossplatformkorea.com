@@ -146,6 +146,10 @@ Practically:
    The key is the same `CONVEX_DEPLOY_KEY` the workflow takes from repository
    secrets. It selects the deployment by itself, so no target flag is needed.
 
+   **Check first that the last good commit is not older than a backfilled
+   field** — see the one-way note below. If it is, this deploy is refused, and
+   you need a forward fix instead.
+
    No workflow does this for you. Dispatching `Deploy to Production` will not:
    the job is guarded by `if: github.ref == 'refs/heads/main'`, so a dispatch
    from a tag or an older branch is skipped and still reported as a successful
