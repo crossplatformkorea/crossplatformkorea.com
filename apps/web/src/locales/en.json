@@ -633,6 +633,10 @@
       "name": "Unity",
       "description": "A cross-platform game engine for developing 2D and 3D games"
     },
+    "GODOT": {
+      "name": "Godot",
+      "description": "A free and open-source cross-platform game engine for 2D and 3D games"
+    },
     "OTHER": {
       "name": "Other",
       "description": "Other cross-platform development technologies"

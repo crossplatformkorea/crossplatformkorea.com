@@ -580,6 +580,10 @@
       "name": "Unity",
       "description": "2Dおよび3Dゲーム開発のためのクロスプラットフォームゲームエンジン"
     },
+    "GODOT": {
+      "name": "Godot",
+      "description": "2Dおよび3Dゲーム開発のためのオープンソースのクロスプラットフォームゲームエンジン"
+    },
     "OTHER": {
       "name": "その他",
       "description": "その他のカテゴリ"
