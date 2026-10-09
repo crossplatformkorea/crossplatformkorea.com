@@ -1000,15 +1000,13 @@ export default function PostWriteModal({
                   onChange={(e) => setCategory(e.target.value)}
                   className={cn(
                     // Layout & Sizing
-                    'w-full pl-2 pr-8 py-2', // Use pr-8, caret will be custom
+                    'w-full pl-2 py-2',
                     // Visual & Borders
                     'border border-border rounded-md',
                     // Focus States
                     'focus:outline-none focus:ring-1 focus:ring-primary/40',
                     // Theme Support
                     'dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700',
-                    // Remove default browser arrow for consistency
-                    'appearance-none',
                   )}
                 >
                   {categories?.map((cat) => (
@@ -1017,17 +1015,6 @@ export default function PostWriteModal({
                     </option>
                   ))}
                 </select>
-                {/* Custom caret icon */}
-                <svg
-                  className="pointer-events-none absolute right-3 inset-y-0 my-auto w-4 h-4 text-muted-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
               </div>
             </div>
           </div>

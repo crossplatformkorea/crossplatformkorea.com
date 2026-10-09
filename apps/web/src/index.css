@@ -130,6 +130,34 @@
   }
 }
 
+@layer base {
+  /* 날짜 선택 아이콘, 스크롤바 같은 브라우저 기본 컨트롤이 테마를 따르게 한다. */
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  /*
+   * 모든 select는 같은 caret(16px, 오른쪽 12px)을 쓴다. 컴포넌트마다 아이콘을
+   * 따로 얹지 말고 이 규칙에 맡긴다. 색은 --muted-foreground와 같은 값이다.
+   */
+  select:not([multiple]):not([size]) {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23666666' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem 1rem;
+  }
+
+  .dark select:not([multiple]):not([size]) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23a6a6a6' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  }
+}
+
 html,
 body {
   margin: 0;

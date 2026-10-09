@@ -358,11 +358,10 @@ const ShowcaseFormModal = ({
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className={cn(
-                    'w-full rounded-md border px-4 py-2 pr-10', // Added pr-10 for more right padding
+                    'w-full rounded-md border px-4 py-2',
                     'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700',
                     'text-gray-900 dark:text-gray-100',
                     'focus:border-gray-500 dark:focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:focus:ring-gray-400',
-                    'appearance-none', // Ensures native dropdown arrow is hidden
                   )}
                   required
                 >
@@ -374,20 +373,6 @@ const ShowcaseFormModal = ({
                     </option>
                   ))}
                 </select>
-                {/* Custom dropdown arrow with better positioning */}
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
-                  <svg
-                    className="h-4 w-4 fill-current text-gray-500 dark:text-gray-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
               </div>
             </div>
 

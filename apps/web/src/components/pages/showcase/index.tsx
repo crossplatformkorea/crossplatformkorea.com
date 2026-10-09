@@ -4,7 +4,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import CuratedShowcases from './CuratedShowcases';
 import ShowcaseItem, { ShowcaseItemType } from './ShowcaseItem';
-import { Search, Plus, AppWindow, X, ChevronDown, LogIn } from 'lucide-react';
+import { Search, Plus, AppWindow, X, LogIn } from 'lucide-react';
 import ShowcaseFormModal from './ShowcaseFormModal';
 import { ShowcaseSkeletonGroup } from './ShowcaseSkeleton';
 import { cn } from '@/lib/utils';
@@ -195,7 +195,7 @@ export default function ShowcasePage() {
               <select
                 value={selectedCategory || ''}
                 onChange={(e) => handleCategoryChange(e.target.value || null)}
-                className="field-control h-11 appearance-none py-2 pl-4 pr-10 sm:min-w-48"
+                className="field-control h-11 py-2 sm:min-w-48"
               >
                 <option value="">{translate('showcase.allCategories')}</option>
                 {categories.map((category) => (
@@ -206,10 +206,6 @@ export default function ShowcasePage() {
                   </option>
                 ))}
               </select>
-              {/* 커스텀 화살표 아이콘 추가 */}
-              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                <ChevronDown size={16} className="text-gray-500 dark:text-gray-400" />
-              </div>
             </div>
           </div>
 
