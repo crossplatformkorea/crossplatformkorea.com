@@ -248,7 +248,20 @@
     "comments": "댓글",
     "views": "조회수",
     "edit": "게시글 수정",
-    "delete": "게시글 삭제"
+    "delete": "게시글 삭제",
+    "eyebrow": "커뮤니티 / 게시물",
+    "pageTitle": "개발자의 이야기.",
+    "pageDescription": "새로운 발견, 해결의 기록, 아직 풀리지 않은 질문까지. 서로의 경험에서 다음 아이디어를 만나보세요.",
+    "allStories": "모든 이야기",
+    "newestFirst": "최신순",
+    "emptyHint": "첫 번째 경험을 이곳에 나눠보세요.",
+    "categoryLabel": "게시물 카테고리",
+    "loginToLike": "로그인하고 좋아요",
+    "viewComments": "댓글 {{count}}개 보기",
+    "backToPosts": "게시물 목록",
+    "watchOnYoutube": "YouTube에서 보기",
+    "tableLabel": "게시물 표 — 가로로 스크롤할 수 있습니다",
+    "discussionKicker": "대화를 이어가요"
   },
   "postCategories": {
     "ALL": {

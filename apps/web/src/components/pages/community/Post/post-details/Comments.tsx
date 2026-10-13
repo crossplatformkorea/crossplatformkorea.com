@@ -10,12 +10,13 @@ import { cn, devConsole, createUserProfileLink } from '../../../../../lib/utils'
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '../../../../uis/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CommentInput from '../../../../uis/CommentInput';
 import { toast } from 'sonner';
 import { userFacingErrorMessage } from '@/lib/errors';
 import { renderMentionsAndLinks } from '../../../../../utils/mentionUtils';
 import { createSignInHref } from '@/lib/authRedirect';
+import { useReducedMotion } from 'framer-motion';
 import { commentAnchorId } from '@/lib/notificationTarget';
 
 interface CommentsProps {
@@ -26,6 +27,7 @@ interface CommentsProps {
 
 export default function Comments({ postId, highlightCommentId }: CommentsProps) {
   const { t, i18n } = useTranslation();
+  const reduceMotion = useReducedMotion();
   const { isAuthenticated, requireAuth } = useAuthStore();
   const [comment, setComment] = useState('');
   const [mentionedUsers, setMentionedUsers] = useState<Id<'users'>[]>([]);
@@ -58,8 +60,8 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
     if (!target) return;
 
     scrolledToRef.current = scrollKey;
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, [highlightCommentId, comments, location.key]);
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+  }, [highlightCommentId, comments, location.key, reduceMotion]);
 
   // 뮤테이션
   const addComment = useMutation(api.comments.mutation.addComment);
@@ -68,7 +70,7 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
 
   // 언어별 로케일 설정
   const getLocale = () => {
-    switch (i18n.language) {
+    switch (i18n.language.split('-')[0]) {
       case 'ko':
         return ko;
       case 'ja':
@@ -135,13 +137,6 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
     })();
   };
 
-  // 사용자 프로필 페이지로 이동 핸들러
-  const handleUserClick = (displayName: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    void navigate(createUserProfileLink(displayName));
-  };
-
   // 멘션 클릭 핸들러
   const handleMentionClick = (userId: Id<'users'>, displayName: string) => {
     void navigate(createUserProfileLink(displayName));
@@ -153,7 +148,9 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      requireAuth();
+      void navigate(
+        createSignInHref(`${location.pathname}${location.search}#${commentAnchorId(commentId)}`),
+      );
       return;
     }
 
@@ -189,17 +186,18 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
     }, {}) || {};
 
   return (
-    <div className="mt-8">
-      <h3 className="font-bold text-xl mb-5 flex items-center">
-        <MessageSquare className="mr-2 h-5 w-5" />
+    <div className="min-w-0">
+      <p className="section-kicker mb-3 text-muted-foreground">{t('posts.discussionKicker')}</p>
+      <h2 className="mb-7 flex items-center gap-2 text-2xl font-bold tracking-[-0.035em]">
+        <MessageSquare className="mr-1 h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
         {t('comments.title')}
         <span className="ml-2 text-sm text-muted-foreground">({comments.length})</span>
-      </h3>
+      </h2>
 
       {/* 댓글 작성 폼 */}
       {isAuthenticated ? (
         <form onSubmit={handleSubmitComment} className="mb-8">
-          <div className="border border-border dark:border-gray-700 rounded-md">
+          <div className="rounded-2xl border border-border/80 bg-card/40">
             <CommentInput
               value={comment}
               onChange={handleCommentChange}
@@ -212,9 +210,7 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
             />
             <div
               className={cn(
-                'flex justify-between items-center p-2 border-t border-border',
-                'dark:border-gray-700',
-                'bg-muted/20 dark:bg-gray-800/50',
+                'flex flex-wrap justify-between items-center gap-3 rounded-b-2xl p-3 border-t border-border/70 bg-muted/20',
               )}
             >
               <span className="text-xs text-muted-foreground">{t('comments.shortcuts')}</span>
@@ -223,7 +219,7 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
                 disabled={isSubmitting || !comment.trim()}
                 variant={comment.trim() ? 'default' : 'secondary'}
                 size="sm"
-                className="gap-1.5"
+                className="min-h-10 gap-1.5"
               >
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -236,13 +232,14 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
           </div>
         </form>
       ) : (
-        <div className="mb-8 flex flex-col items-start justify-between gap-4 rounded-xl border border-border/70 bg-card/60 p-4 sm:flex-row sm:items-center">
+        <div className="mb-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-border/70 bg-muted/30 p-5 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">{t('comments.loginRequired')}</p>
           <Button
             variant="outline"
             size="sm"
+            className="min-h-11"
             onClick={() => {
-              const returnTo = `${location.pathname}${location.search}${location.hash}`;
+              const returnTo = `${location.pathname}${location.search}${location.hash || '#comments'}`;
               void navigate(createSignInHref(returnTo));
             }}
           >
@@ -278,97 +275,91 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
                   key={comment._id.toString()}
                   id={commentAnchorId(comment._id.toString())}
                   className={cn(
-                    'border-b border-border/30 dark:border-gray-700/30 pb-4 last:border-b-0',
-                    'scroll-mt-24 rounded-md transition-colors duration-700',
+                    'border-b border-border/70 pb-6 last:border-b-0',
+                    'scroll-mt-24 rounded-xl transition-colors duration-500 motion-reduce:transition-none',
                     isHighlighted && 'bg-primary/10 ring-1 ring-primary/30 px-3 pt-3',
                   )}
                 >
-                  {/* 댓글 작성자 정보 */}
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center">
-                      {/* 프로필 이미지 - 클릭 시 사용자 페이지로 이동 */}
-                      <div
-                        onClick={
-                          commentAuthor?.displayName
-                            ? (e) => handleUserClick(commentAuthor.displayName, e)
-                            : undefined
-                        }
-                        className="cursor-pointer"
-                      >
-                        {commentAuthor?.avatarUrl ? (
-                          <img
-                            src={commentAuthor.avatarUrl}
-                            alt={commentAuthor.displayName || ''}
-                            className={cn(
-                              'h-8 w-8 rounded-full mr-3', // Increased margin-right from mr-2 to mr-3
-                              'object-cover border border-border/30',
-                              'hover:border-primary/60 transition-colors',
-                              'dark:border-gray-700/50',
-                            )}
-                          />
-                        ) : (
-                          <div
-                            className={cn(
-                              'h-8 w-8 rounded-full mr-3', // Increased margin-right from mr-2 to mr-3
-                              'flex items-center justify-center',
-                              'bg-muted hover:bg-muted/80 transition-colors',
-                              'dark:bg-gray-700',
-                            )}
-                          >
-                            <User className="h-4 w-4 text-muted-foreground" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="ml-0.5">
-                        {' '}
-                        {/* Added a small left margin */}
-                        {/* 사용자 이름 - 클릭 시 사용자 페이지로 이동 */}
-                        <div
-                          className="font-medium text-sm cursor-pointer hover:text-primary transition-colors"
-                          onClick={
-                            commentAuthor?.displayName
-                              ? (e) => handleUserClick(commentAuthor.displayName, e)
-                              : undefined
-                          }
+                  <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                      {commentAuthor?.displayName ? (
+                        <Link
+                          to={createUserProfileLink(commentAuthor.displayName)}
+                          aria-label={commentAuthor.displayName}
+                          className="shrink-0 rounded-full"
                         >
-                          {commentAuthor?.displayName || t('user.anonymousUser')}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
+                          {commentAuthor.avatarUrl ? (
+                            <img
+                              src={commentAuthor.avatarUrl}
+                              alt=""
+                              loading="lazy"
+                              className="h-8 w-8 rounded-full border border-border/70 object-cover"
+                            />
+                          ) : (
+                            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-muted">
+                              <User size={14} />
+                            </span>
+                          )}
+                        </Link>
+                      ) : (
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/70 bg-muted">
+                          <User size={14} />
+                        </span>
+                      )}
+                      <div className="min-w-0">
+                        {commentAuthor?.displayName ? (
+                          <Link
+                            to={createUserProfileLink(commentAuthor.displayName)}
+                            className="block truncate text-sm font-semibold hover:underline"
+                          >
+                            {commentAuthor.displayName}
+                          </Link>
+                        ) : (
+                          <span className="text-sm font-semibold">{t('user.anonymousUser')}</span>
+                        )}
+                        <time
+                          dateTime={new Date(comment._creationTime).toISOString()}
+                          className="mt-1 block text-[11px] text-muted-foreground"
+                        >
                           {formatDistanceToNow(new Date(comment._creationTime), {
                             addSuffix: true,
                             locale: getLocale(),
                           })}
-                        </div>
+                        </time>
                       </div>
                     </div>
-
-                    <div className="flex items-center">
-                      {/* 좋아요 버튼 */}
+                    <div className="flex shrink-0 items-center">
                       <Button
+                        type="button"
                         onClick={(e) => handleToggleLike(comment._id, e)}
                         variant="ghost"
                         size="sm"
                         className={cn(
-                          'flex items-center gap-1 py-1 px-2 h-8',
-                          hasLiked ? 'text-rose-500' : 'text-muted-foreground',
-                          'hover:bg-rose-500/10 hover:text-rose-500',
+                          'min-h-11 gap-1.5 px-2',
+                          hasLiked ? 'text-foreground' : 'text-muted-foreground',
                         )}
-                        title={hasLiked ? t('common.unlike') : t('common.like')}
+                        aria-pressed={hasLiked}
+                        aria-label={`${isAuthenticated ? t(hasLiked ? 'common.unlike' : 'common.like') : t('posts.loginToLike')} · ${likeCount}`}
+                        title={
+                          isAuthenticated
+                            ? t(hasLiked ? 'common.unlike' : 'common.like')
+                            : t('posts.loginToLike')
+                        }
                       >
-                        <Heart className={cn('h-3.5 w-3.5', hasLiked && 'fill-rose-500')} />
+                        <Heart className={cn('h-3.5 w-3.5', hasLiked && 'fill-current')} />
                         <span className="text-xs">{likeCount}</span>
                       </Button>
-
-                      {/* 댓글 삭제 버튼 - 작성자만 볼 수 있음 */}
                       {isCommentAuthor && (
                         <Button
+                          type="button"
                           onClick={() => setShowDeleteCommentModal(comment._id)}
                           variant="ghost"
                           size="icon"
-                          className="text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 h-8 w-8 ml-1"
+                          className="min-h-11 min-w-11 text-muted-foreground hover:text-destructive"
+                          aria-label={t('common.delete')}
                           title={t('common.delete')}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 size={15} />
                         </Button>
                       )}
                     </div>
@@ -378,7 +369,7 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
                   <div className="ml-11 mb-2">
                     {' '}
                     {/* Increased from ml-10 to ml-11 to match new avatar spacing */}
-                    <p className="text-foreground dark:text-gray-200 whitespace-pre-wrap break-words text-sm">
+                    <p className="whitespace-pre-wrap break-words text-sm leading-7 text-foreground/90">
                       {renderMentionsAndLinks(comment.content, {
                         onMentionClick: handleMentionClick,
                       })}

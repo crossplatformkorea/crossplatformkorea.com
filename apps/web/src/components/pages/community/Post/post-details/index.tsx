@@ -1,14 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { formatDistanceToNow } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { ko, ja } from 'date-fns/locale';
 import PostDetailsSkeleton from './PostDetailsSkeleton';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye } from 'lucide-react';
+import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye, Loader2 } from 'lucide-react';
 import AuthorCard from './AuthorCard';
-import CategoryBadge from '@/components/uis/CategoryBadge';
+import PostStatusBadge from '@/components/uis/PostStatusBadge';
+import PostContent from './PostContent';
+import { motion, useReducedMotion } from 'framer-motion';
+import { revealVariants, staggerVariants } from '@/lib/motion';
+import { createSignInHref } from '@/lib/authRedirect';
 import ConfirmDeleteModal from '@/components/modals/ConfirmDeleteModal';
 import PostWriteModal from '../PostWriteModal';
 import NotFound from '@/components/pages/NotFound';
@@ -20,30 +24,14 @@ import { userFacingErrorMessage } from '@/lib/errors';
 import { commentIdFromHash } from '@/lib/notificationTarget';
 import { postPublishedTime } from '@/lib/postTime';
 import { Button } from '@/components/uis/Button';
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import { YouTubeEmbed } from '@/components/uis/YouTubeEmbed';
-import { extractYouTubeVideoId } from '@/utils/youtube';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useMetaTags } from '@/hooks/useMetaTags';
 import { buildBlogPosting, buildBreadcrumbs, buildFaqPage, buildVideoObject } from '@/lib/jsonLd';
 import { getCategoryByKey } from '@convex/constants';
 
-// 마크다운 bold/italic을 HTML로 전처리 (HTML과 마크다운이 섞여있을 때 파싱 문제 해결)
-function preprocessMarkdown(content: string): string {
-  // **text** → <strong>text</strong> (bold)
-  // 링크나 다른 요소와 섞여있어도 동작하도록
-  let processed = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  // *text* → <em>text</em> (italic) - 단, ** 안의 *는 제외
-  processed = processed.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
-  return processed;
-}
-
 export default function PostDetailsPage() {
-  const { isAuthenticated, requireAuth } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
+  const reduceMotion = useReducedMotion();
+  const [isLiking, setIsLiking] = useState(false);
   // Route is `/post/:slugOrId` — accepts either the human-readable slug or a
   // legacy Convex ID. `getBySlugOrId` resolves both.
   const { slugOrId } = useParams();
@@ -78,9 +66,9 @@ export default function PostDetailsPage() {
     if (post && slugOrId && post.slug && slugOrId !== post.slug) {
       // Keep the hash: notifications link by post id, and the comment anchor
       // would otherwise be dropped by this canonicalizing redirect.
-      void navigate(`/post/${post.slug}${location.hash}`, { replace: true });
+      void navigate(`/post/${post.slug}${location.search}${location.hash}`, { replace: true });
     }
-  }, [post, slugOrId, navigate, location.hash]);
+  }, [post, slugOrId, navigate, location.search, location.hash]);
 
   useEffect(() => {
     if (!post || viewIncremented) return;
@@ -98,10 +86,6 @@ export default function PostDetailsPage() {
   );
 
   const hasLiked = useQuery(api.posts.query.hasLiked, post ? { postId: post._id } : 'skip');
-
-  const handleGoBack = () => {
-    void navigate(-1);
-  };
 
   const handleEdit = () => {
     if (post) {
@@ -121,29 +105,34 @@ export default function PostDetailsPage() {
     }
   };
 
-  const handleLikeClick = () => {
-    if (post) {
-      if (!isAuthenticated) {
-        requireAuth();
-        return;
-      }
-      void (async () => {
-        try {
-          await toggleLike({ postId: post._id });
-        } catch (error) {
-          devConsole.error('Failed to toggle post like:', error);
-          toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
-        }
-      })();
+  const handleLikeClick = async () => {
+    if (!post) return;
+    if (!isAuthenticated) {
+      void navigate(createSignInHref(`${location.pathname}${location.search}${location.hash}`));
+      return;
+    }
+    if (isLiking) return;
+    setIsLiking(true);
+    try {
+      await toggleLike({ postId: post._id });
+    } catch (error) {
+      devConsole.error('Failed to toggle post like:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
+    } finally {
+      setIsLiking(false);
     }
   };
 
-  const scrollToComments = () => {
+  const scrollToComments = useCallback(() => {
     commentsRef.current?.scrollIntoView({
-      behavior: 'smooth',
+      behavior: reduceMotion ? 'auto' : 'smooth',
       block: 'start',
     });
-  };
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    if (post?._id && location.hash === '#comments') scrollToComments();
+  }, [post?._id, location.hash, location.key, scrollToComments]);
 
   const commentCount = post?.commentCount || 0;
   const viewCount = post?.viewCount || 0;
@@ -154,7 +143,11 @@ export default function PostDetailsPage() {
   const formattedDate = post
     ? formatDistanceToNow(new Date(postPublishedTime(post)), {
         addSuffix: true,
-        locale: i18n.language === 'ko' ? ko : undefined,
+        locale: i18n.language.startsWith('ko')
+          ? ko
+          : i18n.language.startsWith('ja')
+            ? ja
+            : undefined,
       })
     : '';
 
@@ -287,16 +280,14 @@ export default function PostDetailsPage() {
   }, [post, author, canonicalUrl, publishedIso, modifiedIso, plainExcerpt]);
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Back button - 로딩 상태와 관계 없이 항상 표시 */}
-      <Button
-        variant="ghost"
-        onClick={handleGoBack}
-        className="flex items-center mb-6 text-muted-foreground hover:text-foreground"
+    <div className="article-page">
+      <Link
+        to="/posts"
+        className="mb-8 inline-flex min-h-11 items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground sm:mb-10"
       >
-        <ArrowLeft size={18} className="mr-1" />
-        <span>{t('common.back', { defaultValue: 'Back' })}</span>
-      </Button>
+        <ArrowLeft size={15} />
+        <span>{t('posts.backToPosts')}</span>
+      </Link>
 
       {/* Show loading state while waiting for post data */}
       {!slugOrId ? null : post === undefined ? (
@@ -305,321 +296,122 @@ export default function PostDetailsPage() {
         <NotFound />
       ) : (
         <article itemScope itemType="https://schema.org/BlogPosting">
-          {/* Post header section with visual depth */}
-          <div className="surface-card mb-6 overflow-hidden">
-            <div className="border-b border-border/70 p-6 sm:p-8">
-              {/* Category and tags */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                <CategoryBadge category={post.category} />
-
-                {post.tags &&
-                  post.tags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="rounded-md border border-primary/20 bg-primary/10 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-primary"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-              </div>
-
-              {/* Title and post actions */}
-              <div className="relative">
-                <h1 className="mb-4 pr-20 text-3xl font-bold leading-[1.35] tracking-[-0.045em] sm:text-5xl">
-                  {post.title}
-                </h1>
-                {isAuthor && post.status === 'draft' && (
-                  <div className="mb-3 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
-                    {t('posts.draftBanner')}
-                  </div>
-                )}
-                {isAuthor && post.status === 'scheduled' && (
-                  <div className="mb-3 rounded-md border border-sky-500/40 bg-sky-500/10 px-3 py-2 text-sm text-sky-200">
-                    {t('posts.scheduledBanner')}
-                  </div>
-                )}
-
-                {/* Post actions - For author only */}
-                {isAuthor && (
-                  <div className="absolute top-0 right-0 flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleEdit}
-                      className="p-2 text-muted-foreground rounded-full hover:text-foreground hover:bg-muted/50"
-                      title={t('posts.edit', { defaultValue: 'Edit Post' })}
-                    >
-                      <Pencil size={18} />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowConfirmDelete(true)}
-                      className="p-2 text-muted-foreground rounded-full hover:text-rose-500 hover:bg-rose-500/10"
-                      title={t('posts.delete', { defaultValue: 'Delete Post' })}
-                    >
-                      <Trash2 size={18} />
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              {/* Author info and metadata */}
-              <div className="flex items-center justify-between border-t border-border/10 mt-4 pt-4 ">
+          <motion.header
+            className="article-header"
+            variants={staggerVariants}
+            initial={reduceMotion ? false : 'hidden'}
+            animate={reduceMotion ? undefined : 'visible'}
+          >
+            <motion.div
+              variants={revealVariants}
+              className="flex flex-wrap items-center justify-between gap-3"
+            >
+              <Link
+                to={`/posts?category=${getCategoryByKey(post.category)?.slug || ''}`}
+                className="section-kicker text-muted-foreground hover:text-foreground"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+                {t(`postCategories.${post.category}.name`, { defaultValue: post.category })}
+              </Link>
+              <PostStatusBadge post={post} />
+            </motion.div>
+            <motion.h1 variants={revealVariants} className="article-title" itemProp="headline">
+              {post.title}
+            </motion.h1>
+            {post.tags.length > 0 && (
+              <motion.p
+                variants={revealVariants}
+                className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.06em] text-muted-foreground"
+              >
+                {post.tags.map((tag, index) => (
+                  <span key={index}>#{tag}</span>
+                ))}
+              </motion.p>
+            )}
+            {isAuthor && (post.status === 'draft' || post.status === 'scheduled') && (
+              <p className="mt-6 rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+                {t(post.status === 'draft' ? 'posts.draftBanner' : 'posts.scheduledBanner')}
+              </p>
+            )}
+            <motion.div variants={revealVariants} className="article-byline">
+              <div className="min-w-0 sm:max-w-[55%]">
                 <AuthorCard
                   author={author}
                   creationTime={postPublishedTime(post)}
                   formattedDate={formattedDate}
                 />
-
-                {/* Stats row - all aligned in one container */}
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  {/* Like button */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLikeClick}
-                    className={cn(
-                      'flex items-center gap-1.5 py-1 px-2 rounded-md',
-                      hasLiked ? 'text-rose-500' : 'text-muted-foreground hover:text-rose-500',
-                      'hover:bg-rose-500/10',
-                    )}
-                    title={t('posts.like', { defaultValue: 'Like this post' })}
-                    aria-pressed={hasLiked}
-                  >
-                    <Heart size={15} className={`${hasLiked ? 'fill-rose-500' : ''}`} />
-                    <span>{likeCount}</span>
-                  </Button>
-
-                  {/* Comment count */}
-                  <div
-                    className="flex items-center cursor-pointer hover:text-primary transition-colors"
-                    title={t('posts.comments', { defaultValue: 'Comments' })}
-                    onClick={scrollToComments}
-                    aria-label={`View ${commentCount} comments`}
-                  >
-                    <MessageSquare size={15} className="mr-1.5" />
-                    <span>{commentCount}</span>
-                  </div>
-
-                  {/* View count */}
-                  <div
-                    className="flex items-center"
-                    title={t('posts.views', { defaultValue: 'Views' })}
-                  >
-                    <Eye size={15} className="mr-1.5 opacity-70" />
-                    <span>{viewCount}</span>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-
-          {/* Post content with footer containing social actions */}
-          <div className={cn('surface-card relative overflow-hidden px-5 py-8 sm:px-8 sm:py-10')}>
-            {/* Replace dangerouslySetInnerHTML with ReactMarkdown */}
-            {post.youtubeUrl && extractYouTubeVideoId(post.youtubeUrl) && (
-              <div className="mb-6 overflow-hidden rounded-lg border border-border">
-                <YouTubeEmbed videoId={extractYouTubeVideoId(post.youtubeUrl)!} />
+              <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => void handleLikeClick()}
+                  disabled={isLiking}
+                  aria-busy={isLiking}
+                  aria-pressed={!!hasLiked}
+                  aria-label={`${isAuthenticated ? t(hasLiked ? 'common.unlike' : 'common.like') : t('posts.loginToLike')} · ${likeCount}`}
+                  title={
+                    isAuthenticated
+                      ? t(hasLiked ? 'common.unlike' : 'common.like')
+                      : t('posts.loginToLike')
+                  }
+                  className={cn('journal-metric', hasLiked && 'text-foreground')}
+                >
+                  {isLiking ? (
+                    <Loader2 size={15} className="animate-spin motion-reduce:animate-none" />
+                  ) : (
+                    <Heart size={15} className={cn(hasLiked && 'fill-current')} />
+                  )}
+                  {likeCount}
+                </button>
+                <button
+                  type="button"
+                  onClick={scrollToComments}
+                  className="journal-metric"
+                  aria-label={t('posts.viewComments', { count: commentCount })}
+                >
+                  <MessageSquare size={15} />
+                  {commentCount}
+                </button>
+                <span
+                  className="inline-flex items-center gap-1.5 px-2"
+                  aria-label={`${t('posts.views')} · ${viewCount}`}
+                >
+                  <Eye size={15} />
+                  {viewCount}
+                </span>
+              </div>
+            </motion.div>
+            {isAuthor && (
+              <div className="mt-4 flex justify-end gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleEdit}
+                  className="min-h-10 gap-2 text-muted-foreground"
+                >
+                  <Pencil size={14} />
+                  {t('posts.edit')}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowConfirmDelete(true)}
+                  className="min-h-10 gap-2 text-muted-foreground hover:text-destructive"
+                >
+                  <Trash2 size={14} />
+                  {t('posts.delete')}
+                </Button>
               </div>
             )}
-            <div className="prose prose-lg max-w-none" style={{ wordBreak: 'break-word' }}>
-              <ReactMarkdown
-                rehypePlugins={[rehypeRaw]}
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  // Custom component for links to detect and embed YouTube videos
-                  a: ({ href, children, ...props }) => {
-                    if (href) {
-                      const videoId = extractYouTubeVideoId(href);
-                      if (videoId) {
-                        return (
-                          <div className="my-4">
-                            <YouTubeEmbed videoId={videoId} />
-                            {/* Also show the original link */}
-                            <a
-                              href={href}
-                              {...props}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline text-sm mt-2 block"
-                            >
-                              {href}
-                            </a>
-                          </div>
-                        );
-                      }
-                    }
-
-                    // Regular link - ensure all links are properly wrapped
-                    return (
-                      <a
-                        href={href}
-                        {...props}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline break-words"
-                      >
-                        {children}
-                      </a>
-                    );
-                  },
-                  // Ensure other elements don't interfere with link rendering
-                  p: ({ children, ...props }) => (
-                    <p className="mb-3 leading-relaxed" {...props}>
-                      {children}
-                    </p>
-                  ),
-                  // Handle code blocks with syntax highlighting
-                  code: ({ children, className, ...props }: any) => {
-                    const match = /language-(\w+)/.exec(className || '');
-                    const language = match ? match[1] : '';
-                    const isDarkMode = document.documentElement.classList.contains('dark');
-                    const isInline = !className?.includes('language-');
-
-                    // For inline code
-                    if (isInline) {
-                      return (
-                        <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono" {...props}>
-                          {children}
-                        </code>
-                      );
-                    }
-
-                    // For code blocks with syntax highlighting
-                    return (
-                      <div className="relative my-4">
-                        {language && (
-                          <div className="absolute top-2 right-2 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded z-10">
-                            {language}
-                          </div>
-                        )}
-                        <SyntaxHighlighter
-                          language={language || 'text'}
-                          style={isDarkMode ? vscDarkPlus : vs}
-                          customStyle={{
-                            margin: 0,
-                            padding: '1rem',
-                            paddingTop: language ? '2rem' : '1rem',
-                            borderRadius: '0.5rem',
-                            fontSize: '0.875rem',
-                            lineHeight: '1.5',
-                            backgroundColor: isDarkMode ? '#1e1e1e' : '#f6f8fa',
-                          }}
-                          showLineNumbers={false}
-                          wrapLongLines={true}
-                        >
-                          {String(children).replace(/\n$/, '')}
-                        </SyntaxHighlighter>
-                      </div>
-                    );
-                  },
-                  // Override pre to not wrap code blocks
-                  pre: ({ children }) => {
-                    return <>{children}</>;
-                  },
-                  // Table styling
-                  table: ({ children, ...props }) => (
-                    <div className="my-6 overflow-x-auto border border-border">
-                      <table className="min-w-full divide-y divide-border" {...props}>
-                        {children}
-                      </table>
-                    </div>
-                  ),
-                  thead: ({ children, ...props }) => (
-                    <thead className="bg-muted/50 dark:bg-gray-800/50" {...props}>
-                      {children}
-                    </thead>
-                  ),
-                  tbody: ({ children, ...props }) => (
-                    <tbody className="divide-y divide-border bg-background" {...props}>
-                      {children}
-                    </tbody>
-                  ),
-                  th: ({ children, ...props }) => (
-                    <th
-                      className="px-4 py-3 text-left text-sm font-semibold text-foreground border-r last:border-r-0 border-border/50"
-                      {...props}
-                    >
-                      {children}
-                    </th>
-                  ),
-                  td: ({ children, ...props }) => (
-                    <td
-                      className="px-4 py-3 text-sm text-foreground border-r last:border-r-0 border-border/30"
-                      {...props}
-                    >
-                      {children}
-                    </td>
-                  ),
-                  tr: ({ children, ...props }) => (
-                    <tr
-                      className="hover:bg-muted/20 dark:hover:bg-gray-800/30 transition-colors"
-                      {...props}
-                    >
-                      {children}
-                    </tr>
-                  ),
-                  // Fix list spacing and formatting
-                  ul: ({ children, ...props }) => (
-                    <ul
-                      className="pl-6 mb-4"
-                      style={{ listStyleType: 'disc', listStylePosition: 'outside' }}
-                      {...props}
-                    >
-                      {children}
-                    </ul>
-                  ),
-                  ol: ({ children, ...props }) => (
-                    <ol
-                      className="pl-6 mb-4"
-                      style={{ listStyleType: 'decimal', listStylePosition: 'outside' }}
-                      {...props}
-                    >
-                      {children}
-                    </ol>
-                  ),
-                  li: ({ children, ...props }) => (
-                    <li className="mb-1" style={{ display: 'list-item' }} {...props}>
-                      {children}
-                    </li>
-                  ),
-                  // Handle headers
-                  h1: ({ children, ...props }) => (
-                    <h1 className="text-2xl font-bold mt-6 mb-4" {...props}>
-                      {children}
-                    </h1>
-                  ),
-                  h2: ({ children, ...props }) => (
-                    <h2 className="text-xl font-bold mt-5 mb-3" {...props}>
-                      {children}
-                    </h2>
-                  ),
-                  h3: ({ children, ...props }) => (
-                    <h3 className="text-lg font-bold mt-4 mb-2" {...props}>
-                      {children}
-                    </h3>
-                  ),
-                  // Handle blockquotes
-                  blockquote: ({ children, ...props }) => (
-                    <blockquote
-                      className="border-l-4 border-primary/50 pl-4 my-4 italic !text-gray-700 dark:!text-gray-400"
-                      {...props}
-                    >
-                      {children}
-                    </blockquote>
-                  ),
-                }}
-              >
-                {preprocessMarkdown(post.content || '')}
-              </ReactMarkdown>
-            </div>
+          </motion.header>
+          <div className="article-body">
+            <PostContent content={post.content || ''} youtubeUrl={post.youtubeUrl} />
           </div>
 
           {/* 댓글 컴포넌트 추가 - border 제거 */}
-          <div className={cn('surface-card mt-4 px-5 py-8 sm:px-8')}>
+          <div className="article-comments">
             {/* Add ref to the Comments section */}
-            <div ref={commentsRef} id="comments">
+            <div ref={commentsRef} id="comments" className="scroll-mt-6">
               {post && <Comments postId={post._id} highlightCommentId={highlightCommentId} />}
             </div>
           </div>

@@ -1,74 +1,63 @@
-import React from 'react';
-import { User, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { cn, createUserProfileLink } from '@/lib/utils';
+import { Link } from 'react-router-dom';
+import { createUserProfileLink } from '@/lib/utils';
 
-// Update the interface to accept more flexible author types
 interface AuthorCardProps {
-  author:
-    | {
-        displayName?: string;
-        avatarUrl?: string;
-        [key: string]: any; // Allow additional properties from user profile
-      }
-    | null
-    | undefined;
+  author: { displayName?: string; avatarUrl?: string } | null | undefined;
   creationTime: number;
   formattedDate: string;
 }
 
 export default function AuthorCard({ author, creationTime, formattedDate }: AuthorCardProps) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  const handleAuthorClick = () => {
-    if (author?.displayName) {
-      void navigate(createUserProfileLink(author.displayName));
-    }
-  };
-
-  const isClickable = !!author?.displayName;
+  const [failedAvatar, setFailedAvatar] = useState<string | null>(null);
+  const avatar =
+    author?.avatarUrl && failedAvatar !== author.avatarUrl ? (
+      <img
+        src={author.avatarUrl}
+        alt=""
+        className="h-10 w-10 rounded-full border border-border/70 object-cover"
+        onError={() => setFailedAvatar(author.avatarUrl || null)}
+      />
+    ) : (
+      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-muted/40">
+        <User size={17} strokeWidth={1.5} />
+      </span>
+    );
+  const name = author?.displayName || t('user.anonymousUser');
 
   return (
-    <div className="flex items-center mr-6">
-      <div
-        onClick={isClickable ? handleAuthorClick : undefined}
-        className={cn('mr-3', isClickable && 'cursor-pointer hover:opacity-80 transition-opacity')}
-      >
-        {author?.avatarUrl ? (
-          <img
-            src={author.avatarUrl}
-            alt={author.displayName || t('common.user')}
-            className="w-10 h-10 rounded-full object-cover border border-border/30 shadow-sm"
-          />
-        ) : (
-          <div
-            className={cn(
-              'w-10 h-10 rounded-full flex items-center justify-center shadow-sm',
-              'bg-muted/30',
-            )}
-          >
-            <User size={18} />
-          </div>
-        )}
-      </div>
-      <div className="flex flex-col gap-1">
-        <div
-          onClick={isClickable ? handleAuthorClick : undefined}
-          className={cn('font-medium', isClickable && 'hover:underline cursor-pointer')}
+    <div className="flex min-w-0 items-center gap-3">
+      {author?.displayName ? (
+        <Link
+          to={createUserProfileLink(author.displayName)}
+          aria-label={name}
+          className="shrink-0 rounded-full"
         >
-          {author?.displayName || ''}
-        </div>
-        <div className="flex items-center text-muted-foreground text-sm">
-          <Clock size={14} className="mr-1.5 flex-shrink-0" />
-          <time
-            dateTime={new Date(creationTime).toISOString()}
-            className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]"
+          {avatar}
+        </Link>
+      ) : (
+        avatar
+      )}
+      <div className="min-w-0">
+        {author?.displayName ? (
+          <Link
+            to={createUserProfileLink(author.displayName)}
+            className="block truncate text-sm font-semibold hover:underline"
           >
-            {formattedDate}
-          </time>
-        </div>
+            {name}
+          </Link>
+        ) : (
+          <span className="block truncate text-sm font-semibold">{name}</span>
+        )}
+        <time
+          dateTime={new Date(creationTime).toISOString()}
+          className="mt-1 block text-xs text-muted-foreground"
+        >
+          {formattedDate}
+        </time>
       </div>
     </div>
   );
