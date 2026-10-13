@@ -69,7 +69,7 @@ export default function SummaryPage() {
             className="relative z-10"
             variants={staggerVariants}
             initial={reduceMotion ? false : 'hidden'}
-            animate="visible"
+            animate={reduceMotion ? undefined : 'visible'}
           >
             <motion.div variants={revealVariants} className="section-kicker text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-foreground" />

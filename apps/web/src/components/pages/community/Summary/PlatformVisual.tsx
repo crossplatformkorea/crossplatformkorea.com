@@ -11,8 +11,12 @@ export default function PlatformVisual() {
   const rotateY = useSpring(0, { stiffness: 160, damping: 24 });
   const visible = inView || reduceMotion;
   const nodeMotion = (delay: number, rotate: number) => ({
-    initial: reduceMotion ? (false as const) : { opacity: 0, y: 12, scale: 0.9, rotate: 0 },
-    animate: visible ? { opacity: 1, y: 0, scale: 1, rotate } : { opacity: 0 },
+    initial: false as const,
+    animate: reduceMotion
+      ? { rotate }
+      : visible
+        ? { y: [12, 0], scale: [0.9, 1], rotate }
+        : undefined,
     transition: { ...interactionSpring, delay: reduceMotion ? 0 : delay },
   });
 
@@ -47,8 +51,8 @@ export default function PlatformVisual() {
           stroke="currentColor"
           strokeOpacity="0.2"
           strokeWidth="1"
-          initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-          animate={visible ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+          initial={false}
+          animate={visible && !reduceMotion ? { pathLength: [0, 1] } : undefined}
           transition={{
             duration: reduceMotion ? 0 : 1.1,
             ease: entranceEase,
@@ -64,8 +68,8 @@ export default function PlatformVisual() {
           stroke="currentColor"
           strokeOpacity="0.12"
           strokeWidth="1"
-          initial={reduceMotion ? false : { pathLength: 0 }}
-          animate={{ pathLength: visible ? 1 : 0 }}
+          initial={false}
+          animate={visible && !reduceMotion ? { pathLength: [0, 1] } : undefined}
           transition={{
             duration: reduceMotion ? 0 : 1.1,
             ease: entranceEase,
