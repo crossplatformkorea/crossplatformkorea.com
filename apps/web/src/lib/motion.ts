@@ -10,8 +10,9 @@ export const interactionSpring: Transition = {
 };
 
 export const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: entranceEase } },
+  // Essential hero copy stays visible if an entrance animation is interrupted.
+  hidden: { y: 16 },
+  visible: { y: 0, transition: { duration: 0.5, ease: entranceEase } },
 };
 
 export const staggerVariants: Variants = {
