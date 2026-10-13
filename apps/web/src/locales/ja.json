@@ -390,7 +390,27 @@
     "welcome": "クロスプラットフォーム・コリアへようこそ",
     "welcomeMessage": "コミュニティに参加して他の開発者と繋がりましょう",
     "heroTitle": "Cross-Platform Korea",
-    "heroDescription": "異なるプラットフォームに散らばる情報と経験を集めて共有し、より生産的な次の方向をともに見つけます。"
+    "heroDescription": "異なるプラットフォーム、広がる可能性。開発の経験を共有し、アプリから刺激を受け、次のアイデアをともにつくりましょう。",
+    "eyebrow": "クロスプラットフォーム開発者のコミュニティ",
+    "headlineFirst": "垣根を越えて。",
+    "headlineSecond": "ともに、その先へ。",
+    "exploreCommunity": "コミュニティを見る",
+    "exploreApps": "アプリを探す",
+    "exploreLabel": "Cross-Platform Korea を探索",
+    "discussTitle": "会話をはじめよう",
+    "discussDescription": "質問も、新しい発見も。開発者の経験が集まる場所。",
+    "discoverTitle": "アイデアに出会おう",
+    "discoverDescription": "さまざまなプラットフォームで生まれたアプリを見てみましょう。",
+    "learnTitle": "学びを続けよう",
+    "learnDescription": "コミュニティが共有する開発ガイドと知識を読みましょう。",
+    "latestKicker": "コミュニティから",
+    "latestTitle": "コミュニティの最新の話題",
+    "readStory": "記事を読む",
+    "memberLabel": "コミュニティへの参加",
+    "memberTitle": "あなたの経験が、次の話題に。",
+    "memberDescription": "小さな発見も、大きな悩みも。ログインして開発の話を共有しましょう。",
+    "welcomeBack": "おかえりなさい",
+    "footerNote": "開発者とともにつくるコミュニティ。"
   },
   "auth": {
     "loginDescription": "サインインするとプロフィールの管理、投稿の作成、いいねやコメントができます。",
@@ -691,5 +711,14 @@
       "assistant": "AIアシスタント",
       "streaming": "応答生成中..."
     }
+  },
+  "navigation": {
+    "home": "ホーム",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "label": "メインメニュー",
+    "language": "言語",
+    "theme": "テーマを切り替え",
+    "skip": "本文へ移動"
   }
 }

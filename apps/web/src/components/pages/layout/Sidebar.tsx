@@ -25,7 +25,12 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const { isAuthenticated } = useAuthStore();
   const userData = useQuery(api.users.query.currentUser);
 
-  const isActive = (path: string) => location.pathname.startsWith(path);
+  const isActive = (path: string) =>
+    path === '/'
+      ? location.pathname === '/'
+      : location.pathname === path ||
+        location.pathname.startsWith(`${path}/`) ||
+        (path === '/posts' && location.pathname.startsWith('/post/'));
   const mainItems = sidebarItems.filter((item) => !item.route.startsWith('http'));
   const resourceItems = sidebarItems.filter((item) => item.route.startsWith('http'));
 
@@ -58,7 +63,10 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         </div>
       )}
 
-      <nav className="relative flex-1 px-2 py-3" aria-label="Primary navigation">
+      <nav
+        className="relative min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-2 py-3"
+        aria-label={t('navigation.label')}
+      >
         <ul className="space-y-1.5">
           {mainItems.map((item, index) => {
             const active = isActive(item.route);
@@ -66,6 +74,8 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               <li key={item.key}>
                 <Link
                   to={item.route}
+                  onClick={onClose}
+                  aria-label={t(item.labelKey)}
                   title={!isOpen ? t(item.labelKey) : undefined}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
@@ -102,6 +112,8 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           <a
             key={item.key}
             href={item.route}
+            onClick={onClose}
+            aria-label={t(item.labelKey)}
             target="_blank"
             rel="noopener noreferrer"
             title={!isOpen ? t(item.labelKey) : undefined}
@@ -125,6 +137,8 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         {!isAuthenticated ? (
           <Link
             to={createSignInHref(`${location.pathname}${location.search}${location.hash}`)}
+            onClick={onClose}
+            aria-label={t('common.signIn')}
             title={!isOpen ? t('common.signIn') : undefined}
             className="flex h-11 items-center rounded-lg border border-border/80 bg-background/45 px-3 text-foreground transition hover:border-foreground/25 hover:bg-muted/70"
           >
@@ -144,6 +158,8 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         ) : (
           <Link
             to="/profile"
+            onClick={onClose}
+            aria-label={t('common.profile')}
             title={!isOpen ? t('common.profile') : undefined}
             className="flex h-12 w-full items-center rounded-xl border border-border/70 bg-background/70 px-3 transition hover:border-foreground/30 hover:bg-muted/60"
           >

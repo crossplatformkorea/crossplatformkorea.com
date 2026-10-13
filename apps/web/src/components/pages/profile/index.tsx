@@ -26,7 +26,6 @@ import ProfileDetails from './ProfileDetails';
 import ProfileStats from './ProfileStats';
 import PushNotificationSettings from './PushNotificationSettings';
 import { useAuthStore } from '@/stores/authStore'; // Added
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/uis/Button';
 import { getLocale } from '../../../lib/i18n';
 import PageHeader from '@/components/uis/PageHeader';
@@ -571,7 +570,6 @@ export default function ProfilePage() {
           description={t('profile.sections.details')}
           action={
             <div className="flex items-center gap-2">
-              <ThemeToggle className="block sm:hidden" />
               <Button
                 onClick={() => void handleSignOut()}
                 disabled={isSigningOut}

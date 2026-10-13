@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
+import { useTranslation } from 'react-i18next';
 
 export function ThemeToggle({ className }: { className?: string }) {
+  const { t } = useTranslation();
   const [isDark, setIsDark] = useState<boolean>(false);
 
   // Initialize on mount
@@ -38,13 +40,9 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <button
       onClick={toggleDarkMode}
-      className={cn(
-        'rounded-full p-2 transition-colors',
-        'hidden sm:block',
-        'hover:bg-accent',
-        className,
-      )}
-      aria-label="Toggle theme"
+      className={cn('rounded-lg p-2 transition-colors hover:bg-muted/80', className)}
+      aria-label={t('navigation.theme')}
+      aria-pressed={isDark}
     >
       <div className="relative w-5 h-5">
         {/* Moon icon for dark mode */}
