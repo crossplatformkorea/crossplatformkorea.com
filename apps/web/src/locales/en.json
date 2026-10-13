@@ -248,7 +248,22 @@
     "comments": "Comments",
     "views": "Views",
     "edit": "Edit post",
-    "delete": "Delete post"
+    "delete": "Delete post",
+    "eyebrow": "Community / Posts",
+    "pageTitle": "Stories from builders.",
+    "pageDescription": "New discoveries, lessons learned, and questions still open. Find your next idea in the experiences we share.",
+    "allStories": "All stories",
+    "newestFirst": "Latest first",
+    "emptyHint": "Share the first experience here.",
+    "categoryLabel": "Post categories",
+    "loginToLike": "Sign in to like",
+    "viewComments": "View {{count}} comments",
+    "viewComments_one": "View {{count}} comment",
+    "viewComments_other": "View {{count}} comments",
+    "backToPosts": "Back to posts",
+    "watchOnYoutube": "Watch on YouTube",
+    "tableLabel": "Post table — scroll horizontally",
+    "discussionKicker": "Keep the conversation going"
   },
   "notifications": {
     "title": "Notifications",

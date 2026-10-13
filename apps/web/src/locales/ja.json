@@ -250,7 +250,20 @@
     "comments": "コメント",
     "views": "閲覧数",
     "edit": "投稿を編集",
-    "delete": "投稿を削除"
+    "delete": "投稿を削除",
+    "eyebrow": "コミュニティ / 投稿",
+    "pageTitle": "開発者のストーリー。",
+    "pageDescription": "新しい発見、解決の記録、まだ答えのない疑問まで。共有された経験から次のアイデアを見つけましょう。",
+    "allStories": "すべての話題",
+    "newestFirst": "新着順",
+    "emptyHint": "最初の経験をここで共有しましょう。",
+    "categoryLabel": "投稿カテゴリー",
+    "loginToLike": "ログインしていいね",
+    "viewComments": "{{count}}件のコメントを見る",
+    "backToPosts": "投稿一覧へ",
+    "watchOnYoutube": "YouTubeで見る",
+    "tableLabel": "投稿の表 — 横にスクロールできます",
+    "discussionKicker": "会話を続けましょう"
   },
   "postCategories": {
     "ALL": {
