@@ -1132,7 +1132,7 @@ body {
 .article-video {
   margin: 1.8em 0 2.4em;
 }
-.article-prose.prose iframe:not(.absolute) {
+.article-prose.prose iframe:not([class~='absolute']) {
   display: block;
   width: 100%;
   height: auto;

@@ -1,13 +1,13 @@
 import { Children, isValidElement, useSyncExternalStore, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { YouTubeEmbed } from '@/components/uis/YouTubeEmbed';
 import { extractYouTubeVideoId } from '@/utils/youtube';
 import { preprocessPostMarkdown } from '@/lib/postMarkup';
+import { postHtmlPlugins } from '@/lib/postHtml';
 
 function subscribeToTheme(onChange: () => void) {
   const observer = new MutationObserver(onChange);
@@ -50,7 +50,7 @@ export default function PostContent({
         </div>
       )}
       <ReactMarkdown
-        rehypePlugins={[rehypeRaw]}
+        rehypePlugins={postHtmlPlugins}
         remarkPlugins={[remarkGfm]}
         components={{
           a: ({ node: _node, children, ...props }) => (

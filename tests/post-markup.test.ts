@@ -47,4 +47,25 @@ describe('post Markdown with legacy HTML', () => {
       'İ<PRE>**literal**</PRE><strong>bold</strong>',
     );
   });
+  test('closes long fences only on matching fence lines', () => {
+    const fenced = '````md\ninline ``` **literal**\n```\n```` trailing text\n**literal**\n`````';
+    expect(preprocessPostMarkdown(`${fenced}\n\n**bold**`)).toBe(
+      `${fenced}\n\n<strong>bold</strong>`,
+    );
+  });
+  test('preserves tilde, nested, indented, and multi-backtick code', () => {
+    for (const code of [
+      '~~~md\n``` **literal**\n~~~',
+      '> ```md\n> **literal**\n> ```',
+      '    **literal**\n    *literal*',
+      '``before ` **literal** after``',
+    ])
+      expect(preprocessPostMarkdown(code)).toBe(code);
+  });
+  test('treats HTML code tags inside a fence as literals without hiding later prose', () => {
+    const fence = '```html\n<pre>**literal**\n```';
+    expect(preprocessPostMarkdown(`${fence}\n\n**bold**`)).toBe(
+      `${fence}\n\n<strong>bold</strong>`,
+    );
+  });
 });
