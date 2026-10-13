@@ -1,7 +1,7 @@
 /**
  * Sidebar items for rendering the navigation menu
  */
-import { FileText, Lightbulb, Palette, BookOpen } from 'lucide-react';
+import { FileText, Lightbulb, Palette, BookOpen, House } from 'lucide-react';
 
 export type SidebarItem = {
   key: string;
@@ -11,6 +11,12 @@ export type SidebarItem = {
 };
 
 export const sidebarItems: SidebarItem[] = [
+  {
+    key: 'home',
+    route: '/',
+    icon: House,
+    labelKey: 'navigation.home',
+  },
   {
     key: 'posts',
     route: '/posts',

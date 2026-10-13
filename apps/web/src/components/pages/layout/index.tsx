@@ -9,6 +9,8 @@ import i18next, { t } from 'i18next';
 import { cn } from '@/lib/utils';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { getLocale } from '../../../lib/i18n';
+import * as Dialog from '@radix-ui/react-dialog';
+import MobileNavigation from './MobileNavigation';
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -26,8 +28,16 @@ export function AppLayout({ children }: AppLayoutProps) {
   // Initialize sidebar state from localStorage or default to closed (false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     const savedState = localStorage.getItem('sidebarOpen');
-    return savedState ? JSON.parse(savedState) : false;
+    return savedState === 'true';
   });
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const handleChange = () => setIsMobile(media.matches);
+    media.addEventListener('change', handleChange);
+    return () => media.removeEventListener('change', handleChange);
+  }, []);
 
   // Save sidebar state to localStorage when it changes
   useEffect(() => {
@@ -85,24 +95,10 @@ export function AppLayout({ children }: AppLayoutProps) {
     };
 
     void updateLocaleIfNeeded();
-  }, [
-    isAuthenticated,
-    hasProfile,
-    profileLocale,
-    deviceLocale,
-    updateUserLocale,
-  ]);
+  }, [isAuthenticated, hasProfile, profileLocale, deviceLocale, updateUserLocale]);
 
   const toggleSidebar = () => {
-    const newSidebarState = !isSidebarOpen;
-    setIsSidebarOpen(newSidebarState);
-
-    // Dispatch custom event to notify other components
-    window.dispatchEvent(
-      new CustomEvent('sidebarStateChange', {
-        detail: { isOpen: newSidebarState },
-      }),
-    );
+    setIsSidebarOpen((open) => !open);
   };
 
   if (isLoading) {
@@ -111,6 +107,12 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div className="flex flex-col h-full">
+      <a
+        href="#main-content"
+        className="fixed left-4 top-3 z-[100] -translate-y-20 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground focus:translate-y-0"
+      >
+        {t('navigation.skip')}
+      </a>
       {/* Header at the top level with sidebar toggle */}
       <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
@@ -120,7 +122,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         <div className="hidden shrink-0 md:block">
           <div
             className={cn(
-              'h-full overflow-hidden transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
+              'h-full overflow-hidden transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
               isSidebarOpen ? 'w-64 lg:w-72' : 'w-[72px]',
             )}
           >
@@ -128,32 +130,21 @@ export function AppLayout({ children }: AppLayoutProps) {
           </div>
         </div>
 
-        {/* Mobile Sidebar: Overlays content, shown only on mobile */}
-        <div className="md:hidden">
-          {/* Backdrop for mobile */}
-          {isSidebarOpen && (
-            <div
-              className="fixed inset-0 z-30 bg-black/50"
-              onClick={toggleSidebar}
-              aria-hidden="true"
-            />
+        {/* Radix traps focus, handles Escape, and removes closed mobile links. */}
+        <Dialog.Root open={isMobile && isSidebarOpen} onOpenChange={setIsSidebarOpen}>
+          {isMobile && (
+            <MobileNavigation open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
           )}
-          {/* Sidebar container for mobile */}
-          <div
-            className={cn(
-              'fixed inset-y-0 left-0 z-40 w-64 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-              // The Sidebar component itself provides its background color
-              isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
-            )}
-            role="dialog"
-            aria-modal="true"
-          >
-            <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-          </div>
-        </div>
+        </Dialog.Root>
 
         {/* Main content area */}
-        <main className="flex flex-col flex-1 w-full h-full overflow-hidden">{children}</main>
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex min-w-0 flex-1 flex-col h-full overflow-hidden outline-none"
+        >
+          {children}
+        </main>
       </div>
     </div>
   );

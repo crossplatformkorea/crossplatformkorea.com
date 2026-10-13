@@ -404,7 +404,26 @@
     "welcome": "Welcome to Cross-Platform Korea",
     "welcomeMessage": "Join our community and connect with other developers",
     "heroTitle": "Cross-Platform Korea",
-    "heroDescription": "We collect and share knowledge scattered across platform ecosystems, then discover more productive ways forward together."
+    "heroDescription": "Different platforms. Shared possibilities. A place to exchange ideas, discover inspiring apps, and build what comes next — together.",
+    "eyebrow": "A community for cross-platform builders",
+    "headlineFirst": "Build across.",
+    "headlineSecond": "Grow together.",
+    "exploreCommunity": "Explore the community",
+    "exploreApps": "Discover apps",
+    "exploreLabel": "Explore Cross-Platform Korea",
+    "discussTitle": "Start a conversation",
+    "discussDescription": "Ask a question, share a discovery, or talk through your next idea.",
+    "discoverTitle": "Find your inspiration",
+    "discoverDescription": "See what developers are building across platforms.",
+    "learnTitle": "Keep learning",
+    "learnDescription": "Explore guides and knowledge shared by the community.",
+    "latestTitle": "The latest conversations",
+    "readStory": "Read the story",
+    "memberLabel": "Community membership",
+    "memberTitle": "Your experience belongs here.",
+    "memberDescription": "A small discovery or a big question. Sign in and add your voice.",
+    "welcomeBack": "Welcome back to the community",
+    "footerNote": "Built by developers, for developers."
   },
   "auth": {
     "loginDescription": "Sign in to manage your profile, write posts, and interact with likes and comments.",
@@ -691,5 +710,14 @@
       "assistant": "Assistant",
       "streaming": "Generating response..."
     }
+  },
+  "navigation": {
+    "home": "Home",
+    "openMenu": "Open navigation",
+    "closeMenu": "Close navigation",
+    "label": "Main navigation",
+    "language": "Language",
+    "theme": "Toggle theme",
+    "skip": "Skip to content"
   }
 }

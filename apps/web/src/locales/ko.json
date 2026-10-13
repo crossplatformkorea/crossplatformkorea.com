@@ -388,7 +388,26 @@
     "welcome": "크로스플랫폼 코리아에 오신 것을 환영합니다",
     "welcomeMessage": "커뮤니티에 참여하고 다른 개발자들과 연결하세요",
     "heroTitle": "Cross-Platform Korea",
-    "heroDescription": "서로 다른 플랫폼에 흩어진 정보와 경험을 모아 나누고, 더 생산적인 다음 방향을 함께 발견합니다."
+    "heroDescription": "서로 다른 플랫폼, 함께 만드는 가능성. 개발 경험을 나누고, 새로운 앱에서 영감을 얻고, 다음 아이디어를 함께 만들어갑니다.",
+    "eyebrow": "크로스플랫폼 개발자를 위한 커뮤니티",
+    "headlineFirst": "플랫폼을 넘어.",
+    "headlineSecond": "함께, 더 멀리.",
+    "exploreCommunity": "커뮤니티 둘러보기",
+    "exploreApps": "만들어진 앱 보기",
+    "exploreLabel": "크로스플랫폼 코리아 둘러보기",
+    "discussTitle": "이야기를 나누세요",
+    "discussDescription": "궁금한 점부터 새로운 발견까지. 개발자의 경험이 모이는 곳.",
+    "discoverTitle": "영감을 발견하세요",
+    "discoverDescription": "다양한 플랫폼에서 만들어진 앱과 개발자들의 아이디어를 만나보세요.",
+    "learnTitle": "배움을 이어가세요",
+    "learnDescription": "커뮤니티가 쌓아온 개발 가이드와 지식을 함께 읽어보세요.",
+    "latestTitle": "커뮤니티의 최신 이야기",
+    "readStory": "이야기 읽기",
+    "memberLabel": "커뮤니티 참여",
+    "memberTitle": "당신의 경험이 다음 이야기입니다.",
+    "memberDescription": "작은 발견도, 큰 고민도 좋아요. 로그인하고 개발 이야기를 나눠보세요.",
+    "welcomeBack": "다시 만나 반갑습니다",
+    "footerNote": "개발자가 함께 만들어가는 커뮤니티."
   },
   "auth": {
     "loginDescription": "로그인하시면 개인 프로필 관리, 게시물 작성, 좋아요 및 댓글 기능을 이용하실 수 있습니다.",
@@ -689,5 +708,14 @@
       "assistant": "AI 어시스턴트",
       "streaming": "응답 생성 중..."
     }
+  },
+  "navigation": {
+    "home": "홈",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "label": "주 메뉴",
+    "language": "언어",
+    "theme": "테마 전환",
+    "skip": "본문으로 건너뛰기"
   }
 }

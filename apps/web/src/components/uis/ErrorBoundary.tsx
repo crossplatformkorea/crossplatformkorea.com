@@ -2,6 +2,7 @@ import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { t } from '../../lib/i18n';
 import { devConsole } from '../../lib/utils';
 import { Button } from './Button';
+import { RouteImportError } from '../../lib/routeImport';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   hasError: boolean;
+  reloadOnRetry: boolean;
 }
 
 /**
@@ -22,10 +24,10 @@ interface ErrorBoundaryState {
  * which is noise to a user.
  */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false };
+  state: ErrorBoundaryState = { hasError: false, reloadOnRetry: false };
 
-  static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true };
+  static getDerivedStateFromError(error: unknown): ErrorBoundaryState {
+    return { hasError: true, reloadOnRetry: error instanceof RouteImportError };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
@@ -33,7 +35,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   private reset = () => {
-    this.setState({ hasError: false });
+    if (this.state.reloadOnRetry) {
+      window.location.reload();
+      return;
+    }
+    this.setState({ hasError: false, reloadOnRetry: false });
   };
 
   render() {

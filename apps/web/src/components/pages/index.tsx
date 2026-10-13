@@ -3,25 +3,27 @@ import { Suspense, lazy } from 'react';
 import { AppLayout } from './layout';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
-import PostsPage from './community/Post/posts';
 import { useMetaTags } from '../../hooks/useMetaTags';
 import DevPanel from '../DevPanel';
 import AppLoading from '../AppLoading';
 import { ErrorBoundary } from '../uis/ErrorBoundary';
-import PostDetailsPage from './community/Post/post-details';
 import SummaryPage from './community/Summary';
+import { loadRouteModule } from '@/lib/routeImport';
+
+const lazyPage: typeof lazy = (load) => lazy(() => loadRouteModule(load));
 
 // Lazy load pages for better performance
-const CommunityPage = lazy(() => import('./community/Post/posts'));
-const SignInPage = lazy(() => import('./sign-in'));
-const ProfilePage = lazy(() => import('./profile'));
-const UserProfilePage = lazy(() => import('./user'));
-const FeatureRequestsPage = lazy(() => import('./feature-requests'));
-const FeatureRequestDetailPage = lazy(() => import('./feature-request-detail'));
-const ShowcasePage = lazy(() => import('./showcase'));
-const NotificationsPage = lazy(() => import('./notifications'));
-const ChatGptPage = lazy(() => import('./chatgpt'));
-const NotFoundPage = lazy(() => import('./NotFound'));
+const PostsPage = lazyPage(() => import('./community/Post/posts'));
+const PostDetailsPage = lazyPage(() => import('./community/Post/post-details'));
+const SignInPage = lazyPage(() => import('./sign-in'));
+const ProfilePage = lazyPage(() => import('./profile'));
+const UserProfilePage = lazyPage(() => import('./user'));
+const FeatureRequestsPage = lazyPage(() => import('./feature-requests'));
+const FeatureRequestDetailPage = lazyPage(() => import('./feature-request-detail'));
+const ShowcasePage = lazyPage(() => import('./showcase'));
+const NotificationsPage = lazyPage(() => import('./notifications'));
+const ChatGptPage = lazyPage(() => import('./chatgpt'));
+const NotFoundPage = lazyPage(() => import('./NotFound'));
 
 // This component only handles routing
 export default function AppRoutes() {
@@ -46,7 +48,7 @@ export default function AppRoutes() {
                 path="/*"
                 element={
                   <div className="h-full w-full">
-                    <CommunityPage />
+                    <PostsPage />
                   </div>
                 }
               />
@@ -63,12 +65,10 @@ export default function AppRoutes() {
             <div
               className={cn(
                 'site-canvas bg-background w-full overflow-y-auto', // Changed overflow-y-scroll to overflow-y-auto for better mobile experience
-                'px-3 py-4 sm:px-4 md:px-6 lg:px-16 sm:pt-6 sm:pb-16 md:pt-8 md:pb-20', // Progressive padding for different screen sizes
+                'px-5 py-4 sm:px-8 lg:px-12 sm:pt-6 sm:pb-16 md:pt-8 md:pb-20',
               )}
             >
-              <div className="max-w-5xl mx-auto">
-                {' '}
-                {/* Added max-width container for large screens */}
+              <div className="mx-auto max-w-6xl">
                 <Routes>
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/showcase" element={<ShowcasePage />} />

@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatDistanceToNow } from 'date-fns';
 import { ko, ja } from 'date-fns/locale';
 import { ArrowUpRight, Clock } from 'lucide-react';
 import CategoryBadge from '@/components/uis/CategoryBadge';
+import { cn } from '@/lib/utils';
+import { motion, useReducedMotion } from 'framer-motion';
+import { entranceEase, interactionSpring } from '@/lib/motion';
+
+const MotionLink = motion.create(Link);
 
 interface Post {
   _id: string;
@@ -16,26 +22,54 @@ interface Post {
   slug?: string;
 }
 
-export default function SummaryPostItem({ post }: { post: Post }) {
-  const { i18n } = useTranslation();
+export default function SummaryPostItem({
+  post,
+  featured = false,
+  order = 0,
+}: {
+  post: Post;
+  featured?: boolean;
+  order?: number;
+}) {
+  const { t, i18n } = useTranslation();
+  const reduceMotion = useReducedMotion();
+  const [failedThumbnail, setFailedThumbnail] = useState<string | null>(null);
   const plainContent = post.content
     .replace(/<[^>]*>/g, '')
     .replace(/[#*_>`~]/g, '')
     .trim();
   const preview = plainContent.length > 180 ? `${plainContent.slice(0, 180)}…` : plainContent;
-  const locale = i18n.language === 'ko' ? ko : i18n.language === 'ja' ? ja : undefined;
+  const language = i18n.language.split('-')[0];
+  const locale = language === 'ko' ? ko : language === 'ja' ? ja : undefined;
 
   return (
-    <Link
+    <MotionLink
       to={`/post/${post.slug || post._id}`}
-      className="surface-card-interactive group flex min-h-64 flex-col overflow-hidden"
+      initial={false}
+      whileInView={
+        reduceMotion
+          ? undefined
+          : {
+              opacity: [0.6, 1],
+              transition: { duration: 0.45, ease: entranceEase, delay: order * 0.04 },
+            }
+      }
+      viewport={{ once: true, amount: 0.1 }}
+      whileHover={reduceMotion ? undefined : { y: -4, transition: interactionSpring }}
+      whileTap={reduceMotion ? undefined : { scale: 0.985, transition: interactionSpring }}
+      className={cn(
+        'surface-card group flex min-h-72 flex-col overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-lg',
+        featured && 'border-foreground/25 bg-muted/40',
+      )}
     >
-      {post.thumbnail && (
+      {post.thumbnail && failedThumbnail !== post.thumbnail && (
         <div className="h-32 overflow-hidden border-b border-border/70">
           <img
             src={post.thumbnail}
             alt=""
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+            onError={() => setFailedThumbnail(post.thumbnail || null)}
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03] motion-reduce:transform-none"
           />
         </div>
       )}
@@ -51,11 +85,11 @@ export default function SummaryPostItem({ post }: { post: Post }) {
         <h3 className="mt-5 line-clamp-2 text-lg font-bold leading-snug tracking-[-0.025em] transition group-hover:text-primary">
           {post.title}
         </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{preview}</p>
+        <p className="mb-6 mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{preview}</p>
 
         <div className="mt-auto flex items-end justify-between gap-3 border-t border-border/70 pt-4">
           <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-            {post.tags?.slice(0, 2).join(' / ') || 'COMMUNITY'}
+            {post.tags?.slice(0, 2).join(' / ') || t('summary.readStory')}
           </span>
           <ArrowUpRight
             size={17}
@@ -63,6 +97,6 @@ export default function SummaryPostItem({ post }: { post: Post }) {
           />
         </div>
       </div>
-    </Link>
+    </MotionLink>
   );
 }
