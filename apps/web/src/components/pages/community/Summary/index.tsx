@@ -182,7 +182,7 @@ export default function SummaryPage() {
       <section className="py-12 sm:py-16" aria-labelledby="latest-title">
         <div className="mb-7 flex items-end justify-between gap-4">
           <div>
-            <div className="section-kicker text-muted-foreground">FROM THE COMMUNITY</div>
+            <div className="section-kicker text-muted-foreground">{t('summary.latestKicker')}</div>
             <h2
               id="latest-title"
               className="mt-3 text-2xl font-bold tracking-[-0.04em] sm:text-3xl"
