@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowUpRight, Search } from 'lucide-react';
 import { Button } from '../../uis/Button';
+import { motion, useReducedMotion } from 'framer-motion';
+import { scrollRevealVariants } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { curatedApps } from './catalog-data';
 import { storeMetrics } from './catalog-metrics';
@@ -19,6 +21,7 @@ function AppCard({ app }: { app: CuratedApp }) {
   const { t, i18n } = useTranslation();
   const language = i18n.language.startsWith('ko') ? 'ko' : 'en';
   const [imageFailed, setImageFailed] = useState(false);
+  const reducedMotion = useReducedMotion();
   const metrics = storeMetrics[app.id];
   const formatCount = (count: number) =>
     new Intl.NumberFormat(i18n.language, {
@@ -26,7 +29,13 @@ function AppCard({ app }: { app: CuratedApp }) {
       maximumFractionDigits: 1,
     }).format(count);
   return (
-    <article className="surface-card flex min-w-0 flex-col p-5">
+    <motion.article
+      className="collection-card p-5 sm:p-6"
+      initial={false}
+      whileInView={reducedMotion ? undefined : 'visible'}
+      variants={scrollRevealVariants}
+      viewport={{ once: true, amount: 0.12 }}
+    >
       <div className="mb-5 flex items-center gap-3">
         <div
           className="flex h-12 w-12 shrink-0 items-center justify-center text-lg font-semibold text-gray-700 dark:text-gray-300"
@@ -48,7 +57,7 @@ function AppCard({ app }: { app: CuratedApp }) {
           )}
         </div>
         <div className="min-w-0">
-          <h2 className="break-words text-base font-bold text-gray-950 dark:text-gray-50">
+          <h2 className="break-words text-xl font-semibold tracking-[-0.035em] text-foreground">
             {app.name}
           </h2>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{app.publisher}</p>
@@ -67,7 +76,7 @@ function AppCard({ app }: { app: CuratedApp }) {
           rel="noopener noreferrer"
           aria-label={`${app.name} — ${t('showcase.catalog.storeMetrics')}`}
           title={`${metrics.storeName} · Google Play (${metrics.region}) · ${metrics.checkedAt}`}
-          className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+          className="mb-4 flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 rounded-lg bg-muted/45 px-3 py-2 font-mono text-[11px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <span>
             {t('showcase.catalog.ratingCount', { value: formatCount(metrics.ratingCount) })}
@@ -94,14 +103,14 @@ function AppCard({ app }: { app: CuratedApp }) {
         <p lang={language} className="text-sm leading-6 text-gray-700 dark:text-gray-300">
           {app.adoption[language]}
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
           <a
             href={app.source.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${app.name} — ${t('showcase.catalog.source')}`}
             title={app.source.title}
-            className="inline-flex items-center gap-1 font-medium underline decoration-gray-300 underline-offset-4 hover:decoration-current"
+            className="collection-link"
           >
             {t('showcase.catalog.source')}
             <ArrowUpRight size={14} aria-hidden="true" />
@@ -112,7 +121,7 @@ function AppCard({ app }: { app: CuratedApp }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${app.name} — ${t('showcase.catalog.website')}`}
-              className="inline-flex items-center gap-1 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+              className="inline-flex min-h-11 items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
             >
               {t('showcase.catalog.website')}
               <ArrowUpRight size={14} aria-hidden="true" />
@@ -123,7 +132,7 @@ function AppCard({ app }: { app: CuratedApp }) {
           {t('showcase.catalog.reviewed', { date: app.reviewedAt })}
         </p>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -161,15 +170,8 @@ export default function CuratedShowcases() {
 
   return (
     <section aria-label={t('showcase.catalog.curated')}>
-      <p className="mb-6 max-w-3xl text-sm leading-6 text-gray-500 dark:text-gray-400">
-        {t('showcase.catalog.intro')}
-      </p>
-      <details className="mb-6 max-w-3xl text-xs leading-6 text-gray-500 dark:text-gray-400">
-        <summary className="cursor-pointer font-bold">{t('showcase.catalog.rankingTitle')}</summary>
-        <p className="mt-2">{t('showcase.catalog.rankingMethod')}</p>
-      </details>
       <div
-        className="mb-5 flex flex-wrap gap-2"
+        className="mb-4 flex gap-2 overflow-x-auto pb-2"
         role="group"
         aria-label={t('showcase.catalog.technology')}
       >
@@ -181,8 +183,8 @@ export default function CuratedShowcases() {
             aria-pressed={technology === tech}
             onClick={() => update('tech', tech)}
             className={cn(
-              technology === tech &&
-                'border-gray-500 bg-gray-100 dark:border-gray-400 dark:bg-gray-800',
+              'min-h-11 shrink-0 rounded-lg border-transparent bg-transparent',
+              technology === tech && 'border-border bg-muted/60',
             )}
           >
             {tech ? technologyNames[tech] : t('showcase.catalog.all')}
@@ -194,7 +196,7 @@ export default function CuratedShowcases() {
           </Button>
         ))}
       </div>
-      <div className="surface-card mb-5 flex flex-col gap-3 p-3 sm:flex-row">
+      <div className="community-toolbar mb-5">
         <div className="relative flex-1">
           <Search
             size={18}
@@ -232,6 +234,11 @@ export default function CuratedShowcases() {
           </Button>
         )}
       </div>
+      <details className="mb-6 rounded-xl border border-border/70 px-4 py-3 text-xs leading-6 text-muted-foreground">
+        <summary className="cursor-pointer font-bold">{t('showcase.catalog.rankingTitle')}</summary>
+        <p className="mt-2">{t('showcase.catalog.intro')}</p>
+        <p className="mt-2">{t('showcase.catalog.rankingMethod')}</p>
+      </details>
       <CatalogResults key={`${query}|${technology}|${category}`} apps={apps} />
     </section>
   );
@@ -242,14 +249,18 @@ function CatalogResults({ apps }: { apps: CuratedApp[] }) {
   const [limit, setLimit] = useState(12);
   return apps.length ? (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="collection-grid">
         {apps.slice(0, limit).map((app) => (
           <AppCard key={app.id} app={app} />
         ))}
       </div>
       {limit < apps.length && (
         <div className="mt-8 flex justify-center">
-          <Button variant="outline" onClick={() => setLimit((value) => value + 12)}>
+          <Button
+            variant="outline"
+            className="min-h-12"
+            onClick={() => setLimit((value) => value + 12)}
+          >
             {t('showcase.catalog.more', {
               shown: Math.min(limit, apps.length),
               total: apps.length,
@@ -259,7 +270,7 @@ function CatalogResults({ apps }: { apps: CuratedApp[] }) {
       )}
     </>
   ) : (
-    <div className="surface-card p-12 text-center">
+    <div className="journal-empty">
       <h2 className="font-bold">{t('showcase.noSearchResults')}</h2>
       <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{t('showcase.tryAdjusting')}</p>
     </div>

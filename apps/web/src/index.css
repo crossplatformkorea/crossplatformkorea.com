@@ -1165,3 +1165,56 @@ body {
     transition: none;
   }
 }
+
+@layer components {
+  .community-toolbar {
+    @apply flex flex-col gap-3 rounded-xl border border-border/70 bg-card/40 p-3 sm:flex-row sm:items-center;
+  }
+  .community-section-label {
+    @apply mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-border/70 pb-4;
+  }
+  .collection-grid {
+    @apply grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 xl:grid-cols-3;
+  }
+  .collection-card {
+    @apply flex min-w-0 flex-col overflow-hidden rounded-2xl border border-border/75 bg-card/40 transition-colors duration-200 hover:border-foreground/25 hover:bg-card/80 motion-reduce:transition-none;
+  }
+  .collection-link {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border/80 bg-background/40 px-3 py-2 text-xs font-medium transition-colors hover:border-foreground/30 hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20;
+  }
+  .roadmap-status {
+    @apply inline-flex max-w-full items-center gap-2 rounded-md border border-border/75 bg-muted/30 px-2.5 py-1 font-mono text-[10px] font-medium tracking-wide text-muted-foreground;
+  }
+  .roadmap-status-dot {
+    @apply h-1.5 w-1.5 shrink-0 rounded-full border border-current;
+  }
+  .roadmap-status[data-status='in-progress'] .roadmap-status-dot {
+    @apply bg-current ring-2 ring-foreground/10;
+  }
+  .roadmap-status[data-status='completed'] .roadmap-status-dot {
+    @apply bg-current;
+  }
+  .roadmap-vote {
+    @apply flex min-h-14 w-12 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl border border-border/80 text-muted-foreground transition-colors hover:border-foreground/35 hover:bg-muted/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:opacity-50;
+  }
+  .roadmap-steps {
+    @apply grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6;
+  }
+  .roadmap-step {
+    @apply flex min-w-0 items-center gap-2.5 text-xs text-muted-foreground;
+  }
+  .roadmap-step-current {
+    @apply font-semibold text-foreground;
+  }
+  .roadmap-step-number {
+    @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border font-mono text-[10px] text-muted-foreground;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .community-page * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
