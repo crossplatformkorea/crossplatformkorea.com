@@ -102,7 +102,7 @@ export default function ShowcasePage() {
   return (
     <div className="journal-page community-page">
       <CommunityPageHeader
-        eyebrow="SHOWCASE / MADE WITH CROSS-PLATFORM"
+        eyebrow={translate('showcase.header.eyebrow')}
         title={translate('showcase.title')}
         description={translate('showcase.catalog.description')}
         action={
@@ -137,7 +137,7 @@ export default function ShowcasePage() {
               aria-hidden="true"
               className="ml-auto hidden items-center font-mono text-[10px] tracking-[0.16em] text-muted-foreground sm:inline-flex"
             >
-              ONE CODEBASE. MANY POSSIBILITIES.
+              {translate('showcase.header.tagline')}
             </span>
           </div>
         }

@@ -172,7 +172,7 @@ export default function FeatureRequestDetailPage() {
           {t('featureRequest.backToList')}
         </Link>
         <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
-          <span className="section-kicker">COMMUNITY / FEATURE REQUEST</span>
+          <span className="section-kicker">{t('featureRequest.header.detailKicker')}</span>
           <RequestStatus status={featureRequest.status} />
         </div>
         <h1 className="article-title">{featureRequest.title}</h1>

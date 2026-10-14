@@ -97,7 +97,7 @@ export default function FeatureRequestsPage() {
   return (
     <div className="journal-page community-page">
       <CommunityPageHeader
-        eyebrow="COMMUNITY / BUILD TOGETHER"
+        eyebrow={t('featureRequest.header.eyebrow')}
         title={t('featureRequest.title')}
         description={t('featureRequest.description')}
         action={
@@ -197,7 +197,7 @@ export default function FeatureRequestsPage() {
         aria-busy={status === 'LoadingFirstPage' || status === 'LoadingMore'}
       >
         <div className="community-section-label">
-          <span className="section-kicker">IDEAS / DISCUSSION</span>
+          <span className="section-kicker">{t('featureRequest.header.listKicker')}</span>
           <span className="text-xs text-muted-foreground">{t('featureRequest.listNote')}</span>
         </div>
         {status === 'LoadingFirstPage' ? (

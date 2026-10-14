@@ -301,6 +301,11 @@
     "featureRequests": "기능 요청"
   },
   "featureRequest": {
+    "header": {
+      "eyebrow": "커뮤니티 / 함께 만들어요",
+      "listKicker": "아이디어 / 함께 나누는 이야기",
+      "detailKicker": "커뮤니티 / 기능 요청"
+    },
     "progress": "아이디어부터 완성까지",
     "formGuidance": "어떤 문제를 해결하고 싶은지, 아이디어가 어떻게 도움이 될지 알려주세요. 제목은 3자 이상, 설명은 10자 이상 작성해주세요.",
     "listNote": "여러분의 아이디어로 함께 만들어갑니다.",
@@ -459,6 +464,10 @@
     "noPostsYet": "아직 게시물이 없습니다"
   },
   "showcase": {
+    "header": {
+      "eyebrow": "쇼케이스 / 크로스플랫폼으로 만들다",
+      "tagline": "하나의 코드, 더 많은 가능성."
+    },
     "clearSearch": "검색어 지우기",
     "title": "쇼케이스",
     "description": "놀라운 크로스플랫폼 애플리케이션을 발견하세요",
