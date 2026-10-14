@@ -301,6 +301,10 @@
     "featureRequests": "기능 요청"
   },
   "featureRequest": {
+    "progress": "아이디어부터 완성까지",
+    "formGuidance": "어떤 문제를 해결하고 싶은지, 아이디어가 어떻게 도움이 될지 알려주세요. 제목은 3자 이상, 설명은 10자 이상 작성해주세요.",
+    "listNote": "여러분의 아이디어로 함께 만들어갑니다.",
+    "voteFailed": "투표를 반영하지 못했어요. 다시 시도해주세요.",
     "title": "기능 요청",
     "description": "기존 기능 요청에 투표하거나 새로운 기능을 제안하여 플랫폼 개선에 도움을 주세요.",
     "requestButton": "기능 요청하기",
@@ -455,6 +459,7 @@
     "noPostsYet": "아직 게시물이 없습니다"
   },
   "showcase": {
+    "clearSearch": "검색어 지우기",
     "title": "쇼케이스",
     "description": "놀라운 크로스플랫폼 애플리케이션을 발견하세요",
     "addNew": "추가",

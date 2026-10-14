@@ -319,6 +319,10 @@
     }
   },
   "featureRequest": {
+    "progress": "From idea to delivery",
+    "formGuidance": "Describe the problem and how your idea could help. Title: at least 3 characters. Description: at least 10 characters.",
+    "listNote": "Your ideas shape what comes next.",
+    "voteFailed": "Unable to update your vote. Please try again.",
     "title": "Feature Requests",
     "description": "Vote on existing feature requests or suggest new ones to help us improve the platform.",
     "requestButton": "Request Feature",
@@ -510,6 +514,7 @@
     "featureRequests": "Feature Requests"
   },
   "showcase": {
+    "clearSearch": "Clear search",
     "title": "Showcase",
     "description": "Discover amazing cross-platform applications",
     "addNew": "Add New",
