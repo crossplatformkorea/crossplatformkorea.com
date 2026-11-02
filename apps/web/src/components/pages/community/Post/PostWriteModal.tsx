@@ -320,7 +320,8 @@ export default function PostWriteModal({
     if (!isOpen) return;
 
     const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape' || e.isComposing) return;
+      // Escape also cancels an IME candidate; keyCode 229 covers Safari.
+      if (e.key !== 'Escape' || e.isComposing || e.keyCode === 229) return;
       // Escape closes the innermost layer first.
       if (showThumbnailMenu) {
         setShowThumbnailMenu(false);

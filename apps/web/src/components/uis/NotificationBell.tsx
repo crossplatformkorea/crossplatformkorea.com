@@ -225,7 +225,11 @@ export default function NotificationBell() {
                         // Nothing to open, but a click still marks it read.
                         <button
                           type="button"
-                          onClick={() => void handleNotificationClick(notification)}
+                          onClick={() => {
+                            void handleNotificationClick(notification);
+                            // The row unmounts with the panel; keep keyboard focus on the bell.
+                            bellRef.current?.focus();
+                          }}
                           className={cn(rowClassName, 'w-full text-left hover:bg-muted/50')}
                         >
                           {body}

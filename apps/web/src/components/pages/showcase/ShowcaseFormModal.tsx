@@ -318,6 +318,11 @@ const ShowcaseFormModal = ({
           // A long form: only the explicit close and cancel buttons dismiss it.
           onPointerDownOutside={(event) => event.preventDefault()}
           onEscapeKeyDown={(event) => {
+            // Escape that cancels an IME candidate must not close the form.
+            if (event.isComposing || event.keyCode === 229) {
+              event.preventDefault();
+              return;
+            }
             if (isSubmitting || successMessage) {
               event.preventDefault();
               return;
