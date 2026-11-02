@@ -10,6 +10,17 @@ import { preprocessPostMarkdown } from '@/lib/postMarkup';
 import { postHtmlPlugins } from '@/lib/postHtml';
 import { useIsDarkTheme } from '@/hooks/useTheme';
 
+// Compare resolved origins: "//host" and look-alike hosts such as
+// "https://crossplatformkorea.com.example" must still count as external.
+function isExternalHref(href: string | undefined): boolean {
+  if (!href || href.startsWith('#')) return false;
+  try {
+    return new URL(href, window.location.href).origin !== window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
 function codeText(children: ReactNode): string {
   return Children.toArray(children)
     .map((child) =>
@@ -46,8 +57,7 @@ export default function PostContent({
         components={{
           // Only links that leave the site open a new tab; in-article anchors stay put.
           a: ({ node: _node, children, ...props }) =>
-            /^https?:\/\//i.test(props.href ?? '') &&
-            !props.href!.startsWith(window.location.origin) ? (
+            isExternalHref(props.href) ? (
               <a {...props} target="_blank" rel="noopener noreferrer">
                 {children}
               </a>

@@ -300,6 +300,17 @@ const ShowcaseFormModal = ({
     }
   };
 
+  const hasFormInput = Boolean(
+    title.trim() ||
+      description.trim() ||
+      appStoreUrl ||
+      playStoreUrl ||
+      websiteUrl ||
+      imageUrl ||
+      otherLinks.length > 0 ||
+      tags.length > 0,
+  );
+
   // Radix handles Escape, the focus trap, scroll lock and returning focus to the trigger.
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && !isSubmitting && onClose()}>
@@ -307,6 +318,13 @@ const ShowcaseFormModal = ({
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60" />
         <Dialog.Content
           aria-describedby={undefined}
+          // A long form: only the explicit close and cancel buttons dismiss it.
+          onPointerDownOutside={(event) => event.preventDefault()}
+          onEscapeKeyDown={(event) => {
+            if (hasFormInput && !window.confirm(t('postWrite.discardConfirm'))) {
+              event.preventDefault();
+            }
+          }}
           className={cn(
             'fixed left-1/2 top-1/2 z-50 flex h-[min(90dvh,56rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-2xl border border-border shadow-xl',
             'bg-card',
@@ -380,7 +398,7 @@ const ShowcaseFormModal = ({
                     onChange={(e) => setCategory(e.target.value)}
                     className={cn(
                       'w-full rounded-md border px-4 py-2',
-                      'border-input bg-white',
+                      'border-input bg-background',
                       'text-foreground',
                       'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                     )}
@@ -410,7 +428,7 @@ const ShowcaseFormModal = ({
                   onChange={(e) => setTitle(e.target.value)}
                   className={cn(
                     'w-full rounded-md border px-4 py-2',
-                    'border-input bg-white',
+                    'border-input bg-background',
                     'text-foreground',
                     'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                   )}
@@ -440,7 +458,7 @@ const ShowcaseFormModal = ({
                     onPaste={(e) => handleUrlPaste(e, setImageUrl)}
                     className={cn(
                       'flex-1 rounded-r-md border border-l-0 px-4 py-2',
-                      'border-input bg-white',
+                      'border-input bg-background',
                       'text-foreground',
                       'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                     )}
@@ -496,7 +514,7 @@ const ShowcaseFormModal = ({
                       onPaste={(e) => handleUrlPaste(e, setWebsiteUrl)}
                       className={cn(
                         'flex-1 rounded-r-md border border-l-0 px-4 py-2',
-                        'border-input bg-white',
+                        'border-input bg-background',
                         'text-foreground',
                         'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                       )}
@@ -525,7 +543,7 @@ const ShowcaseFormModal = ({
                       onPaste={(e) => handleUrlPaste(e, setAppStoreUrl)}
                       className={cn(
                         'flex-1 rounded-r-md border border-l-0 px-4 py-2',
-                        'border-input bg-white',
+                        'border-input bg-background',
                         'text-foreground',
                         'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                       )}
@@ -554,7 +572,7 @@ const ShowcaseFormModal = ({
                       onPaste={(e) => handleUrlPaste(e, setPlayStoreUrl)}
                       className={cn(
                         'flex-1 rounded-r-md border border-l-0 px-4 py-2',
-                        'border-input bg-white',
+                        'border-input bg-background',
                         'text-foreground',
                         'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                       )}
@@ -610,7 +628,7 @@ const ShowcaseFormModal = ({
                       onPaste={(e) => handleUrlPaste(e, setOtherLinkInput)}
                       className={cn(
                         'flex-1 border border-l-0 px-4 py-2',
-                        'border-input bg-white',
+                        'border-input bg-background',
                         'text-foreground',
                         'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                         'rounded-r-none',
@@ -670,7 +688,7 @@ const ShowcaseFormModal = ({
                     onCompositionEnd={handleCompositionEnd}
                     className={cn(
                       'flex-1 rounded-l-md border px-4 py-2',
-                      'border-input bg-white',
+                      'border-input bg-background',
                       'text-foreground',
                       'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                     )}
@@ -702,7 +720,7 @@ const ShowcaseFormModal = ({
                   rows={4}
                   className={cn(
                     'w-full rounded-md border px-4 py-2 resize-none',
-                    'border-input bg-white',
+                    'border-input bg-background',
                     'text-foreground',
                     'focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring/40',
                   )}

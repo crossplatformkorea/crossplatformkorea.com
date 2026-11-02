@@ -72,12 +72,8 @@ export default function FeatureRequestDetailPage() {
     });
   };
 
-  const hasVoted = () => {
-    if (!currentUser || !featureRequest) return false;
-    return featureRequest.voterIds?.includes(currentUser._id) ?? false;
-  };
-
-  const isOwner = featureRequest && currentUser && featureRequest.userId === currentUser._id;
+  // The server computes these for the signed-in viewer; it never sends voter IDs.
+  const isOwner = featureRequest?.isOwner ?? false;
 
   const handleVote = async () => {
     if (!featureRequestId) return;
@@ -188,8 +184,8 @@ export default function FeatureRequestDetailPage() {
           <div className="flex flex-wrap items-center gap-4">
             <VoteButton
               votes={featureRequest.votes}
-              voted={hasVoted()}
-              isOwner={!!isOwner}
+              voted={featureRequest.hasVoted}
+              isOwner={isOwner}
               pending={isVoting}
               signedIn={isAuthenticated}
               onVote={() => void handleVote()}

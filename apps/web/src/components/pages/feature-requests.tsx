@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useConvexAuth, useMutation, usePaginatedQuery, useQuery } from 'convex/react';
+import { useConvexAuth, useMutation, usePaginatedQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
@@ -41,7 +41,6 @@ export default function FeatureRequestsPage() {
   } = usePaginatedQuery(api.featureRequests.query.getAll, {}, { initialNumItems: 10 });
   const addFeatureRequest = useMutation(api.featureRequests.mutation.add);
   const voteForFeature = useMutation(api.featureRequests.mutation.vote);
-  const currentUser = useQuery(api.users.query.currentUser);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -258,10 +257,8 @@ export default function FeatureRequestsPage() {
                 <div className="flex items-start gap-4 p-5 sm:gap-6 sm:p-7">
                   <VoteButton
                     votes={request.votes}
-                    voted={
-                      currentUser ? (request.voterIds?.includes(currentUser._id) ?? false) : false
-                    }
-                    isOwner={currentUser?._id === request.userId}
+                    voted={request.hasVoted}
+                    isOwner={request.isOwner}
                     pending={votingIds.has(request._id)}
                     signedIn={isAuthenticated}
                     onVote={() => void handleVote(request._id)}

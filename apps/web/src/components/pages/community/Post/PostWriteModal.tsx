@@ -286,18 +286,30 @@ export default function PostWriteModal({
       content !== defaultContent ||
       tags.join('\n') !== (defaultTags || []).join('\n') ||
       selectedThumbnail !== (defaultThumbnail || '') ||
-      youtubeUrl !== (defaultYoutubeUrl || '')
+      youtubeUrl !== (defaultYoutubeUrl || '') ||
+      category !== (defaultCategory || category) ||
+      publishAtLocal !== (defaultPublishAt ? utcIsoToSeoulLocal(defaultPublishAt) : '') ||
+      saveAsDraft !== (defaultStatus === 'draft')
     : Boolean(
-        title.trim() || content.trim() || tags.length > 0 || selectedThumbnail || youtubeUrl.trim(),
+        title.trim() ||
+          content.trim() ||
+          tags.length > 0 ||
+          selectedThumbnail ||
+          youtubeUrl.trim() ||
+          publishAtLocal ||
+          saveAsDraft ||
+          category !== (defaultCategory || DEFAULT_CATEGORY),
       );
 
   // Every user-initiated close (Escape, X, Cancel) goes through here so a draft is never lost silently.
   const requestClose = useCallback(() => {
+    // The close animation keeps the modal mounted for a moment; ignore repeats.
+    if (isClosing) return;
     if (!isSubmitting && hasUnsavedChanges && !window.confirm(t('postWrite.discardConfirm'))) {
       return;
     }
     handleClose();
-  }, [handleClose, hasUnsavedChanges, isSubmitting, t]);
+  }, [handleClose, hasUnsavedChanges, isClosing, isSubmitting, t]);
 
   useEffect(() => {
     if (!isOpen) return;

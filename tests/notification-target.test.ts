@@ -24,6 +24,12 @@ describe('notificationHref', () => {
     expect(notificationHref({ showcaseId: 'show789' })).toBe('/showcase/show789');
   });
 
+  test('opens the feature request a roadmap comment belongs to', () => {
+    expect(notificationHref({ featureRequestId: 'fr42', commentId: 'comment456' })).toBe(
+      '/feature-request/fr42',
+    );
+  });
+
   test('ignores a stray comment id with nothing to open', () => {
     expect(notificationHref({ commentId: 'comment456' })).toBeNull();
   });

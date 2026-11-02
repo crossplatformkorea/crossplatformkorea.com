@@ -1,11 +1,31 @@
 import { query } from "../_generated/server";
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
+import { getAuthUserId } from "@convex-dev/auth/server";
+import type { Doc, Id } from "../_generated/dataModel";
+
+// The roadmap is public, so return only what it renders. The stored row also
+// holds the author's email and every voter's user ID, which must not leave
+// the server; the viewer-specific bits are computed here instead.
+function toPublicRequest(request: Doc<"featureRequests">, viewerId: Id<"users"> | null) {
+  return {
+    _id: request._id,
+    _creationTime: request._creationTime,
+    title: request.title,
+    description: request.description,
+    votes: request.votes,
+    status: request.status,
+    commentCount: request.commentCount,
+    hasVoted: viewerId !== null && request.voterIds.includes(viewerId),
+    isOwner: viewerId !== null && request.userId === viewerId,
+  };
+}
 
 // Get feature requests with pagination
 export const getAll = query({
   args: { paginationOpts: paginationOptsValidator },
   handler: async (ctx, args) => {
+    const viewerId = await getAuthUserId(ctx);
     // Use a simple query with filter to exclude soft-deleted items
     const results = await ctx.db
       .query("featureRequests")
@@ -16,7 +36,9 @@ export const getAll = query({
     // Note: this isn't ideal for large datasets but will work for development
     return {
       ...results,
-      page: results.page.sort((a, b) => b.votes - a.votes),
+      page: results.page
+        .sort((a, b) => b.votes - a.votes)
+        .map((request) => toPublicRequest(request, viewerId)),
     };
   },
 });
@@ -32,7 +54,7 @@ export const getById = query({
       return null;
     }
 
-    return featureRequest;
+    return toPublicRequest(featureRequest, await getAuthUserId(ctx));
   },
 });
 

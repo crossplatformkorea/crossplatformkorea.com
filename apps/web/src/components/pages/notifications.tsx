@@ -53,7 +53,9 @@ export default function NotificationsPage() {
   const deleteNotification = useMutation(api.notifications.mutation.deleteNotification);
 
   // 로딩 중이거나 인증되지 않은 경우
-  if (isLoading || status === 'LoadingFirstPage') {
+  // A skipped (signed-out) paginated query also reports LoadingFirstPage, so
+  // only treat it as loading when there is a session to load for.
+  if (isLoading || (isAuthenticated && status === 'LoadingFirstPage')) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto" role="status" aria-label={t('common.loading')}>

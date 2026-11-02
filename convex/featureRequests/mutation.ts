@@ -27,13 +27,6 @@ export const add = mutation({
     // Change null to undefined to match the expected type
     const userEmail = identity.email || undefined;
 
-    console.log("Server received feature request:", {
-      title,
-      description,
-      userId,
-      userEmail,
-    });
-
     // Validate inputs
     if (title.trim().length < 3) {
       console.error("Title too short");
@@ -52,8 +45,6 @@ export const add = mutation({
         // Track who already voted (starting with the creator)
         voterIds: [userId],
       };
-      console.log("Attempting to insert:", featureRequestData);
-
       // Create new feature request
       const id = await ctx.db.insert("featureRequests", featureRequestData);
 

@@ -24,6 +24,7 @@ export function commentIdFromHash(hash: string): string | null {
 type NotificationTarget = {
   postId?: string | null;
   showcaseId?: string | null;
+  featureRequestId?: string | null;
   commentId?: string | null;
 };
 
@@ -37,6 +38,10 @@ export function notificationHref(notification: NotificationTarget): string | nul
 
   if (notification.showcaseId) {
     return `/showcase/${notification.showcaseId}`;
+  }
+
+  if (notification.featureRequestId) {
+    return `/feature-request/${notification.featureRequestId}`;
   }
 
   return null;
