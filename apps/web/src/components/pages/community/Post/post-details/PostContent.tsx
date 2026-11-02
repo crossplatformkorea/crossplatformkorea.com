@@ -1,4 +1,4 @@
-import { Children, isValidElement, useSyncExternalStore, type ReactNode } from 'react';
+import { Children, isValidElement, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -8,12 +8,7 @@ import { YouTubeEmbed } from '@/components/uis/YouTubeEmbed';
 import { extractYouTubeVideoId } from '@/utils/youtube';
 import { preprocessPostMarkdown } from '@/lib/postMarkup';
 import { postHtmlPlugins } from '@/lib/postHtml';
-
-function subscribeToTheme(onChange: () => void) {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-  return () => observer.disconnect();
-}
+import { useIsDarkTheme } from '@/hooks/useTheme';
 
 function codeText(children: ReactNode): string {
   return Children.toArray(children)
@@ -35,11 +30,7 @@ export default function PostContent({
   youtubeUrl?: string;
 }) {
   const { t } = useTranslation();
-  const isDark = useSyncExternalStore(
-    subscribeToTheme,
-    () => document.documentElement.classList.contains('dark'),
-    () => false,
-  );
+  const isDark = useIsDarkTheme();
   const primaryVideo = youtubeUrl ? extractYouTubeVideoId(youtubeUrl) : null;
 
   return (
@@ -53,11 +44,16 @@ export default function PostContent({
         rehypePlugins={postHtmlPlugins}
         remarkPlugins={[remarkGfm]}
         components={{
-          a: ({ node: _node, children, ...props }) => (
-            <a {...props} target="_blank" rel="noopener noreferrer">
-              {children}
-            </a>
-          ),
+          // Only links that leave the site open a new tab; in-article anchors stay put.
+          a: ({ node: _node, children, ...props }) =>
+            /^https?:\/\//i.test(props.href ?? '') &&
+            !props.href!.startsWith(window.location.origin) ? (
+              <a {...props} target="_blank" rel="noopener noreferrer">
+                {children}
+              </a>
+            ) : (
+              <a {...props}>{children}</a>
+            ),
           p: ({ node: _node, children, ...props }) => {
             const parts = Children.toArray(children).filter(
               (child) => typeof child !== 'string' || child.trim(),

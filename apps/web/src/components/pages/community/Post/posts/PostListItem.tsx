@@ -136,8 +136,11 @@ export default function PostListItem({
             <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted-foreground">{excerpt}</p>
           )}
           {post.tags.length > 0 && (
-            <p className="mt-4 truncate font-mono text-[10px] uppercase tracking-[0.06em] text-muted-foreground">
-              {post.tags.slice(0, 3).join(' / ')}
+            <p className="mt-4 truncate text-xs text-muted-foreground">
+              {post.tags
+                .slice(0, 3)
+                .map((tag) => `#${tag}`)
+                .join(' ')}
             </p>
           )}
         </div>

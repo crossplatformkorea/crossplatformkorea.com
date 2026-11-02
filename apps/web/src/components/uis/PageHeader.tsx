@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 interface PageHeaderProps {
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
   action?: ReactNode;
@@ -20,10 +20,7 @@ export default function PageHeader({
     <header className={cn('page-hero', className)}>
       <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
         <div>
-          <div className="section-kicker">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            {eyebrow}
-          </div>
+          {eyebrow && <div className="section-kicker">{eyebrow}</div>}
           <h1 className="page-title">{title}</h1>
           {description && <div className="page-description">{description}</div>}
         </div>

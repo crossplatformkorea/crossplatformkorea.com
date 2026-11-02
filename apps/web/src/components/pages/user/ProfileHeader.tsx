@@ -82,10 +82,7 @@ export default function ProfileHeader({
 
         {/* Display Name */}
         <div>
-          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
-            MEMBER / PROFILE
-          </span>
-          <h1 className="mt-1 text-3xl font-bold tracking-[-0.045em]">
+          <h1 className="text-3xl font-bold tracking-[-0.045em]">
             {displayName || t('user.anonymousUser')}
           </h1>
         </div>
@@ -107,7 +104,7 @@ export default function ProfileHeader({
               {tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="rounded-md border border-primary/20 bg-primary/10 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-primary"
+                  className="rounded-md border border-primary/20 bg-primary/10 px-2 py-1 text-xs text-primary"
                 >
                   {tag}
                 </span>

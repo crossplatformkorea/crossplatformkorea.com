@@ -308,9 +308,8 @@ export default function PostDetailsPage() {
             >
               <Link
                 to={`/posts?category=${getCategoryByKey(post.category)?.slug || ''}`}
-                className="section-kicker text-muted-foreground hover:text-foreground"
+                className="section-kicker hover:text-foreground"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
                 {t(`postCategories.${post.category}.name`, { defaultValue: post.category })}
               </Link>
               <PostStatusBadge post={post} />
@@ -321,7 +320,7 @@ export default function PostDetailsPage() {
             {post.tags.length > 0 && (
               <motion.p
                 variants={revealVariants}
-                className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.06em] text-muted-foreground"
+                className="mt-5 flex flex-wrap gap-x-3 gap-y-2 text-sm text-muted-foreground"
               >
                 {post.tags.map((tag, index) => (
                   <span key={index}>#{tag}</span>

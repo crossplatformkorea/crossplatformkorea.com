@@ -360,6 +360,7 @@ export default function ProfilePage() {
 
   // Handle tag input key down
   const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       const value = tagInput.replace(/,/g, '').trim();
@@ -565,7 +566,6 @@ export default function ProfilePage() {
     <div>
       <div className="max-w-4xl mx-auto">
         <PageHeader
-          eyebrow="MEMBER / SETTINGS"
           title={t('profile.title')}
           description={t('profile.sections.details')}
           action={

@@ -20,7 +20,7 @@ const CommentInput: React.FC<MentionInputProps> = ({
   value,
   onChange,
   onSubmit,
-  placeholder = 'Write a comment...',
+  placeholder = 'Write a comment…',
   disabled = false,
   className,
   rows = 3,
@@ -156,6 +156,8 @@ const CommentInput: React.FC<MentionInputProps> = ({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        aria-label={placeholder}
+        a11ySuggestionsListLabel={placeholder}
         disabled={disabled}
         style={mentionInputStyles}
         singleLine={false}
@@ -173,24 +175,16 @@ const CommentInput: React.FC<MentionInputProps> = ({
             <div
               className={cn(
                 'flex items-center gap-3 px-3 py-2.5 cursor-pointer text-sm transition-colors duration-150',
-                'border-l-2 border-transparent',
-                // Base styles for light mode
-                'bg-white text-gray-900 hover:bg-gray-50',
-                // Dark mode styles
-                'dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700',
-                // Focused state styles
-                focused && [
-                  'bg-blue-50 border-l-blue-500 text-blue-900',
-                  'dark:bg-blue-950/50 dark:text-blue-100 dark:border-l-blue-400',
-                ],
+                'border-l-2 border-transparent bg-popover text-popover-foreground hover:bg-muted',
+                focused && 'border-l-foreground bg-muted',
               )}
             >
               {/* GitHub-style avatar */}
               <div
                 className={cn(
                   'w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold',
-                  'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
-                  focused && 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+                  'bg-muted text-foreground',
+                  focused && 'bg-foreground text-background',
                 )}
               >
                 {(suggestion.display || 'A').charAt(0).toUpperCase()}

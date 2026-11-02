@@ -2,13 +2,13 @@
   "common": {
     "buttons": {
       "save": "Save",
-      "saving": "Saving...",
+      "saving": "Saving…",
       "cancel": "Cancel",
-      "submitting": "Submitting..."
+      "submitting": "Submitting…"
     },
     "cancel": "Cancel",
-    "deleting": "Deleting...",
-    "loading": "Loading...",
+    "deleting": "Deleting…",
+    "loading": "Loading…",
     "loadMore": "Load more posts",
     "appName": "Cross-Platform Korea",
     "sideFeatureRequests": "Feature Requests",
@@ -53,7 +53,8 @@
     "enterFullscreen": "Enter fullscreen",
     "exitFullscreen": "Exit fullscreen",
     "profile": "Profile",
-    "user": "User"
+    "user": "User",
+    "tags": "Tags"
   },
   "errors": {
     "general": "An error occurred. Please try again.",
@@ -180,22 +181,22 @@
     "alreadySignedInTitle": "Already Signed In",
     "alreadySignedInMessage": "You can sign out or continue using the app.",
     "title": "Sign In",
-    "signInMessage": "Enter your email and we'll send you a verification code. We'll send an OTP code via email for secure login.",
+    "signInMessage": "We'll email you an 8-digit code.",
     "emailLabel": "Email Address",
     "emailPlaceholder": "Enter your email address",
-    "sendingCode": "Sending Code...",
+    "sendingCode": "Sending Code…",
     "signInWithEmail": "Sign in with Email",
     "verificationCodeLabel": "Verification Code",
     "verificationCodePlaceholder": "Enter the 8-digit code",
-    "verifying": "Verifying...",
+    "verifying": "Verifying…",
     "verifyCode": "Verify Code",
     "back": "Back",
     "signOutPrompt": "Are you sure you want to sign out?",
-    "signingOut": "Signing out...",
+    "signingOut": "Signing out…",
     "signOut": "Sign Out",
     "returnToHome": "Return to Home",
     "signInWithGithub": "Sign in with GitHub",
-    "signingInWithGithub": "Signing in with GitHub...",
+    "signingInWithGithub": "Signing in with GitHub…",
     "errors": {
       "sendCodeFailed": "We couldn't send the verification code. Please try again in a moment.",
       "invalidCode": "That code is incorrect or has expired. Please use the code from the most recent email.",
@@ -206,7 +207,9 @@
     "chooseMethodMessage": "Sign in to post, comment, and showcase what you build.",
     "continueWithGithub": "Continue with GitHub",
     "githubRedirectNotice": "You'll be redirected to GitHub to authorize {{app}}",
-    "useEmailInstead": "Have an existing email account? Sign in with email code"
+    "useEmailInstead": "Have an existing email account? Sign in with email code",
+    "or": "or",
+    "intro": "Start with your GitHub account or a one-time email code. There is no password to create."
   },
   "posts": {
     "title": "Posts",
@@ -216,7 +219,7 @@
     "post2": "Second Post",
     "backToList": "Back to List",
     "sampleTitle": "Sample Post Title",
-    "loading": "Loading posts...",
+    "loading": "Loading posts…",
     "empty": "No posts in this category",
     "eventPeriod": "Event Period: {{start}} - {{end}}",
     "categories": "Categories",
@@ -316,13 +319,18 @@
         "permissionDenied": "Notification permission denied",
         "testNotificationFailed": "Failed to send test notification"
       }
-    }
+    },
+    "description": "Replies, mentions and likes on your posts, in one place.",
+    "signInToView": "Sign in to see notifications",
+    "deleteSelectedConfirm": "Delete {{count}} selected notifications? This cannot be undone.",
+    "unread": "Unread",
+    "selectOne": "Select “{{title}}”"
   },
   "featureRequest": {
     "header": {
-      "eyebrow": "COMMUNITY / BUILD TOGETHER",
-      "listKicker": "IDEAS / DISCUSSION",
-      "detailKicker": "COMMUNITY / FEATURE REQUEST"
+      "eyebrow": "Community / Build together",
+      "listKicker": "Ideas / Discussion",
+      "detailKicker": "Community / Feature request"
     },
     "progress": "From idea to delivery",
     "formGuidance": "Describe the problem and how your idea could help. Title: at least 3 characters. Description: at least 10 characters.",
@@ -336,18 +344,18 @@
     "titleLabel": "Title",
     "titlePlaceholder": "What feature would you like to see?",
     "descriptionLabel": "Description",
-    "descriptionPlaceholder": "Please describe the feature you'd like to see in detail...",
+    "descriptionPlaceholder": "Please describe the feature you'd like to see in detail…",
     "emailLabel": "Email (optional)",
     "emailPlaceholder": "Your email (we'll notify you about updates)",
     "emailDescription": "We'll only use your email to notify you about updates to this feature.",
     "submitButton": "Submit Request",
-    "submittingButton": "Submitting...",
+    "submittingButton": "Submitting…",
     "successMessage": "Feature request submitted successfully!",
     "noRequests": "No feature requests yet. Be the first to suggest one!",
     "noRequestsTitle": "No Feature Requests Yet",
     "beTheFirst": "Be the first to suggest a feature!",
-    "loading": "Loading feature requests...",
-    "loadingMore": "Loading more...",
+    "loading": "Loading feature requests…",
+    "loadingMore": "Loading more…",
     "loadMore": "Load more requests",
     "votes": "votes",
     "voteAriaLabel": "Vote for this feature",
@@ -370,9 +378,9 @@
     "deleteSuccess": "Feature request deleted successfully.",
     "deleteFailed": "Failed to delete feature request.",
     "comments": "Comments",
-    "commentPlaceholder": "Write a comment...",
+    "commentPlaceholder": "Write a comment…",
     "addComment": "Add Comment",
-    "submittingComment": "Submitting...",
+    "submittingComment": "Submitting…",
     "commentAdded": "Comment added successfully.",
     "commentFailed": "Failed to add comment.",
     "commentDeleted": "Comment deleted successfully.",
@@ -380,7 +388,10 @@
     "noComments": "No comments yet. Be the first to comment!",
     "backToList": "Back to list",
     "notFound": "Feature request not found",
-    "notFoundDescription": "The feature request you're looking for doesn't exist or has been deleted."
+    "notFoundDescription": "The feature request you're looking for doesn't exist or has been deleted.",
+    "signInToVote": "Sign in to vote",
+    "signInToRequest": "Sign in to request a feature",
+    "deleteCommentConfirm": "Delete this comment? This cannot be undone."
   },
   "postWrite": {
     "writeNewPost": "Write New Post",
@@ -395,7 +406,7 @@
     "tagsLabel": "Tags",
     "tagsPlaceholder": "Add tags (Press Enter or comma to add)",
     "addTag": "Add Tag",
-    "contentPlaceholder": "Write your post content here...",
+    "contentPlaceholder": "Write your post content here…",
     "previewTitle": "Post Preview",
     "previewPlaceholder": "Content preview will appear here",
     "publishPost": "Publish Post",
@@ -418,11 +429,12 @@
     "changeThumbnail": "Change Thumbnail",
     "selectThumbnail": "Select Thumbnail",
     "youtubeUrlLabel": "YouTube URL",
-    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=…",
     "publishAtLabel": "Schedule (Asia/Seoul)",
     "publishAtHelp": "Leave empty to publish now. A future time saves the post as scheduled.",
     "saveAsDraft": "Save as draft",
-    "schedulePost": "Schedule post"
+    "schedulePost": "Schedule post",
+    "discardConfirm": "Your unsaved changes will be lost. Close anyway?"
   },
   "summary": {
     "welcome": "Welcome to Cross-Platform Korea",
@@ -441,9 +453,7 @@
     "discoverDescription": "See what developers are building across platforms.",
     "learnTitle": "Keep learning",
     "learnDescription": "Explore guides and knowledge shared by the community.",
-    "latestKicker": "From the community",
     "latestTitle": "The latest conversations",
-    "readStory": "Read the story",
     "memberLabel": "Community membership",
     "memberTitle": "Your experience belongs here.",
     "memberDescription": "A small discovery or a big question. Sign in and add your voice.",
@@ -456,13 +466,14 @@
   },
   "comments": {
     "title": "Comments",
-    "writePlaceholder": "Write a comment...",
+    "writePlaceholder": "Write a comment…",
     "submit": "Submit",
     "shortcuts": "Cmd/Ctrl + Enter to submit",
     "loginRequired": "Please sign in to post comments",
     "noComments": "No comments yet. Be the first to comment!",
     "deleteCommentTitle": "Delete Comment",
-    "deleteCommentMessage": "Are you sure you want to delete this comment? This action cannot be undone."
+    "deleteCommentMessage": "Are you sure you want to delete this comment? This action cannot be undone.",
+    "signInToComment": "Sign in to comment"
   },
   "user": {
     "posts": "Posts",
@@ -520,8 +531,7 @@
   },
   "showcase": {
     "header": {
-      "eyebrow": "SHOWCASE / MADE WITH CROSS-PLATFORM",
-      "tagline": "ONE CODEBASE. MANY POSSIBILITIES."
+      "eyebrow": "Showcase / Made with cross-platform"
     },
     "clearSearch": "Clear search",
     "title": "Showcase",
@@ -529,7 +539,7 @@
     "addNew": "Add New",
     "addFirst": "Add First Showcase",
     "signInToAdd": "Sign in to add a showcase",
-    "searchPlaceholder": "Search showcases...",
+    "searchPlaceholder": "Search showcases…",
     "allCategories": "All Categories",
     "noShowcases": "No showcases yet",
     "noSearchResults": "No search results found",
@@ -558,7 +568,7 @@
       "tags": "Tags",
       "tagsPlaceholder": "Add tags (press Enter to add)",
       "addTag": "Add Tag",
-      "submitting": "Submitting...",
+      "submitting": "Submitting…",
       "createButton": "Create",
       "update": "Update",
       "cancel": "Cancel",
@@ -693,7 +703,7 @@
   },
   "pwa": {
     "install": "Install App",
-    "installing": "Installing...",
+    "installing": "Installing…",
     "installed": "Installed",
     "offline": "Offline Mode",
     "updateAvailable": "New version available",
@@ -706,13 +716,13 @@
   },
   "chat": {
     "title": "ChatGPT",
-    "inputPlaceholder": "Type your message...",
+    "inputPlaceholder": "Type your message…",
     "send": "Send",
-    "sending": "Sending...",
+    "sending": "Sending…",
     "newChat": "New Chat",
     "conversations": "Conversations",
     "noConversations": "No conversations yet",
-    "typeMessage": "Type your message...",
+    "typeMessage": "Type your message…",
     "configureApiKey": "Configure API key to start chatting",
     "apiKey": {
       "title": "API Key",
@@ -738,7 +748,7 @@
     "messages": {
       "user": "You",
       "assistant": "Assistant",
-      "streaming": "Generating response..."
+      "streaming": "Generating response…"
     }
   },
   "navigation": {
@@ -748,6 +758,7 @@
     "label": "Main navigation",
     "language": "Language",
     "theme": "Toggle theme",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "darkMode": "Dark mode"
   }
 }

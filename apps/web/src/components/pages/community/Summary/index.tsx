@@ -71,10 +71,9 @@ export default function SummaryPage() {
             initial={reduceMotion ? false : 'hidden'}
             animate={reduceMotion ? undefined : 'visible'}
           >
-            <motion.div variants={revealVariants} className="section-kicker text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+            <motion.p variants={revealVariants} className="section-kicker">
               {t('summary.eyebrow')}
-            </motion.div>
+            </motion.p>
             <motion.h1 variants={revealVariants} id="home-title" className="home-title">
               {t('summary.headlineFirst')}
               <br />
@@ -136,13 +135,10 @@ export default function SummaryPage() {
         whileInView={reduceMotion ? undefined : 'visible'}
         viewport={{ once: true, amount: 0.15 }}
       >
-        {destinations.map(({ key, to, icon: Icon }, index) => {
+        {destinations.map(({ key, to, icon: Icon }) => {
           const content = (
             <>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] text-muted-foreground">0{index + 1}</span>
-                <Icon size={19} strokeWidth={1.5} className="text-muted-foreground" />
-              </div>
+              <Icon size={19} strokeWidth={1.5} className="text-muted-foreground" />
               <div className="mt-5 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-semibold tracking-tight">{t(`summary.${key}Title`)}</h2>
                 <ArrowUpRight
@@ -181,15 +177,12 @@ export default function SummaryPage() {
 
       <section className="py-12 sm:py-16" aria-labelledby="latest-title">
         <div className="mb-7 flex items-end justify-between gap-4">
-          <div>
-            <div className="section-kicker text-muted-foreground">{t('summary.latestKicker')}</div>
-            <h2
-              id="latest-title"
-              className="mt-3 text-2xl font-bold tracking-[-0.04em] sm:text-3xl"
-            >
-              {t('summary.latestTitle')}
-            </h2>
-          </div>
+          <h2
+            id="latest-title"
+            className="text-balance text-2xl font-bold tracking-[-0.04em] sm:text-3xl"
+          >
+            {t('summary.latestTitle')}
+          </h2>
           <Link
             to="/posts"
             className="inline-flex shrink-0 items-center gap-2 py-2 text-xs font-semibold hover:underline sm:text-sm"
@@ -278,7 +271,7 @@ export default function SummaryPage() {
 
       <footer className="flex flex-col gap-4 border-t border-border/80 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <img src="/assets/logo.png" alt="" className="h-6 w-6" />
+          <img src="/assets/logo.png" alt="" width={24} height={24} className="h-6 w-6" />
           <span className="text-xs font-medium">Cross-Platform Korea</span>
           <span className="hidden text-xs text-muted-foreground lg:inline">
             {t('summary.footerNote')}

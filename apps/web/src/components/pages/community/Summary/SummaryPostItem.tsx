@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatDistanceToNow } from 'date-fns';
 import { ko, ja } from 'date-fns/locale';
-import { ArrowUpRight, Clock } from 'lucide-react';
 import CategoryBadge from '@/components/uis/CategoryBadge';
 import { cn } from '@/lib/utils';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -55,10 +54,9 @@ export default function SummaryPostItem({
             }
       }
       viewport={{ once: true, amount: 0.1 }}
-      whileHover={reduceMotion ? undefined : { y: -4, transition: interactionSpring }}
       whileTap={reduceMotion ? undefined : { scale: 0.985, transition: interactionSpring }}
       className={cn(
-        'surface-card group flex min-h-72 flex-col overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-lg',
+        'surface-card group flex flex-col overflow-hidden transition-colors duration-200 hover:border-foreground/40',
         featured && 'border-foreground/25 bg-muted/40',
       )}
     >
@@ -76,26 +74,31 @@ export default function SummaryPostItem({
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-3">
           <CategoryBadge category={post.category} />
-          <span className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
-            <Clock size={11} />
+          <time
+            dateTime={post.updatedAt}
+            className="whitespace-nowrap text-xs text-muted-foreground"
+          >
             {formatDistanceToNow(new Date(post.updatedAt), { addSuffix: true, locale })}
-          </span>
+          </time>
         </div>
 
-        <h3 className="mt-5 line-clamp-2 text-lg font-bold leading-snug tracking-[-0.025em] transition group-hover:text-primary">
+        <h3 className="mt-5 line-clamp-2 text-lg font-bold leading-snug tracking-[-0.025em]">
           {post.title}
         </h3>
-        <p className="mb-6 mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{preview}</p>
+        <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{preview}</p>
 
-        <div className="mt-auto flex items-end justify-between gap-3 border-t border-border/70 pt-4">
-          <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-            {post.tags?.slice(0, 2).join(' / ') || t('summary.readStory')}
-          </span>
-          <ArrowUpRight
-            size={17}
-            className="shrink-0 text-primary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
-        </div>
+        {post.tags && post.tags.length > 0 && (
+          <ul className="mt-auto flex flex-wrap gap-1.5 pt-5" aria-label={t('common.tags')}>
+            {post.tags.slice(0, 3).map((tag) => (
+              <li
+                key={tag}
+                className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground"
+              >
+                #{tag}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </MotionLink>
   );

@@ -26,7 +26,7 @@ import { Button } from '../../../uis/Button';
 
 // Import additional plugins for ReactMarkdown to handle HTML content and line breaks
 import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
+import { postHtmlPlugins } from '@/lib/postHtml';
 import { api } from '@convex/_generated/api';
 import {
   resolvePostStatus,
@@ -157,30 +157,37 @@ export default function PostWriteModal({
 
   // Handle modal open animation
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-
-      // Start with modal positioned at bottom
+    if (!isOpen) {
       setHasAppeared(false);
-
-      // Use RAF to ensure browser renders the initial position first
-      requestAnimationFrame(() => {
-        // Then use setTimeout to trigger the animation
-        setTimeout(() => {
-          setHasAppeared(true);
-        }, 10);
-      });
-
-      // Focus title input after animation completes
-      const focusTimer = setTimeout(() => {
-        titleRef.current?.focus();
-      }, 350);
-
-      return () => clearTimeout(focusTimer);
-    } else {
-      document.body.style.overflow = 'auto';
-      setHasAppeared(false);
+      return;
     }
+
+    // Restore the previous value even when the modal unmounts while open (e.g. browser Back).
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    // Start with modal positioned at bottom
+    setHasAppeared(false);
+
+    // Use RAF to ensure browser renders the initial position first
+    requestAnimationFrame(() => {
+      // Then use setTimeout to trigger the animation
+      setTimeout(() => {
+        setHasAppeared(true);
+      }, 10);
+    });
+
+    // Focus title input after animation completes; skip on touch so the keyboard doesn't jump up.
+    const focusTimer = setTimeout(() => {
+      if (window.matchMedia('(pointer: fine)').matches) {
+        titleRef.current?.focus();
+      }
+    }, 350);
+
+    return () => {
+      clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
   // Manage fullscreen toggle animations
@@ -274,18 +281,40 @@ export default function PostWriteModal({
     }, 300); // 전환 지속 시간과 일치
   }, [onClose, resetFormData, cleanupUploadedFiles, isSubmitting]);
 
-  // Close modal when Escape key is pressed
+  const hasUnsavedChanges = isEditMode
+    ? title !== defaultTitle ||
+      content !== defaultContent ||
+      tags.join('\n') !== (defaultTags || []).join('\n') ||
+      selectedThumbnail !== (defaultThumbnail || '') ||
+      youtubeUrl !== (defaultYoutubeUrl || '')
+    : Boolean(
+        title.trim() || content.trim() || tags.length > 0 || selectedThumbnail || youtubeUrl.trim(),
+      );
+
+  // Every user-initiated close (Escape, X, Cancel) goes through here so a draft is never lost silently.
+  const requestClose = useCallback(() => {
+    if (!isSubmitting && hasUnsavedChanges && !window.confirm(t('postWrite.discardConfirm'))) {
+      return;
+    }
+    handleClose();
+  }, [handleClose, hasUnsavedChanges, isSubmitting, t]);
+
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        // Use handleClose instead of onClose to ensure proper cleanup
-        handleClose();
+      if (e.key !== 'Escape' || e.isComposing) return;
+      // Escape closes the innermost layer first.
+      if (showThumbnailMenu) {
+        setShowThumbnailMenu(false);
+        return;
       }
+      requestClose();
     };
 
     document.addEventListener('keydown', handleEscapeKey);
     return () => document.removeEventListener('keydown', handleEscapeKey);
-  }, [handleClose, isOpen]); // Add handleClose to dependency array
+  }, [isOpen, requestClose, showThumbnailMenu]);
 
   // Handle adding tags
   const handleAddTag = () => {
@@ -300,6 +329,7 @@ export default function PostWriteModal({
 
   // Handle tag input key events
   const handleTagKeyDown = (e: React.KeyboardEvent) => {
+    if (e.nativeEvent.isComposing) return;
     if ((e.key === 'Enter' || e.key === ',') && tagInput.trim()) {
       e.preventDefault();
       handleAddTag();
@@ -375,9 +405,22 @@ export default function PostWriteModal({
     setIsFullscreen((prev) => !prev);
   };
 
-  // Add window unload event to clean up files on refresh/navigation
+  // Warn before a reload or tab close would drop the draft.
   useEffect(() => {
-    const handleBeforeUnload = () => {
+    if (!isOpen || !hasUnsavedChanges) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isOpen, hasUnsavedChanges]);
+
+  // Clean up uploaded files only once the page is really going away (after any unload prompt).
+  useEffect(() => {
+    const handlePageHide = () => {
       if (uploadedStorageIds.length > 0) {
         // Note: This runs synchronously and can't guarantee file deletion
         // This is best effort cleanup
@@ -392,12 +435,8 @@ export default function PostWriteModal({
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      // Clean up on component unmount
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
+    window.addEventListener('pagehide', handlePageHide);
+    return () => window.removeEventListener('pagehide', handlePageHide);
   }, [deleteFile, uploadedStorageIds]);
 
   // Set initial category if provided
@@ -423,19 +462,6 @@ export default function PostWriteModal({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showThumbnailMenu]);
-
-  // Close modal when Escape key is pressed
-  useEffect(() => {
-    const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        // Use handleClose instead of onClose to ensure proper cleanup
-        handleClose();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => document.removeEventListener('keydown', handleEscapeKey);
-  }, [isOpen, handleClose]); // Add handleClose to dependency array
 
   // 수정된 handleSubmit 함수 - 수정 모드에 따라 다르게 동작
   const handleSubmit = async (e: React.FormEvent) => {
@@ -926,7 +952,7 @@ export default function PostWriteModal({
             <Button
               variant="ghost"
               size="sm"
-              onClick={handleClose}
+              onClick={requestClose}
               className={cn(
                 // Shape & Spacing
                 'rounded-full p-2',
@@ -1240,7 +1266,7 @@ export default function PostWriteModal({
                   )}
                 >
                   <ReactMarkdown
-                    rehypePlugins={[rehypeRaw]}
+                    rehypePlugins={postHtmlPlugins}
                     components={{
                       // Fix list spacing and formatting
                       ul: ({ children, ...props }) => (
@@ -1455,7 +1481,7 @@ export default function PostWriteModal({
                   )}
                 >
                   <ReactMarkdown
-                    rehypePlugins={[rehypeRaw]}
+                    rehypePlugins={postHtmlPlugins}
                     components={{
                       // Fix list spacing and formatting
                       ul: ({ children, ...props }) => (
@@ -1629,7 +1655,7 @@ export default function PostWriteModal({
                 />
                 {t('postWrite.saveAsDraft')}
               </label>
-              <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
+              <Button variant="outline" onClick={requestClose} disabled={isSubmitting}>
                 {t('common.cancel')}
               </Button>
               <Button

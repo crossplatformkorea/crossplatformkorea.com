@@ -76,7 +76,7 @@ function AppCard({ app }: { app: CuratedApp }) {
           rel="noopener noreferrer"
           aria-label={`${app.name} — ${t('showcase.catalog.storeMetrics')}`}
           title={`${metrics.storeName} · Google Play (${metrics.region}) · ${metrics.checkedAt}`}
-          className="mb-4 flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 rounded-lg bg-muted/45 px-3 py-2 font-mono text-[11px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="mb-4 flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 rounded-lg bg-muted/45 px-3 py-2 text-xs tabular-nums text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <span>
             {t('showcase.catalog.ratingCount', { value: formatCount(metrics.ratingCount) })}

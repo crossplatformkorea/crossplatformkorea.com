@@ -9,6 +9,7 @@ import AppLoading from '../AppLoading';
 import { ErrorBoundary } from '../uis/ErrorBoundary';
 import SummaryPage from './community/Summary';
 import { loadRouteModule } from '@/lib/routeImport';
+import { useIsDarkTheme } from '@/hooks/useTheme';
 
 const lazyPage: typeof lazy = (load) => lazy(() => loadRouteModule(load));
 
@@ -30,6 +31,8 @@ export default function AppRoutes() {
   const location = useLocation();
   const isSignInPage = location.pathname === '/sign-in';
   const isChatGptPage = location.pathname === '/chatgpt';
+  // Follow the in-app theme choice, not only the OS preference.
+  const isDark = useIsDarkTheme();
 
   // Apply default meta tags for home page
   useMetaTags();
@@ -91,7 +94,7 @@ export default function AppRoutes() {
           )}
         </Suspense>
       </ErrorBoundary>
-      <Toaster theme="system" position="bottom-right" richColors closeButton />
+      <Toaster theme={isDark ? 'dark' : 'light'} position="bottom-right" richColors closeButton />
       <DevPanel />
     </AppLayout>
   );

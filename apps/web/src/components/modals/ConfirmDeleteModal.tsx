@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import * as Dialog from '@radix-ui/react-dialog';
 import { t } from 'i18next';
 import { Button } from '@/components/uis/Button';
 
@@ -24,18 +23,6 @@ export default function ConfirmDeleteModal({
   confirmText,
   targetName,
 }: ConfirmDeleteModalProps) {
-  // Handle ESC key to close modal
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
-
-  if (!isOpen) return null;
-
   // Default texts
   const modalTitle = title || t('common.deleteConfirmTitle', { defaultValue: 'Confirm Delete' });
   const modalMessage =
@@ -47,44 +34,36 @@ export default function ConfirmDeleteModal({
   const modalCancelText = cancelText || t('common.cancel', { defaultValue: 'Cancel' });
   const modalConfirmText = confirmText || t('common.delete', { defaultValue: 'Delete' });
 
+  // Radix handles Escape, the focus trap, scroll lock and returning focus to the trigger.
   return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
-      <div
-        className={cn(
-          'p-6 rounded-lg max-w-md w-full',
-          'bg-background dark:bg-gray-800',
-          'shadow-xl dark:shadow-black/30',
-          'border border-border/30 dark:border-gray-700',
-          'backdrop-blur-sm',
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h3 id="modal-title" className="text-lg font-bold mb-2 dark:text-white">
-          {modalTitle}
-        </h3>
-        <p className="text-muted-foreground dark:text-gray-300 mb-4">{modalMessage}</p>
-        <div className="flex justify-end gap-2">
-          <Button
-            onClick={onClose}
-            variant="outline"
-            className="w-full sm:w-auto"
-          >
-            {modalCancelText}
-          </Button>
-          <Button
-            onClick={onConfirm}
-            className="w-full sm:w-auto"
-          >
-            {modalConfirmText}
-          </Button>
-        </div>
-      </div>
-    </div>
+    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
+        <Dialog.Content
+          role="alertdialog"
+          className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overscroll-contain rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xl"
+        >
+          <Dialog.Title className="mb-2 text-lg font-bold">{modalTitle}</Dialog.Title>
+          <Dialog.Description className="mb-6 text-sm leading-6 text-muted-foreground">
+            {modalMessage}
+          </Dialog.Description>
+          <div className="flex flex-col-reverse justify-end gap-2 sm:flex-row">
+            {/* Cancel takes initial focus so Enter never deletes by accident. */}
+            <Dialog.Close asChild>
+              <Button variant="outline" className="w-full sm:w-auto" autoFocus>
+                {modalCancelText}
+              </Button>
+            </Dialog.Close>
+            <Button
+              onClick={onConfirm}
+              variant="outline"
+              className="w-full border-destructive/40 text-destructive hover:border-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto"
+            >
+              {modalConfirmText}
+            </Button>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

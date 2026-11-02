@@ -14,8 +14,8 @@
     <meta property="og:image" content="/og-preview.jpg" />
 
     <!-- PWA Meta Tags with dynamic theme color -->
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <!-- Set from the resolved theme by the script below and by the theme toggle -->
+    <meta name="theme-color" content="#ffffff" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
@@ -86,13 +86,14 @@
         const theme = localStorage.getItem('theme');
         const html = document.documentElement;
         
-        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          html.classList.add('dark');
-          html.classList.remove('light');
-        } else {
-          html.classList.add('light');
-          html.classList.remove('dark');
-        }
+        const isDark =
+          theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        html.classList.toggle('dark', isDark);
+        html.classList.toggle('light', !isDark);
+        // Keep in sync with themeColors in src/hooks/useTheme.ts.
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', isDark ? '#141414' : '#ffffff');
       })();
     </script>
   </head>

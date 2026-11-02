@@ -33,9 +33,7 @@ export default function UserStats({ userId, className }: UserStatsProps) {
             <strong className="block text-xl font-semibold leading-none sm:text-2xl">
               {value}
             </strong>
-            <span className="mt-1 block text-[10px] uppercase tracking-[0.08em] text-muted-foreground sm:text-xs">
-              {title}
-            </span>
+            <span className="mt-1 block text-xs text-muted-foreground">{title}</span>
           </div>
         </div>
       ))}

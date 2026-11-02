@@ -186,9 +186,6 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                 <span className="block truncate text-sm font-semibold">
                   {userData?.displayName || t('common.profile')}
                 </span>
-                <span className="block truncate font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
-                  Member
-                </span>
               </div>
               <ChevronRight size={15} className="ml-2 shrink-0 text-muted-foreground" />
             </div>

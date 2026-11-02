@@ -67,8 +67,7 @@ const Posts = memo(function PostsPage() {
         initial={reduceMotion ? false : 'hidden'}
         animate={reduceMotion ? undefined : 'visible'}
       >
-        <motion.div variants={revealVariants} className="section-kicker text-muted-foreground">
-          <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+        <motion.div variants={revealVariants} className="section-kicker">
           {t('posts.eyebrow')}
         </motion.div>
         <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">

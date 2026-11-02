@@ -31,22 +31,22 @@ export default function ProfileStats({ userId, className, compact = false }: Pro
       title: t('profile.stats.posts'),
       value: postCount,
       icon: <FileText className={compact ? 'w-4 h-4' : 'w-5 h-5'} />,
-      color: 'text-blue-500 dark:text-blue-400',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      color: 'text-foreground',
+      bgColor: 'bg-muted',
     },
     {
       title: t('profile.stats.likes'),
       value: likeCount,
       icon: <Heart className={compact ? 'w-4 h-4' : 'w-5 h-5'} />,
-      color: 'text-rose-500 dark:text-rose-400',
-      bgColor: 'bg-rose-50 dark:bg-rose-900/20',
+      color: 'text-foreground',
+      bgColor: 'bg-muted',
     },
     {
       title: t('profile.stats.comments'),
       value: commentCount,
       icon: <MessageSquare className={compact ? 'w-4 h-4' : 'w-5 h-5'} />,
-      color: 'text-green-500 dark:text-green-400',
-      bgColor: 'bg-green-50 dark:bg-green-900/20',
+      color: 'text-foreground',
+      bgColor: 'bg-muted',
     },
   ];
 

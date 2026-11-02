@@ -75,14 +75,14 @@ export default function ShowcaseItem({
           </div>
         )}
         {showcase.featured && (
-          <span className="absolute right-3 top-3 rounded-lg border border-border/70 bg-background/95 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider backdrop-blur">
+          <span className="absolute right-3 top-3 rounded-lg border border-border/70 bg-background/95 px-3 py-1.5 text-xs font-medium backdrop-blur">
             {t('showcase.featured')}
           </span>
         )}
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <div className="mb-3 flex items-center justify-between gap-2">
-          <span className="min-w-0 break-words font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className="min-w-0 break-words text-xs text-muted-foreground">
             {showcase.categoryName || showcase.category}
           </span>
           {isEditable && (
@@ -149,7 +149,7 @@ export default function ShowcaseItem({
             {showcase.tags.slice(0, 3).map((tag, index) => (
               <span
                 key={index}
-                className="max-w-full break-words rounded-md bg-muted/50 px-2 py-1 font-mono text-[10px] text-muted-foreground"
+                className="max-w-full break-words rounded-md bg-muted/50 px-2 py-1 text-xs text-muted-foreground"
               >
                 #{tag}
               </span>

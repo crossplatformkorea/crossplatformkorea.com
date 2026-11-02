@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useId } from 'react';
 import { Bell, X } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { useConvexAuth } from 'convex/react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import type { Id } from '@convex/_generated/dataModel';
 import { toast } from 'sonner';
 import { cn, devConsole } from '../../lib/utils';
 import { userFacingErrorMessage } from '../../lib/errors';
@@ -27,9 +28,10 @@ const formatTimeAgo = (timestamp: number) => {
 
 export default function NotificationBell() {
   const { isAuthenticated } = useConvexAuth();
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const bellRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
 
   // 알림 데이터 조회
   const unreadCount = useQuery(
@@ -57,55 +59,68 @@ export default function NotificationBell() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Escape closes the panel and hands focus back to the bell.
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setIsOpen(false);
+      bellRef.current?.focus();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   // 인증되지 않은 사용자는 렌더링하지 않음
   if (!isAuthenticated) {
     return null;
   }
 
-  const handleBellClick = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleNotificationClick = async (notification: any) => {
-    // Mark as read if not already read. A failure here must not swallow the
-    // navigation the user actually clicked for.
-    if (!notification.isRead) {
-      try {
-        await markAsRead({ notificationId: notification._id });
-      } catch (error) {
-        devConsole.error('Failed to mark notification as read:', error);
-        toast.error(userFacingErrorMessage(error, t('errors.notificationUpdateFailed')));
-      }
-    }
-
-    // Comment notifications land on the comment itself, not the post header.
-    const href = notificationHref(notification);
-    if (href) {
-      void navigate(href);
-    }
-
-    // Close the dropdown
+  // Opening a notification is a plain link; marking it read rides along and
+  // must never swallow the navigation the user clicked for.
+  const handleNotificationClick = async (notification: {
+    _id: Id<'notifications'>;
+    isRead: boolean;
+  }) => {
     setIsOpen(false);
+    if (notification.isRead) return;
+    try {
+      await markAsRead({ notificationId: notification._id });
+    } catch (error) {
+      devConsole.error('Failed to mark notification as read:', error);
+      toast.error(userFacingErrorMessage(error, t('errors.notificationUpdateFailed')));
+    }
   };
+
+  const hasUnread = unreadCount !== undefined && unreadCount > 0;
 
   return (
     <div className="relative" ref={dropdownRef}>
       {/* 알림 벨 아이콘 */}
       <Button
+        ref={bellRef}
         variant="ghost"
         size="sm"
-        onClick={handleBellClick}
+        onClick={() => setIsOpen((open) => !open)}
         className="relative p-2"
-        aria-label={t('notifications.bellAriaLabel')}
+        aria-label={
+          hasUnread
+            ? `${t('notifications.bellAriaLabel')} · ${t('notifications.unreadCount', { count: unreadCount })}`
+            : t('notifications.bellAriaLabel')
+        }
+        aria-expanded={isOpen}
+        aria-controls={panelId}
       >
-        <Bell size={20} />
+        <Bell size={20} aria-hidden="true" />
         {/* Not `unreadCount &&`: when the count is 0 that yields the number
             0, which React renders as a literal "0" beside the bell. */}
-        {unreadCount !== undefined && unreadCount > 0 && (
+        {hasUnread && (
           <span
+            aria-hidden="true"
             className={cn(
               'absolute -top-1 -right-1',
-              'bg-red-500 text-white text-xs',
-              'rounded-full w-5 h-5',
+              'bg-foreground text-background text-[11px] font-semibold tabular-nums',
+              'rounded-full min-w-5 h-5 px-1',
               'flex items-center justify-center',
             )}
           >
@@ -117,6 +132,7 @@ export default function NotificationBell() {
       {/* 알림 드롭다운 */}
       {isOpen && (
         <div
+          id={panelId}
           className={cn(
             'fixed sm:absolute',
             'left-1/2 sm:left-auto right-auto sm:right-0',
@@ -128,52 +144,49 @@ export default function NotificationBell() {
         >
           {/* 헤더 */}
           <div className={cn('flex items-center justify-between p-4', 'border-b border-border')}>
-            <button
+            <h2 className="flex-1 font-bold text-lg">
+              <Link
+                to="/notifications"
+                onClick={() => setIsOpen(false)}
+                className="hover:underline underline-offset-4"
+              >
+                {t('notifications.title')}
+                {/* Unread, matching the bell badge. */}
+                {hasUnread && (
+                  <span className="text-sm text-muted-foreground ml-2 tabular-nums">
+                    ({unreadCount})
+                  </span>
+                )}
+              </Link>
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => {
                 setIsOpen(false);
-                void navigate('/notifications');
+                bellRef.current?.focus();
               }}
-              className={cn(
-                'flex-1 text-left',
-                'hover:text-foreground transition-colors cursor-pointer',
-              )}
+              className="p-1 w-8 h-8 rounded-md"
+              aria-label={t('common.close')}
             >
-              <h3 className="font-bold text-lg">
-                {t('notifications.title')}
-                {/* Unread, matching the bell badge. This counted the rows in the
-                    dropdown instead, so a single unread notification still read
-                    as "(5)" next to a badge showing 1. */}
-                {unreadCount !== undefined && unreadCount > 0 && (
-                  <span className="text-sm text-muted-foreground ml-2">({unreadCount})</span>
-                )}
-              </h3>
-            </button>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsOpen(false)}
-                className="p-1 w-8 h-8 rounded-md"
-              >
-                <X size={16} />
-              </Button>
-            </div>
+              <X size={16} aria-hidden="true" />
+            </Button>
           </div>
 
           {/* 알림 목록 */}
-          <div className="max-h-96 overflow-y-auto">
+          <div className="max-h-96 overflow-y-auto overscroll-contain">
             {recentNotifications && recentNotifications.length > 0 ? (
-              <div className="divide-y divide-border">
-                {recentNotifications.map((notification) => (
-                  <div
-                    key={notification._id}
-                    className={cn(
-                      'p-4 hover:bg-muted/50 cursor-pointer transition-colors',
-                      !notification.isRead && 'bg-primary/5',
-                    )}
-                    onClick={() => void handleNotificationClick(notification)}
-                  >
-                    <div className="flex items-start gap-3">
+              <ul className="divide-y divide-border">
+                {recentNotifications.map((notification) => {
+                  // Comment notifications land on the comment itself, not the post header.
+                  const href = notificationHref(notification);
+                  const rowClassName = cn(
+                    'flex items-start gap-3 p-4 transition-colors',
+                    href && 'hover:bg-muted/50',
+                    !notification.isRead && 'bg-primary/5',
+                  );
+                  const body = (
+                    <>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm text-foreground">{notification.title}</p>
                         <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
@@ -185,23 +198,39 @@ export default function NotificationBell() {
                           </span>
                           {notification.triggeredByUser && (
                             <span className="text-xs text-muted-foreground">
-                              • {notification.triggeredByUser.name}
+                              <span aria-hidden="true">• </span>
+                              {notification.triggeredByUser.name}
                             </span>
                           )}
                         </div>
                       </div>
                       {!notification.isRead && (
-                        <div
-                          className={cn('w-2 h-2 bg-primary rounded-full', 'flex-shrink-0 mt-1')}
-                        />
+                        <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-1">
+                          <span className="sr-only">{t('notifications.unread')}</span>
+                        </span>
                       )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                    </>
+                  );
+                  return (
+                    <li key={notification._id}>
+                      {href ? (
+                        <Link
+                          to={href}
+                          onClick={() => void handleNotificationClick(notification)}
+                          className={rowClassName}
+                        >
+                          {body}
+                        </Link>
+                      ) : (
+                        <div className={rowClassName}>{body}</div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
             ) : (
               <div className={cn('p-8 text-center text-muted-foreground')}>
-                <Bell size={48} className="mx-auto mb-4 opacity-30" />
+                <Bell size={48} className="mx-auto mb-4 opacity-30" aria-hidden="true" />
                 <p>{t('notifications.noNotifications')}</p>
               </div>
             )}

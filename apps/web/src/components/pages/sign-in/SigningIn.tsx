@@ -165,7 +165,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
             {t('signIn.verifyEmailTitle')}
           </h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            <span className="font-medium text-foreground">{email}</span>
+            <span className="break-all font-medium text-foreground">{email}</span>
             <br />
             {t('signIn.verifyEmailMessage')}
             <br />
@@ -247,6 +247,8 @@ export default function SigningIn({ returnTo }: SigningInProps) {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
+              spellCheck={false}
+              autoCapitalize="none"
               required
               autoFocus
               className="field-control h-12"
@@ -282,7 +284,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
     <>
       <div className="mb-8">
         <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
-          <SiGithub size={20} />
+          <SiGithub size={20} aria-hidden="true" />
         </div>
         <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-4xl">{t('signIn.title')}</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -298,7 +300,7 @@ export default function SigningIn({ returnTo }: SigningInProps) {
         size="lg"
         className="w-full"
       >
-        <SiGithub size={18} />
+        <SiGithub size={18} aria-hidden="true" />
         {isGitHubLoading ? t('signIn.signingInWithGithub') : t('signIn.continueWithGithub')}
       </Button>
 
@@ -308,9 +310,9 @@ export default function SigningIn({ returnTo }: SigningInProps) {
 
       {errorMessage ? <div className="mt-5">{errorMessage}</div> : null}
 
-      <div className="my-7 flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+      <div className="my-7 flex items-center gap-4 text-xs text-muted-foreground">
         <span className="h-px flex-1 bg-border" />
-        <span>or</span>
+        <span>{t('signIn.or')}</span>
         <span className="h-px flex-1 bg-border" />
       </div>
 

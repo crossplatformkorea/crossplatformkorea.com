@@ -1,25 +1,28 @@
 import { useState, useCallback, ChangeEvent } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useQuery, useMutation } from 'convex/react';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useConvexAuth, useQuery, useMutation } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { ArrowLeft, MessageSquare, Trash2 } from 'lucide-react';
+import { ArrowLeft, LogIn, MessageSquare, Trash2 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { revealVariants } from '@/lib/motion';
 import RequestStatus from './feature-request/RequestStatus';
 import VoteButton from './feature-request/VoteButton';
 import RequestRoadmap from './feature-request/RequestRoadmap';
-import useAuthGuard from '@/hooks/useAuthGuard';
+import { createSignInHref } from '@/lib/authRedirect';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { devConsole } from '@/lib/utils';
 import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function FeatureRequestDetailPage() {
-  useAuthGuard();
   const { t, i18n } = useTranslation();
+  // Reading is public; voting and commenting send visitors to sign-in first.
+  const { isAuthenticated } = useConvexAuth();
+  const location = useLocation();
+  const signInHref = createSignInHref(`${location.pathname}${location.search}`);
   const reducedMotion = useReducedMotion();
   const [isVoting, setIsVoting] = useState(false);
 
@@ -78,6 +81,10 @@ export default function FeatureRequestDetailPage() {
 
   const handleVote = async () => {
     if (!featureRequestId) return;
+    if (!isAuthenticated) {
+      void navigate(signInHref);
+      return;
+    }
     setIsVoting(true);
     try {
       await voteForFeature({ id: featureRequestId as Id<'featureRequests'> });
@@ -124,6 +131,7 @@ export default function FeatureRequestDetailPage() {
   }, [featureRequestId, commentContent, addComment, t]);
 
   const handleDeleteComment = async (commentId: Id<'featureRequestComments'>) => {
+    if (!window.confirm(t('featureRequest.deleteCommentConfirm'))) return;
     try {
       await deleteComment({ commentId });
       toast.success(t('featureRequest.commentDeleted'));
@@ -183,6 +191,7 @@ export default function FeatureRequestDetailPage() {
               voted={hasVoted()}
               isOwner={!!isOwner}
               pending={isVoting}
+              signedIn={isAuthenticated}
               onVote={() => void handleVote()}
             />
             <p className="text-xs text-muted-foreground">
@@ -243,44 +252,54 @@ export default function FeatureRequestDetailPage() {
           <MessageSquare size={20} className="text-muted-foreground" />
           <h2 id="request-comments-title" className="text-2xl font-semibold tracking-tight">
             {t('featureRequest.comments')}{' '}
-            <span className="ml-1 font-mono text-sm text-muted-foreground">
+            <span className="ml-1 text-sm tabular-nums text-muted-foreground">
               {comments === undefined ? '—' : comments.length}
             </span>
           </h2>
         </div>
-        <form
-          className="journal-card mb-8 p-5 sm:p-6"
-          onSubmit={(event) => {
-            event.preventDefault();
-            void handleSubmitComment();
-          }}
-        >
-          <label htmlFor="request-comment" className="sr-only">
-            {t('featureRequest.commentPlaceholder')}
-          </label>
-          <Textarea
-            id="request-comment"
-            value={commentContent}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCommentContent(e.target.value)}
-            placeholder={t('featureRequest.commentPlaceholder')}
-            rows={4}
-            className="mb-4 text-sm"
-            required
-          />
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              className="min-h-11"
-              disabled={isSubmittingComment || !commentContent.trim()}
-            >
-              {t(
-                isSubmittingComment
-                  ? 'featureRequest.submittingComment'
-                  : 'featureRequest.addComment',
-              )}
-            </Button>
+        {!isAuthenticated ? (
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-border/70 bg-muted/30 p-5 sm:flex-row sm:items-center">
+            <p className="text-sm text-muted-foreground">{t('comments.loginRequired')}</p>
+            <Link to={signInHref} className="home-secondary-link">
+              <LogIn size={15} />
+              {t('comments.signInToComment')}
+            </Link>
           </div>
-        </form>
+        ) : (
+          <form
+            className="journal-card mb-8 p-5 sm:p-6"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleSubmitComment();
+            }}
+          >
+            <label htmlFor="request-comment" className="sr-only">
+              {t('featureRequest.commentPlaceholder')}
+            </label>
+            <Textarea
+              id="request-comment"
+              value={commentContent}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setCommentContent(e.target.value)}
+              placeholder={t('featureRequest.commentPlaceholder')}
+              rows={4}
+              className="mb-4 text-sm"
+              required
+            />
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                className="min-h-11"
+                disabled={isSubmittingComment || !commentContent.trim()}
+              >
+                {t(
+                  isSubmittingComment
+                    ? 'featureRequest.submittingComment'
+                    : 'featureRequest.addComment',
+                )}
+              </Button>
+            </div>
+          </form>
+        )}
         {comments === undefined ? (
           <p role="status" className="py-8 text-sm text-muted-foreground">
             {t('common.loading')}

@@ -23,10 +23,7 @@ export default function CommunityPageHeader({
       animate="visible"
       variants={revealVariants}
     >
-      <div className="section-kicker">
-        <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
-        {eyebrow}
-      </div>
+      <div className="section-kicker">{eyebrow}</div>
       <div className="mt-5 grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div className="min-w-0">
           <h1 className="journal-title">{title}</h1>

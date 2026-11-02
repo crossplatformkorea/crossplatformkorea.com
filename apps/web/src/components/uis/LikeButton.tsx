@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
@@ -31,30 +31,33 @@ export default function LikeButton({
 
   // Determine API endpoints based on type
   const hasLiked = useQuery(
+    type === 'showcases' ? api.showcases.query.hasLikedShowcase : api.posts.query.hasLiked,
     type === 'showcases'
-      ? api.showcases.query.hasLikedShowcase
-      : api.posts.query.hasLiked,
-    type === 'showcases' ? { showcaseId: postId as Id<'showcases'> } : { postId: postId as Id<'posts'> }
+      ? { showcaseId: postId as Id<'showcases'> }
+      : { postId: postId as Id<'posts'> },
   );
   const doc = useQuery(
+    type === 'showcases' ? api.showcases.query.getShowcase : api.posts.query.getById,
     type === 'showcases'
-      ? api.showcases.query.getShowcase
-      : api.posts.query.getById,
-    type === 'showcases' ? { showcaseId: postId as Id<'showcases'> } : { id: postId as Id<'posts'> }
+      ? { showcaseId: postId as Id<'showcases'> }
+      : { id: postId as Id<'posts'> },
   );
   const likeCount = doc?.likeCount || 0;
 
   const toggleLike = useMutation(
-    type === 'showcases'
-      ? api.showcases.mutation.toggleLike
-      : api.posts.mutation.toggleLike
+    type === 'showcases' ? api.showcases.mutation.toggleLike : api.posts.mutation.toggleLike,
   );
+
+  // A double tap would otherwise like and immediately unlike.
+  const [isPending, setIsPending] = useState(false);
 
   const handleToggleLike = async () => {
     if (!isAuthenticated) {
       requireAuth();
       return;
     }
+    if (isPending) return;
+    setIsPending(true);
     try {
       if (type === 'showcases') {
         await toggleLike({ showcaseId: postId as Id<'showcases'> });
@@ -64,8 +67,16 @@ export default function LikeButton({
     } catch (error) {
       devConsole.error('Failed to toggle like:', error);
       toast.error(userFacingErrorMessage(error, t('errors.likeFailed')));
+    } finally {
+      setIsPending(false);
     }
   };
+
+  const label = !isAuthenticated
+    ? t('posts.loginToLike')
+    : hasLiked
+      ? t('posts.unlike')
+      : t('posts.like');
 
   // 사이즈에 따른 스타일 설정
   const sizeStyles = {
@@ -89,27 +100,26 @@ export default function LikeButton({
         className={cn(
           'flex items-center gap-1.5 rounded-full transition-colors h-auto',
           hasLiked
-            ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/40'
+            ? 'bg-foreground/10 text-foreground hover:bg-foreground/15'
             : 'bg-muted hover:bg-muted/80 text-muted-foreground',
           sizeStyles[size],
-          className
+          className,
         )}
-        aria-label={hasLiked ? t('posts.unlike') : t('posts.like')}
-        title={hasLiked ? t('posts.unlike') : t('posts.like')}
+        aria-label={showCount ? `${label} · ${likeCount}` : label}
+        aria-pressed={isAuthenticated ? Boolean(hasLiked) : undefined}
+        aria-busy={isPending || undefined}
+        title={label}
       >
         <Heart
+          aria-hidden="true"
           size={iconSize[size]}
-          className={cn(
-            'transition-transform',
-            hasLiked ? 'fill-red-500 text-red-500' : 'fill-transparent',
-            hasLiked && 'scale-110'
-          )}
+          className={cn(hasLiked ? 'fill-current' : 'fill-transparent')}
         />
-        {showCount && <span className="font-medium">{likeCount ?? 0}</span>}
+        {showCount && <span className="font-medium tabular-nums">{likeCount}</span>}
       </Button>
-      
+
       {/* Show liked users list only for showcases and when there are likes */}
-      {type === 'showcases' && likeCount && likeCount > 0 && (
+      {type === 'showcases' && likeCount > 0 && (
         <LikedUsersList showcaseId={postId as Id<'showcases'>} />
       )}
     </div>

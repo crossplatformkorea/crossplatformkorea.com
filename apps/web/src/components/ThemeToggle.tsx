@@ -1,47 +1,22 @@
-import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 import { useTranslation } from 'react-i18next';
+import { applyTheme, useIsDarkTheme } from '@/hooks/useTheme';
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { t } = useTranslation();
-  const [isDark, setIsDark] = useState<boolean>(false);
-
-  // Initialize on mount
-  useEffect(() => {
-    const isDarkMode =
-      document.documentElement.classList.contains('dark') ||
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-    setIsDark(isDarkMode);
-
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-    }
-  }, []);
+  const isDark = useIsDarkTheme();
 
   const toggleDarkMode = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      localStorage.theme = 'light';
-    } else {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-      localStorage.theme = 'dark';
-    }
-    setIsDark(!isDark);
+    applyTheme(!isDark);
+    localStorage.theme = isDark ? 'light' : 'dark';
   };
 
   return (
     <button
+      type="button"
       onClick={toggleDarkMode}
       className={cn('rounded-lg p-2 transition-colors hover:bg-muted/80', className)}
-      aria-label={t('navigation.theme')}
+      aria-label={t('navigation.darkMode')}
       aria-pressed={isDark}
     >
       <div className="relative w-5 h-5">
@@ -56,6 +31,7 @@ export function ThemeToggle({ className }: { className?: string }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          aria-hidden="true"
           className={cn(
             'h-5 w-5 transition-opacity duration-300',
             isDark ? 'opacity-100' : 'opacity-0',
@@ -76,6 +52,7 @@ export function ThemeToggle({ className }: { className?: string }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          aria-hidden="true"
           className={cn(
             'h-5 w-5 transition-opacity duration-300',
             !isDark ? 'opacity-100' : 'opacity-0',

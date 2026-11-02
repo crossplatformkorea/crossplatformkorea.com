@@ -2,13 +2,13 @@
   "common": {
     "buttons": {
       "save": "保存",
-      "saving": "保存中...",
+      "saving": "保存中…",
       "cancel": "キャンセル",
-      "submitting": "送信中..."
+      "submitting": "送信中…"
     },
     "cancel": "キャンセル",
-    "deleting": "削除中...",
-    "loading": "ローディング中...",
+    "deleting": "削除中…",
+    "loading": "ローディング中…",
     "appName": "クロスプラットフォームコリア",
     "sideFeatureRequests": "機能リクエスト",
     "signIn": "ログイン",
@@ -53,7 +53,8 @@
     "enterFullscreen": "全画面表示",
     "exitFullscreen": "全画面表示を終了",
     "profile": "プロフィール",
-    "user": "ユーザー"
+    "user": "ユーザー",
+    "tags": "タグ"
   },
   "errors": {
     "general": "エラーが発生しました。もう一度お試しください。",
@@ -180,24 +181,24 @@
     "alreadySignedInTitle": "既にログインしています",
     "alreadySignedInMessage": "ログアウトするか、アプリの使用を続けることができます。",
     "title": "ログイン",
-    "signInMessage": "メールアドレスを入力すると、確認コードを送信します。安全なログインのためにメールでOTPコードを送信します。",
+    "signInMessage": "メールで8桁の確認コードをお送りします。",
     "emailLabel": "メールアドレス",
     "emailPlaceholder": "メールアドレスを入力",
-    "sendingCode": "コード送信中...",
+    "sendingCode": "コード送信中…",
     "signInWithEmail": "メールでログイン",
     "verificationCodeLabel": "確認コード",
     "verificationCodePlaceholder": "8桁のコードを入力",
-    "verifying": "確認中...",
+    "verifying": "確認中…",
     "verifyCode": "コードを確認",
     "back": "戻る",
     "signOutPrompt": "ログアウトしますか？",
-    "signingOut": "ログアウト中...",
+    "signingOut": "ログアウト中…",
     "signOut": "ログアウト",
     "returnToHome": "ホームに戻る",
     "loginToAccess": "サインインして始める",
     "signIn": "サインイン",
     "signInWithGithub": "GitHubでログイン",
-    "signingInWithGithub": "GitHubでログイン中...",
+    "signingInWithGithub": "GitHubでログイン中…",
     "errors": {
       "sendCodeFailed": "認証コードを送信できませんでした。しばらくしてからもう一度お試しください。",
       "invalidCode": "コードが正しくないか、期限切れです。最新のメールに記載されたコードをご確認ください。",
@@ -208,7 +209,9 @@
     "chooseMethodMessage": "投稿・コメント・ショーケース登録にはログインが必要です。",
     "continueWithGithub": "GitHubで続ける",
     "githubRedirectNotice": "GitHubに移動して{{app}}を承認します",
-    "useEmailInstead": "メールアカウントをお持ちですか？メールコードでログイン"
+    "useEmailInstead": "メールアカウントをお持ちですか？メールコードでログイン",
+    "or": "または",
+    "intro": "GitHubアカウントかメールの確認コードですぐに始められます。パスワードを作る必要はありません。"
   },
   "posts": {
     "title": "投稿",
@@ -218,7 +221,7 @@
     "post2": "2番目の投稿",
     "backToList": "投稿一覧に戻る",
     "sampleTitle": "サンプル投稿タイトル",
-    "loading": "投稿を読み込み中...",
+    "loading": "投稿を読み込み中…",
     "empty": "このカテゴリに投稿はありません",
     "eventPeriod": "イベント期間: {{start}} - {{end}}",
     "categories": "カテゴリ",
@@ -320,18 +323,18 @@
     "titleLabel": "タイトル",
     "titlePlaceholder": "どのような機能が見たいですか？",
     "descriptionLabel": "説明",
-    "descriptionPlaceholder": "希望する機能について詳しく説明してください...",
+    "descriptionPlaceholder": "希望する機能について詳しく説明してください…",
     "emailLabel": "メール（任意）",
     "emailPlaceholder": "メールアドレス（更新情報をお知らせします）",
     "emailDescription": "メールは、この機能の更新情報をお知らせするためにのみ使用されます。",
     "submitButton": "リクエストを提出",
-    "submittingButton": "提出中...",
+    "submittingButton": "提出中…",
     "successMessage": "機能リクエストが正常に提出されました！",
     "noRequests": "まだ機能リクエストがありません。最初に提案してください！",
     "noRequestsTitle": "機能リクエストはまだありません",
     "beTheFirst": "最初に機能を提案してください！",
-    "loading": "機能リクエストを読み込み中...",
-    "loadingMore": "さらに読み込み中...",
+    "loading": "機能リクエストを読み込み中…",
+    "loadingMore": "さらに読み込み中…",
     "loadMore": "さらにリクエストを読み込む",
     "votes": "投票",
     "voteAriaLabel": "この機能に投票",
@@ -354,9 +357,9 @@
     "deleteSuccess": "機能リクエストが削除されました。",
     "deleteFailed": "削除に失敗しました。",
     "comments": "コメント",
-    "commentPlaceholder": "コメントを書いてください...",
+    "commentPlaceholder": "コメントを書いてください…",
     "addComment": "コメント追加",
-    "submittingComment": "送信中...",
+    "submittingComment": "送信中…",
     "commentAdded": "コメントが追加されました。",
     "commentFailed": "コメントの追加に失敗しました。",
     "commentDeleted": "コメントが削除されました。",
@@ -364,7 +367,10 @@
     "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
     "backToList": "一覧に戻る",
     "notFound": "機能リクエストが見つかりません",
-    "notFoundDescription": "お探しの機能リクエストは存在しないか、削除されています。"
+    "notFoundDescription": "お探しの機能リクエストは存在しないか、削除されています。",
+    "signInToVote": "ログインして投票",
+    "signInToRequest": "ログインして機能をリクエスト",
+    "deleteCommentConfirm": "このコメントを削除しますか？元に戻せません。"
   },
   "postWrite": {
     "writeNewPost": "新規投稿",
@@ -379,7 +385,7 @@
     "tagsLabel": "タグ",
     "tagsPlaceholder": "タグを追加 (Enterまたはカンマで追加)",
     "addTag": "タグを追加",
-    "contentPlaceholder": "投稿内容を入力してください...",
+    "contentPlaceholder": "投稿内容を入力してください…",
     "previewTitle": "プレビュー",
     "previewPlaceholder": "ここに内容のプレビューが表示されます",
     "publishPost": "投稿する",
@@ -402,11 +408,12 @@
     "changeThumbnail": "サムネイル変更",
     "selectThumbnail": "代表画像を選択",
     "youtubeUrlLabel": "YouTube URL",
-    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+    "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=…",
     "publishAtLabel": "公開予約 (Asia/Seoul)",
     "publishAtHelp": "空欄ならすぐ公開します。未来の日時は予約投稿として保存されます。",
     "saveAsDraft": "下書き保存",
-    "schedulePost": "予約公開"
+    "schedulePost": "予約公開",
+    "discardConfirm": "保存されていない内容は失われます。閉じますか？"
   },
   "summary": {
     "welcome": "クロスプラットフォーム・コリアへようこそ",
@@ -425,9 +432,7 @@
     "discoverDescription": "さまざまなプラットフォームで生まれたアプリを見てみましょう。",
     "learnTitle": "学びを続けよう",
     "learnDescription": "コミュニティが共有する開発ガイドと知識を読みましょう。",
-    "latestKicker": "コミュニティから",
     "latestTitle": "コミュニティの最新の話題",
-    "readStory": "記事を読む",
     "memberLabel": "コミュニティへの参加",
     "memberTitle": "あなたの経験が、次の話題に。",
     "memberDescription": "小さな発見も、大きな悩みも。ログインして開発の話を共有しましょう。",
@@ -440,13 +445,14 @@
   },
   "comments": {
     "title": "コメント",
-    "writePlaceholder": "コメントを書く...",
+    "writePlaceholder": "コメントを書く…",
     "submit": "投稿",
     "shortcuts": "Cmd/Ctrl + Enterで投稿",
     "loginRequired": "コメントを投稿するにはログインしてください",
     "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
     "deleteCommentTitle": "コメント削除",
-    "deleteCommentMessage": "このコメントを削除してもよろしいですか？この操作は元に戻せません。"
+    "deleteCommentMessage": "このコメントを削除してもよろしいですか？この操作は元に戻せません。",
+    "signInToComment": "ログインしてコメント"
   },
   "user": {
     "posts": "投稿",
@@ -467,8 +473,7 @@
   },
   "showcase": {
     "header": {
-      "eyebrow": "ショーケース / クロスプラットフォームでつくる",
-      "tagline": "ひとつのコード、広がる可能性。"
+      "eyebrow": "ショーケース / クロスプラットフォームでつくる"
     },
     "clearSearch": "検索をクリア",
     "title": "ショーケース",
@@ -476,7 +481,7 @@
     "addNew": "追加",
     "addFirst": "最初のショーケースを追加",
     "signInToAdd": "ログインしてショーケースを追加",
-    "searchPlaceholder": "ショーケースを検索...",
+    "searchPlaceholder": "ショーケースを検索…",
     "allCategories": "すべてのカテゴリ",
     "noShowcases": "まだショーケースがありません",
     "noSearchResults": "検索結果が見つかりません",
@@ -505,7 +510,7 @@
       "tags": "タグ",
       "tagsPlaceholder": "タグを追加（Enterキーで追加）",
       "addTag": "タグを追加",
-      "submitting": "送信中...",
+      "submitting": "送信中…",
       "createButton": "作成",
       "update": "更新",
       "cancel": "キャンセル",
@@ -638,7 +643,7 @@
   },
   "pwa": {
     "install": "アプリをインストール",
-    "installing": "インストール中...",
+    "installing": "インストール中…",
     "installed": "インストール完了",
     "offline": "オフラインモード",
     "updateAvailable": "新しいバージョンが利用可能です",
@@ -695,7 +700,12 @@
         "permissionDenied": "通知権限が拒否されました",
         "testNotificationFailed": "テスト通知の送信に失敗しました"
       }
-    }
+    },
+    "description": "投稿へのコメント、メンション、いいねをまとめて表示します。",
+    "signInToView": "ログインして通知を見る",
+    "deleteSelectedConfirm": "選択した通知{{count}}件を削除しますか？元に戻せません。",
+    "unread": "未読",
+    "selectOne": "「{{title}}」を選択"
   },
   "meta": {
     "title": "クロスプラットフォームコリア",
@@ -704,13 +714,13 @@
   },
   "chat": {
     "title": "ChatGPT",
-    "inputPlaceholder": "メッセージを入力してください...",
+    "inputPlaceholder": "メッセージを入力してください…",
     "send": "送信",
-    "sending": "送信中...",
+    "sending": "送信中…",
     "newChat": "新しいチャット",
     "conversations": "会話リスト",
     "noConversations": "まだ会話はありません",
-    "typeMessage": "メッセージを入力してください...",
+    "typeMessage": "メッセージを入力してください…",
     "configureApiKey": "チャットを開始するにはAPIキーを設定してください",
     "apiKey": {
       "title": "APIキー",
@@ -736,7 +746,7 @@
     "messages": {
       "user": "ユーザー",
       "assistant": "AIアシスタント",
-      "streaming": "応答生成中..."
+      "streaming": "応答生成中…"
     }
   },
   "navigation": {
@@ -746,6 +756,7 @@
     "label": "メインメニュー",
     "language": "言語",
     "theme": "テーマを切り替え",
-    "skip": "本文へ移動"
+    "skip": "本文へ移動",
+    "darkMode": "ダークモード"
   }
 }

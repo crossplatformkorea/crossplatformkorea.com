@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation, usePaginatedQuery, useQuery } from 'convex/react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useConvexAuth, useMutation, usePaginatedQuery, useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { ArrowUpRight, Lightbulb, MessageSquare, Plus, X } from 'lucide-react';
+import { ArrowUpRight, Lightbulb, LogIn, MessageSquare, Plus, X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import useAuthGuard from '@/hooks/useAuthGuard';
+import { createSignInHref } from '@/lib/authRedirect';
 import { Button } from '@/components/uis/Button';
 import { Textarea } from '@/components/uis/Textarea';
 import { devConsole } from '@/lib/utils';
@@ -20,8 +20,12 @@ import VoteButton from './feature-request/VoteButton';
 import RequestRoadmap from './feature-request/RequestRoadmap';
 
 export default function FeatureRequestsPage() {
-  useAuthGuard();
   const { t, i18n } = useTranslation();
+  // Reading the roadmap is public; requesting and voting send visitors to sign-in first.
+  const { isAuthenticated } = useConvexAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const signInHref = createSignInHref(`${location.pathname}${location.search}`);
   const reducedMotion = useReducedMotion();
   useMetaTags({
     title: `${t('featureRequest.title')} | Cross-Platform Korea`,
@@ -77,6 +81,10 @@ export default function FeatureRequestsPage() {
   }, [title, description, addFeatureRequest, t]);
 
   const handleVote = async (id: Id<'featureRequests'>) => {
+    if (!isAuthenticated) {
+      void navigate(signInHref);
+      return;
+    }
     setVotingIds((previous) => new Set(previous).add(id));
     try {
       await voteForFeature({ id });
@@ -101,16 +109,23 @@ export default function FeatureRequestsPage() {
         title={t('featureRequest.title')}
         description={t('featureRequest.description')}
         action={
-          <Button
-            onClick={toggleForm}
-            variant={showForm ? 'outline' : 'default'}
-            className="min-h-11"
-            aria-expanded={showForm}
-            aria-controls="request-form"
-          >
-            {showForm ? <X size={16} /> : <Plus size={16} />}
-            {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
-          </Button>
+          isAuthenticated ? (
+            <Button
+              onClick={toggleForm}
+              variant={showForm ? 'outline' : 'default'}
+              className="min-h-11"
+              aria-expanded={showForm}
+              aria-controls="request-form"
+            >
+              {showForm ? <X size={16} /> : <Plus size={16} />}
+              {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
+            </Button>
+          ) : (
+            <Link to={signInHref} className="home-secondary-link">
+              <LogIn size={16} />
+              {t('featureRequest.signInToRequest')}
+            </Link>
+          )
         }
         aside={<RequestRoadmap />}
       />
@@ -217,11 +232,17 @@ export default function FeatureRequestsPage() {
             <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
               {t('featureRequest.noRequests')}
             </p>
-            {!showForm && (
-              <Button onClick={toggleForm} variant="outline" className="mt-6 min-h-11">
-                {t('featureRequest.beTheFirst')}
-              </Button>
-            )}
+            {!showForm &&
+              (isAuthenticated ? (
+                <Button onClick={toggleForm} variant="outline" className="mt-6 min-h-11">
+                  {t('featureRequest.beTheFirst')}
+                </Button>
+              ) : (
+                <Link to={signInHref} className="home-secondary-link mt-6">
+                  <LogIn size={16} />
+                  {t('featureRequest.signInToRequest')}
+                </Link>
+              ))}
           </div>
         ) : (
           <div className="space-y-3">
@@ -242,6 +263,7 @@ export default function FeatureRequestsPage() {
                     }
                     isOwner={currentUser?._id === request.userId}
                     pending={votingIds.has(request._id)}
+                    signedIn={isAuthenticated}
                     onVote={() => void handleVote(request._id)}
                   />
                   <div className="min-w-0 flex-1">

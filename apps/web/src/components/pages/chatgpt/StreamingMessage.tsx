@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useStream } from '@convex-dev/persistent-text-streaming/react';
 import { StreamId } from '@convex-dev/persistent-text-streaming';
 import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
+import { postHtmlPlugins } from '@/lib/postHtml';
 import remarkGfm from 'remark-gfm';
 import { Copy, Check } from 'lucide-react';
 
@@ -85,7 +85,7 @@ export function StreamingMessage({ message }: { message: Message }) {
         style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
       >
         <ReactMarkdown
-          rehypePlugins={[rehypeRaw]}
+          rehypePlugins={postHtmlPlugins}
           remarkPlugins={[remarkGfm]}
           components={{
             // Links

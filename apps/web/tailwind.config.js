@@ -35,9 +35,15 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
       },
       fontFamily: {
-        sans: ["Inter Variable", ...fontFamily.sans],
+        // Pretendard shares Inter's Latin forms and adds Hangul, so mixed Korean
+        // and English text keeps one rhythm on every OS.
+        sans: ["Pretendard Variable", "Pretendard", ...fontFamily.sans],
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -58,12 +58,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button type="button" onClick={this.reset} variant="secondary">
+          <Button type="button" onClick={this.reset}>
             {t('common.errors.retry')}
           </Button>
-          <Button type="button" onClick={() => window.location.assign('/')}>
+          {/* A full reload on purpose: it also resets state outside the crashed page. */}
+          <a href="/" className="home-secondary-link">
             {t('common.errors.goHome')}
-          </Button>
+          </a>
         </div>
       </div>
     );

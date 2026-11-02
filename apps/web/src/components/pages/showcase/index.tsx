@@ -118,7 +118,7 @@ export default function ShowcasePage() {
         aside={
           <div className="flex flex-wrap gap-x-8 gap-y-4 sm:gap-x-12">
             <div className="flex items-baseline gap-3">
-              <span className="font-mono text-3xl font-medium tracking-tight">
+              <span className="text-3xl font-semibold tracking-tight tabular-nums">
                 {curatedApps.length}
               </span>
               <span className="text-xs text-muted-foreground">
@@ -126,19 +126,13 @@ export default function ShowcasePage() {
               </span>
             </div>
             <div className="flex items-baseline gap-3">
-              <span className="font-mono text-3xl font-medium tracking-tight">
-                0{technologies.length}
+              <span className="text-3xl font-semibold tracking-tight tabular-nums">
+                {technologies.length}
               </span>
               <span className="text-xs text-muted-foreground">
                 {translate('showcase.catalog.technology')}
               </span>
             </div>
-            <span
-              aria-hidden="true"
-              className="ml-auto hidden items-center font-mono text-[10px] tracking-[0.16em] text-muted-foreground sm:inline-flex"
-            >
-              {translate('showcase.header.tagline')}
-            </span>
           </div>
         }
       />

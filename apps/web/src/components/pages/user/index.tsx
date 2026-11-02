@@ -10,6 +10,7 @@ import PostListItem from '../community/Post/posts/PostListItem';
 import { resolvePostStatus } from '@convex/posts/visibility';
 import ProfileHeader from './ProfileHeader';
 import UserSkeleton from './UserSkeleton';
+import NotFound from '../NotFound';
 import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function UserProfilePage() {
@@ -23,13 +24,6 @@ export default function UserProfilePage() {
 
   // Extract displayName from the parameter (remove @ prefix and decode)
   const decodedDisplayName = isValidUserProfile ? decodeURIComponent(rawDisplayName.slice(1)) : '';
-
-  // Redirect to home if not a valid user profile route
-  useEffect(() => {
-    if (!isValidUserProfile) {
-      void navigate('/', { replace: true });
-    }
-  }, [isValidUserProfile, navigate]);
 
   // Fetch user data by display name (case-insensitive)
   const user = useQuery(
@@ -120,14 +114,14 @@ export default function UserProfilePage() {
     }
   }, [user]);
 
+  // Only "/@name" is a profile; any other single-segment path is a real 404.
+  if (!isValidUserProfile) {
+    return <NotFound />;
+  }
+
   // Loading state
   if (user === undefined) {
     return <UserSkeleton />;
-  }
-
-  // Early return if not a valid user profile route
-  if (!isValidUserProfile) {
-    return null;
   }
 
   // Handle back button click
@@ -276,7 +270,7 @@ export default function UserProfilePage() {
                         published list stays unlabelled as before. */}
                     {(groupedPosts.scheduled?.length || groupedPosts.draft?.length) ? (
                       <div className="flex items-center gap-3">
-                        <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <h3 className="text-sm font-semibold text-foreground">
                           {t(`posts.status.${key}Section`)}
                         </h3>
                         <span className="text-xs text-muted-foreground">{posts?.length}</span>

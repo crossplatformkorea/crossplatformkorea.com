@@ -16,7 +16,7 @@ export function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
   const { t } = useTranslation();
 
   return (
-    <header className="relative z-30 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-border/70 bg-card/90 px-3 backdrop-blur-xl sm:px-5">
+    <header className="relative z-30 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-border/70 bg-card/90 pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] backdrop-blur-xl sm:pl-[max(1.25rem,env(safe-area-inset-left))] sm:pr-[max(1.25rem,env(safe-area-inset-right))]">
       <div className="flex min-w-0 items-center gap-2 sm:gap-4">
         <button
           id="sidebar-toggle"
@@ -52,7 +52,10 @@ export function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
           className="flex min-w-0 items-center gap-2.5"
         >
           <img src="/assets/logo.png" alt="" className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" />
-          <span className="hidden whitespace-nowrap text-xs font-bold tracking-tight sm:inline sm:text-base">
+          <span
+            translate="no"
+            className="hidden whitespace-nowrap text-xs font-bold tracking-tight sm:inline sm:text-base"
+          >
             {t('common.appName')}
           </span>
           <span className="text-sm font-bold sm:hidden">CPK</span>
@@ -65,8 +68,10 @@ export function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
           rel="noopener noreferrer"
           className="mr-1 hidden items-center gap-2 rounded-lg border border-border/70 px-3 py-2 text-xs font-medium transition-colors hover:bg-muted/70 md:inline-flex"
         >
-          <SiDiscord className="h-4 w-4" /> Discord{' '}
-          <span className="text-muted-foreground">↗</span>
+          <SiDiscord className="h-4 w-4" aria-hidden="true" /> Discord{' '}
+          <span className="text-muted-foreground" aria-hidden="true">
+            ↗
+          </span>
         </a>
         <NotificationBell />
         <ThemeToggle />

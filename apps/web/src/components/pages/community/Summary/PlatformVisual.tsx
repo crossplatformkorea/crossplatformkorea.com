@@ -86,18 +86,16 @@ export default function PlatformVisual() {
       </div>
       <motion.div className="platform-node platform-node-mobile" {...nodeMotion(0.28, -6)}>
         <Smartphone size={23} strokeWidth={1.4} />
-        <span>MOBILE</span>
+        <span>Mobile</span>
       </motion.div>
       <motion.div className="platform-node platform-node-desktop" {...nodeMotion(0.38, 6)}>
         <Monitor size={24} strokeWidth={1.4} />
-        <span>DESKTOP</span>
+        <span>Desktop</span>
       </motion.div>
       <motion.div className="platform-node platform-node-web" {...nodeMotion(0.48, -3)}>
         <Globe2 size={24} strokeWidth={1.4} />
-        <span>WEB</span>
+        <span>Web</span>
       </motion.div>
-      <span className="platform-caption">MANY PLATFORMS. ONE COMMUNITY.</span>
-      <span className="platform-coordinate">CPK / CONNECT</span>
     </motion.div>
   );
 }

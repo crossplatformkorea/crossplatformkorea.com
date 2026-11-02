@@ -31,10 +31,16 @@ export function AppLayout({ children }: AppLayoutProps) {
     return savedState === 'true';
   });
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  // The mobile drawer is a modal, so it starts closed on every load and never
+  // inherits the persisted desktop rail state.
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   useEffect(() => {
     const media = window.matchMedia('(max-width: 767px)');
-    const handleChange = () => setIsMobile(media.matches);
+    const handleChange = () => {
+      setIsMobile(media.matches);
+      setIsMobileNavOpen(false);
+    };
     media.addEventListener('change', handleChange);
     return () => media.removeEventListener('change', handleChange);
   }, []);
@@ -98,7 +104,11 @@ export function AppLayout({ children }: AppLayoutProps) {
   }, [isAuthenticated, hasProfile, profileLocale, deviceLocale, updateUserLocale]);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen((open) => !open);
+    if (isMobile) {
+      setIsMobileNavOpen((open) => !open);
+    } else {
+      setIsSidebarOpen((open) => !open);
+    }
   };
 
   if (isLoading) {
@@ -114,7 +124,10 @@ export function AppLayout({ children }: AppLayoutProps) {
         {t('navigation.skip')}
       </a>
       {/* Header at the top level with sidebar toggle */}
-      <Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <Header
+        isSidebarOpen={isMobile ? isMobileNavOpen : isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+      />
 
       {/* Main content with sidebar */}
       <div className="flex flex-1 overflow-hidden min-h-0">
@@ -131,9 +144,9 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
 
         {/* Radix traps focus, handles Escape, and removes closed mobile links. */}
-        <Dialog.Root open={isMobile && isSidebarOpen} onOpenChange={setIsSidebarOpen}>
+        <Dialog.Root open={isMobile && isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
           {isMobile && (
-            <MobileNavigation open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+            <MobileNavigation open={isMobileNavOpen} onClose={() => setIsMobileNavOpen(false)} />
           )}
         </Dialog.Root>
 

@@ -173,6 +173,20 @@ body {
   @apply bg-background font-sans text-foreground antialiased transition-colors duration-300;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Removes the double-tap zoom delay on controls without disabling pinch zoom. */
+a,
+button,
+[role='button'],
+select,
+label,
+summary {
+  touch-action: manipulation;
+}
+
 /* Keep keyboard focus visible on navigation, cards, and native controls. */
 :where(a, button, select, input, textarea):focus-visible {
   outline: 2px solid hsl(var(--ring));
@@ -220,12 +234,13 @@ body {
     @apply surface-card transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_28px_90px_-50px_rgba(0,0,0,0.5)] motion-reduce:transform-none motion-reduce:transition-none;
   }
 
+  /* Where-am-I context above a page title: quiet, sentence case, no ornament. */
   .section-kicker {
-    @apply flex items-center gap-3 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-primary;
+    @apply flex items-center gap-2 text-[13px] font-medium text-muted-foreground;
   }
 
   .field-label {
-    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+    @apply mb-2 block text-sm font-medium text-foreground;
   }
 
   .field-control {
@@ -242,7 +257,11 @@ body {
   }
 
   .page-title {
-    @apply mt-4 max-w-3xl text-3xl font-bold leading-none tracking-[-0.05em] sm:text-5xl;
+    @apply max-w-3xl text-balance text-3xl font-bold leading-tight tracking-[-0.05em] sm:text-5xl;
+  }
+
+  .section-kicker + .page-title {
+    @apply mt-4;
   }
 
   .page-description {
@@ -259,7 +278,7 @@ body {
   }
 
   .home-title {
-    @apply mt-7 font-bold leading-[1.16] tracking-[-0.065em];
+    @apply mt-7 text-balance font-bold leading-[1.16] tracking-[-0.065em];
     font-size: clamp(2.5rem, 5.7cqw, 4.75rem);
     word-break: keep-all;
   }
@@ -314,7 +333,7 @@ body {
   }
 
   .platform-node span {
-    @apply font-mono text-[8px] tracking-[0.14em] text-muted-foreground;
+    @apply text-[11px] font-medium text-muted-foreground;
   }
 
   .platform-node-mobile {
@@ -327,14 +346,6 @@ body {
 
   .platform-node-web {
     @apply bottom-[10%] left-[24%];
-  }
-
-  .platform-caption {
-    @apply absolute bottom-[3%] right-[7%] font-mono text-[8px] tracking-[0.12em] text-muted-foreground;
-  }
-
-  .platform-coordinate {
-    @apply absolute right-[10%] top-[9%] font-mono text-[8px] tracking-[0.12em] text-muted-foreground;
   }
 }
 
@@ -414,26 +425,6 @@ body {
   }
 }
 
-.accent-text {
-  @apply text-muted-foreground dark:text-muted;
-}
-
-.button {
-  @apply bg-primary text-primary-foreground;
-}
-
-.input-field {
-  @apply w-full px-3 py-2 rounded-md bg-background border-2 border-input focus:outline-none focus:border-primary transition-colors;
-}
-
-.auth-button {
-  @apply w-full py-2 rounded-md text-primary-foreground font-medium button hover:opacity-90 transition-opacity;
-}
-
-.link-text {
-  @apply text-primary dark:text-primary-foreground hover:underline cursor-pointer font-medium;
-}
-
 /* Elegant scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
@@ -446,7 +437,7 @@ body {
 
 /* Hamburger menu animation */
 .hamburger-line {
-  @apply transition-all duration-300 ease-in-out transform;
+  @apply transition-[transform,opacity] duration-300 ease-in-out transform motion-reduce:transition-none;
 }
 
 .hamburger-top {
@@ -473,23 +464,6 @@ body {
   @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/40;
 }
 
-/* Even thinner scrollbar for specific elements */
-.thin-scrollbar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-.thin-scrollbar::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-.thin-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/50 transition-colors;
-  /* Ensure the scrollbar doesn't go all the way to the edges */
-  border: 1px solid transparent;
-  background-clip: padding-box;
-}
-
 /* Hide scrollbar for cleaner UI but keep functionality */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
@@ -498,17 +472,6 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.app-logo {
-  height: 40px;
-  width: auto;
 }
 
 /* Prose 스타일 커스터마이징 - 포스트 콘텐츠 띄어쓰기 문제 해결 */
@@ -527,38 +490,47 @@ body {
   margin-top: 1em;
 }
 
-/* 링크 스타일링 */
+/* 링크: 브랜드와 같은 흑백 톤, 밑줄로 구분한다. */
 .prose a {
-  @apply text-blue-600 hover:text-blue-800 underline decoration-1 underline-offset-2 transition-colors;
-  font-weight: 500;
-}
-
-.dark .prose a {
-  @apply text-blue-400 hover:text-blue-300;
+  @apply font-medium text-foreground underline decoration-foreground/40 decoration-1 underline-offset-2 transition-[text-decoration-color] hover:decoration-foreground;
 }
 
 /* 리스트 스타일링 */
 .prose ul {
-  @apply list-disc list-inside space-y-1 my-4;
+  @apply my-4 list-inside list-disc space-y-1;
   padding-left: 1.5rem;
 }
 
 .prose ol {
-  @apply list-decimal list-inside space-y-1 my-4;
+  @apply my-4 list-inside list-decimal space-y-1;
   padding-left: 1.5rem;
 }
 
 .prose li {
-  @apply leading-relaxed;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   padding-left: 0.5rem;
+  line-height: 1.6;
 }
 
 .prose ul ul,
 .prose ol ol,
 .prose ul ol,
 .prose ol ul {
-  @apply mt-2 mb-2;
+  @apply my-2;
   padding-left: 1.5rem;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose li::marker {
+  color: hsl(var(--muted-foreground));
+}
+
+.prose ol > li::marker {
+  font-weight: 500;
 }
 
 /* 제목 스타일링 */
@@ -582,11 +554,7 @@ body {
 
 /* 인용문 스타일링 */
 .prose blockquote {
-  @apply border-l-4 border-muted-foreground/30 pl-4 italic text-muted-foreground my-4;
-}
-
-.dark .prose blockquote {
-  @apply border-muted/50 text-muted;
+  @apply my-4 border-l-4 border-border pl-4 italic text-muted-foreground;
 }
 
 /* 구분선 스타일링 */
@@ -603,157 +571,22 @@ body {
   @apply italic;
 }
 
-/* 코드 블록 스타일링 - GitHub/Discourse 스타일 */
+/* 코드 블록: 페이지보다 한 단계 들어간 면 위에 둔다. 오른쪽은 복사 버튼 자리. */
 .prose pre {
-  @apply bg-gray-100 border border-gray-300 rounded-lg p-4 text-sm font-mono shadow-sm overflow-x-auto;
-  background-color: #f6f8fa !important;
-  border: 1px solid #d1d9e0 !important;
-  color: #24292f !important;
-  position: relative;
+  @apply relative overflow-x-auto rounded-lg border border-border bg-muted/60 p-4 pr-12 font-mono text-sm text-foreground;
 }
 
 .prose pre code {
-  @apply bg-transparent p-0 rounded-none text-sm font-mono;
-  background-color: transparent !important;
-  color: inherit !important;
-  font-weight: normal !important;
-  text-shadow: none !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-  border: none !important;
+  @apply rounded-none border-0 bg-transparent p-0 font-mono text-sm font-normal;
+  color: inherit;
 }
 
-/* 인라인 코드 스타일링 */
-.prose code {
-  @apply bg-gray-200 px-1.5 py-0.5 rounded text-sm font-mono;
-  background-color: #f6f8fa !important;
-  color: #24292f !important;
-  border: 1px solid #e1e8ed !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
+/* 인라인 코드 */
+.prose :not(pre) > code {
+  @apply rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.875em] text-foreground;
 }
 
-/* 다크모드 코드 블록 */
-.dark .prose pre {
-  @apply bg-gray-900 border-gray-700;
-  background-color: #0d1117 !important;
-  border: 1px solid #30363d !important;
-  color: #e6edf3 !important;
-}
-
-.dark .prose pre code {
-  background-color: transparent !important;
-  color: inherit !important;
-  text-shadow: none !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* 다크모드 인라인 코드 */
-.dark .prose code {
-  @apply bg-gray-800 text-gray-200;
-  background-color: #21262d !important;
-  color: #e6edf3 !important;
-  border: 1px solid #30363d !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
-/* 링크 스타일링 */
-.prose a {
-  color: #2563eb !important; /* blue-600 */
-  text-decoration: underline;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
-}
-
-.prose a:hover {
-  color: #1d4ed8 !important; /* blue-700 */
-  text-decoration: underline;
-}
-
-.dark .prose a {
-  color: #60a5fa !important; /* blue-400 for dark mode */
-}
-
-.dark .prose a:hover {
-  color: #93c5fd !important; /* blue-300 for dark mode hover */
-}
-
-/* 리스트 스타일링 */
-.prose ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.prose ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.prose li {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  line-height: 1.6;
-}
-
-.prose ul ul,
-.prose ol ol,
-.prose ul ol,
-.prose ol ul {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.prose ul > li {
-  position: relative;
-}
-
-.prose ul > li::marker {
-  color: #6b7280; /* gray-500 */
-}
-
-.prose ol > li::marker {
-  color: #6b7280; /* gray-500 */
-  font-weight: 500;
-}
-
-.dark .prose ul > li::marker,
-.dark .prose ol > li::marker {
-  color: #9ca3af; /* gray-400 for dark mode */
-}
-
-/* 코드 블록에 복사 버튼 공간 확보 */
-.prose pre {
-  padding-right: 3rem;
-}
-
-/* 더 나은 구분을 위한 추가 스타일 */
-.prose pre::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, #6b7280, #374151);
-  border-radius: 2px 0 0 2px;
-}
-
-.dark .prose pre::before {
-  background: linear-gradient(to bottom, #9ca3af, #6b7280);
-}
-
-/* GitHub-style Mentions CSS */
+/* Mentions input */
 .mentions {
   margin: 0;
   position: relative;
@@ -769,31 +602,18 @@ body {
   max-height: 300px; /* Allow expansion up to 300px */
   overflow-y: auto; /* Enable scrolling */
   padding: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
 
 .mentions__control:focus-within {
-  border-color: #0969da;
-  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 3px hsl(var(--ring) / 0.15);
   outline: none;
 }
 
-/* Dark mode control styles */
-.dark .mentions__control {
-  background: hsl(var(--background)) !important;
-  border-color: hsl(var(--border)) !important;
-}
-
-.dark .mentions__control:focus-within {
-  border-color: #58a6ff;
-  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.12);
-}
-
-/* Hide the highlighter completely for clean GitHub-style */
+/* Hide the highlighter completely */
 .mentions__highlighter {
   display: none !important;
 }
@@ -819,40 +639,20 @@ body {
   color: hsl(var(--muted-foreground)) !important;
 }
 
-/* Dark mode input text color */
-.dark .mentions__input {
-  color: hsl(var(--foreground)) !important;
-}
-
-.dark .mentions__input::placeholder {
-  color: hsl(var(--muted-foreground)) !important;
-}
-
-/* Suggestions dropdown - GitHub style */
 .mentions__suggestions {
   position: absolute !important;
   z-index: 9999 !important;
-  border: 1px solid #d1d9e0 !important;
+  background: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
   border-radius: 8px !important;
-  box-shadow:
-    0 8px 24px rgba(140, 149, 159, 0.2),
-    0 0 0 1px rgba(209, 217, 225, 0.8) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16) !important;
   max-height: 300px !important;
   overflow-y: auto !important;
+  overscroll-behavior: contain;
   min-width: 240px !important;
   max-width: 320px !important;
   margin-top: 8px !important;
-  color: #24292f !important;
-}
-
-/* Dark mode suggestions */
-.dark .mentions__suggestions {
-  background: #161b22 !important;
-  color: #f0f6fc !important;
-  border-color: #30363d !important;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
 }
 
 .mentions__suggestions__list {
@@ -866,15 +666,10 @@ body {
   margin: 0 !important;
 }
 
-.mentions__suggestions__item--focused {
-  background-color: #0969da !important;
-  color: white !important;
-}
-
 /* Mention text styling */
 .mentions__mention {
-  color: #0969da !important;
-  font-weight: 500 !important;
+  color: hsl(var(--foreground)) !important;
+  font-weight: 600 !important;
   text-decoration: none !important;
   background: transparent !important;
   padding: 0 !important;
@@ -883,11 +678,6 @@ body {
   z-index: 1 !important;
   text-shadow: none !important;
   pointer-events: none !important;
-}
-
-/* Dark mode mention text */
-.dark .mentions__mention {
-  color: #58a6ff !important;
 }
 
 /* Scrollbar styling for suggestions */
@@ -900,12 +690,8 @@ body {
 }
 
 .mentions__suggestions::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: hsl(var(--muted-foreground) / 0.25);
   border-radius: 3px;
-}
-
-.dark .mentions__suggestions::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Scrollbar styling for mention input control */
@@ -936,7 +722,7 @@ body {
     container-type: inline-size;
   }
   .journal-title {
-    @apply font-bold leading-[1.16] tracking-[-0.06em];
+    @apply text-balance font-bold leading-[1.16] tracking-[-0.06em];
     font-size: clamp(2.5rem, 5.7cqw, 4.5rem);
     word-break: keep-all;
     overflow-wrap: anywhere;
@@ -973,7 +759,7 @@ body {
     container-type: inline-size;
   }
   .article-title {
-    @apply mt-7 font-bold leading-[1.3] tracking-[-0.05em];
+    @apply mt-7 text-balance font-bold leading-[1.3] tracking-[-0.05em];
     font-size: clamp(2rem, 5.7cqw, 3.75rem);
     word-break: keep-all;
     overflow-wrap: anywhere;
@@ -1180,10 +966,10 @@ body {
     @apply flex min-w-0 flex-col overflow-hidden rounded-2xl border border-border/75 bg-card/40 transition-colors duration-200 hover:border-foreground/25 hover:bg-card/80 motion-reduce:transition-none;
   }
   .collection-link {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border/80 bg-background/40 px-3 py-2 text-xs font-medium transition-colors hover:border-foreground/30 hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border/80 bg-background/40 px-3 py-2 text-xs font-medium transition-colors hover:border-foreground/30 hover:bg-muted/60;
   }
   .roadmap-status {
-    @apply inline-flex max-w-full items-center gap-2 rounded-md border border-border/75 bg-muted/30 px-2.5 py-1 font-mono text-[10px] font-medium tracking-wide text-muted-foreground;
+    @apply inline-flex max-w-full items-center gap-2 rounded-md border border-border/75 bg-muted/30 px-2.5 py-1 text-xs font-medium text-muted-foreground;
   }
   .roadmap-status-dot {
     @apply h-1.5 w-1.5 shrink-0 rounded-full border border-current;
@@ -1195,7 +981,7 @@ body {
     @apply bg-current;
   }
   .roadmap-vote {
-    @apply flex min-h-14 w-12 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl border border-border/80 text-muted-foreground transition-colors hover:border-foreground/35 hover:bg-muted/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20 disabled:opacity-50;
+    @apply flex min-h-14 w-12 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl border border-border/80 text-muted-foreground transition-colors hover:border-foreground/35 hover:bg-muted/60 hover:text-foreground disabled:opacity-50;
   }
   .roadmap-steps {
     @apply grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6;

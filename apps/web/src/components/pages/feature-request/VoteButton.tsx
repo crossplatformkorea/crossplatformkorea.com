@@ -7,19 +7,22 @@ export default function VoteButton({
   voted,
   isOwner,
   pending,
+  signedIn = true,
   onVote,
 }: {
   votes: number;
   voted: boolean;
   isOwner: boolean;
   pending: boolean;
+  /** Signed-out visitors can see the count; clicking takes them to sign-in. */
+  signedIn?: boolean;
   onVote: () => void;
 }) {
   const { t } = useTranslation();
   const content = (
     <>
       <ChevronUp size={17} aria-hidden="true" />
-      <span className="font-mono text-sm font-semibold tabular-nums">{votes}</span>
+      <span className="text-sm font-semibold tabular-nums">{votes}</span>
     </>
   );
   if (isOwner)
@@ -38,8 +41,9 @@ export default function VoteButton({
       type="button"
       onClick={onVote}
       disabled={pending}
-      aria-pressed={voted}
-      aria-label={t('featureRequest.voteAriaLabel')}
+      aria-pressed={signedIn ? voted : undefined}
+      aria-label={`${signedIn ? t('featureRequest.voteAriaLabel') : t('featureRequest.signInToVote')} · ${votes}`}
+      title={signedIn ? undefined : t('featureRequest.signInToVote')}
       aria-busy={pending}
       className={cn('roadmap-vote', voted && 'border-foreground/40 bg-muted/70 text-foreground')}
     >

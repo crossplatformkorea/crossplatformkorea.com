@@ -187,7 +187,7 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
 
   return (
     <div className="min-w-0">
-      <p className="section-kicker mb-3 text-muted-foreground">{t('posts.discussionKicker')}</p>
+      <p className="section-kicker mb-3">{t('posts.discussionKicker')}</p>
       <h2 className="mb-7 flex items-center gap-2 text-2xl font-bold tracking-[-0.035em]">
         <MessageSquare className="mr-1 h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
         {t('comments.title')}
@@ -244,7 +244,7 @@ export default function Comments({ postId, highlightCommentId }: CommentsProps) 
             }}
           >
             <LogIn size={15} />
-            {t('common.signIn')}
+            {t('comments.signInToComment')}
           </Button>
         </div>
       )}

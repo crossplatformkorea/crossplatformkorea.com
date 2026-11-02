@@ -15,7 +15,7 @@ export default function MobileNavigation({
     <Dialog.Portal>
       <Dialog.Overlay className="navigation-backdrop fixed inset-0 z-40 bg-black/45 backdrop-blur-sm" />
       <Dialog.Content
-        className="navigation-drawer fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] outline-none"
+        className="navigation-drawer fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] pl-[env(safe-area-inset-left)] outline-none"
         inert={!open}
         aria-describedby={undefined}
         onCloseAutoFocus={(event) => {
