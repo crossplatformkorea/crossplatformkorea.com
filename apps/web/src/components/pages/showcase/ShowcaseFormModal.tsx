@@ -308,9 +308,16 @@ const ShowcaseFormModal = ({
     }
   };
 
+  // Escape, the header X and Cancel all close through here, so edits are never dropped silently.
+  const requestClose = () => {
+    if (isSubmitting || successMessage) return;
+    if (isDirty && !window.confirm(t('postWrite.discardConfirm'))) return;
+    onClose();
+  };
+
   // Radix handles Escape, the focus trap, scroll lock and returning focus to the trigger.
   return (
-    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && !isSubmitting && onClose()}>
+    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && requestClose()}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60" />
         <Dialog.Content
@@ -319,17 +326,7 @@ const ShowcaseFormModal = ({
           onPointerDownOutside={(event) => event.preventDefault()}
           onEscapeKeyDown={(event) => {
             // Escape that cancels an IME candidate must not close the form.
-            if (event.isComposing || event.keyCode === 229) {
-              event.preventDefault();
-              return;
-            }
-            if (isSubmitting || successMessage) {
-              event.preventDefault();
-              return;
-            }
-            if (isDirty && !window.confirm(t('postWrite.discardConfirm'))) {
-              event.preventDefault();
-            }
+            if (event.isComposing || event.keyCode === 229) event.preventDefault();
           }}
           className={cn(
             'fixed left-1/2 top-1/2 z-50 flex h-[min(90dvh,56rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-2xl border border-border shadow-xl',
@@ -755,7 +752,11 @@ const ShowcaseFormModal = ({
               'bg-muted/50',
             )}
           >
-            <Button variant="ghost" onClick={onClose} disabled={isSubmitting || !!successMessage}>
+            <Button
+              variant="ghost"
+              onClick={requestClose}
+              disabled={isSubmitting || !!successMessage}
+            >
               {t('showcase.form.cancel')}
             </Button>
             <Button

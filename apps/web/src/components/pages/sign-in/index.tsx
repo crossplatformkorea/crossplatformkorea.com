@@ -1,10 +1,11 @@
 import { Navigate, useSearchParams } from 'react-router-dom';
-import { t } from '../../../lib/i18n';
+import { useTranslation } from 'react-i18next';
 import { sanitizeReturnTo } from '../../../lib/authRedirect';
 import { useAuthStore } from '@/stores/authStore';
 import SigningIn from './SigningIn';
 
 function LoadingState() {
+  const { t } = useTranslation();
   return (
     <div className="flex h-full items-center justify-center bg-background">
       <div className="flex items-center gap-3 text-sm font-medium text-muted-foreground">
@@ -16,6 +17,8 @@ function LoadingState() {
 }
 
 export default function SignIn() {
+  // Subscribing re-renders the page (and the form inside it) when the language changes.
+  const { t } = useTranslation();
   const { isAuthenticated, isLoading } = useAuthStore();
   const [searchParams] = useSearchParams();
   const returnTo = sanitizeReturnTo(searchParams.get('returnTo'));

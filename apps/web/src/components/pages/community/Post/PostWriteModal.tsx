@@ -96,7 +96,6 @@ export default function PostWriteModal({
   // Refs for focus management
   const modalRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const contentRefDesktop = useRef<HTMLTextAreaElement>(null);
 
@@ -184,7 +183,7 @@ export default function PostWriteModal({
         titleRef.current?.focus();
       } else {
         // Still move focus into the dialog, just not onto a text field.
-        dialogRef.current?.focus();
+        modalRef.current?.focus();
       }
     }, 350);
 
@@ -777,7 +776,6 @@ export default function PostWriteModal({
         )}
         aria-modal="true"
         role="dialog"
-        ref={dialogRef}
         tabIndex={-1}
       >
         {/* Modal header */}
