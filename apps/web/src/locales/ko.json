@@ -209,7 +209,8 @@
     "githubRedirectNotice": "GitHub로 이동해 {{app}} 권한을 승인하게 됩니다",
     "useEmailInstead": "이메일 계정이 있으신가요? 이메일 코드로 로그인",
     "or": "또는",
-    "intro": "GitHub 계정이나 이메일 인증 코드로 바로 시작할 수 있어요. 따로 만들 비밀번호는 없어요."
+    "intro": "GitHub 계정이나 이메일 인증 코드로 바로 시작할 수 있어요. 따로 만들 비밀번호는 없어요.",
+    "slogan": "만들고.\n나누고.\n연결하고."
   },
   "posts": {
     "title": "게시물",
@@ -450,7 +451,8 @@
     "noComments": "아직 댓글이 없습니다. 첫 댓글을 작성해보세요!",
     "deleteCommentTitle": "댓글 삭제",
     "deleteCommentMessage": "이 댓글을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
-    "signInToComment": "로그인하고 댓글 쓰기"
+    "signInToComment": "로그인하고 댓글 쓰기",
+    "mentionSuggestions": "멘션할 사용자"
   },
   "user": {
     "posts": "게시물",

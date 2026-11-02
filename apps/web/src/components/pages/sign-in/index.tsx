@@ -32,13 +32,15 @@ export default function SignIn() {
           <section className="hidden lg:block">
             <p
               aria-hidden="true"
-              className="max-w-2xl text-[clamp(3.3rem,8vw,7.5rem)] font-bold leading-[0.84] tracking-[-0.075em]"
+              className="max-w-2xl text-[clamp(3.3rem,8vw,7.5rem)] font-bold leading-[0.92] tracking-[-0.075em]"
             >
-              Build.
-              <br />
-              Share.
-              <br />
-              Connect.
+              {t('signIn.slogan')
+                .split('\n')
+                .map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
             </p>
             <p className="mt-8 max-w-md text-pretty text-base leading-7 text-muted-foreground sm:text-lg">
               {t('signIn.intro')}

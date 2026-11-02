@@ -22,7 +22,7 @@ export default function FeatureRequestDetailPage() {
   // Reading is public; voting and commenting send visitors to sign-in first.
   const { isAuthenticated } = useConvexAuth();
   const location = useLocation();
-  const signInHref = createSignInHref(`${location.pathname}${location.search}`);
+  const signInHref = createSignInHref(`${location.pathname}${location.search}${location.hash}`);
   const reducedMotion = useReducedMotion();
   const [isVoting, setIsVoting] = useState(false);
 

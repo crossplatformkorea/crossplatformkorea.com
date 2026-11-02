@@ -8,6 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Format date based on current locale
+/**
+ * True while an IME (Hangul, kana, …) is still composing. Safari reports
+ * `isComposing: false` on the Enter that confirms a candidate but keeps
+ * keyCode 229, so both are checked.
+ */
+export function isImeComposing(event: { nativeEvent: KeyboardEvent }): boolean {
+  return event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229;
+}
+
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
   const locale = getLocale();

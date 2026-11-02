@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { useTranslation } from 'react-i18next';
-import { cn, devLog, devConsole } from '../../../../lib/utils';
+import { cn, devLog, devConsole, isImeComposing } from '../../../../lib/utils';
 import { Id } from '@convex/_generated/dataModel';
 import { MAX_FILE_SIZE, MAX_FILE_SIZE_READABLE } from '../../../../constants';
 import { DEFAULT_CATEGORY } from '@convex/constants';
@@ -96,6 +96,7 @@ export default function PostWriteModal({
   // Refs for focus management
   const modalRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const contentRefDesktop = useRef<HTMLTextAreaElement>(null);
 
@@ -177,10 +178,13 @@ export default function PostWriteModal({
       }, 10);
     });
 
-    // Focus title input after animation completes; skip on touch so the keyboard doesn't jump up.
+    // Focus the title after the animation; on touch, focus the dialog so the keyboard stays down.
     const focusTimer = setTimeout(() => {
       if (window.matchMedia('(pointer: fine)').matches) {
         titleRef.current?.focus();
+      } else {
+        // Still move focus into the dialog, just not onto a text field.
+        dialogRef.current?.focus();
       }
     }, 350);
 
@@ -304,8 +308,9 @@ export default function PostWriteModal({
   // Every user-initiated close (Escape, X, Cancel) goes through here so a draft is never lost silently.
   const requestClose = useCallback(() => {
     // The close animation keeps the modal mounted for a moment; ignore repeats.
-    if (isClosing) return;
-    if (!isSubmitting && hasUnsavedChanges && !window.confirm(t('postWrite.discardConfirm'))) {
+    // While publishing, stay open so a failure can still show its error.
+    if (isClosing || isSubmitting) return;
+    if (hasUnsavedChanges && !window.confirm(t('postWrite.discardConfirm'))) {
       return;
     }
     handleClose();
@@ -341,7 +346,7 @@ export default function PostWriteModal({
 
   // Handle tag input key events
   const handleTagKeyDown = (e: React.KeyboardEvent) => {
-    if (e.nativeEvent.isComposing) return;
+    if (isImeComposing(e)) return;
     if ((e.key === 'Enter' || e.key === ',') && tagInput.trim()) {
       e.preventDefault();
       handleAddTag();
@@ -432,7 +437,9 @@ export default function PostWriteModal({
 
   // Clean up uploaded files only once the page is really going away (after any unload prompt).
   useEffect(() => {
-    const handlePageHide = () => {
+    const handlePageHide = (event: PageTransitionEvent) => {
+      // A page entering the back/forward cache can come back with this draft.
+      if (event.persisted) return;
       if (uploadedStorageIds.length > 0) {
         // Note: This runs synchronously and can't guarantee file deletion
         // This is best effort cleanup
@@ -757,7 +764,7 @@ export default function PostWriteModal({
           'flex flex-col overflow-hidden mx-auto',
           isFullscreen ? 'w-full h-full' : 'w-[98%] max-w-7xl max-h-[85vh]',
           // Background & Visual Effects
-          'bg-background',
+          'bg-background outline-none',
           'shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)]',
           'dark:shadow-[0_10px_40px_rgba(0,0,0,0.5)] dark:border dark:border-gray-700/80',
           // Border Radius
@@ -769,6 +776,8 @@ export default function PostWriteModal({
         )}
         aria-modal="true"
         role="dialog"
+        ref={dialogRef}
+        tabIndex={-1}
       >
         {/* Modal header */}
         <div

@@ -57,8 +57,13 @@ const ShowcaseFormModal = ({
     return url.replace(/^https?:\/\//, '');
   };
 
+  // Whether the user changed anything since the form was filled in, so
+  // dismissing an untouched edit form doesn't ask for confirmation.
+  const [isDirty, setIsDirty] = useState(false);
+
   // Initialize form with showcase data if in edit mode
   useEffect(() => {
+    setIsDirty(false);
     if (isEditMode && showcase) {
       setTitle(showcase.title);
       setDescription(showcase.description);
@@ -121,6 +126,7 @@ const ShowcaseFormModal = ({
   // Handle removing a tag
   const handleRemoveTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
+    setIsDirty(true);
   };
 
   // Update tag input keydown handler to check composition state
@@ -172,6 +178,7 @@ const ShowcaseFormModal = ({
   // Handle removing a link
   const handleRemoveLink = (linkToRemove: string) => {
     setOtherLinks(otherLinks.filter((link) => link !== linkToRemove));
+    setIsDirty(true);
   };
 
   // Add URL validation utility
@@ -195,6 +202,7 @@ const ShowcaseFormModal = ({
     const replacesAll = input.selectionStart === 0 && input.selectionEnd === input.value.length;
     if (!replacesAll) return;
     e.preventDefault();
+    setIsDirty(true);
     // Remove http:// or https:// prefix
     setter(
       e.clipboardData
@@ -300,17 +308,6 @@ const ShowcaseFormModal = ({
     }
   };
 
-  const hasFormInput = Boolean(
-    title.trim() ||
-      description.trim() ||
-      appStoreUrl ||
-      playStoreUrl ||
-      websiteUrl ||
-      imageUrl ||
-      otherLinks.length > 0 ||
-      tags.length > 0,
-  );
-
   // Radix handles Escape, the focus trap, scroll lock and returning focus to the trigger.
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && !isSubmitting && onClose()}>
@@ -321,7 +318,11 @@ const ShowcaseFormModal = ({
           // A long form: only the explicit close and cancel buttons dismiss it.
           onPointerDownOutside={(event) => event.preventDefault()}
           onEscapeKeyDown={(event) => {
-            if (hasFormInput && !window.confirm(t('postWrite.discardConfirm'))) {
+            if (isSubmitting || successMessage) {
+              event.preventDefault();
+              return;
+            }
+            if (isDirty && !window.confirm(t('postWrite.discardConfirm'))) {
               event.preventDefault();
             }
           }}
@@ -356,7 +357,12 @@ const ShowcaseFormModal = ({
 
           {/* Form Content - Scrollable */}
           <div className="flex-1 overflow-y-auto p-6 bg-card">
-            <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6">
+            <form
+              onSubmit={(e) => void handleSubmit(e)}
+              // Input, select and textarea changes bubble here.
+              onChange={() => setIsDirty(true)}
+              className="space-y-6"
+            >
               {/* Display error message */}
               {error && (
                 <div
@@ -601,12 +607,14 @@ const ShowcaseFormModal = ({
                     >
                       <span className="text-sm truncate max-w-[200px]">{link}</span>
                       <Button
+                        type="button"
                         variant="ghost"
                         size="sm"
                         onClick={() => handleRemoveLink(link)}
+                        aria-label={`${t('common.remove')} ${link}`}
                         className="text-muted-foreground hover:text-foreground"
                       >
-                        <X size={14} />
+                        <X size={14} aria-hidden="true" />
                       </Button>
                     </div>
                   ))}
@@ -636,6 +644,7 @@ const ShowcaseFormModal = ({
                       placeholder="example.com/page"
                     />
                     <Button
+                      type="button"
                       variant="outline"
                       onClick={handleAddLink}
                       disabled={!otherLinkInput.trim()}
@@ -667,12 +676,14 @@ const ShowcaseFormModal = ({
                     >
                       <span>{tag}</span>
                       <Button
+                        type="button"
                         variant="ghost"
                         size="sm"
                         onClick={() => handleRemoveTag(tag)}
+                        aria-label={`${t('common.remove')} ${tag}`}
                         className="text-muted-foreground hover:text-foreground"
                       >
-                        <X size={14} />
+                        <X size={14} aria-hidden="true" />
                       </Button>
                     </div>
                   ))}
@@ -695,6 +706,7 @@ const ShowcaseFormModal = ({
                     placeholder={t('showcase.form.tagsPlaceholder')}
                   />
                   <Button
+                    type="button"
                     variant="outline"
                     onClick={handleAddTag}
                     disabled={!tagInput.trim()}

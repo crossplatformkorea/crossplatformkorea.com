@@ -222,7 +222,14 @@ export default function NotificationBell() {
                           {body}
                         </Link>
                       ) : (
-                        <div className={rowClassName}>{body}</div>
+                        // Nothing to open, but a click still marks it read.
+                        <button
+                          type="button"
+                          onClick={() => void handleNotificationClick(notification)}
+                          className={cn(rowClassName, 'w-full text-left hover:bg-muted/50')}
+                        >
+                          {body}
+                        </button>
                       )}
                     </li>
                   );

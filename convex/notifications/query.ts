@@ -185,6 +185,7 @@ export const getRecentNotifications = query({
       message: v.string(),
       postId: v.optional(v.id('posts')),
       showcaseId: v.optional(v.id('showcases')),
+      featureRequestId: v.optional(v.id('featureRequests')),
       // Lets the bell deep-link to the comment itself rather than the post top.
       commentId: v.optional(v.id('comments')),
       isRead: v.boolean(),
@@ -227,6 +228,7 @@ export const getRecentNotifications = query({
           message: localized.message,
           postId: notification.postId,
           showcaseId: notification.showcaseId,
+          featureRequestId: notification.featureRequestId,
           commentId: notification.commentId,
           isRead: notification.isRead,
           triggeredByUser: {

@@ -74,7 +74,7 @@ export const vote = mutation({
 
     // Get the current feature request
     const request = await ctx.db.get(id);
-    if (!request) {
+    if (!request || request.deletedAt) {
       throw new Error("Feature request not found");
     }
 

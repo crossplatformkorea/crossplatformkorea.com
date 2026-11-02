@@ -211,7 +211,8 @@
     "githubRedirectNotice": "GitHubに移動して{{app}}を承認します",
     "useEmailInstead": "メールアカウントをお持ちですか？メールコードでログイン",
     "or": "または",
-    "intro": "GitHubアカウントかメールの確認コードですぐに始められます。パスワードを作る必要はありません。"
+    "intro": "GitHubアカウントかメールの確認コードですぐに始められます。パスワードを作る必要はありません。",
+    "slogan": "つくる。\nわかちあう。\nつながる。"
   },
   "posts": {
     "title": "投稿",
@@ -452,7 +453,8 @@
     "noComments": "まだコメントがありません。最初のコメントを書いてみましょう！",
     "deleteCommentTitle": "コメント削除",
     "deleteCommentMessage": "このコメントを削除してもよろしいですか？この操作は元に戻せません。",
-    "signInToComment": "ログインしてコメント"
+    "signInToComment": "ログインしてコメント",
+    "mentionSuggestions": "メンションするユーザー"
   },
   "user": {
     "posts": "投稿",

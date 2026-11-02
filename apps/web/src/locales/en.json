@@ -209,7 +209,8 @@
     "githubRedirectNotice": "You'll be redirected to GitHub to authorize {{app}}",
     "useEmailInstead": "Have an existing email account? Sign in with email code",
     "or": "or",
-    "intro": "Start with your GitHub account or a one-time email code. There is no password to create."
+    "intro": "Start with your GitHub account or a one-time email code. There is no password to create.",
+    "slogan": "Build.\nShare.\nConnect."
   },
   "posts": {
     "title": "Posts",
@@ -473,7 +474,8 @@
     "noComments": "No comments yet. Be the first to comment!",
     "deleteCommentTitle": "Delete Comment",
     "deleteCommentMessage": "Are you sure you want to delete this comment? This action cannot be undone.",
-    "signInToComment": "Sign in to comment"
+    "signInToComment": "Sign in to comment",
+    "mentionSuggestions": "People to mention"
   },
   "user": {
     "posts": "Posts",

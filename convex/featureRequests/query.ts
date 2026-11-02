@@ -62,6 +62,12 @@ export const getById = query({
 export const getComments = query({
   args: { featureRequestId: v.id("featureRequests") },
   handler: async (ctx, args) => {
+    // A deleted request takes its discussion with it.
+    const featureRequest = await ctx.db.get(args.featureRequestId);
+    if (!featureRequest || featureRequest.deletedAt) {
+      return [];
+    }
+
     const comments = await ctx.db
       .query("featureRequestComments")
       .withIndex("by_featureRequest", (q) => q.eq("featureRequestId", args.featureRequestId))

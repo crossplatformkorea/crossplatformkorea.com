@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { useAuthActions } from '@convex-dev/auth/react';
-import { devConsole } from '@/lib/utils';
+import { devConsole, isImeComposing } from '@/lib/utils';
 import { userFacingErrorMessage } from '@/lib/errors';
 // Import translation utility for error messages
 import { LogOut, Globe, Link as LinkIcon, LucideLinkedin, ArrowLeft } from 'lucide-react';
@@ -360,7 +360,7 @@ export default function ProfilePage() {
 
   // Handle tag input key down
   const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing) return;
+    if (isImeComposing(e)) return;
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       const value = tagInput.replace(/,/g, '').trim();

@@ -4,6 +4,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
 import { cn } from '../../lib/utils';
+import { t } from '../../lib/i18n';
 
 interface MentionInputProps {
   value: string;
@@ -157,7 +158,7 @@ const CommentInput: React.FC<MentionInputProps> = ({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         aria-label={placeholder}
-        a11ySuggestionsListLabel={placeholder}
+        a11ySuggestionsListLabel={t('comments.mentionSuggestions')}
         disabled={disabled}
         style={mentionInputStyles}
         singleLine={false}
