@@ -89,9 +89,10 @@ export default function SummaryPostItem({
 
         {post.tags && post.tags.length > 0 && (
           <ul className="mt-auto flex flex-wrap gap-1.5 pt-5" aria-label={t('common.tags')}>
-            {post.tags.slice(0, 3).map((tag) => (
+            {post.tags.slice(0, 3).map((tag, index) => (
               <li
-                key={tag}
+                // Tags are not deduplicated on the server.
+                key={`${tag}-${index}`}
                 className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground"
               >
                 #{tag}
