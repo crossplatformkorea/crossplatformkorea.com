@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { usePaginatedQuery, useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import CuratedShowcases from './CuratedShowcases';
 import ShowcaseItem, { ShowcaseItemType } from './ShowcaseItem';
-import { Search, Plus, AppWindow, X, LogIn } from 'lucide-react';
+import { Search, Plus, AppWindow, X } from 'lucide-react';
 import ShowcaseFormModal from './ShowcaseFormModal';
 import { ShowcaseSkeletonGroup } from './ShowcaseSkeleton';
 import { cn } from '@/lib/utils';
@@ -17,7 +17,6 @@ import CommunityPageHeader from '../../uis/CommunityPageHeader';
 import { curatedApps } from './catalog-data';
 import { technologies } from './catalog';
 import { useAuthStore } from '@/stores/authStore';
-import { createSignInHref } from '@/lib/authRedirect';
 
 export default function ShowcasePage() {
   // Apply showcase-specific meta tags
@@ -26,8 +25,8 @@ export default function ShowcasePage() {
   });
 
   const { t: translate } = useTranslation();
-  const navigate = useNavigate();
   const location = useLocation();
+  const returnTo = `${location.pathname}${location.search}${location.hash}`;
   const [params, setParams] = useSearchParams();
   const collection = params.get('collection') === 'community' ? 'community' : 'curated';
   const selectCollection = (value: 'curated' | 'community') => {
@@ -95,11 +94,6 @@ export default function ShowcasePage() {
     setIsFormOpen(true);
   };
 
-  const openSignIn = () => {
-    const returnTo = `${location.pathname}${location.search}${location.hash}`;
-    void navigate(createSignInHref(returnTo));
-  };
-
   return (
     <div className="journal-page community-page">
       <CommunityPageHeader
@@ -113,9 +107,7 @@ export default function ShowcasePage() {
               {translate('showcase.addNew')}
             </Button>
           ) : (
-            <SignInAction returnTo={`${location.pathname}${location.search}${location.hash}`}>
-              {translate('showcase.signInToAdd')}
-            </SignInAction>
+            <SignInAction returnTo={returnTo}>{translate('showcase.signInToAdd')}</SignInAction>
           )
         }
         aside={
@@ -237,18 +229,16 @@ export default function ShowcasePage() {
               <p className={cn('mx-auto max-w-md', 'text-gray-500 dark:text-gray-400')}>
                 {searchText ? translate('showcase.tryAdjusting') : translate('showcase.beTheFirst')}
               </p>
-              <Button
-                variant={isAuthenticated ? 'default' : 'outline'}
-                className="mt-6"
-                onClick={isAuthenticated ? openCreateForm : openSignIn}
-              >
-                {isAuthenticated ? <Plus size={16} /> : <LogIn size={16} />}
-                <span>
-                  {isAuthenticated
-                    ? translate('showcase.addFirst')
-                    : translate('showcase.signInToAdd')}
-                </span>
-              </Button>
+              {isAuthenticated ? (
+                <Button className="mt-6" onClick={openCreateForm}>
+                  <Plus size={16} />
+                  <span>{translate('showcase.addFirst')}</span>
+                </Button>
+              ) : (
+                <SignInAction returnTo={returnTo} className="mt-6">
+                  {translate('showcase.signInToAdd')}
+                </SignInAction>
+              )}
             </div>
           ) : (
             <>
