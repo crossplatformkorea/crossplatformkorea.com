@@ -5,7 +5,7 @@ import { api } from '@convex/_generated/api';
 import { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { ArrowUpRight, Lightbulb, LogIn, MessageSquare, Plus, X } from 'lucide-react';
+import { ArrowUpRight, Lightbulb, MessageSquare, Plus, X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { createSignInHref } from '@/lib/authRedirect';
 import { Button } from '@/components/uis/Button';
@@ -26,7 +26,8 @@ export default function FeatureRequestsPage() {
   const { isAuthenticated } = useConvexAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const signInHref = createSignInHref(`${location.pathname}${location.search}`);
+  const returnTo = `${location.pathname}${location.search}${location.hash}`;
+  const signInHref = createSignInHref(returnTo);
   const reducedMotion = useReducedMotion();
   useMetaTags({
     title: `${t('featureRequest.title')} | Cross-Platform Korea`,
@@ -121,9 +122,7 @@ export default function FeatureRequestsPage() {
               {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
             </Button>
           ) : (
-            <SignInAction returnTo={`${location.pathname}${location.search}${location.hash}`}>
-              {t('featureRequest.signInToRequest')}
-            </SignInAction>
+            <SignInAction returnTo={returnTo}>{t('featureRequest.signInToRequest')}</SignInAction>
           )
         }
         aside={<RequestRoadmap />}
@@ -237,10 +236,9 @@ export default function FeatureRequestsPage() {
                   {t('featureRequest.beTheFirst')}
                 </Button>
               ) : (
-                <Link to={signInHref} className="home-secondary-link mt-6">
-                  <LogIn size={16} />
+                <SignInAction returnTo={returnTo} className="mt-6">
                   {t('featureRequest.signInToRequest')}
-                </Link>
+                </SignInAction>
               ))}
           </div>
         ) : (
