@@ -25,7 +25,7 @@
     "viewAll": "View All",
     "loginToAccess": "Sign in to get started",
     "back": "Back",
-    "loginToWrite": "Sign in to write",
+    "loginToWrite": "Sign in to write a post",
     "add": "Add",
     "time": {
       "hours": "{{count}} hours",
@@ -253,7 +253,7 @@
     "views": "Views",
     "edit": "Edit post",
     "delete": "Delete post",
-    "eyebrow": "Community / Posts",
+    "eyebrow": "Community / Our stories",
     "pageTitle": "Stories from builders.",
     "pageDescription": "New discoveries, lessons learned, and questions still open. Find your next idea in the experiences we share.",
     "allStories": "All stories",

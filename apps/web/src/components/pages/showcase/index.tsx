@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useMetaTags } from '../../../hooks/useMetaTags';
 import { t } from '../../../lib/i18n';
 import { Button } from '../../uis/Button';
+import SignInAction from '../../uis/SignInAction';
 import CommunityPageHeader from '../../uis/CommunityPageHeader';
 import { curatedApps } from './catalog-data';
 import { technologies } from './catalog';
@@ -106,14 +107,16 @@ export default function ShowcasePage() {
         title={translate('showcase.title')}
         description={translate('showcase.catalog.description')}
         action={
-          <Button
-            onClick={isAuthenticated ? openCreateForm : openSignIn}
-            variant={isAuthenticated ? 'default' : 'outline'}
-            className="min-h-11"
-          >
-            {isAuthenticated ? <Plus size={16} /> : <LogIn size={16} />}
-            {isAuthenticated ? translate('showcase.addNew') : translate('showcase.signInToAdd')}
-          </Button>
+          isAuthenticated ? (
+            <Button onClick={openCreateForm} className="min-h-11">
+              <Plus size={16} />
+              {translate('showcase.addNew')}
+            </Button>
+          ) : (
+            <SignInAction returnTo={`${location.pathname}${location.search}${location.hash}`}>
+              {translate('showcase.signInToAdd')}
+            </SignInAction>
+          )
         }
         aside={
           <div className="flex flex-wrap gap-x-8 gap-y-4 sm:gap-x-12">

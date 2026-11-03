@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, MessageSquare, Heart, Pencil, Trash2, Eye, Loader2 } from 'lucide-react';
 import AuthorCard from './AuthorCard';
 import PostStatusBadge from '@/components/uis/PostStatusBadge';
-import TypingText from '@/components/uis/TypingText';
+import TypingHeading from '@/components/uis/TypingHeading';
 import PostContent from './PostContent';
 import { motion, useReducedMotion } from 'framer-motion';
 import { revealVariants, staggerVariants } from '@/lib/motion';
@@ -315,9 +315,9 @@ export default function PostDetailsPage() {
               </Link>
               <PostStatusBadge post={post} />
             </motion.div>
-            <h1 className="article-title" itemProp="headline">
-              <TypingText>{post.title}</TypingText>
-            </h1>
+            <TypingHeading className="article-title" itemProp="headline">
+              {post.title}
+            </TypingHeading>
             {post.tags.length > 0 && (
               <motion.p
                 variants={revealVariants}

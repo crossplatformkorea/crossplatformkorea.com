@@ -235,7 +235,7 @@ export default function SummaryPage() {
               </p>
             </div>
             <Link to={createSignInHref('/posts')} className="home-secondary-link shrink-0">
-              {t('common.loginToWrite')} <ArrowRight size={15} />
+              {t('common.loginToWrite')}
             </Link>
           </div>
         ) : null}

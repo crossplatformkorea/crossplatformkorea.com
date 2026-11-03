@@ -12,7 +12,7 @@ import {
   SiGmail,
   SiBlogger,
 } from '@icons-pack/react-simple-icons';
-import TypingText from '@/components/uis/TypingText';
+import TypingHeading from '@/components/uis/TypingHeading';
 
 interface ProfileHeaderProps {
   displayName: string;
@@ -83,9 +83,9 @@ export default function ProfileHeader({
 
         {/* Display Name */}
         <div>
-          <h1 className="text-3xl font-bold tracking-[-0.045em]">
-            <TypingText>{displayName || t('user.anonymousUser')}</TypingText>
-          </h1>
+          <TypingHeading className="text-3xl font-bold tracking-[-0.045em]">
+            {displayName || t('user.anonymousUser')}
+          </TypingHeading>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import TypingText from './TypingText';
+import TypingHeading from './TypingHeading';
 
 export default function CommunityPageHeader({
   eyebrow,
@@ -19,9 +19,7 @@ export default function CommunityPageHeader({
       <div className="section-kicker">{eyebrow}</div>
       <div className="mt-5 grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div className="min-w-0">
-          <h1 className="journal-title">
-            <TypingText>{title}</TypingText>
-          </h1>
+          <TypingHeading className="journal-title">{title}</TypingHeading>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
             {description}
           </p>

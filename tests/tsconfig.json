@@ -5,6 +5,7 @@
     "target": "ESNext",
     "lib": ["ES2021", "ES2022.Intl", "dom"],
     "module": "ESNext",
+    "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "allowJs": true,
     "allowImportingTsExtensions": true,

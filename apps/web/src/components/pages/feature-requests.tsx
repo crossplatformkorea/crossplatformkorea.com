@@ -9,6 +9,7 @@ import { ArrowUpRight, Lightbulb, LogIn, MessageSquare, Plus, X } from 'lucide-r
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { createSignInHref } from '@/lib/authRedirect';
 import { Button } from '@/components/uis/Button';
+import SignInAction from '@/components/uis/SignInAction';
 import { Textarea } from '@/components/uis/Textarea';
 import { devConsole } from '@/lib/utils';
 import { userFacingErrorMessage } from '@/lib/errors';
@@ -120,10 +121,9 @@ export default function FeatureRequestsPage() {
               {showForm ? t('featureRequest.cancelButton') : t('featureRequest.requestButton')}
             </Button>
           ) : (
-            <Link to={signInHref} className="home-secondary-link">
-              <LogIn size={16} />
+            <SignInAction returnTo={`${location.pathname}${location.search}${location.hash}`}>
               {t('featureRequest.signInToRequest')}
-            </Link>
+            </SignInAction>
           )
         }
         aside={<RequestRoadmap />}

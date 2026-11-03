@@ -25,7 +25,7 @@
     "viewAll": "すべて見る",
     "loginToAccess": "サインインして始める",
     "back": "戻る",
-    "loginToWrite": "ログインして投稿",
+    "loginToWrite": "ログインして記事を書く",
     "add": "追加",
     "time": {
       "hours": "{{count}}時間",
@@ -255,7 +255,7 @@
     "views": "閲覧数",
     "edit": "投稿を編集",
     "delete": "投稿を削除",
-    "eyebrow": "コミュニティ / 投稿",
+    "eyebrow": "コミュニティ / わたしたちの物語",
     "pageTitle": "開発者のストーリー。",
     "pageDescription": "新しい発見、解決の記録、まだ答えのない疑問まで。共有された経験から次のアイデアを見つけましょう。",
     "allStories": "すべての話題",

@@ -1,4 +1,4 @@
-import TypingText from '@/components/uis/TypingText';
+import TypingHeading from '@/components/uis/TypingHeading';
 
 export default function HomeHeadline({
   firstLine,
@@ -8,12 +8,10 @@ export default function HomeHeadline({
   secondLine: string;
 }) {
   return (
-    <h1 id="home-title" className="home-title">
-      <TypingText>
-        {firstLine}
-        <br />
-        <span className="text-muted-foreground">{secondLine}</span>
-      </TypingText>
-    </h1>
+    <TypingHeading id="home-title" className="home-title">
+      {firstLine}
+      <br />
+      <span className="text-muted-foreground">{secondLine}</span>
+    </TypingHeading>
   );
 }

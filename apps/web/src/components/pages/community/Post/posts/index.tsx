@@ -1,15 +1,15 @@
 import { memo, useMemo, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { usePaginatedQuery, useQuery } from 'convex/react';
-import { ArrowDown, ArrowRight, Loader2, LogIn, MessageSquare, PenLine } from 'lucide-react';
+import { ArrowDown, ArrowRight, Loader2, MessageSquare, PenLine } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { api } from '@convex/_generated/api';
 import { DEFAULT_CATEGORY } from '@convex/constants';
 import { useAuthStore } from '@/stores/authStore';
 import { Button } from '@/components/uis/Button';
-import TypingText from '@/components/uis/TypingText';
+import SignInAction from '@/components/uis/SignInAction';
+import TypingHeading from '@/components/uis/TypingHeading';
 import { useMetaTags } from '@/hooks/useMetaTags';
-import { createSignInHref } from '@/lib/authRedirect';
 import CategoriesBreadCrumbs from './CategoriesBreadCrumbs';
 import PostsSkeleton from './PostsSkeleton';
 import PostListItem from './PostListItem';
@@ -17,7 +17,6 @@ import PostWriteModal from '../PostWriteModal';
 
 const Posts = memo(function PostsPage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const categorySlug = searchParams.get('category');
@@ -63,29 +62,29 @@ const Posts = memo(function PostsPage() {
         <div className="section-kicker">{t('posts.eyebrow')}</div>
         <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="min-w-0 max-w-2xl">
-            <h1 className="journal-title">
-              <TypingText>{title}</TypingText>
-            </h1>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+            <TypingHeading className="journal-title">{title}</TypingHeading>
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
               {description}
             </p>
           </div>
           <div className="shrink-0">
-            <Button
-              className="min-h-11 w-full gap-3 sm:w-auto"
-              variant={isAuthenticated ? 'default' : 'outline'}
-              onClick={() => {
-                if (isAuthenticated) setIsWriteModalOpen(true);
-                else
-                  void navigate(
-                    createSignInHref(`${location.pathname}${location.search}${location.hash}`),
-                  );
-              }}
-            >
-              {isAuthenticated ? <PenLine size={16} /> : <LogIn size={16} />}
-              {isAuthenticated ? t('posts.write') : t('common.loginToWrite')}
-              <ArrowRight size={15} />
-            </Button>
+            {isAuthenticated ? (
+              <Button
+                className="min-h-11 w-full sm:w-auto"
+                onClick={() => setIsWriteModalOpen(true)}
+              >
+                <PenLine size={16} />
+                {t('posts.write')}
+                <ArrowRight size={15} />
+              </Button>
+            ) : (
+              <SignInAction
+                returnTo={`${location.pathname}${location.search}${location.hash}`}
+                className="w-full sm:w-auto"
+              >
+                {t('common.loginToWrite')}
+              </SignInAction>
+            )}
           </div>
         </div>
       </header>

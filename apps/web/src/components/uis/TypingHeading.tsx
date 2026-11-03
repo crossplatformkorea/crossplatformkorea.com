@@ -1,5 +1,5 @@
-import { Children, cloneElement, isValidElement, type ReactNode } from 'react';
-import { graphemes } from '@/lib/graphemes';
+import { Children, cloneElement, isValidElement, type HTMLAttributes, type ReactNode } from 'react';
+import { graphemes } from '../../lib/graphemes';
 
 function textContent(children: ReactNode): string {
   return Children.toArray(children)
@@ -13,8 +13,12 @@ function textContent(children: ReactNode): string {
     .join('');
 }
 
-/** Reveal text without changing its final wrapping or reserved space. */
-export default function TypingText({ children }: { children: ReactNode }) {
+type TypingHeadingProps = Omit<HTMLAttributes<HTMLHeadingElement>, 'aria-label' | 'children'> & {
+  children: ReactNode;
+};
+
+/** Reserve the full heading while revealing its single text copy. */
+export default function TypingHeading({ children, ...props }: TypingHeadingProps) {
   const text = textContent(children).normalize('NFC');
   const interval = Math.min(45, 900 / Math.max(1, graphemes(text).length));
   let characterIndex = 0;
@@ -41,11 +45,10 @@ export default function TypingText({ children }: { children: ReactNode }) {
     });
 
   return (
-    <>
-      <span className="sr-only">{text}</span>
+    <h1 {...props} aria-label={text.replace(/\s+/g, ' ').trim()}>
       <span key={text} aria-hidden="true">
         {reveal(children)}
       </span>
-    </>
+    </h1>
   );
 }

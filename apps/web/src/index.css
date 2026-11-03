@@ -298,7 +298,7 @@ summary {
   }
 
   .home-destination {
-    @apply border-b border-border/80 px-1 py-6 last:border-b-0 hover:bg-muted/40 md:border-b-0 md:border-r md:px-6 md:py-7 md:first:pl-0 md:last:border-r-0;
+    @apply border-b border-border/80 px-1 py-6 transition-colors last:border-b-0 hover:bg-muted/40 motion-reduce:transition-none md:border-b-0 md:border-r md:px-6 md:py-7 md:first:pl-0 md:last:border-r-0;
   }
 
   .home-member-panel {
